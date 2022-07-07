@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import defaultUserIcon from './icon/defaultUserIcon.png';
 import settingIcon from './icon/settingIcon.png';
-import BasicStack from './StudyState';
+import OngoingStudyInfo from './OngoingStudyInfo';
+import ScheduledStudyInfo from './ScheduledStudyInfo';
+import FinishedStudyInfo from './FinishedStudyInfo';
 
 const MyPage = () => {
   const Container = styled.div`
@@ -10,7 +12,7 @@ const MyPage = () => {
     height: 100vh;
 
     display: grid;
-    grid-template-columns: 300px 2fr;
+    grid-template-columns: 400px 2fr;
     grid-template-rows: 100px 1fr 1fr;
   `;
 
@@ -73,6 +75,12 @@ const MyPage = () => {
     }
   `;
 
+  const StateTitle = styled.p`
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  `;
+
   return (
     <Container>
       <div>nav 임시 | 높이 100px</div>
@@ -90,7 +98,12 @@ const MyPage = () => {
         </div>
       </Profile>
       <Study>
-        <BasicStack />
+        <StateTitle>진행중인 스터디</StateTitle>
+        <OngoingStudyInfo />
+        <StateTitle>진행 예정 스터디</StateTitle>
+        <ScheduledStudyInfo />
+        <StateTitle>종료된 스터디</StateTitle>
+        <FinishedStudyInfo />
       </Study>
     </Container>
   );

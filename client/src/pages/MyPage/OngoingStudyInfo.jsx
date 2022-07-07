@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -6,20 +7,6 @@ import studyCategoryIcon from './icon/studyCategoryIcon.png';
 import studyPeriodIcon from './icon/studyPeriodIcon.png';
 import userMinsize from './icon/userMinsize.png';
 import testImg from './icon/testImg.png';
-
-// StudyArea.defaultProps = {
-
-// };
-
-const Container = styled.div``;
-
-const StudyState = styled.div`
-  & > p {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-`;
 
 const OngoingStudy = styled.div`
   border: solid 1px gray;
@@ -47,11 +34,6 @@ const StudyIcon = styled.img`
   height: 25px;
 `;
 
-// const CategoryWrapper = styled.div`
-//   display: flex;
-//   align-items: flex-end;
-// `;
-
 const StudyInfoWrappers = styled.div`
   margin-top: 30px;
 `;
@@ -63,9 +45,9 @@ const StudyInfoWrapper = styled.div`
   margin-left: 300px;
   margin-top: 10px;
   & > h5 {
-    width: 65px;
+    width: 88px;
     margin-left: 8px;
-    margin-right: 8px;
+    margin-right: 10px;
 
     border-right: 1px gray solid;
   }
@@ -111,36 +93,31 @@ const EntranceBtn = styled.button`
   bottom: 30px;
 `;
 
-const StudyArea = () => {
+const OngoingStudyInfo = () => {
   return (
-    <Container>
-      <StudyState>
-        <p>진행중인 스터디</p>
-        <OngoingStudy>
-          <p>코어 자바스크립트</p>
-          <StudyImg src={testImg} />
-          <StudyInfoWrappers>
-            <StudyInfoWrapper>
-              <StudyIcon src={studyCategoryIcon} />
-              <h5>카테고리</h5>
-              <StudyCategory>it</StudyCategory>
-            </StudyInfoWrapper>
-            <StudyInfoWrapper>
-              <StudyIcon src={studyPeriodIcon} />
-              <h5>기간</h5>
-              <StudyExplanation>22/06/20~22/07/19</StudyExplanation>
-            </StudyInfoWrapper>
-            <StudyInfoWrapper>
-              <StudyIcon src={userMinsize} />
-              <h5>인원 수</h5>
-              <StudyExplanation> 6명</StudyExplanation>
-            </StudyInfoWrapper>
-          </StudyInfoWrappers>
-          <EntranceBtn>입장하기</EntranceBtn>
-        </OngoingStudy>
-      </StudyState>
-    </Container>
+    <OngoingStudy>
+      <p>코어 자바스크립트</p>
+      <StudyImg src={testImg} />
+      <StudyInfoWrappers>
+        <StudyInfoWrapper>
+          <StudyIcon src={studyCategoryIcon} />
+          <h5>카테고리</h5>
+          <StudyCategory>it</StudyCategory>
+        </StudyInfoWrapper>
+        <StudyInfoWrapper>
+          <StudyIcon src={studyPeriodIcon} />
+          <h5>스터디 기간</h5>
+          <StudyExplanation>22/06/20~22/07/19</StudyExplanation>
+        </StudyInfoWrapper>
+        <StudyInfoWrapper>
+          <StudyIcon src={userMinsize} />
+          <h5>인원 수</h5>
+          <StudyExplanation> 6명</StudyExplanation>
+        </StudyInfoWrapper>
+      </StudyInfoWrappers>
+      <EntranceBtn>입장하기</EntranceBtn>
+    </OngoingStudy>
   );
 };
 
-export default StudyArea;
+export default OngoingStudyInfo;
