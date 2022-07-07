@@ -64,12 +64,24 @@ const MyPage = () => {
     }
   `;
 
-  const CurrentStudy = styled.div`
+  const Study = styled.div`
     background-color: blue;
 
     grid-row: 2 / 4;
 
-    div {
+    > div {
+      margin-bottom: 20px;
+    }
+
+    .studyState {
+      font-size: large;
+      font-weight: bold;
+    }
+
+    .studyArea {
+      border: solid gray 1px;
+      margin: 10px;
+      padding: 10px;
     }
   `;
 
@@ -89,9 +101,35 @@ const MyPage = () => {
           <div>회원정보 변경</div>
         </div>
       </Profile>
-      <CurrentStudy>
-        <div>study</div>
-      </CurrentStudy>
+      <Study>
+        <div className="currentStudy">
+          <div className="studyState">진행중인 스터디</div>
+          <div className="studyArea">
+            <div className="studyName">코어 자바스크립트</div>
+            <div className="studyCategory">카테고리</div>
+            <div className="studyPeriod">진행 기간</div>
+            <div className="studyPeople">인원 수</div>
+          </div>
+        </div>
+        <div className="scheduledStudy">
+          <div className="studyState">진행 예정 스터디</div>
+          <div className="studyArea">
+            <div className="studyName">코어 자바스크립트</div>
+            <div className="studyCategory">카테고리</div>
+            <div className="studyPeriod">진행 기간</div>
+            <div className="studyPeople">인원 수</div>
+          </div>
+        </div>
+        <div className="finishedStudy">
+          <div className="studyState">종료된 스터디</div>
+          <div className="studyArea">
+            <div className="studyName">코어 자바스크립트</div>
+            <div className="studyCategory">카테고리</div>
+            <div className="studyPeriod">진행 기간</div>
+            <div className="studyPeople">인원 수</div>
+          </div>
+        </div>
+      </Study>
     </Container>
   );
 };
