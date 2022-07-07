@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import defaultUserIcon from '../../assets/defaultUserIcon.png';
 import settingIcon from '../../assets/settingIcon.png';
-import studyCategoryIcon from '../../assets/studyCategoryIcon.png';
-import studyPeriodIcon from '../../assets/studyPeriodIcon.png';
-import userMinsize from '../../assets/userMinsize.png';
+import BasicStack from './StudyState';
 
 const MyPage = () => {
   const Container = styled.div`
@@ -68,56 +66,10 @@ const MyPage = () => {
   `;
 
   const Study = styled.div`
-    background-color: blue;
-
     grid-row: 2 / 4;
 
     > div {
       margin-bottom: 20px;
-    }
-  `;
-
-  const CurrentStudy = styled.div`
-    font-size: large;
-    font-weight: bold;
-    > div {
-      font-weight: normal;
-    }
-  `;
-
-  const ScheduledStudy = styled.div`
-    font-size: large;
-    font-weight: bold;
-
-    .scheduled {
-      display: felx;
-      > div {
-        font-weight: normal;
-        margin-right: 10px;
-      }
-    }
-  `;
-
-  const FinishedStudy = styled.div`
-    font-size: large;
-    font-weight: bold;
-  `;
-
-  const StudyArea = styled.div`
-    border: solid gray 1px;
-    margin: 10px;
-    padding: 10px;
-
-    font-size: medium;
-
-    .studyName {
-      font-weight: bold;
-    }
-
-    .studyCategory,
-    .studyPeriod,
-    .studyPeople {
-      font-size: small;
     }
   `;
 
@@ -138,47 +90,7 @@ const MyPage = () => {
         </div>
       </Profile>
       <Study>
-        <CurrentStudy>
-          <p>진행중인 스터디</p>
-          <StudyArea className="current">
-            <div className="studyName">코어 자바스크립트</div>
-            <div className="studyCategory">
-              <img src={studyCategoryIcon} alt="categoryIcon" />
-              카테고리
-            </div>
-            <div className="studyPeriod">
-              <img src={studyPeriodIcon} alt="periodIcon" />
-              진행 기간
-            </div>
-            <div className="studyPeople">
-              <img src={userMinsize} alt="peopleIcon" />
-              인원 수
-            </div>
-            <input type="button" value="입장하기" />
-          </StudyArea>
-        </CurrentStudy>
-        <ScheduledStudy>
-          <p>진행 예정 스터디</p>
-          <StudyArea className="scheduled">
-            <div className="studyName">코어 자바스크립트</div>
-            <div className="studyCategory">
-              <img src={studyCategoryIcon} alt="categoryIcon" />
-            </div>
-            <div className="studyPeriod">
-              <img src={studyPeriodIcon} alt="periodIcon" />
-            </div>
-            <div className="studyPeople">
-              <img src={userMinsize} alt="peopleIcon" />
-            </div>
-            <input type="button" value="취소하기" />
-          </StudyArea>
-        </ScheduledStudy>
-        <FinishedStudy>
-          <p>종료된 스터디</p>
-          <StudyArea className="finish">
-            <div className="studyName">코어 자바스크립트</div>
-          </StudyArea>
-        </FinishedStudy>
+        <BasicStack />
       </Study>
     </Container>
   );
