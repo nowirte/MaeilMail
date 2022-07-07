@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import defaultUserIcon from '../../assets/defaultUserIcon.png';
 import settingIcon from '../../assets/settingIcon.png';
+import studyCategoryIcon from '../../assets/studyCategoryIcon.png';
+import studyPeriodIcon from '../../assets/studyPeriodIcon.png';
+import userMinsize from '../../assets/userMinsize.png';
 
 const MyPage = () => {
   const Container = styled.div`
@@ -72,16 +75,49 @@ const MyPage = () => {
     > div {
       margin-bottom: 20px;
     }
+  `;
 
-    .studyState {
-      font-size: large;
+  const CurrentStudy = styled.div`
+    font-size: large;
+    font-weight: bold;
+    > div {
+      font-weight: normal;
+    }
+  `;
+
+  const ScheduledStudy = styled.div`
+    font-size: large;
+    font-weight: bold;
+
+    .scheduled {
+      display: felx;
+      > div {
+        font-weight: normal;
+        margin-right: 10px;
+      }
+    }
+  `;
+
+  const FinishedStudy = styled.div`
+    font-size: large;
+    font-weight: bold;
+  `;
+
+  const StudyArea = styled.div`
+    border: solid gray 1px;
+    margin: 10px;
+    padding: 10px;
+
+    font-size: medium;
+
+    .studyName {
       font-weight: bold;
     }
 
-    .studyArea {
-      border: solid gray 1px;
-      margin: 10px;
-      padding: 10px;
+    .studyCategory,
+    .studyPeriod,
+    .studyPeople {
+      font-size: small;
     }
   `;
 
@@ -102,33 +138,47 @@ const MyPage = () => {
         </div>
       </Profile>
       <Study>
-        <div className="currentStudy">
-          <div className="studyState">진행중인 스터디</div>
-          <div className="studyArea">
+        <CurrentStudy>
+          <p>진행중인 스터디</p>
+          <StudyArea className="current">
             <div className="studyName">코어 자바스크립트</div>
-            <div className="studyCategory">카테고리</div>
-            <div className="studyPeriod">진행 기간</div>
-            <div className="studyPeople">인원 수</div>
-          </div>
-        </div>
-        <div className="scheduledStudy">
-          <div className="studyState">진행 예정 스터디</div>
-          <div className="studyArea">
+            <div className="studyCategory">
+              <img src={studyCategoryIcon} alt="categoryIcon" />
+              카테고리
+            </div>
+            <div className="studyPeriod">
+              <img src={studyPeriodIcon} alt="periodIcon" />
+              진행 기간
+            </div>
+            <div className="studyPeople">
+              <img src={userMinsize} alt="peopleIcon" />
+              인원 수
+            </div>
+            <input type="button" value="입장하기" />
+          </StudyArea>
+        </CurrentStudy>
+        <ScheduledStudy>
+          <p>진행 예정 스터디</p>
+          <StudyArea className="scheduled">
             <div className="studyName">코어 자바스크립트</div>
-            <div className="studyCategory">카테고리</div>
-            <div className="studyPeriod">진행 기간</div>
-            <div className="studyPeople">인원 수</div>
-          </div>
-        </div>
-        <div className="finishedStudy">
-          <div className="studyState">종료된 스터디</div>
-          <div className="studyArea">
+            <div className="studyCategory">
+              <img src={studyCategoryIcon} alt="categoryIcon" />
+            </div>
+            <div className="studyPeriod">
+              <img src={studyPeriodIcon} alt="periodIcon" />
+            </div>
+            <div className="studyPeople">
+              <img src={userMinsize} alt="peopleIcon" />
+            </div>
+            <input type="button" value="취소하기" />
+          </StudyArea>
+        </ScheduledStudy>
+        <FinishedStudy>
+          <p>종료된 스터디</p>
+          <StudyArea className="finish">
             <div className="studyName">코어 자바스크립트</div>
-            <div className="studyCategory">카테고리</div>
-            <div className="studyPeriod">진행 기간</div>
-            <div className="studyPeople">인원 수</div>
-          </div>
-        </div>
+          </StudyArea>
+        </FinishedStudy>
       </Study>
     </Container>
   );
