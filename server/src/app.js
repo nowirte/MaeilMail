@@ -25,3 +25,4 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(require('../swagger.js')));
 app.get("/", (req, res) => res.send("Hello World!"));
 
 
+export { app };
