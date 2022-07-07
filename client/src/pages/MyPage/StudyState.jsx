@@ -1,104 +1,146 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Stack from '@mui/material/Stack';
 
 // 이미지 조각
-import userMinsize from '../../assets/userMinsize.png';
-import studyCategoryIcon from '../../assets/studyCategoryIcon.png';
-import studyPeriodIcon from '../../assets/studyPeriodIcon.png';
-import testImg from '../../assets/testImg.png';
+import studyCategoryIcon from './icon/studyCategoryIcon.png';
+import studyPeriodIcon from './icon/studyPeriodIcon.png';
+import userMinsize from './icon/userMinsize.png';
+import testImg from './icon/testImg.png';
 
-const Container = styled.div`
-  width: 90%;
-`;
+// StudyArea.defaultProps = {
 
-const Item = styled.div`
-  border: solid 1px gray;
-  padding: 5px;
-  .studyName {
-    font-weight: bold;
-  }
-  > div {
-    padding: 8px;
-  }
+// };
 
-  .studyInfo {
-    display: grid;
-    grid-template-columns: 300px 90px 1fr 1fr;
-    grid-template-rows: repeat(5, 30px);
-    place-items: center;
-
-    & > div {
-      display: flex;
-      height: 25px;
-    }
-
-    & > img {
-      grid-column: 1 / 2;
-      grid-row: 1 / 6;
-    }
-
-    .category {
-      grid-column: 2 / 3;
-      grid-row: 2 / 3;
-    }
-
-    .period {
-      grid-column: 2 / 3;
-      grid-row: 3 / 4;
-    }
-
-    .people {
-      grid-column: 2 / 3;
-      grid-row: 4 / 5;
-    }
-  }
-`;
+const Container = styled.div``;
 
 const StudyState = styled.div`
-  font-size: x-large;
-  font-weight: bold;
+  & > p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 `;
 
-const Icon = styled.img`
+const OngoingStudy = styled.div`
+  border: solid 1px gray;
+  width: 70vw;
+  height: 180px;
+  padding: 20px 10px 10px;
+
+  position: relative;
+  & > p {
+    margin-bottom: 20px;
+    margin-left: 30px;
+    font-weight: bold;
+  }
+`;
+
+const StudyImg = styled.img`
+  width: 250px;
+  position: absolute;
+  left: 40px;
+  bottom: 30px;
+`;
+
+const StudyIcon = styled.img`
   width: 25px;
   height: 25px;
 `;
 
-const BasicStack = () => {
+// const CategoryWrapper = styled.div`
+//   display: flex;
+//   align-items: flex-end;
+// `;
+
+const StudyInfoWrappers = styled.div`
+  margin-top: 30px;
+`;
+
+const StudyInfoWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+
+  margin-left: 300px;
+  margin-top: 10px;
+  & > h5 {
+    width: 65px;
+    margin-left: 8px;
+    margin-right: 8px;
+
+    border-right: 1px gray solid;
+  }
+`;
+
+const StudyCategory = styled.p`
+  font-weight: bold;
+  font-size: 0.9rem;
+  position: relative;
+  padding: 4px 6px;
+  color: red;
+
+  ::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: red;
+    opacity: 0.2;
+    border-radius: 2px;
+  }
+`;
+
+const StudyExplanation = styled.p`
+  font-size: 0.9rem;
+`;
+
+const EntranceBtn = styled.button`
+  background-color: #ff8303;
+  color: white;
+  border: none;
+  border-radius: 13px;
+  padding: 14px 12px;
+  text-align: center;
+
+  width: 114px;
+  height: 39px;
+
+  position: absolute;
+  right: 50px;
+  bottom: 30px;
+`;
+
+const StudyArea = () => {
   return (
     <Container>
-      <Stack spacing={2}>
-        <StudyState>진행중인 스터디</StudyState>
-        <Item>
-          <div className="studyName">스터디 이름</div>
-          <div className="studyInfo">
-            <img src={testImg} alt="studyInfoIcon" style={{ width: 250 }} />
-            <div className="category">
-              <Icon src={studyCategoryIcon} alt="studyInfoIcon" />
-              <div>카테고리</div>
-            </div>
-            <div className="period">
-              <Icon src={studyPeriodIcon} alt="studyInfoIcon" />
-              <div>기간</div>
-            </div>
-            <div className="people">
-              <Icon src={userMinsize} alt="studyInfoIcon" />
-              <div>인원 수</div>
-            </div>
-          </div>
-        </Item>
-        <StudyState>진행 예정 스터디</StudyState>
-        <Item>
-          <div className="studyName">스터디 이름</div>
-        </Item>
-        <StudyState>종료된 스터디</StudyState>
-        <Item>
-          <div className="studyName">스터디 이름</div>
-        </Item>
-      </Stack>
+      <StudyState>
+        <p>진행중인 스터디</p>
+        <OngoingStudy>
+          <p>코어 자바스크립트</p>
+          <StudyImg src={testImg} />
+          <StudyInfoWrappers>
+            <StudyInfoWrapper>
+              <StudyIcon src={studyCategoryIcon} />
+              <h5>카테고리</h5>
+              <StudyCategory>it</StudyCategory>
+            </StudyInfoWrapper>
+            <StudyInfoWrapper>
+              <StudyIcon src={studyPeriodIcon} />
+              <h5>기간</h5>
+              <StudyExplanation>22/06/20~22/07/19</StudyExplanation>
+            </StudyInfoWrapper>
+            <StudyInfoWrapper>
+              <StudyIcon src={userMinsize} />
+              <h5>인원 수</h5>
+              <StudyExplanation> 6명</StudyExplanation>
+            </StudyInfoWrapper>
+          </StudyInfoWrappers>
+          <EntranceBtn>입장하기</EntranceBtn>
+        </OngoingStudy>
+      </StudyState>
     </Container>
   );
 };
 
-export default BasicStack;
+export default StudyArea;

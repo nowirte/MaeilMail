@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import defaultUserIcon from '../../assets/defaultUserIcon.png';
-import settingIcon from '../../assets/settingIcon.png';
+import defaultUserIcon from './icon/defaultUserIcon.png';
+import settingIcon from './icon/settingIcon.png';
 import BasicStack from './StudyState';
 
 const MyPage = () => {
