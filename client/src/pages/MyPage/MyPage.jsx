@@ -20,7 +20,7 @@ const MyPage = () => {
   const Study = styled.div`
     margin: 0 50px;
     > div {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     }
   `;
 

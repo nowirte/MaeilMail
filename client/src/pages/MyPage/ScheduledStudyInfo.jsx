@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import * as React from 'react';
 import styled from 'styled-components';
 
 // 이미지 조각
-import studyCategoryIcon from './icon/studyCategoryIcon.png';
-import studyPeriodIcon from './icon/studyPeriodIcon.png';
-import userMinsize from './icon/userMinsize.png';
+import DiscountOutlinedIcon from '@mui/icons-material/DiscountOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined';
 
 const ScheduledStudy = styled.div`
   display: flex;
@@ -22,18 +21,13 @@ const ScheduledStudy = styled.div`
   }
 `;
 
-const StudyIcon = styled.img`
-  width: 25px;
-  height: 25px;
-`;
-
 const StudyInfoWrappers = styled.div`
   display: flex;
 `;
 
 const StudyInfoWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   margin-left: 60px;
   & > h5 {
@@ -87,17 +81,17 @@ const ScheduledStudyInfo = () => {
       <p>코어 자바스크립트</p>
       <StudyInfoWrappers>
         <StudyInfoWrapper>
-          <StudyIcon src={studyCategoryIcon} />
+          <DiscountOutlinedIcon />
           <h5>카테고리</h5>
           <StudyCategory>it</StudyCategory>
         </StudyInfoWrapper>
         <StudyInfoWrapper>
-          <StudyIcon src={studyPeriodIcon} />
+          <CalendarMonthOutlinedIcon />
           <h5>스터디 기간</h5>
           <StudyExplanation>22/06/20~22/07/19</StudyExplanation>
         </StudyInfoWrapper>
         <StudyInfoWrapper>
-          <StudyIcon src={userMinsize} />
+          <SupervisorAccountOutlinedIcon />
           <h5>인원 수</h5>
           <StudyExplanation> 6명</StudyExplanation>
         </StudyInfoWrapper>
