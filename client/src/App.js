@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import MyPage from './pages/MyPage/MyPage';
 import AdminManageAccount from './pages/AdminManageAccount';
+import Signup from './pages/Signup';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/AdminManageAccount" element={<AdminManageAccount />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );
