@@ -1,4 +1,4 @@
-openapi: "3.0.0",
+openapi: "3.0.3"
 info: 
   version: "1.0.0"
   title: "Study"
@@ -6,9 +6,6 @@ info:
 servers:
   - url: http://localhost:3000/
 paths:
-  $ref: './src/paths.yaml'
+  $ref: './paths/_index.yaml'
 components:
-  $ref: './src/components.yaml'
-responses:
-  $ref: './src/responses.yaml'
-
+  $ref: './components/_index.yaml'
