@@ -1,6 +1,6 @@
-import passport from 'passport';
-import google from './strategies/google';
+// import passport from 'passport';
+// import google from './strategies/google';
 
-export default function () {
-  passport.use(google);
-}
+// export default function () {
+//   passport.use(google);
+// }
