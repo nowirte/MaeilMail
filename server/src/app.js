@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
-import YAML from 'js-yaml'
+import YAML from 'yamljs'
 
 
 const app = express();
@@ -25,6 +25,7 @@ app.get("/", (req, res) => res.send("express!"));
 // app.use("/api/study", studyRouter);
 
 const swaggerSpec = YAML.load(path.join(__dirname, '../build/swagger.yaml'))
+
 app.use(
   "/api-docs",
   swaggerUi.serve,

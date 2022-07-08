@@ -20,7 +20,8 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.18",
     "passport": "^0.6.0",
-    "swagger-cli": "^4.0.4"
+    "swagger-cli": "^4.0.4",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "swagger-ui-express": "^4.4.0"
