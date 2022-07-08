@@ -1,8 +1,10 @@
-const cors = require('cors')
-const express = require('express')
-const passport = require('passport')
-const passportConfig = require('./passport')
-const swaggerUi = require('swagger-ui-express');
+import cors from 'cors';
+import express from 'express';
+import passport from 'passport';
+import passportConfig from './passport';
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger/swaggerSpec'
 
 const app = express();
 
@@ -13,16 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 passportConfig();
 app.use(passport.initialize());
 
-app.use('/user', userRouter)
-app.use('/study', studyRouter)
+app.get("/", (req, res) => res.send("express!"));
 
-/**
- * @swagger
+app.use("/api/user", userRouter);
+app.use("/api/study", studyRouter);
 
- */
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(require('../swagger.js')));
-app.get("/", (req, res) => res.send("Hello World!"));
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
 export { app };
