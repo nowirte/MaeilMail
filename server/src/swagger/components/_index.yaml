@@ -15,6 +15,7 @@ schemas:
         description: 이메일
       password:
         type: string
+        format: password
         description: 비밀번호
       nickname:
         type: string
@@ -28,6 +29,18 @@ schemas:
       profileImage:
         type: string
         description: 프로필 사진 url
+      createdAt:
+        type: string
+        format: date-time
+        description: 생성 일자
+      updatedAt:
+        type: string
+        format: date-time
+        description: 업데이트 일자
+      studyList:
+        type: array
+        items: string
+        description: 참여 중인 스터디 목록
   GeneralError: 
     type: object
     properties:

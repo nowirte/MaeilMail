@@ -44,6 +44,7 @@
           application/json:
             schema:
               $ref: '../components/_index.yaml#/schemas/GeneralError'
+
 /signin:
   post:
     tags: 
@@ -83,7 +84,8 @@
           application/json:
             schema:
               $ref: '../components/_index.yaml#/schemas/GeneralError'
-/
+
+/info:
   get:
     tags:
       - users
@@ -110,7 +112,13 @@
             schema:
               type: string
               example: "정상적인 토큰이 아닙니다."
-  update:
+      default: 
+        description: 에러
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/GeneralError'
+  put:
     tags:
       - users
     summary: Update user profile by user id
@@ -136,8 +144,15 @@
             schema:
               type: string
               example: "정상적인 토큰이 아닙니다."
-/password
-  update:
+      default: 
+        description: 에러
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/GeneralError'
+
+/info/password:
+  put:
     tags:
       - users
     summary: Update user password
@@ -158,7 +173,65 @@
             properties:
               password:
                 type: string
+                format: password
               example:
                 password: 12345678
-      
+    responses:
+      '200':
+        description: 토큰 확인 후 수정 완료
+      '403':
+        description: 토큰 오류.
+        content:
+          application/json:
+            schema:
+              type: string
+              example: "정상적인 토큰이 아닙니다."  
+      default: 
+        description: 에러
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/GeneralError'
 
+/info/withdrawal:
+  put:
+    tags:
+      - users:
+    summary: Update user status into withdrawal
+    description: 회원 탈퇴
+    operationId: updateUserStatus
+    content: application/json
+    requestBody:
+      description: user pw to update status
+      content:
+        application/json:
+          schema: 
+            type: object
+            required: true
+            properties:
+              password:
+                type: string
+                format: password
+              example:
+                password: 12345678
+    responses:
+      '200':
+        description: 토큰 확인 후 수정 완료
+      '403':
+        description: 토큰 오류.
+        content:
+          application/json:
+            schema:
+              type: string
+              example: "정상적인 토큰이 아닙니다."  
+      default: 
+        description: 에러
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/GeneralError'
+/admin:
+  get:
+    tags:
+      - admin
+    summary: 
