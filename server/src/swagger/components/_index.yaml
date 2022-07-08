@@ -1,0 +1,46 @@
+schemas:
+  User:
+    type: object
+    required:
+      - email
+      - password
+      - nickname
+    properties:
+      id:
+        type: number
+        description: 고유값
+      email:
+        type: string
+        format: email
+        description: 이메일
+      password:
+        type: string
+        description: 비밀번호
+      nickname:
+        type: string
+        description: 별명
+      admin:
+        type: boolean
+        description: 관리자 여부
+      status:
+        type: boolean
+        description: 활동 가능 여부
+  GeneralError: 
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+responses:
+  NotFound:
+    description: URL not found.
+  IllegalInput:
+    description: Illegal input for operation.
+  GeneralError:
+    description: General Error
+    content:
+      application/json:
+        schema:
+          $ref: '#/schemas/GeneralError'
