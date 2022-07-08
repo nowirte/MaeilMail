@@ -20,6 +20,11 @@ const Nav = styled.nav`
       background-color: #ff8303;
       color: white;
       border: none;
+      border-radius: 13px;
+      padding: 14px 12px;
+      margin-left: 8px;
+      width: 85px;
+      height: 39px;
     }
   }
 `;
