@@ -1,15 +1,12 @@
 const maria = require("mysql");
 
 const db = maria.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PSWORD,
-    database: process.env.DB_DATABASE,
-    date: process.env.DB_DATESTRINGS,
+    host: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DB_NAME,
+    port: process.env.RDS_PORT, 
 });
 
-db.connect();
 
-module.exports = db;
-
-
+export { db };
