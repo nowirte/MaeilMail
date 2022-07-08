@@ -10,8 +10,7 @@ const Profile = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  grid-row: 2/3;
-
+  margin: 0 50px;
   > img {
     width: 100px;
     height: 100px;

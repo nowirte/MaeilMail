@@ -10,7 +10,7 @@ import testImg from './icon/testImg.png';
 
 const OngoingStudy = styled.div`
   border: solid 1px gray;
-  width: 70vw;
+  width: 60vw;
   height: 180px;
   padding: 20px 10px 10px;
 

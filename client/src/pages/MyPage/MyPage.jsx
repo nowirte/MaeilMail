@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Nav from '../../components/Nav';
 import ProfileInfo from './Profile';
 import OngoingStudyInfo from './OngoingStudyInfo';
 import ScheduledStudyInfo from './ScheduledStudyInfo';
@@ -10,14 +11,14 @@ const MyPage = () => {
     width: 100vw;
     height: 100vh;
 
-    display: grid;
-    grid-template-columns: 400px 2fr;
-    grid-template-rows: 100px 1fr 1fr;
+    margin-top: 50px;
+
+    display: flex;
+    justify-content: center;
   `;
 
   const Study = styled.div`
-    grid-row: 2 / 4;
-
+    margin: 0 50px;
     > div {
       margin-bottom: 20px;
     }
@@ -30,18 +31,20 @@ const MyPage = () => {
   `;
 
   return (
-    <Container>
-      <div>nav 임시 | 높이 100px</div>
-      <ProfileInfo />
-      <Study>
-        <StateTitle>진행중인 스터디</StateTitle>
-        <OngoingStudyInfo />
-        <StateTitle>진행 예정 스터디</StateTitle>
-        <ScheduledStudyInfo />
-        <StateTitle>종료된 스터디</StateTitle>
-        <FinishedStudyInfo />
-      </Study>
-    </Container>
+    <div>
+      <Nav>nav 임시 | 높이 100px</Nav>
+      <Container>
+        <ProfileInfo />
+        <Study>
+          <StateTitle>진행중인 스터디</StateTitle>
+          <OngoingStudyInfo />
+          <StateTitle>진행 예정 스터디</StateTitle>
+          <ScheduledStudyInfo />
+          <StateTitle>종료된 스터디</StateTitle>
+          <FinishedStudyInfo />
+        </Study>
+      </Container>
+    </div>
   );
 };
 

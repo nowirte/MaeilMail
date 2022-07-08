@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const OngoingStudy = styled.div`
   border: solid 1px gray;
-  width: 70vw;
+  width: 60vw;
   padding: 20px 10px;
 `;
 
