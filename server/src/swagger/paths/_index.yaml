@@ -6,7 +6,7 @@
     description: 회원가입
     operationId: addUser
     content: 
-       application/json
+      application/json
     required: true
     requestBody:
       description: new user to add to the db
@@ -27,6 +27,17 @@
           application/json:
             schema: 
               $ref: '../components/_index.yaml#/schemas/User'
+      '406':
+        description: 중복이 아닌 경우 true, 중복인 경우 false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: boolean
+                nickname:
+                  type: boolean
       default: 
         description: 에러
         content:
@@ -63,5 +74,46 @@
         description: 로그인 성공
         content:
           application/json:
+            type: http
+            schema: bearer
+            bearerFormat: JWT
+      default: 
+        description: 에러
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/GeneralError'
+/
+  get:
+    tags:
+      - users
+    summary: Find user by token
+    description: 마이페이지
+    operationId: getUserInfo
+    content: application/json
+    parameters:
+      name: Authorization
+      in: header
+      description: usertoken to be passed as a header
+      required: true
+    responses:
+      '200':
+        description: 토큰 확인 후 유저 정보 전송
+        content:
+          application/json:
+            schema:
+              $ref: '../components/_index.yaml#/schemas/User'
+      '403':
+        description: 토큰 오류.
+        content:
+          application/json:
             schema:
               type: string
+              example: "정상적인 토큰이 아닙니다."
+  update:
+    tags:
+      - users
+    summary: Update user info by user id
+    description: 정보 업데이트
+
+/

@@ -19,12 +19,15 @@ schemas:
       nickname:
         type: string
         description: 별명
-      admin:
-        type: boolean
-        description: 관리자 여부
       status:
-        type: boolean
-        description: 활동 가능 여부
+        type: string
+        description: 일반 유저, 관리자, 정지 유저
+      introduce:
+        type: string
+        description: 한 줄 소개
+      profileImage:
+        type: string
+        description: 프로필 사진 url
   GeneralError: 
     type: object
     properties:
