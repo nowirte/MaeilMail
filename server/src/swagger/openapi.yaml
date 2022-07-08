@@ -1,0 +1,14 @@
+openapi: "3.0.0",
+info: 
+  version: "1.0.0"
+  title: "Study"
+  description: "메인 기능 api입니다."
+servers:
+  - url: http://localhost:3000/
+paths:
+  $ref: './src/paths.yaml'
+components:
+  $ref: './src/components.yaml'
+responses:
+  $ref: './src/responses.yaml'
+
