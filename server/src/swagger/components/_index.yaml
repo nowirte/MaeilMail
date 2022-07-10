@@ -6,9 +6,10 @@ schemas:
       - password
       - nickname
     properties:
-      id:
+      user_id:
         type: number
         description: 고유값
+        readOnly: true
       email:
         type: string
         format: email
@@ -23,40 +24,163 @@ schemas:
       status:
         type: string
         description: 일반 유저, 관리자, 정지 유저
-      introduce:
+        readOnly: true
+      profile_text:
         type: string
         description: 한 줄 소개
-      profileImage:
+      profile_image:
         type: string
-        description: 프로필 사진 url
-      createdAt:
+        description: 프로필 사진(이모지) url
+      created_at:
         type: string
         format: date-time
         description: 생성 일자
-      updatedAt:
+        readOnly: true
+      updated_at:
         type: string
         format: date-time
         description: 업데이트 일자
-      studyList:
-        type: array
-        items: string
-        description: 참여 중인 스터디 목록
-  GeneralError: 
+        readOnly: true
+      favor:
+        $ref: '#/schemas/Favor'
+
+  Favor:
     type: object
     properties:
-      code:
-        type: integer
-        format: int32
-      message:
+      favor1:
         type: string
-responses:
-  NotFound:
-    description: URL not found.
-  IllegalInput:
-    description: Illegal input for operation.
-  GeneralError:
-    description: General Error
-    content:
-      application/json:
-        schema:
-          $ref: '#/schemas/GeneralError'
+      favor2:
+        type: string
+      favor3:
+        type: string
+
+  Letter:
+    type: object
+    properties:
+      user_id:
+        type: number
+        description: 편지 고유값
+        readOnly: true
+      send_id:
+        type: number
+        description: 보낸이 고유 id
+      receive_id:
+        type: number
+        description: 받는이 고유 id
+      status:
+        type: string
+        description: 편지 상태(발송 중, 수신 완료 등)
+        readOnly: true
+      send_date:
+        type: string
+        format: date-time
+        description: 보낸 일자
+        readOnly: true
+      delivery_time:
+        type: number
+        description: 배송 시간
+        readOnly: true
+      receive_date:
+        type: string
+        format: date-time
+        description: 수신 일자
+        readOnly: true
+      send_location:
+        type: string
+        description: 보낸이 주소
+        readOnly: true
+      receive_location:
+        type: string
+        description: 보낸이 주소
+        readOnly: true
+      title:
+        type: string
+        description: 제목
+      content:
+        type: string
+        description: 내용
+
+  Friend:
+    type: object
+    properties:
+      friend_id:
+        type: number
+        description: 친구 관계 고유값
+        readOnly: true
+      send_id:
+        type: number
+        description: 친구 신청 보낸이 고유 id
+      receive_id:
+        type: number
+        description: 친구 신청 받는이 고유 id
+      status:
+        type: string
+        description: 친구 관계 상태
+        readOnly: true
+      created_at:
+        type: string
+        format: date-time
+        description: 생성 일자
+        readOnly: true
+      updated_at:
+        type: string
+        format: date-time
+        description: 업데이트 일자
+        readOnly: true
+
+  Report:
+    type: object
+    properties:
+      report_id:
+        type: number
+        description: 신고 고유값
+        readOnly: true
+      send_id:
+        type: number
+        description: 신고자 고유 id
+      receive_id:
+        type: number
+        description: 피신고자 고유 id
+      status:
+        type: boolean
+        description: 신고 처리 상태
+        readOnly: true
+      created_at:
+        type: string
+        format: date-time
+        description: 생성 일자
+        readOnly: true
+      updated_at:
+        type: string
+        format: date-time
+        description: 업데이트 일자
+        readOnly: true
+  
+  Block:
+    type: object
+    properties:
+      block_id:
+        type: number
+        description: 차단 고유값
+        readOnly: true
+      send_id:
+        type: number
+        description: 차단자 고유 id
+      receive_id:
+        type: number
+        description: 피차단자 고유 id
+      status:
+        type: string
+        description: 차단 상태
+        readOnly: true
+      created_at:
+        type: string
+        format: date-time
+        description: 생성 일자
+        readOnly: true
+      updated_at:
+        type: string
+        format: date-time
+        description: 업데이트 일자
+        readOnly: true
+  
