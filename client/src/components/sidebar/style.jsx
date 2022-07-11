@@ -5,7 +5,6 @@ const Container = styled.div`
   min-width: 960px;
   max-width: 1920px;
   height: 100vh;
-  padding: 1rem;
   gap: 1rem;
   box-sizing: border-box;
 `;
@@ -16,21 +15,17 @@ const SideWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  background-color: #40577a;
 `;
+
 const Navbar = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   height: 100%;
 `;
-const Logo = styled.h1`
-  height: 50px;
-`;
-const MyProfile = styled.div`
-  height: 100px;
-  background: #999;
-  border-radius: 0.25rem;
-`;
+
 const Friends = styled.div`
   width: 100%;
   height: 100%;
@@ -42,4 +37,4 @@ const Footer = styled.footer`
   background: #999;
 `;
 
-export { Container, SideWrapper, Navbar, Logo, MyProfile, Friends, Footer };
+export { Container, SideWrapper, Navbar, Friends, Footer };
