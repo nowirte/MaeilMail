@@ -4,6 +4,7 @@ import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import Friend from './pages/friend';
 import SignUp from './pages/signup';
+import MyPage from './pages/MyPage';
 
 const App = () => {
   return (
@@ -12,9 +13,9 @@ const App = () => {
         {/* 사이드바가 보여지는 영역 */}
         <Route element={<SideBar />}>
           <Route path="/" element={<Home />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/friend" element={<Friend />} />
         </Route>
-
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
