@@ -5,7 +5,7 @@ const Friends = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0.25rem;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const FriendsList = styled.div`
