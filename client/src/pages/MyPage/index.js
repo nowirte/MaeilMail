@@ -1,5 +1,6 @@
 import React from 'react';
 import UserArea from './User';
+import SettingArea from './Setting';
 import { Wrapper, ProfileImg, Title, MyProfile } from './style';
 
 const MyPage = () => {
@@ -13,6 +14,7 @@ const MyPage = () => {
           </div>
         </ProfileImg>
         <UserArea />
+        <SettingArea />
       </MyProfile>
     </Wrapper>
   );

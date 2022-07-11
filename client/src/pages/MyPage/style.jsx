@@ -11,8 +11,18 @@ const Wrapper = styled.div`
 const MyProfile = styled.div`
   display: flex;
   margin: 100px auto;
+  position: relative;
 
+  height: 420px;
   align-items: flex-start;
+
+  > .setting {
+    display: flex;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 `;
 
 const Title = styled.p`
