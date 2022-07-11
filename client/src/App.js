@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
-import Home from './pages/home';
+import Home from './pages/Home';
 import Friend from './pages/friend';
 import SignUp from './pages/signup';
 
