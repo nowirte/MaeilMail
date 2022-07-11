@@ -1,20 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/login';
-import MyPage from './pages/MyPage/MyPage';
-import AdminManageAccount from './pages/AdminManageAccount';
-import Signup from './pages/Signup';
+import SideBar from './components/sidebar';
+import Home from './pages/home';
+import Friend from './pages/friend';
+import SignUp from './pages/signup';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/AdminManageAccount" element={<AdminManageAccount />} />
-        <Route path="/signup" element={<Signup />} />
+        {/* 사이드바가 보여지는 영역 */}
+        <Route element={<SideBar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/friend" element={<Friend />} />
+        </Route>
+
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );

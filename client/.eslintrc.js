@@ -21,4 +21,5 @@ module.exports = {
     ],
     'arrow-body-style': ['error', 'always'],
   },
+  ignorePatterns: ['**/*.html'],
 };
