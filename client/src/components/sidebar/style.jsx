@@ -26,15 +26,8 @@ const Navbar = styled.nav`
   height: 100%;
 `;
 
-const Friends = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #666;
-  border-radius: 0.25rem;
-  overflow: scroll;
-`;
 const Footer = styled.footer`
   background: #999;
 `;
 
-export { Container, SideWrapper, Navbar, Friends, Footer };
+export { Container, SideWrapper, Navbar, Footer };

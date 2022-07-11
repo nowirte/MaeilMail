@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router';
 import NavTopArea from './NavTop';
-
-import { Container, SideWrapper, Navbar, Friends, Footer } from './style';
+import NavFriendsArea from './NavFriends';
+import { Container, SideWrapper, Navbar, Footer } from './style';
 
 const SideBar = () => {
   return (
@@ -10,7 +10,7 @@ const SideBar = () => {
       <SideWrapper>
         <Navbar>
           <NavTopArea />
-          <Friends>친구 리스트</Friends>
+          <NavFriendsArea />
         </Navbar>
         <Footer>푸터(모달)</Footer>
       </SideWrapper>
