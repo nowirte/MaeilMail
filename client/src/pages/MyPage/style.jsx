@@ -11,6 +11,8 @@ const Wrapper = styled.div`
 const MyProfile = styled.div`
   display: flex;
   margin: 100px auto;
+
+  align-items: flex-start;
 `;
 
 const Title = styled.p`
@@ -45,10 +47,11 @@ const ProfileImg = styled.div`
     border-radius: 100%;
     background-color: white;
 
-    box-shadow: 1px 1px 3px grey;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2),
+      inset -2.5px -3px 0px rgba(0, 0, 0, 0.1);
 
     & span {
-      font-size: 8rem;
+      font-size: 108px;
       padding-bottom: 20px;
     }
   }

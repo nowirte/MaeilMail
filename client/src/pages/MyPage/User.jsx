@@ -2,20 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import FemaleIcon from '@mui/icons-material/Female';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AdditionalUserInfoArea from './AdditionalUserInfo';
 
 const User = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   margin-left: 80px;
 `;
 
 const Account = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 
   & .userName {
     font-size: 1.75rem;
     font-weight: bold;
+
+    margin-right: 10px;
   }
 
   & .userEmail {
@@ -50,9 +54,8 @@ const Introduction = styled.div`
 
   width: fit-content;
   padding: 11px 20px;
-  margin-bottom: 15px;
   > span {
-    font-size: 1.45rem;
+    font-size: 1.25rem;
   }
 `;
 
@@ -80,6 +83,7 @@ const UserArea = () => {
       <Introduction>
         <span>Hi! I am Korean.</span>
       </Introduction>
+      <AdditionalUserInfoArea />
     </User>
   );
 };
