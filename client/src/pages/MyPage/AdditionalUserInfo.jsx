@@ -18,6 +18,8 @@ const Info = styled.div`
   & .title {
     font-size: 1.25rem;
     font-weight: bold;
+    text-align: end;
+
     margin-right: 20px;
 
     width: 60px;
@@ -34,7 +36,6 @@ const Info = styled.div`
     border-radius: 5px;
 
     line-height: 12px;
-    text-align: end;
   }
 `;
 
