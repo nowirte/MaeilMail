@@ -1,6 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from './img/logo.png';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const NavTop = styled.div`
   height: 140px;
@@ -54,14 +59,18 @@ const MyProfile = styled.div`
 const NavTopArea = () => {
   return (
     <NavTop>
-      <Logo src={logo} alt="logoImg" />
+      <StyledLink to="/">
+        <Logo src={logo} alt="logoImg" />
+      </StyledLink>
       <Line />
-      <MyProfile>
-        <div className="profileImgArea">
-          <span className="profileEmoji">🤓</span>
-        </div>
-        <span>사용자 이름</span>
-      </MyProfile>
+      <StyledLink to="/mypage">
+        <MyProfile>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>사용자 이름</span>
+        </MyProfile>
+      </StyledLink>
       <Line />
     </NavTop>
   );

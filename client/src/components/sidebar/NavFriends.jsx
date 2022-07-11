@@ -1,5 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const Friends = styled.div`
   width: 100%;
@@ -43,18 +48,14 @@ const FriendsList = styled.div`
 const NavFriendsArea = () => {
   return (
     <Friends>
-      <FriendsList>
-        <div className="profileImgArea">
-          <span className="profileEmoji">🥰</span>
-        </div>
-        <span>지재영</span>
-      </FriendsList>
-      <FriendsList>
-        <div className="profileImgArea">
-          <span className="profileEmoji">🤓</span>
-        </div>
-        <span>홍길동</span>
-      </FriendsList>
+      <StyledLink to="/friend/:id">
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+      </StyledLink>
     </Friends>
   );
 };
