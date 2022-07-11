@@ -3,8 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv'
 import passport from 'passport';
 import passportConfig from './passport';
-
-passportConfig();
+import { loginRouter } from './routers'
 
 dotenv.config()
 const app = express();
@@ -13,11 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => res.send("express!"));
-
-app.use("user", userRouter);
-app.use("study", studyRouter);
-
+passportConfig();
 app.use(passport.initialize());
+app.use('/login', loginRouter)
 
 export { app };
