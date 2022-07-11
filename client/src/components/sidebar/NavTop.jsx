@@ -27,6 +27,11 @@ const MyProfile = styled.div`
   font-size: 1.25rem;
   padding: 5px 0;
 
+  > span {
+    font-weight: bold;
+    color: white;
+  }
+
   & .profileImgArea {
     display: flex;
     justify-content: center;
@@ -41,7 +46,7 @@ const MyProfile = styled.div`
 
     & span {
       font-size: 2rem;
-      padding-bottom: 3px;
+      padding-bottom: 2px;
     }
   }
 `;

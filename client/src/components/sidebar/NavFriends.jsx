@@ -13,8 +13,13 @@ const FriendsList = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 1.25rem;
-  padding-bottom: 25px;
+  font-size: 1.2rem;
+  padding-bottom: 20px;
+
+  > span {
+    font-weight: bold;
+    color: white;
+  }
 
   & .profileImgArea {
     display: flex;
@@ -23,14 +28,14 @@ const FriendsList = styled.div`
 
     margin-right: 10px;
 
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 100%;
     background-color: white;
 
     & span {
-      font-size: 2rem;
-      padding-bottom: 3px;
+      font-size: 1.75rem;
+      padding-bottom: 2px;
     }
   }
 `;
@@ -40,7 +45,7 @@ const NavFriendsArea = () => {
     <Friends>
       <FriendsList>
         <div className="profileImgArea">
-          <span className="profileEmoji">🤓</span>
+          <span className="profileEmoji">🥰</span>
         </div>
         <span>지재영</span>
       </FriendsList>
@@ -48,7 +53,7 @@ const NavFriendsArea = () => {
         <div className="profileImgArea">
           <span className="profileEmoji">🤓</span>
         </div>
-        <span>지재영</span>
+        <span>홍길동</span>
       </FriendsList>
     </Friends>
   );
