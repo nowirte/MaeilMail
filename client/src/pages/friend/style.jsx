@@ -6,7 +6,7 @@ const User = styled.div`
   position: fixed;
   z-index: 9;
   padding: 2rem 1rem;
-  width: calc(100% - 380px);
+  width: calc(100% - 390px);
   align-items: center;
   background: #fff;
 `;
