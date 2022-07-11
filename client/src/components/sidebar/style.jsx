@@ -1,6 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
-import { Outlet } from 'react-router';
+
+const Container = styled.div`
+  display: flex;
+  min-width: 960px;
+  max-width: 1920px;
+  height: 100vh;
+  padding: 1rem;
+  gap: 1rem;
+  box-sizing: border-box;
+`;
 
 const SideWrapper = styled.div`
   width: 400px;
@@ -34,20 +42,4 @@ const Footer = styled.footer`
   background: #999;
 `;
 
-const SideBar = () => {
-  return (
-    <>
-      <SideWrapper>
-        <Navbar>
-          <Logo>로고이미지, 로고</Logo>
-          <MyProfile>내 프로필</MyProfile>
-          <Friends>친구 리스트</Friends>
-        </Navbar>
-        <Footer>푸터(모달)</Footer>
-      </SideWrapper>
-      <Outlet />
-    </>
-  );
-};
-
-export default SideBar;
+export { Container, SideWrapper, Navbar, Logo, MyProfile, Friends, Footer };

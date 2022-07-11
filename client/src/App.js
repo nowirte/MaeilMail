@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Container from './components/container';
 import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import Friend from './pages/friend';
@@ -8,19 +7,17 @@ import SignUp from './pages/signup';
 
 const App = () => {
   return (
-    <Container>
-      <Router>
-        <Routes>
-          {/* 사이드바가 보여지는 영역 */}
-          <Route element={<SideBar />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/friend" element={<Friend />} />
-          </Route>
+    <Router>
+      <Routes>
+        {/* 사이드바가 보여지는 영역 */}
+        <Route element={<SideBar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/friend" element={<Friend />} />
+        </Route>
 
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </Router>
-    </Container>
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
 };
 
