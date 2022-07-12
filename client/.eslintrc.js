@@ -11,6 +11,8 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'import/no-unresolved': 'off',
+    'import/prefer-default-export':'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/function-component-definition': [
       2,
