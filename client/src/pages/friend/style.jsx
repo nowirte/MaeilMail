@@ -54,11 +54,11 @@ const Badge = styled.span`
 const LetterWrapper = styled.ul`
   overflow: hidden;
   position: relative;
-  margin: 200px 1rem 0 1rem;
+  margin: 200px 1rem 2rem 1rem;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const Letter = styled.li`
