@@ -92,9 +92,16 @@ const ModalStyle = styled.div`
   background-color: white;
   border: 2px solid #000;
   /* boxShadow: 24, */
-  padding: 4px;
+  padding: 20px;
   & * {
+    margin-top: 10px;
     margin-bottom: 13px;
+  }
+
+  & input,
+  select {
+    display: block;
+    padding: 5px 5px;
   }
 `;
 
