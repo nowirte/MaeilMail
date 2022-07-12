@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv'
 import passport from 'passport';
 import passportConfig from './passport';
-import { loginRouter } from './routers/login-router'
+import { loginRouter, signupRouter, userRouter } from './routers/login-router'
 passportConfig();
 dotenv.config()
 
@@ -16,5 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 app.use('/login', loginRouter)
+app.use('/signup', signupRouter)
+app.use('/user', userRouter)
 
+
+app.use(errorHandler)
 export { app };

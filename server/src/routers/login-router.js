@@ -1,32 +1,47 @@
 import { Router } from 'express';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
-const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+import { setUserToken } from '../utils/setUserToken';
 
 const loginRouter = Router();
 
-loginRouter.post('/', passport.authenticate('local'))
-
-
-// 구글 로그인
-loginRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-loginRouter.get('/google/callback', passport.authenticate('google', {
+loginRouter.post(
+  '/',
+  passport.authenticate('local', {
     failureRedirect: '/login',
     session: false,
   }),
   (req, res, next) => {
     try {
       // 토큰 제공
-      const user = req.user
-      const token = jwt.sign({ userId: user.user_id }, secretKey)
-      res.cookie('token', token)
-      
+      setUserToken(req.user, res);
       res.redirect('/');
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
-  },
+  }
+);
+
+// 구글 로그인
+loginRouter.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+loginRouter.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/login',
+    session: false,
+  }),
+  (req, res, next) => {
+    try {
+      // 토큰 제공
+      setUserToken(req.user, res);
+      res.redirect('/');
+    } catch (err) {
+      next(err);
+    }
+  }
 );
 
 export { loginRouter };
