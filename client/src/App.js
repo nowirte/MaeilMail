@@ -4,6 +4,8 @@ import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import Friend from './pages/friend';
 import SignUp from './pages/signup';
+import Login from './pages/login';
+import LoginBackground from './components/loginBackground';
 
 const App = () => {
   return (
@@ -14,8 +16,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/friend" element={<Friend />} />
         </Route>
-
-        <Route path="/signup" element={<SignUp />} />
+        <Route element={<LoginBackground />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Route>
       </Routes>
     </Router>
   );
