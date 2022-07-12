@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
 
 function setUserToken(user, res) {

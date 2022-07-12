@@ -10,10 +10,10 @@ loginRouter.post(
     failureRedirect: '/login',
     session: false,
   }),
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       // 토큰 제공
-      setUserToken(req.user, res);
+      await setUserToken(req.user, res);
       res.redirect('/');
     } catch (err) {
       next(err);
@@ -33,10 +33,10 @@ loginRouter.get(
     failureRedirect: '/login',
     session: false,
   }),
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       // 토큰 제공
-      setUserToken(req.user, res);
+      await setUserToken(req.user, res);
       res.redirect('/');
     } catch (err) {
       next(err);

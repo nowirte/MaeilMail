@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import passport from 'passport';
 import passportConfig from './passport';
 import { loginRouter, signupRouter, userRouter } from './routers/login-router'
+import { errorHandler } from './middleware'
+
 passportConfig();
 dotenv.config()
 
@@ -18,7 +20,6 @@ app.use(passport.initialize());
 app.use('/login', loginRouter)
 app.use('/signup', signupRouter)
 app.use('/user', userRouter)
-
 
 app.use(errorHandler)
 export { app };

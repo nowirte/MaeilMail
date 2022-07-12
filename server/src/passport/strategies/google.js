@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-google-oauth20';
+import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { User } from '../../db/models';
-import passport from 'passport';
 
 // 구글 OAuth 설정
 const config = {
@@ -43,6 +43,6 @@ const verify = async (a, b, profile, done) => {
   }
 };
 
-passport.use(new Strategy(config, verify))
+passport.use(new Strategy(config, verify));
 // const google = new Strategy.Strategy(config, verify);
 // export { google };

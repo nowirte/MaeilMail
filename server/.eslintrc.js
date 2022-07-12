@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     'arrow-body-style': ['error', 'always'],
+    'import/no-unresolved': 'off',
     'import/prefer-default-export':'off',
   },
 };
