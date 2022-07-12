@@ -93,6 +93,9 @@ const ModalStyle = styled.div`
   border: 2px solid #000;
   /* boxShadow: 24, */
   padding: 4px;
+  & * {
+    margin-bottom: 13px;
+  }
 `;
 
 export { Wrapper, ProfileImg, Title, MyProfile, SettingBtn, ModalStyle };
