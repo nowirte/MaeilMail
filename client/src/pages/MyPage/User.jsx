@@ -60,28 +60,36 @@ const Introduction = styled.div`
 `;
 
 const UserArea = () => {
+  const { email, nickname, gender, location, profileText } = {
+    email: 'user@example.com',
+    nickname: 'string',
+    gender: 'female',
+    location: 'Korea',
+    profileText: "hi! i'm korean",
+    profile_image: 'string',
+  };
   return (
     <User>
       <Account>
-        <span className="userName">지재영</span>
-        <span className="userEmail">abc@naver.com</span>
+        <span className="userName">{nickname}</span>
+        <span className="userEmail">{email}</span>
       </Account>
       <Info>
         <div className="gender">
           <p>
             <FemaleIcon />
-            여성
+            {gender}
           </p>
         </div>
         <div className="location">
           <p>
             <LocationOnIcon />
-            KR
+            {location}
           </p>
         </div>
       </Info>
       <Introduction>
-        <span>Hi! I am Korean.</span>
+        <span>{profileText}</span>
       </Introduction>
       <AdditionalUserInfoArea />
     </User>
