@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import FemaleIcon from '@mui/icons-material/Female';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';
@@ -60,36 +61,31 @@ const Introduction = styled.div`
 `;
 
 const UserArea = () => {
-  const { email, nickname, gender, location, profileText } = {
-    email: 'user@example.com',
-    nickname: 'string',
-    gender: 'female',
-    location: 'Korea',
-    profileText: "hi! i'm korean",
-    profile_image: 'string',
-  };
+  const userData = useSelector(state => {
+    return state;
+  });
   return (
     <User>
       <Account>
-        <span className="userName">{nickname}</span>
-        <span className="userEmail">{email}</span>
+        <span className="userName">{userData.nickname}</span>
+        <span className="userEmail">{userData.email}</span>
       </Account>
       <Info>
         <div className="gender">
           <p>
             <FemaleIcon />
-            {gender}
+            {userData.gender === 'female' ? '여자' : '남자'}
           </p>
         </div>
         <div className="location">
           <p>
             <LocationOnIcon />
-            {location}
+            {userData.location}
           </p>
         </div>
       </Info>
       <Introduction>
-        <span>{profileText}</span>
+        <span>{userData.profileText}</span>
       </Introduction>
       <AdditionalUserInfoArea />
     </User>

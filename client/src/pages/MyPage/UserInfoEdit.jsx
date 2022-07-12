@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -28,6 +29,8 @@ const UserInfoEditArea = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <div className="setting">
@@ -116,6 +119,17 @@ const UserInfoEditArea = () => {
                   onClick={handleClose}
                 >
                   닫기
+                </Button>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="neutral"
+                  onClick={() => {
+                    dispatch({ type: 'EDITNICKNAME' });
+                    handleClose();
+                  }}
+                >
+                  닉네임 변경
                 </Button>
               </ThemeProvider>
             </form>
