@@ -36,7 +36,9 @@ const Friend = () => {
             <Badge>예술</Badge>
           </BadgeWrapper>
         </UserInfo>
-        <UserEmoji>emoji</UserEmoji>
+        <UserEmoji>
+          <span>🐮</span>
+        </UserEmoji>
       </User>
 
       <LetterWrapper>

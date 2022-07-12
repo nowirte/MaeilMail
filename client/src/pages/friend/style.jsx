@@ -18,9 +18,22 @@ const UserInfo = styled.div`
 `;
 
 const UserEmoji = styled.div`
-  background: gray;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 255, 0.2);
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 255, 0.2);
   width: 100px;
   height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, 0.2);
+  }
+
+  & > span {
+    font-size: 4rem;
+  }
 `;
 
 const UserDetail = styled.div`
