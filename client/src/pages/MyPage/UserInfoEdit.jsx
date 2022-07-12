@@ -3,7 +3,17 @@ import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
+
+const theme = createTheme({
+  palette: {
+    neutral: {
+      main: '#59B1FC',
+      contrastText: '#fff',
+    },
+  },
+});
 
 const Title = styled.h2`
   font-size: 1.25rem;
@@ -87,17 +97,27 @@ const UserInfoEditArea = () => {
                   placeholder="새로운 비밀번호"
                 />
               </label>
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={false}
-                sx={{ mr: 1 }}
-              >
-                변경하기
-              </Button>
-              <Button type="button" variant="outlined" onClick={handleClose}>
-                닫기
-              </Button>
+              <ThemeProvider theme={theme}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="neutral"
+                  disabled={false}
+                  sx={{ mr: 1 }}
+                >
+                  변경하기
+                </Button>
+              </ThemeProvider>
+              <ThemeProvider theme={theme}>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="neutral"
+                  onClick={handleClose}
+                >
+                  닫기
+                </Button>
+              </ThemeProvider>
             </form>
           </div>
           {/* <Button onClick={handleClose}>Close Child Modal</Button> */}
