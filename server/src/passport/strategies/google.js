@@ -1,9 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import { Strategy } from 'passport-google-oauth20';
-import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { User } from '../../db/models';
 
-// 구글 OAuth 설정
 const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
   clientSecret: process.env.GOOGLE_OAUTH_SECRET,
@@ -31,6 +30,7 @@ async function findOrCreateUser({ email, name }) {
 
 const verify = async (a, b, profile, done) => {
   try {
+    console.log(profile)
     const { email, name } = profile._json;
     const user = await findOrCreateUser({ email, name });
     if (user) {
@@ -43,6 +43,5 @@ const verify = async (a, b, profile, done) => {
   }
 };
 
-passport.use(new Strategy(config, verify));
-// const google = new Strategy.Strategy(config, verify);
-// export { google };
+const google = new Strategy.Strategy(config, verify);
+export { google };

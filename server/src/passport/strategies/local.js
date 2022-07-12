@@ -1,5 +1,4 @@
 import { Strategy } from 'passport-local';
-import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { User } from '../../db/models';
 
@@ -25,6 +24,5 @@ const verify = async (email, password, done) => {
   }
 };
 
-passport.use(new Strategy(config, verify))
-// const local = new Strategy(config, verify);
-// export { local };
+const local = new Strategy(config, verify);
+export { local };

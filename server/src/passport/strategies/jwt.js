@@ -1,4 +1,3 @@
-import passport from 'passport'
 import { ExtractJwt as Extract, Strategy } from 'passport-jwt';
 import { User } from '../../db/models';
 
@@ -21,6 +20,6 @@ const verify = async (jwtPayload, done) => {
   }
 };
 
-passport.use(new Strategy(config, verify))
-// const jwt = new Strategy(config, verify);
-// export { jwt };
+
+const jwt = new Strategy(config, verify);
+export { jwt };
