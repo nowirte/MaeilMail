@@ -67,4 +67,32 @@ const ProfileImg = styled.div`
   }
 `;
 
-export { Wrapper, ProfileImg, Title, MyProfile };
+const SettingBtn = styled.button`
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+
+  margin-left: 20px;
+
+  border: none;
+  background-color: white;
+
+  cursor: pointer;
+  > p {
+    margin-left: 5px;
+  }
+`;
+
+const ModalStyle = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  border: 2px solid #000;
+  /* boxShadow: 24, */
+  padding: 4px;
+`;
+
+export { Wrapper, ProfileImg, Title, MyProfile, SettingBtn, ModalStyle };
