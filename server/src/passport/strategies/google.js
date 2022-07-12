@@ -1,6 +1,7 @@
 import { Strategy } from 'passport-google-oauth20';
 import bcrypt from 'bcrypt';
 import { User } from '../../db/models';
+import passport from 'passport';
 
 // 구글 OAuth 설정
 const config = {
@@ -33,7 +34,7 @@ const verify = async (a, b, profile, done) => {
     const { email, name } = profile._json;
     const user = await findOrCreateUser({ email, name });
     if (user) {
-      done(null, { userId: user.user_id });
+      done(null, { userId: user.user_id, status: user.status });
       return;
     }
   } catch (err) {
@@ -42,6 +43,6 @@ const verify = async (a, b, profile, done) => {
   }
 };
 
-const google = new Strategy.Strategy(config, verify);
-
-export { google };
+passport.use(new Strategy(config, verify))
+// const google = new Strategy.Strategy(config, verify);
+// export { google };

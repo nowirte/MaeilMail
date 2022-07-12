@@ -2,7 +2,6 @@ import { Router } from 'express';
 import passport from 'passport';
 import { userService } from '../services/user-service';
 
-
 const signupRouter = Router();
 
 signupRouter.post('/', (req, res, next) => {
