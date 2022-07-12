@@ -1,6 +1,6 @@
-import mysql from 'mysql'
+import mysql2 from 'mysql2';
 
-const db = mysql.createConnection({
+const db = mysql2.createConnection({
     host: process.env.RDS_HOSTNAME,
     user: process.env.RDS_USERNAME,
     password: process.env.RDS_PASSWORD,
