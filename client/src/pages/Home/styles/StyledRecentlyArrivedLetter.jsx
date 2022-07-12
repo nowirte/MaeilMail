@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  margin-top: 90px;
+  margin-left: 10px;
+`;
+
 export const RecentlyContainer = styled.div`
-  margin: 60px 0;
   width: 360px;
   height: 480px;
   border: 1px solid black;
@@ -13,7 +17,6 @@ export const RecentlyContainer = styled.div`
 export const RecentlyContentContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 25px;
 `;
 export const LetterContent = styled.div`
   width: 300px;

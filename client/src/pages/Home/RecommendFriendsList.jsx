@@ -13,32 +13,7 @@ import {
 const RecommendFriendsList = () => {
   return (
     <RecommendFriendsListContainer>
-      <Swiper
-        navigation
-        spaceBetween={180}
-        slidesPerView={5}
-        breakpoints={{
-          640: {
-            width: 640,
-            slidesPerView: 5,
-          },
-          // when window width is >= 768px
-          768: {
-            width: 768,
-            slidesPerView: 6,
-          },
-          // when window width is >= 991px
-          991: {
-            width: 991,
-            slidesPerView: 7,
-          },
-          // when window width is >= 1024px
-          1024: {
-            width: 1024,
-            slidesPerView: 7,
-          },
-        }}
-      >
+      <Swiper navigation spaceBetween={180} slidesPerView={6}>
         <SwiperSlide>
           <RecommendationFriendBox>
             <RecommendFriend>
