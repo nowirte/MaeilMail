@@ -1,6 +1,7 @@
 // import path from 'path';
 import Sequelize from 'sequelize';
 import {User} from './models/user'
+import {Favor} from './models/favor'
 // import dotenv from 'dotenv';
 // const env = process.env.NODE_ENV || 'development';
 // const config = require(
@@ -22,6 +23,13 @@ const sequelize = new Sequelize(process.env.RDS_DB_NAME, process.env.RDS_USERNAM
 
 db.sequelize = sequelize;
 
+db.User = User;
+db.Favor = Favor;
+
 User.init(sequelize);
+Favor.init(sequelize);
+
+User.associate(db);
+Favor.associate(db);
 
 export { db };
