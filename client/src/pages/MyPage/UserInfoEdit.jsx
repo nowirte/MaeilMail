@@ -1,6 +1,7 @@
+/* eslint-disable array-callback-return */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -19,9 +20,33 @@ const theme = createTheme({
 const Title = styled.h2`
   font-size: 1.25rem;
   font-weight: bold;
+  margin-bottom: 13px;
+`;
+
+const Form = styled.form`
+  & #favoriteTopic {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    align-items: center;
+    margin-bottom: 13px;
+
+    > span {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      > label {
+        margin-left: 0 0 0 5px;
+      }
+    }
+  }
 `;
 
 const UserInfoEditArea = () => {
+  const userData = useSelector(state => {
+    return state;
+  });
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -48,7 +73,7 @@ const UserInfoEditArea = () => {
           {/* 모달 스타일 박스 쉐도우 값 설정 필요 */}
           <Title id="userInfoEdit-title">회원정보 수정</Title>
           <div id="userInfoEdit-description">
-            <form className="userInfoEditForm">
+            <Form className="userInfoEditForm">
               <label htmlFor="nickName">
                 닉네임
                 <input id="nickName" type="text" placeholder="닉네임" />
@@ -57,26 +82,25 @@ const UserInfoEditArea = () => {
                 한 줄 소개
                 <input id="introduction" type="text" placeholder="한 줄 소개" />
               </label>
-              <label htmlFor="emoji">
-                프로필을 선택해주세요.
-                <select name="emoji" id="emoji">
-                  <option value="">선택해주세요.</option>
-                  <option value="angel">😇</option>
-                  <option value="lovely">😍</option>
-                  <option value="smile">😁</option>
-                </select>
-              </label>
-              <label htmlFor="topic">
-                관심사를 선택해주세요.
-                <select name="topic" id="topic">
-                  <option value="">선택해주세요.</option>
-                  <option value="movie">영화</option>
-                  <option value="language">언어</option>
-                  <option value="reading">독서</option>
-                </select>
-              </label>
+              <p>관심사를 선택해주세요.</p>
+
+              <p id="favoriteTopic">
+                {Object.entries(userData.favor).map(e => {
+                  return (
+                    <span key={e[0]}>
+                      <input
+                        type="checkbox"
+                        name={e[0]}
+                        value={e[0]}
+                        checked={e[1]}
+                      />
+                      <label htmlFor="favoriteTopic">{e[0]}</label>
+                    </span>
+                  );
+                })}
+              </p>
               <label htmlFor="language">
-                사용할 수 있는 언어를 선택해주세요.
+                <p>사용할 수 있는 언어를 선택해주세요.</p>
                 <select name="language" id="language">
                   <option value="">선택해주세요.</option>
                   <option value="korean">한국어</option>
@@ -85,7 +109,7 @@ const UserInfoEditArea = () => {
                 </select>
               </label>
               <label htmlFor="currentPassowrd">
-                현재 비밀번호를 입력해주세요.
+                <p>현재 비밀번호를 입력해주세요.</p>
                 <input
                   id="currentPassowrd"
                   type="password"
@@ -93,7 +117,7 @@ const UserInfoEditArea = () => {
                 />
               </label>
               <label htmlFor="changedPassowrd">
-                변경 할 비밀번호를 입력해주세요.
+                <p>변경 할 비밀번호를 입력해주세요.</p>
                 <input
                   id="changedPassowrd"
                   type="password"
@@ -107,6 +131,11 @@ const UserInfoEditArea = () => {
                   color="neutral"
                   disabled={false}
                   sx={{ mr: 1 }}
+                  onClick={e => {
+                    e.preventDefault();
+                    dispatch({ type: 'EDITNICKNAME' });
+                    handleClose();
+                  }}
                 >
                   변경하기
                 </Button>
@@ -120,19 +149,8 @@ const UserInfoEditArea = () => {
                 >
                   닫기
                 </Button>
-                <Button
-                  type="button"
-                  variant="outlined"
-                  color="neutral"
-                  onClick={() => {
-                    dispatch({ type: 'EDITNICKNAME' });
-                    handleClose();
-                  }}
-                >
-                  닉네임 변경
-                </Button>
               </ThemeProvider>
-            </form>
+            </Form>
           </div>
           {/* <Button onClick={handleClose}>Close Child Modal</Button> */}
         </ModalStyle>
