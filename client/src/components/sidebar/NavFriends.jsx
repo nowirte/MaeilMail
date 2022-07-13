@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -37,124 +38,26 @@ const FriendsList = styled.div`
     border-radius: 100%;
     background-color: white;
 
-    & span {
-      font-size: 1.75rem;
-      padding-bottom: 2px;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
   }
 `;
 
 const NavFriendsArea = () => {
+  const userData = useSelector(state => {
+    return state;
+  });
   return (
     <Friends>
       <StyledLink to="/friend/:id">
         <FriendsList>
           <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
+            <img src={userData.profileImage} alt="friendImg" />
           </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
-        </FriendsList>
-        <FriendsList>
-          <div className="profileImgArea">
-            <span className="profileEmoji">🤓</span>
-          </div>
-          <span>홍길동</span>
+          <span>{userData.nickname}</span>
         </FriendsList>
       </StyledLink>
     </Friends>
