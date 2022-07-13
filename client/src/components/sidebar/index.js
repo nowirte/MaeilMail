@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Outlet } from 'react-router';
 import NavTopArea from './NavTop';
 import NavFriendsArea from './NavFriends';
-import { Container, SideWrapper, Navbar, Footer } from './style';
+import { Container, SideWrapper, Navbar } from './style';
 
 import reducer from './reducer/sidebar';
 
@@ -19,7 +19,6 @@ const SideBar = () => {
             <NavTopArea />
             <NavFriendsArea />
           </Navbar>
-          <Footer>푸터(모달)</Footer>{' '}
         </SideWrapper>
         <Outlet />
       </Container>
