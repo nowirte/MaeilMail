@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 import React from 'react';
 import styled from 'styled-components';
@@ -82,7 +83,11 @@ const UserArea = () => {
         <div className="gender">
           <p>
             <FemaleIcon />
-            {userData.gender === 'female' ? '여자' : '남자'}
+            {userData.gender === 'female'
+              ? '여자'
+              : userData.gender === 'male'
+              ? '남자'
+              : '기타'}
           </p>
         </div>
         <div className="birthday">
