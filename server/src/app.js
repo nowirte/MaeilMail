@@ -1,25 +1,40 @@
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
-import {db} from './db/config/db.config.js';
+import {db} from '../models/index.js';
+import {User} from '../models/user.js';
+
 dotenv.config()
 const app = express();
+const sequelize = db.sequelize;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+sequelize.sync({force: false});
 app.get("/", (req, res) => res.send("express!"));
-app.get("/user/:id", async (req, res) => {
+
+app.get("/user", async (req, res) => {
     try {
-        const id = req.params.id;
-        const sql = `SELECT * FROM user WHERE user_id = ${id};`;
-        const [user] = await db.promise().query(sql);
-        console.log(user[0].nickname);
-        res.json(user);    
+      const data = await User.create({
+        nickname: "maruhod23111fa",
+        password: "1234567",
+        email: "abc@abcde111ffagfgd.com"
+    });
+      res.send(data); 
     } catch (error) {
         console.log(error);
     }
+});
+
+app.get("/user/find", async (req, res) => {
+  try {
+    const data = await User.findAll({});
+    res.send(data); 
+  } catch (error) {
+      console.log(error);
+  }
 });
 
 export { app };
