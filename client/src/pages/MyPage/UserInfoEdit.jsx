@@ -115,6 +115,7 @@ const UserInfoEditArea = () => {
                   id="birthday"
                   type="date"
                   name="birthday"
+                  value={user.birthday}
                   onChange={e => {
                     handleEditState(e);
                   }}

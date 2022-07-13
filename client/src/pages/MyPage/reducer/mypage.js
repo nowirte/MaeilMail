@@ -41,6 +41,7 @@ const reducer = (state = initailState, action) => {
       nickname: action.data.nickname,
       profileText: action.data.profileText,
       language: action.data.language,
+      birthday: action.data.birthday,
     };
   }
 
