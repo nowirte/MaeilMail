@@ -27,7 +27,7 @@ const initailState = {
   birthday: '1993-09-22',
   gender: 'female',
   location: 'Korea',
-  profile_image: 'string',
+  profileImage: '/img/뚱이.png',
 };
 
 const reducer = (state = initailState, action) => {

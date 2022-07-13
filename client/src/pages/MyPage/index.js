@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
@@ -7,9 +6,7 @@ import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
 import { Wrapper, ProfileImg, Title, MyProfile } from './style';
 
-import reducer from './reducer/mypage';
-
-const store = createStore(reducer);
+import { store } from '../../stores/userStore';
 
 const MyPage = () => {
   const imgInput = useRef();
