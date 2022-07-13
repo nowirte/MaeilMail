@@ -1,3 +1,3 @@
-export * from './google';
-export * from './local';
-export * from './jwt';
+export * from './local'
+export * from './google'
+export * from './jwt'

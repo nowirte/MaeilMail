@@ -1,26 +1,26 @@
-import { User } from '../db/models';
 import bcrypt from 'bcrypt';
+import { User } from '../db/models';
 
 class UserService {
-    constructor(User) {
-        this.User = User;
+    constructor(param) {
+        this.User = param;
     }
 
     async addUser(userInfo) {
         const { nickname, email, password } = userInfo
 
-        const email_result = await this.User.findBy(email);
-        if (email_result) {
+        const emailResult = await this.User.findBy(email);
+        if (emailResult) {
             throw new Error("중복된 이메일입니다.")
         }
 
-        const nickname_result = await this.User.findBy(nickname);
-        if (nickname_result) {
+        const nicknameResult = await this.User.findBy(nickname);
+        if (nicknameResult) {
             throw new Error("중복된 닉네임입니다.")
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUserInfo = { fullName, email, password: hashedPassword };
+        const newUserInfo = { nickname, email, password: hashedPassword };
     
         const newUser = await this.userModel.create(newUserInfo);
     

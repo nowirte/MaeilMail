@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import { userService } from '../services/user-service';
 
-
 const signupRouter = Router();
 
-signupRouter.post('/', (req, res, next) => {
+signupRouter.post('/', async (req, res, next) => {
     try{
         const { nickname, email, password, gender, birthday } = req.body
         const info = { nickname, email, password, gender, birthday }
