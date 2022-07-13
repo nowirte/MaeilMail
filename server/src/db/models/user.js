@@ -71,4 +71,4 @@ class User extends Sequelize.Model {
       });
     }};
 
-export {User};
+export { User };
