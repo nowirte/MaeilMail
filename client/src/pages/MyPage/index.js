@@ -11,6 +11,7 @@ import { Wrapper, ProfileImg, Title, MyProfile } from './style';
 const initailState = {
   email: 'user@example.com',
   nickname: 'string',
+  birthday: '8월 15일',
   gender: 'female',
   location: 'Korea',
   profileText: "hi! i'm korean",

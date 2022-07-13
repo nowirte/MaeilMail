@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import FemaleIcon from '@mui/icons-material/Female';
+import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';
 
@@ -47,6 +48,10 @@ const Info = styled.div`
     font-size: 1rem;
     border-radius: 5px;
   }
+
+  & .birthday {
+    margin-right: 4px;
+  }
 `;
 
 const Introduction = styled.div`
@@ -75,6 +80,12 @@ const UserArea = () => {
           <p>
             <FemaleIcon />
             {userData.gender === 'female' ? '여자' : '남자'}
+          </p>
+        </div>
+        <div className="birthday">
+          <p>
+            <CakeOutlinedIcon className="birthday" />
+            {userData.birthday}
           </p>
         </div>
         <div className="location">
