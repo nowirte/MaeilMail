@@ -2,8 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import passportConfig from './passport';
-import { loginRouter, signupRouter, userRouter } from './routers'
+import passportConfig from './middleware/passport';
+import { loginRouter, signupRouter, mypageRouter, userRouter } from './routers'
 import { errorHandler } from './middleware'
 import { db } from './db';
 
@@ -22,7 +22,8 @@ app.use(passport.initialize());
 
 app.use('/login', loginRouter)
 app.use('/signup', signupRouter)
-app.use('/user', userRouter)
+app.use('/mypage', mypageRouter)
+app.use('/users', userRouter)
 
 app.use(errorHandler)
 export { app };
