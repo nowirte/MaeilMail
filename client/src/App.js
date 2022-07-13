@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Friend from './pages/Friend';
 import SignUp from './pages/signup';
 import MyPage from './pages/MyPage';
+import Login from './pages/login';
+import LoginBackground from './components/loginBackground';
 
 const App = () => {
   return (
@@ -16,7 +18,11 @@ const App = () => {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/friend/:id" element={<Friend />} />
         </Route>
-        <Route path="/signup" element={<SignUp />} />
+
+        <Route element={<LoginBackground />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Route>
       </Routes>
     </Router>
   );
