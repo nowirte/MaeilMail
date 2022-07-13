@@ -109,6 +109,17 @@ const UserInfoEditArea = () => {
                   }}
                 />
               </label>
+              <label htmlFor="birthday">
+                생일
+                <input
+                  id="birthday"
+                  type="date"
+                  name="birthday"
+                  onChange={e => {
+                    handleEditState(e);
+                  }}
+                />
+              </label>
               <p>관심사를 선택해주세요.</p>
 
               <p id="favoriteTopic">

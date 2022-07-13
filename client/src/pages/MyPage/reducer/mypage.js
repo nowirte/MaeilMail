@@ -24,7 +24,7 @@ const initailState = {
   language: '영어',
   password: '12345',
   email: 'user@example.com',
-  birthday: '8월 15일',
+  birthday: '1993-09-22',
   gender: 'female',
   location: 'Korea',
   profile_image: 'string',

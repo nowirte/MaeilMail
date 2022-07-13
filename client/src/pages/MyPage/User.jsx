@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -69,6 +70,8 @@ const UserArea = () => {
   const userData = useSelector(state => {
     return state;
   });
+  const birthday = userData.birthday.split('-');
+
   return (
     <User>
       <Account>
@@ -85,7 +88,7 @@ const UserArea = () => {
         <div className="birthday">
           <p>
             <CakeOutlinedIcon className="birthday" />
-            {userData.birthday}
+            {birthday[1]}월 {birthday[2]}일
           </p>
         </div>
         <div className="location">
