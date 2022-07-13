@@ -29,7 +29,7 @@ const ImgCard = styled.div`
 
   display: flex;
   justify-content: center;
-  direction: col;
+  direction: column;
 `;
 
 const Title = styled.span`
