@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Outlet } from 'react-router';
 import NavTopArea from './NavTop';
 import NavFriendsArea from './NavFriends';
+import LogoutArea from './Logout';
 import { Container, SideWrapper, Navbar } from './style';
 
 import reducer from './reducer/sidebar';
@@ -19,6 +20,7 @@ const SideBar = () => {
             <NavTopArea />
             <NavFriendsArea />
           </Navbar>
+          <LogoutArea />
         </SideWrapper>
         <Outlet />
       </Container>
