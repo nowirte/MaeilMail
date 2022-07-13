@@ -20,6 +20,5 @@ const verify = async (jwtPayload, done) => {
   }
 };
 
-
 const jwt = new Strategy(config, verify);
 export { jwt };
