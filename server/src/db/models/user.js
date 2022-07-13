@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 class User extends Sequelize.Model {
+  
   static init(sequelize){
     return super.init({
       user_id: {
@@ -60,7 +61,7 @@ class User extends Sequelize.Model {
         type: DataTypes.STRING(200)
       }
 
-    }, {
+    },{
         intialAutoIncrement: 1,
         sequelize,
         timestamps: true,
@@ -68,7 +69,13 @@ class User extends Sequelize.Model {
         collate: "utf8_general_ci", // 한국어 설정
         tableName: "Users",
         modelName: "User"
-      });
-    }};
+      }
+    );
+    }
+
+  static associate(db) { 
+    db.User.hasOne(db.Favor, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+   }
+};
 
 export { User };
