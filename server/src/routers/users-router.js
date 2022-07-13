@@ -70,7 +70,7 @@ userRouter.get(
     passport.authenticate('jwt'),
     async (req, res, next) => {
       try {
-        const result = userService.getUserRecommend
+        const result = userService.getUserRecommend()
         res.status(200).json(result);
       } catch (err) {
         next(err);
