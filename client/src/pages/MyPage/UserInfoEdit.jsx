@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 
+// const EDIT_USERINFO = 'EDITUSERINFO';
+// const EDIT_PASSWORD = 'EDITPASSWORD';
+
 const theme = createTheme({
   palette: {
     neutral: {
@@ -47,7 +50,14 @@ const UserInfoEditArea = () => {
     return state;
   });
 
+  const [user, setUser] = useState(userData);
   const [open, setOpen] = useState(false);
+  const handleEditState = e => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -74,13 +84,29 @@ const UserInfoEditArea = () => {
           <Title id="userInfoEdit-title">회원정보 수정</Title>
           <div id="userInfoEdit-description">
             <Form className="userInfoEditForm">
-              <label htmlFor="nickName">
+              <label htmlFor="nickname">
                 닉네임
-                <input id="nickName" type="text" placeholder="닉네임" />
+                <input
+                  id="nickname"
+                  type="text"
+                  placeholder={user.nickname}
+                  name="nickname"
+                  onChange={e => {
+                    handleEditState(e);
+                  }}
+                />
               </label>
-              <label htmlFor="introduction">
+              <label htmlFor="profileText">
                 한 줄 소개
-                <input id="introduction" type="text" placeholder="한 줄 소개" />
+                <input
+                  id="profileText"
+                  type="text"
+                  placeholder={user.profileText}
+                  name="profileText"
+                  onChange={e => {
+                    handleEditState(e);
+                  }}
+                />
               </label>
               <p>관심사를 선택해주세요.</p>
 
@@ -91,8 +117,8 @@ const UserInfoEditArea = () => {
                       <input
                         type="checkbox"
                         name={e[0]}
-                        value={e[0]}
-                        checked={e[1]}
+                        value={e[0] || ''}
+                        // checked={e[1]}
                       />
                       <label htmlFor="favoriteTopic">{e[0]}</label>
                     </span>
@@ -133,7 +159,7 @@ const UserInfoEditArea = () => {
                   sx={{ mr: 1 }}
                   onClick={e => {
                     e.preventDefault();
-                    dispatch({ type: 'EDITNICKNAME' });
+                    dispatch({ type: 'EDITUSERINFO', data: user });
                     handleClose();
                   }}
                 >
