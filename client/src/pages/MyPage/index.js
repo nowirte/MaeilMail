@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
@@ -11,6 +12,11 @@ import reducer from './reducer/mypage';
 const store = createStore(reducer);
 
 const MyPage = () => {
+  const imgInput = useRef();
+
+  const handleImgUpload = () => {
+    imgInput.current.click();
+  };
   return (
     <Provider store={store}>
       <Wrapper>
@@ -19,6 +25,19 @@ const MyPage = () => {
           <ProfileImg>
             <div className="profileImgArea">
               <img className="profileEmoji" src="/img/뚱이.png" alt="뚱이" />
+              <input
+                type="file"
+                style={{ display: 'none' }}
+                ref={imgInput}
+                accept="image/jpg, image/png, image/jpeg"
+              />
+              <button
+                className="imgUploadBtn"
+                onClick={handleImgUpload}
+                type="button"
+              >
+                <AddPhotoAlternateIcon />
+              </button>
             </div>
           </ProfileImg>
           <UserArea />
