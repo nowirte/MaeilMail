@@ -1,88 +1,62 @@
 import React from 'react';
-import PinDropIcon from '@mui/icons-material/PinDrop';
 import MainWrapper from '../../components/common';
+import FriendInfo from './FriendInfo';
+import Stamp from '../../assets/stamp.png';
+
 import {
-  User,
-  UserInfo,
-  UserEmoji,
-  UserDetail,
-  DetailItem,
-  UserName,
-  UserBio,
-  BadgeWrapper,
-  Badge,
   LetterWrapper,
   Letter,
   LetterHeader,
+  LetterContent,
+  LetterFooter,
+  Writer,
+  Date,
 } from './style';
 
 const Friend = () => {
   return (
     <MainWrapper>
-      <User>
-        <UserInfo>
-          <UserName>Arae Boram</UserName>
-          <UserDetail>
-            <DetailItem>
-              <PinDropIcon style={{ fontSize: '1rem' }} />
-              브라질
-            </DetailItem>
-            <DetailItem>3월 31일 (50)</DetailItem>
-          </UserDetail>
-          <UserBio>Hey, sorry I didn&apos;t get back to you sooner. 🥲</UserBio>
-          <BadgeWrapper>
-            <Badge>영화</Badge>
-            <Badge>음악</Badge>
-            <Badge>예술</Badge>
-          </BadgeWrapper>
-        </UserInfo>
-        <UserEmoji>
-          <span>🐮</span>
-        </UserEmoji>
-      </User>
-
+      <FriendInfo />
       <LetterWrapper>
         <Letter>
-          <LetterHeader>hi</LetterHeader>
+          <LetterHeader>
+            <img src={Stamp} alt="" />
+          </LetterHeader>
+          <LetterContent>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+            eum ipsa animi, amet labore consectetur aspernatur facilis
+            doloremque nesciunt iure deleniti dolorum, quos, optio nostrum hic
+            quam deserunt laboriosam doloribus.
+          </LetterContent>
+          <LetterFooter>
+            <Writer>Arae Boram</Writer>
+            <Date>2시간 후 도착</Date>
+          </LetterFooter>
         </Letter>
         <Letter>
-          <LetterHeader>hi</LetterHeader>
+          <LetterHeader>
+            <img src={Stamp} alt="" />
+          </LetterHeader>
+          <LetterContent>...</LetterContent>
+          <LetterFooter>
+            <Writer>Marco</Writer>
+            <Date>1시간 후 도착</Date>
+          </LetterFooter>
         </Letter>
         <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
-        </Letter>
-        <Letter>
-          <LetterHeader>hi</LetterHeader>
+          <LetterHeader>
+            <img src={Stamp} alt="" />
+          </LetterHeader>
+          <LetterContent>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti,
+            temporibus a! A saepe amet dolore soluta nam repellat quia aliquam
+            incidunt commodi necessitatibus consequuntur, reiciendis voluptas
+            nemo officia molestias nobis.
+          </LetterContent>
+          <LetterFooter>
+            <Writer>Marco</Writer>
+            <Date>2030.12.05</Date>
+          </LetterFooter>
         </Letter>
       </LetterWrapper>
     </MainWrapper>
