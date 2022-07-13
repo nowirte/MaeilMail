@@ -16,6 +16,8 @@ const SideWrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
 
+  overflow: auto;
+
   background-color: #40577a;
 `;
 

@@ -10,7 +10,6 @@ const Friends = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0.25rem;
-  overflow: auto;
 `;
 
 const FriendsList = styled.div`
@@ -49,6 +48,108 @@ const NavFriendsArea = () => {
   return (
     <Friends>
       <StyledLink to="/friend/:id">
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
+        <FriendsList>
+          <div className="profileImgArea">
+            <span className="profileEmoji">🤓</span>
+          </div>
+          <span>홍길동</span>
+        </FriendsList>
         <FriendsList>
           <div className="profileImgArea">
             <span className="profileEmoji">🤓</span>
