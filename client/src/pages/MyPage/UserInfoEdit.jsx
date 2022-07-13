@@ -51,6 +51,7 @@ const UserInfoEditArea = () => {
   });
 
   const [user, setUser] = useState(userData);
+  const [currentPassword, setCurrentPassword] = useState(userData.password);
   const [open, setOpen] = useState(false);
   const handleEditState = e => {
     setUser({
@@ -140,14 +141,26 @@ const UserInfoEditArea = () => {
                   id="currentPassowrd"
                   type="password"
                   placeholder="현재 비밀번호"
+                  onChange={e => {
+                    setCurrentPassword(e.target.value);
+                  }}
                 />
+                {userData.password !== currentPassword ? (
+                  <p>현재 비밀번호를 다시 확인해주세요.</p>
+                ) : (
+                  ''
+                )}
               </label>
-              <label htmlFor="changedPassowrd">
+              <label htmlFor="password">
                 <p>변경 할 비밀번호를 입력해주세요.</p>
                 <input
-                  id="changedPassowrd"
+                  id="password"
                   type="password"
                   placeholder="새로운 비밀번호"
+                  name="password"
+                  onChange={e => {
+                    handleEditState(e);
+                  }}
                 />
               </label>
               <ThemeProvider theme={theme}>
