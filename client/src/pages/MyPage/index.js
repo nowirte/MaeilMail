@@ -1,5 +1,3 @@
-/* eslint-disable default-param-last */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -8,57 +6,7 @@ import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
 import { Wrapper, ProfileImg, Title, MyProfile } from './style';
 
-const EDIT_USERINFO = 'EDITUSERINFO';
-const EDIT_PASSWORD = 'EDITPASSWORD';
-
-const initailState = {
-  nickname: 'string',
-  profileText: "hi! i'm korean",
-  favor: {
-    movie: true,
-    language: false,
-    reading: false,
-    game: false,
-    coding: false,
-    fantasy: false,
-    sports: false,
-    entertainment: false,
-    music: false,
-    fashion: false,
-    art: false,
-    travel: false,
-  },
-  language: '영어',
-  password: '12345',
-  email: 'user@example.com',
-  birthday: '8월 15일',
-  gender: 'female',
-  location: 'Korea',
-  profile_image: 'string',
-};
-
-const reducer = (state = initailState, action) => {
-  if (initailState === undefined) {
-    return { initailState };
-  }
-  const newState = { ...initailState };
-  if (action.type === EDIT_USERINFO) {
-    return {
-      ...newState,
-      nickname: action.data.nickname,
-      profileText: action.data.profileText,
-      language: action.data.language,
-    };
-  }
-
-  if (action.type === EDIT_PASSWORD) {
-    return {
-      ...newState,
-      password: action.data.password,
-    };
-  }
-  return newState;
-};
+import reducer from './reducer/mypage';
 
 const store = createStore(reducer);
 
@@ -70,7 +18,7 @@ const MyPage = () => {
         <MyProfile>
           <ProfileImg>
             <div className="profileImgArea">
-              <span className="profileEmoji">🤓</span>
+              <img className="profileEmoji" src="/img/뚱이.png" alt="뚱이" />
             </div>
           </ProfileImg>
           <UserArea />
