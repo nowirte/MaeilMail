@@ -45,16 +45,24 @@ const FriendsList = styled.div`
   }
 `;
 
-const NavFriendsArea = () => {
+const NavFriendsArea = props => {
+  const friendList = props.friend;
+  console.log(friendList);
+
   return (
     <Friends>
       <StyledLink to="/friend/:id">
-        <FriendsList>
-          <div className="profileImgArea">
-            <img src="/img/뚱이.png" alt="friendImg" />
-          </div>
-          <span>닉네임</span>
-        </FriendsList>
+        {friendList &&
+          friendList.map(friend => {
+            return (
+              <FriendsList key={friend.id}>
+                <div className="profileImgArea">
+                  <img src={friend.profileImage} alt="friendImg" />
+                </div>
+                <span>{friend.nickname}</span>
+              </FriendsList>
+            );
+          })}
       </StyledLink>
     </Friends>
   );
