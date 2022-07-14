@@ -37,7 +37,7 @@ loginRouter.get(
     try {
       // 토큰 제공
       await setUserToken(req.user, res);
-      res.redirect('/');
+      res.redirect('/googleSignup');
     } catch (err) {
       next(err);
     }

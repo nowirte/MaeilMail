@@ -6,7 +6,7 @@ import { User } from '../../../db/models';
 const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
   clientSecret: process.env.GOOGLE_OAUTH_SECRET,
-  callbackURL: '/googleSignup',
+  callbackURL: '/login/google/callback',
 };
 
 async function findOrCreateUser({ email, name }) {
