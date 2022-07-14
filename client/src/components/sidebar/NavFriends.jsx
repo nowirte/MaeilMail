@@ -51,19 +51,19 @@ const NavFriendsArea = props => {
 
   return (
     <Friends>
-      <StyledLink to="/friend/:id">
-        {friendList &&
-          friendList.map(friend => {
-            return (
-              <FriendsList key={friend.id}>
+      {friendList &&
+        friendList.map(friend => {
+          return (
+            <StyledLink to={`/friend/${friend.id}`} key={friend.id}>
+              <FriendsList>
                 <div className="profileImgArea">
                   <img src={friend.profileImage} alt="friendImg" />
                 </div>
                 <span>{friend.nickname}</span>
               </FriendsList>
-            );
-          })}
-      </StyledLink>
+            </StyledLink>
+          );
+        })}
     </Friends>
   );
 };
