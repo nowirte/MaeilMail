@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
+import Modal from '../../components/ui/Modal';
 import Stamp from '../../assets/stamp.png';
-
 import {
   LetterWrapper,
   Letter,
@@ -11,18 +11,36 @@ import {
   LetterFooter,
   Writer,
   Date,
+  WriteBtn,
 } from './style';
 
-const Friend = () => {
+const FriendDetail = () => {
+  const [profileIsShown, setProfileIsShown] = useState(false);
+  const [writeIsShown, setWriteIsShown] = useState(false);
+
+  const showProfileHandler = () => {
+    setProfileIsShown(true);
+  };
+
+  const hideProfileHandler = () => {
+    console.log(profileIsShown);
+    setProfileIsShown(false);
+  };
+
+  const showWriteHandler = () => {
+    setWriteIsShown(true);
+  };
+
   return (
     <MainWrapper>
-      <FriendInfo />
+      {profileIsShown && <Modal onClose={hideProfileHandler} />}
+      <FriendInfo onShowProfile={showProfileHandler} />
       <LetterWrapper>
-        <Letter>
+        <Letter future>
           <LetterHeader>
             <img src={Stamp} alt="" />
           </LetterHeader>
-          <LetterContent>
+          <LetterContent future>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
             eum ipsa animi, amet labore consectetur aspernatur facilis
             doloremque nesciunt iure deleniti dolorum, quos, optio nostrum hic
@@ -59,8 +77,11 @@ const Friend = () => {
           </LetterFooter>
         </Letter>
       </LetterWrapper>
+      {!writeIsShown && (
+        <WriteBtn onClick={showWriteHandler}>편지 보내기</WriteBtn>
+      )}
     </MainWrapper>
   );
 };
 
-export default Friend;
+export default FriendDetail;

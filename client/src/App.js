@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
 import Home from './pages/Home';
-import Friend from './pages/Friend';
+import FriendDetail from './pages/Friend';
 import SignUp from './pages/signup';
 import MyPage from './pages/MyPage';
 import Login from './pages/login';
@@ -16,7 +16,7 @@ const App = () => {
         <Route element={<SideBar />}>
           <Route path="/" element={<Home />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/friend/:id" element={<Friend />} />
+          <Route path="/friend/:id" element={<FriendDetail />} />
         </Route>
 
         <Route element={<LoginBackground />}>

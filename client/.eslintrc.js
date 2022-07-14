@@ -12,7 +12,7 @@ module.exports = {
   ],
   rules: {
     'import/no-unresolved': 'off',
-    'import/prefer-default-export':'off',
+    'import/prefer-default-export': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/function-component-definition': [
       2,
@@ -21,7 +21,9 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    'arrow-body-style': ['error', 'always'],
+    'arrow-body-style': 'off',
+    'no-console': 'off',
+    'react/prop-types': 0,
   },
   ignorePatterns: ['**/*.html'],
 };

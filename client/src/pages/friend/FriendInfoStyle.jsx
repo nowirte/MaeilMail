@@ -76,7 +76,7 @@ const Badge = styled.span`
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #4f4f4f;
+    border: 1px solid #4f4f4f;
     opacity: 0.2;
     border-radius: 5px;
   }

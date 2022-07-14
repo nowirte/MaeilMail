@@ -12,7 +12,7 @@ const LetterWrapper = styled.ul`
 
 const Letter = styled.li`
   width: 300px;
-  border: 1px solid #ccc;
+
   border-radius: 1rem;
   box-sizing: border-box;
   padding: 1rem;
@@ -20,6 +20,9 @@ const Letter = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  ${props =>
+    props.future ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
 `;
 
 const LetterHeader = styled.div`
@@ -58,6 +61,28 @@ const Date = styled.p`
   font-size: 1rem;
   color: #828282;
 `;
+
+const WriteBtn = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #ccc;
+  color: #333;
+  cursor: pointer;
+  padding: 1rem 3rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #4f4f4f;
+    color: #ccc;
+    opacity: 0.2;
+  }
+`;
 export {
   LetterWrapper,
   Letter,
@@ -66,4 +91,5 @@ export {
   LetterFooter,
   Writer,
   Date,
+  WriteBtn,
 };

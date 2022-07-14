@@ -12,7 +12,8 @@ import {
   Badge,
 } from './FriendInfoStyle';
 
-const FriendInfo = () => {
+const FriendInfo = props => {
+  const { onShowProfile } = props;
   return (
     <User>
       <UserInfo>
@@ -33,7 +34,7 @@ const FriendInfo = () => {
           <Badge>영어</Badge>
         </BadgeWrapper>
       </UserInfo>
-      <UserEmoji>🐮</UserEmoji>
+      <UserEmoji onClick={onShowProfile}>🐮</UserEmoji>
     </User>
   );
 };
