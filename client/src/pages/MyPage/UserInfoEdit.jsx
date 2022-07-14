@@ -94,6 +94,13 @@ const UserInfoEditArea = props => {
         alert('현재 비밀번호를 확인해주세요.');
         return;
       }
+      if (checkPassword !== changedPassword) {
+        alert('새로운 비밀번호를 다시 확인해주세요.');
+        return;
+      }
+      if (changedPassword === '') {
+        setChangedPassword(userData.password);
+      }
 
       await axios.patch(`http://localhost:3333/user/1`, {
         nickname: inputData.nickname,
@@ -209,7 +216,7 @@ const UserInfoEditArea = props => {
                     setCheckPassword(e.target.value);
                   }}
                 />
-                {changedPassword !== changedPassword && (
+                {changedPassword !== checkPassword && (
                   <p
                     className="changedPasswordChecked"
                     style={{ fontSize: '0.75rem', color: 'red' }}
