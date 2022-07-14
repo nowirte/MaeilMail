@@ -10,9 +10,10 @@ const MyPage = () => {
   const [userData, setUserData] = useState({});
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/data/userData.json`);
-      const data = res.data;
+      const res = await axios.get(`http://localhost:3333/user`);
+      const data = res.data[0];
       setUserData(data);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }

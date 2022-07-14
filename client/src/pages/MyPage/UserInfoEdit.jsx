@@ -74,25 +74,37 @@ const UserInfoEditArea = props => {
     }
   };
 
+  useEffect(() => {
+    setInputData(userData);
+  }, []);
+
   const handleOnChange = e => {
     const { value, name } = e.target;
     setInputData({
-      ...userData,
+      ...inputData,
       [name]: value,
     });
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const url = `http://localhost:3000/data/userData.json`;
-    const data = JSON.stringify(inputData);
-    console.log(inputData);
+
     try {
-      await axios.post(`http://localhost:3000/data/userData.json`, data);
-      // if (userData.password !== currentPassword || currentPassword === '') {
-      //   throw new Error();
-      // }
-      handleModal;
+      if (userData.password !== currentPassword) {
+        alert('현재 비밀번호를 확인해주세요.');
+        return;
+      }
+
+      await axios.patch(`http://localhost:3333/user/1`, {
+        nickname: inputData.nickname,
+        profileText: inputData.profileText,
+        birthday: inputData.birthday,
+        password: changedPassword,
+      });
+      console.log('현재 비번', currentPassword);
+      console.log('바뀐 비번', changedPassword);
+      handleModal();
+      alert('회원 정보가 변경되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -120,9 +132,8 @@ const UserInfoEditArea = props => {
                 <input
                   id="nickname"
                   type="text"
-                  placeholder={userData.nickname || ''}
+                  placeholder={userData.nickname}
                   name="nickname"
-                  value={inputData.nickname}
                   onChange={handleOnChange}
                 />
               </label>
@@ -142,7 +153,7 @@ const UserInfoEditArea = props => {
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={userData.birthday}
+                  value={userData.birthday || ''}
                   onChange={handleOnChange}
                 />
               </label>
@@ -180,7 +191,7 @@ const UserInfoEditArea = props => {
                   type="password"
                   placeholder="새로운 비밀번호"
                   name="changedPassowrd"
-                  value={changedPassword}
+                  value={changedPassword || ''}
                   onChange={e => {
                     setChangedPassword(e.target.value);
                   }}
@@ -193,11 +204,19 @@ const UserInfoEditArea = props => {
                   type="password"
                   placeholder="새로운 비밀번호 확인"
                   name="checkPassowrd"
-                  value={checkPassword}
+                  value={checkPassword || ''}
                   onChange={e => {
                     setCheckPassword(e.target.value);
                   }}
                 />
+                {changedPassword !== changedPassword && (
+                  <p
+                    className="changedPasswordChecked"
+                    style={{ fontSize: '0.75rem', color: 'red' }}
+                  >
+                    새로운 비밀번호가 일치하지 않습니다.
+                  </p>
+                )}
               </label>
               <label htmlFor="currentPassowrd">
                 현재 비밀번호를 입력해주세요.
@@ -206,7 +225,7 @@ const UserInfoEditArea = props => {
                   type="password"
                   placeholder="현재 비밀번호"
                   name="currentPassword"
-                  value={currentPassword}
+                  value={currentPassword || ''}
                   onChange={e => {
                     setCurrentPassword(e.target.value);
                   }}
