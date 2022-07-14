@@ -1,26 +1,27 @@
-/* eslint-disable array-callback-return */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
+import axios from 'axios';
 
-const favor = [
-  { movie: true },
-  { language: false },
-  { reading: false },
-  { game: false },
-  { coding: false },
-  { fantasy: false },
-  { sports: false },
-  { entertainment: false },
-  { music: false },
-  { fashion: false },
-  { art: false },
-  { travel: false },
-];
+const favor = {
+  userId: 0,
+  movie: true,
+  language: true,
+  reading: true,
+  game: true,
+  coding: true,
+  fantasy: true,
+  sports: true,
+  entertainment: true,
+  music: true,
+  fashion: true,
+  art: true,
+  travel: true,
+};
 
 const theme = createTheme({
   palette: {
@@ -56,25 +57,56 @@ const Form = styled.form`
   }
 `;
 
-const UserInfoEditArea = () => {
+const UserInfoEditArea = props => {
+  const userData = props.data;
+
+  const [inputData, setInputData] = useState({});
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [changedPassword, setChangedPassword] = useState('');
+  const [checkPassword, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleModal = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleOnChange = e => {
+    const { value, name } = e.target;
+    setInputData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const url = `http://localhost:3000/data/userData.json`;
+    const data = JSON.stringify(inputData);
+    console.log(inputData);
+    try {
+      await axios.post(`http://localhost:3000/data/userData.json`, data);
+      // if (userData.password !== currentPassword || currentPassword === '') {
+      //   throw new Error();
+      // }
+      handleModal;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div className="setting">
-      <SettingBtn className="userInfoEdit" onClick={handleOpen}>
+      <SettingBtn className="userInfoEdit" onClick={handleModal}>
         <EditIcon />
         <p>회원정보 수정</p>
       </SettingBtn>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModal}
         aria-labelledby="userInfoEdit-title"
         aria-describedby="userInfoEdit-description"
       >
@@ -82,14 +114,16 @@ const UserInfoEditArea = () => {
           {/* 모달 스타일 박스 쉐도우 값 설정 필요 */}
           <Title id="userInfoEdit-title">회원정보 수정</Title>
           <div id="userInfoEdit-description">
-            <Form className="userInfoEditForm">
+            <Form className="userInfoEditForm" onSubmit={handleSubmit}>
               <label htmlFor="nickname">
                 닉네임
                 <input
                   id="nickname"
                   type="text"
-                  placeholder="{user.nickname}"
+                  placeholder={userData.nickname || ''}
                   name="nickname"
+                  value={inputData.nickname}
+                  onChange={handleOnChange}
                 />
               </label>
               <label htmlFor="profileText">
@@ -97,19 +131,27 @@ const UserInfoEditArea = () => {
                 <input
                   id="profileText"
                   type="text"
-                  placeholder="{user.profileText}"
+                  placeholder={userData.profileText}
                   name="profileText"
+                  onChange={handleOnChange}
                 />
               </label>
               <label htmlFor="birthday">
                 생일
-                <input id="birthday" type="date" name="birthday" />
+                <input
+                  id="birthday"
+                  type="date"
+                  name="birthday"
+                  value={userData.birthday}
+                  onChange={handleOnChange}
+                />
               </label>
               <p>관심사를 선택해주세요.</p>
 
               <p id="favoriteTopic">
-                {favor.map(e => {
-                  return (
+                {/* {Object.keys(favor).map(e => {
+                  console.log(e); */}
+                {/* return (
                     <span key={e}>
                       <input
                         type="checkbox"
@@ -118,9 +160,9 @@ const UserInfoEditArea = () => {
                         // checked={e[1]}
                       />
                       <label htmlFor="favoriteTopic">{e}</label>
-                    </span>
-                  );
-                })}
+                    </span> */}
+                {/* ); */}
+                {/* })} */}
               </p>
               <label htmlFor="language">
                 <p>사용할 수 있는 언어를 선택해주세요.</p>
@@ -131,28 +173,58 @@ const UserInfoEditArea = () => {
                   <option value="chinese">중국어</option>
                 </select>
               </label>
-              <label htmlFor="currentPassowrd">
-                현재 비밀번호를 입력해주세요.
-                <input
-                  id="currentPassowrd"
-                  type="password"
-                  placeholder="현재 비밀번호"
-                />
-              </label>
               <label htmlFor="changedPassowrd">
                 변경 할 비밀번호를 입력해주세요.
                 <input
                   id="changedPassowrd"
                   type="password"
                   placeholder="새로운 비밀번호"
+                  name="changedPassowrd"
+                  value={changedPassword}
+                  onChange={e => {
+                    setChangedPassword(e.target.value);
+                  }}
                 />
+              </label>
+              <label htmlFor="checkPassowrd">
+                변경 할 비밀번호를 다시 입력해주세요.
+                <input
+                  id="checkPassowrd"
+                  type="password"
+                  placeholder="새로운 비밀번호 확인"
+                  name="checkPassowrd"
+                  value={checkPassword}
+                  onChange={e => {
+                    setCheckPassword(e.target.value);
+                  }}
+                />
+              </label>
+              <label htmlFor="currentPassowrd">
+                현재 비밀번호를 입력해주세요.
+                <input
+                  id="currentPassowrd"
+                  type="password"
+                  placeholder="현재 비밀번호"
+                  name="currentPassword"
+                  value={currentPassword}
+                  onChange={e => {
+                    setCurrentPassword(e.target.value);
+                  }}
+                />
+                {userData.password !== currentPassword && (
+                  <p
+                    className="currentPasswordChecked"
+                    style={{ fontSize: '0.75rem', color: 'red' }}
+                  >
+                    현재 비밀번호가 일치하지 않습니다.
+                  </p>
+                )}
               </label>
               <ThemeProvider theme={theme}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="neutral"
-                  disabled={false}
                   sx={{ mr: 1 }}
                 >
                   변경하기
@@ -163,7 +235,7 @@ const UserInfoEditArea = () => {
                   type="button"
                   variant="outlined"
                   color="neutral"
-                  onClick={handleClose}
+                  onClick={handleModal}
                 >
                   닫기
                 </Button>

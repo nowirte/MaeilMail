@@ -4,7 +4,6 @@ import FemaleIcon from '@mui/icons-material/Female';
 import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';
-import axios from 'axios';
 
 const User = styled.div`
   display: flex;
@@ -65,51 +64,37 @@ const Introduction = styled.div`
   }
 `;
 
-const UserArea = () => {
-  const [userData, setUserData] = useState();
-  const fetchUserData = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3000/data/userData.json`);
-      const data = await res.data;
-      setUserData(data);
-      console.log(userData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
+const UserArea = props => {
+  const { gender, birthday, location, profileText, email, nickname } =
+    props.data;
   return (
     <User>
       <Account>
-        <span className="userName">{userData.nickname}</span>
-        <span className="userEmail">{userData.email}</span>
+        <span className="userName">{nickname}</span>
+        <span className="userEmail">{email}</span>
       </Account>
       <Info>
         <div className="gender">
           <p>
             <FemaleIcon />
-            {userData.gender}
+            {gender}
           </p>
         </div>
         <div className="birthday">
           <p>
             <CakeOutlinedIcon />
-            {userData.birthday}
+            {birthday}
           </p>
         </div>
         <div className="location">
           <p>
             <LocationOnIcon />
-            {userData.location}
+            {location}
           </p>
         </div>
       </Info>
       <Introduction>
-        <span>{userData.profileText}</span>
+        <span>{profileText}</span>
       </Introduction>
       <AdditionalUserInfoArea />
     </User>

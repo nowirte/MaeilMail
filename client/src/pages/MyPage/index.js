@@ -1,11 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
 import { Wrapper, ProfileImg, Title, MyProfile } from './style';
+import axios from 'axios';
 
 const MyPage = () => {
+  const [userData, setUserData] = useState({});
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/data/userData.json`);
+      const data = res.data;
+      setUserData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   const imgInput = useRef();
 
   const handleImgUpload = () => {
@@ -33,10 +49,10 @@ const MyPage = () => {
             </button>
           </div>
         </ProfileImg>
-        <UserArea />
+        <UserArea data={userData} />
         <div className="setting">
-          <UserInfoEditArea />
-          <UserSignOutArea />
+          <UserInfoEditArea data={userData} />
+          <UserSignOutArea data={userData} />
         </div>
       </MyProfile>
     </Wrapper>
