@@ -5,8 +5,8 @@ const signupRouter = Router();
 
 signupRouter.post('/', async (req, res, next) => {
     try {
-        const { nickname, email, password, gender, birthday } = req.body
-        const info = { nickname, email, password, gender, birthday }
+        const { nickname, email, password, gender, location, latitude, longitude } = req.body
+        const info = { nickname, email, password, gender, location, latitude, longitude }
         const user = await userService.addUser(info) 
         res.status(201).json(user)
     } catch (err) {

@@ -61,8 +61,26 @@ class UserService {
     return user;
   }
 
-  // status == google ? status == 
-  async updateUser(id, toUpdate)
+  async updateUser(id, password, toUpdate, flag) {
+    if (password) {
+      const currentPassword = await this.User.findOne(
+        { where: {user_id: id} },
+        { attributes: ['password'] }
+      )
+      if (currentPassword !== password) {
+        throw new Error("비밀번호가 일치하지 않습니다.")
+      }
+    }
+    const hashedPassword = password && toUpdate ? await bcrypt.hash(password, 10) : null;
+    const toUpdate = 
+      !password ? toUpdate
+    : !toUpdate ? { status: 'inactive' }
+    : { password: hashedPassword };
+    
+    const updated = await this.User.update( { toUpdate: toUpdate }, { where: { user_id: id } } )
+    
+    return updated
+  }
 }
 
 const userService = new UserService(User);

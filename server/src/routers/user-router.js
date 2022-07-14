@@ -2,9 +2,9 @@ import { Router } from 'express';
 import passport from '../middleware/passport';
 import { userService } from '../services/user-service';
 
-const mypageRouter = Router();
+const userRouter = Router();
 
-mypageRouter.get('/', passport.authenticate('jwt'), async (req, res, next) => {
+userRouter.get('/', passport.authenticate('jwt'), async (req, res, next) => {
   try {
     const { id } = req.user;
     if (!id) {
@@ -17,7 +17,7 @@ mypageRouter.get('/', passport.authenticate('jwt'), async (req, res, next) => {
   }
 });
 
-mypageRouter.patch(
+userRouter.patch(
   '/',
   passport.authenticate('jwt'),
   async (req, res, next) => {
@@ -26,8 +26,34 @@ mypageRouter.patch(
       if (!id) {
         throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
       }
-      const { toUpdate } = req.body;
-      const info = userService.updateUser(id, toUpdate);
+
+      const {
+        nickname,
+        gender,
+        birthday,
+        language,
+        location,
+        latitude,
+        longitude,
+        profileText,
+        profileImage,
+        favor,
+      } = req.body;
+
+      const toUpdate = {
+        ...(nickname && { nickname }),
+        ...(gender && { gender }),
+        ...(birthday && { birthday }),
+        ...(language && { language }),
+        ...(location && { location }),
+        ...(latitude && { latitude }),
+        ...(longitude && { longitude }),
+        ...(profileText && { profileText }),
+        ...(profileImage && { profileImage }),
+        ...(favor && { favor }),
+      };
+
+      const info = userService.updateUser(id, false, toUpdate, 1);
       res.status(200).json(info);
     } catch (err) {
       next(err);
@@ -35,7 +61,7 @@ mypageRouter.patch(
   }
 );
 
-mypageRouter.patch(
+userRouter.patch(
   '/password',
   passport.authenticate('jwt'),
   async (req, res, next) => {
@@ -47,9 +73,10 @@ mypageRouter.patch(
       const {
         nickname,
         currentPassword,
-        password,
+        newPassword,
         gender,
         birthday,
+        location,
         latitude,
         longitude,
         profileText,
@@ -61,12 +88,12 @@ mypageRouter.patch(
         throw new Error('현재 비밀번호가 필요합니다.');
       }
 
-      const requriedInfo = { id, currentPassword };
       const toUpdate = {
         ...(nickname && { nickname }),
-        ...(password && { password }),
+        ...(newPassword && { newPassword }),
         ...(gender && { gender }),
         ...(birthday && { birthday }),
+        ...(location && { location }),
         ...(latitude && { latitude }),
         ...(longitude && { longitude }),
         ...(profileText && { profileText }),
@@ -74,7 +101,7 @@ mypageRouter.patch(
         ...(favor && { favor }),
       };
 
-      const updated = await userService.updateUser(requriedInfo, toUpdate);
+      const updated = await userService.updateUser(id, currentPassword, {newPassword: newPassword}, 2);
       res.status(200).json(updated);
     } catch (err) {
       next(err);
@@ -82,7 +109,7 @@ mypageRouter.patch(
   }
 );
 
-mypageRouter.patch(
+userRouter.patch(
   '/withdrawal',
   passport.authenticate('jwt'),
   async (req, res, next) => {
@@ -92,15 +119,13 @@ mypageRouter.patch(
         throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
       }
 
-      const { currentPassword } = req.body;
-      if (!currentPassword) {
+      const { password } = req.body;
+
+      if (!password) {
         throw new Error('현재 비밀번호가 필요합니다.');
       }
 
-      const requiredInfo = { id, currentPassword };
-      const toUpdate = { status: false };
-
-      const updated = await userService.updateUser(requiredInfo, toUpdate);
+      const updated = await userService.updateUser(id, password, false, 3);
       if (!updated.status) {
         res.status(200).json({message: "탈퇴 절차가 정상적으로 처리되었습니다."});
       }
@@ -110,4 +135,4 @@ mypageRouter.patch(
   }
 );
 
-export { mypageRouter };
+export { userRouter };

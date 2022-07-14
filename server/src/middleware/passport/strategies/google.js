@@ -11,7 +11,7 @@ const config = {
 };
 
 async function findOrCreateUser({ email, name }) {
-  const user = await userService.getUserInfoByEmail({ email });
+  const user = await userService.getUserByEmail({ email });
   if (user) {
     return user;
   }

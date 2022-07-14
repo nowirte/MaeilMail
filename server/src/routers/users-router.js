@@ -2,10 +2,10 @@ import { Router } from 'express';
 import passport from 'passport';
 import { userService } from '../services/user-service';
 
-const userRouter = Router();
+const usersRouter = Router();
 
 // 관리자
-userRouter.get(
+usersRouter.get(
   '/',
   passport.authenticate('jwtAdmin'),
   async (req, res, next) => {
@@ -18,7 +18,7 @@ userRouter.get(
   }
 );
 
-userRouter.get(
+usersRouter.get(
   '/:userId',
   passport.authenticate('jwtAdmin'),
   async (req, res, next) => {
@@ -33,7 +33,7 @@ userRouter.get(
 );
 
 // 검색
-userRouter.get(
+usersRouter.get(
     '/search',
     passport.authenticate('jwt'),
     async (req, res, next) => {
@@ -42,7 +42,7 @@ userRouter.get(
         if (!q) {
             throw new Error ('검색어를 입력해주세요')
         } 
-        const result = userService.getUserByFilter(q)
+        const result = userService.getUserBySearch(q)
         res.status(200).json(result);
       } catch (err) {
         next(err);
@@ -50,7 +50,7 @@ userRouter.get(
     }
   );
 
-userRouter.get(
+usersRouter.get(
     '/search/:userId',
     passport.authenticate('jwt'),
     async (req, res, next) => {
@@ -65,7 +65,7 @@ userRouter.get(
   );
 
 // 추천
-userRouter.get(
+usersRouter.get(
     '/recommend',
     passport.authenticate('jwt'),
     async (req, res, next) => {
@@ -78,8 +78,8 @@ userRouter.get(
     }
   );
 
-userRouter.get(
-    '/search/:userId',
+usersRouter.get(
+    '/recommend/:userId',
     passport.authenticate('jwt'),
     async (req, res, next) => {
       try {
@@ -92,4 +92,4 @@ userRouter.get(
     }
   );
 
-export { userRouter };
+export { usersRouter };
