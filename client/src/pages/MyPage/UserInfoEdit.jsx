@@ -110,14 +110,14 @@ const UserInfoEditArea = () => {
               <p id="favoriteTopic">
                 {favor.map(e => {
                   return (
-                    <span key={e[0]}>
+                    <span key={e}>
                       <input
                         type="checkbox"
-                        name={e[0]}
-                        value={e[0] || ''}
+                        name={e}
+                        value={e || ''}
                         // checked={e[1]}
                       />
-                      <label htmlFor="favoriteTopic">{e[0]}</label>
+                      <label htmlFor="favoriteTopic">{e}</label>
                     </span>
                   );
                 })}

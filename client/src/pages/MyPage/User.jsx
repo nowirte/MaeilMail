@@ -1,11 +1,10 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-shadow */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FemaleIcon from '@mui/icons-material/Female';
 import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';
+import axios from 'axios';
 
 const User = styled.div`
   display: flex;
@@ -67,36 +66,50 @@ const Introduction = styled.div`
 `;
 
 const UserArea = () => {
-  const { email, nickname, gender, location, profileText } = {
-    email: 'user@example.com',
-    nickname: 'string',
-    gender: 'female',
-    location: 'Korea',
-    profileText: "hi! i'm korean",
-    profile_image: 'string',
+  const [userData, setUserData] = useState();
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/data/userData.json`);
+      const data = await res.data;
+      setUserData(data);
+      console.log(userData);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <User>
       <Account>
-        <span className="userName">{nickname}</span>
-        <span className="userEmail">{email}</span>
+        <span className="userName">{userData.nickname}</span>
+        <span className="userEmail">{userData.email}</span>
       </Account>
       <Info>
         <div className="gender">
           <p>
             <FemaleIcon />
-            {gender}
+            {userData.gender}
+          </p>
+        </div>
+        <div className="birthday">
+          <p>
+            <CakeOutlinedIcon />
+            {userData.birthday}
           </p>
         </div>
         <div className="location">
           <p>
             <LocationOnIcon />
-            {location}
+            {userData.location}
           </p>
         </div>
       </Info>
       <Introduction>
-        <span>{profileText}</span>
+        <span>{userData.profileText}</span>
       </Introduction>
       <AdditionalUserInfoArea />
     </User>
