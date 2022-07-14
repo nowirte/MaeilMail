@@ -8,7 +8,7 @@ const UserInfoContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 670px;
-  margin: 40px 0 40px 0;
+  margin-top: 40px;
 `;
 const PersonalInfo = () => {
   return (
