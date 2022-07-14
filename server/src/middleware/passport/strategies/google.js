@@ -1,24 +1,28 @@
 /* eslint-disable no-underscore-dangle */
 import { Strategy } from 'passport-google-oauth20';
 import bcrypt from 'bcrypt';
-import { User } from '../../../db/models';
+import { userService } from '../../../services/user-service';
 
 const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
   clientSecret: process.env.GOOGLE_OAUTH_SECRET,
+  // backend router 경로로 callback할 것
   callbackURL: '/login/google/callback',
 };
 
 async function findOrCreateUser({ email, name }) {
-  const user = await User.findOne({ email });
+  const user = await userService.getUserInfoByEmail({ email });
   if (user) {
     return user;
   }
 
   const hashed = await bcrypt.hash(name, 10);
-  const newUser = await User.create({
+  const newUser = await userService.addNullUser({
     email,
     password: hashed,
+    nickname: hashed,
+    status: "google",
+    gender: "else"
   });
 
   if (!newUser) {

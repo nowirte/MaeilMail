@@ -1,12 +1,12 @@
 import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import { User } from '../../../db/models';
+import { userService } from '../../../services/user-service';
 
 const config = { usernameField: 'email', passwordField: 'password', session: false };
 
 const verify = async (email, password, done) => {
   try {
-    const user = User.findOne({ where: { email } });
+    const user = userService.getUserByEmail({ where: { email } });
     if (!user) {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;

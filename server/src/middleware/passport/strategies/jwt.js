@@ -1,5 +1,5 @@
 import { ExtractJwt as Extract, Strategy } from 'passport-jwt';
-import { User } from '../../../db/models';
+import { userService } from '../../../services/user-service';
 
 const config = {
   jwtFromRequest: Extract.fromHeader('authorization'),
@@ -8,7 +8,7 @@ const config = {
 
 const verify = async (jwtPayload, done) => {
   try {
-    const user = await User.findOne({ where: { id: jwtPayload.id } });
+    const user = await userService.getUserById({ where: { id: jwtPayload.id } });
     if (user) {
       done(null, user);
       return;

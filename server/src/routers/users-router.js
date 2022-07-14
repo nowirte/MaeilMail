@@ -6,7 +6,7 @@ const userRouter = Router();
 
 // 관리자
 userRouter.get(
-  '/admin',
+  '/',
   passport.authenticate('jwtAdmin'),
   async (req, res, next) => {
     try {
@@ -19,12 +19,12 @@ userRouter.get(
 );
 
 userRouter.get(
-  '/admin/:userId',
+  '/:userId',
   passport.authenticate('jwtAdmin'),
   async (req, res, next) => {
     try {
       const { userId } = req.params;
-      const user = userService.getUser(userId);
+      const user = userService.getUserById(userId);
       res.status(200).json(user);
     } catch (err) {
       next(err);

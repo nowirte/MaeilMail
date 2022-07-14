@@ -49,7 +49,8 @@ class User extends Sequelize.Model {
       },
 
       status: {
-        type: DataTypes.STRING(200)
+        type: DataTypes.STRING(200),
+        allowNull: false
       },
 
       profileText: {

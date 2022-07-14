@@ -10,7 +10,7 @@ mypageRouter.get('/', passport.authenticate('jwt'), async (req, res, next) => {
     if (!id) {
       throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
     }
-    const info = userService.getUser(id);
+    const info = userService.getUserById(id);
     res.status(200).json(info);
   } catch (err) {
     next(err);

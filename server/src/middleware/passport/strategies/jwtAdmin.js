@@ -1,5 +1,5 @@
 import { ExtractJwt as Extract, Strategy } from 'passport-jwt';
-import { User } from '../../../db/models';
+import { userService } from '../../../services/user-service';
 
 const config = {
   jwtFromRequest: Extract.fromHeader('authorization'),
@@ -8,10 +8,9 @@ const config = {
 
 const verify = async (jwtPayload, done) => {
   try {
-    //  status 값만 가져오자
-    const userStatus = await User.findOne({ where: { id: jwtPayload.id } });
-    if (userStatus === "admin") {
-      done(null, true);
+    const {status} = await userService.getUserById({ where: { id: jwtPayload.id } });
+    if (status === "admin") {
+      done(null, status);
       return;
     }
     done(null, false, { reason: '권한이 없습니다.' });
