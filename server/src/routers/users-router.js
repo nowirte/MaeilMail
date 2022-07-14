@@ -38,11 +38,11 @@ usersRouter.get(
     passport.authenticate('jwt'),
     async (req, res, next) => {
       try {
-        const { q } = req.query;
-        if (!q) {
+        const { nickname } = req.query;
+        if (!nickname) {
             throw new Error ('검색어를 입력해주세요')
         } 
-        const result = userService.getUserBySearch(q)
+        const result = userService.getUserBySearch(nickname)
         res.status(200).json(result);
       } catch (err) {
         next(err);
@@ -56,7 +56,7 @@ usersRouter.get(
     async (req, res, next) => {
       try {
         const { userId } = req.params;
-        const user = userService.getUser(userId);
+        const user = userService.getUserById(userId);
         res.status(200).json(user);
       } catch (err) {
         next(err);
@@ -70,7 +70,7 @@ usersRouter.get(
     passport.authenticate('jwt'),
     async (req, res, next) => {
       try {
-        const result = userService.getUserRecommend()
+        const result = userService.getUsersRecommended()
         res.status(200).json(result);
       } catch (err) {
         next(err);
@@ -84,7 +84,7 @@ usersRouter.get(
     async (req, res, next) => {
       try {
         const { userId } = req.params;
-        const user = userService.getUser(userId);
+        const user = userService.getUserById(userId);
         res.status(200).json(user);
       } catch (err) {
         next(err);
