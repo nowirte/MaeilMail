@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import logo from './img/logo.png';
 
 const StyledLink = styled(Link)`
@@ -59,9 +58,6 @@ const MyProfile = styled.div`
 `;
 
 const NavTopArea = () => {
-  const userData = useSelector(state => {
-    return state;
-  });
   return (
     <NavTop>
       <StyledLink to="/">
@@ -71,9 +67,9 @@ const NavTopArea = () => {
       <StyledLink to="/mypage">
         <MyProfile>
           <div className="profileImgArea">
-            <img src={userData.profileImage} alt="profileImg" />
+            <img src="/img/뚱이.png" alt="profileImg" />
           </div>
-          <span>{userData.nickname}</span>
+          <span>닉네임</span>
         </MyProfile>
       </StyledLink>
       <Line />

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -47,17 +46,14 @@ const FriendsList = styled.div`
 `;
 
 const NavFriendsArea = () => {
-  const userData = useSelector(state => {
-    return state;
-  });
   return (
     <Friends>
       <StyledLink to="/friend/:id">
         <FriendsList>
           <div className="profileImgArea">
-            <img src={userData.profileImage} alt="friendImg" />
+            <img src="/img/뚱이.png" alt="friendImg" />
           </div>
-          <span>{userData.nickname}</span>
+          <span>닉네임</span>
         </FriendsList>
       </StyledLink>
     </Friends>

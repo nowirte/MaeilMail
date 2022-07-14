@@ -1,15 +1,26 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 
-// const EDIT_USERINFO = 'EDITUSERINFO';
-// const EDIT_PASSWORD = 'EDITPASSWORD';
+const favor = [
+  { movie: true },
+  { language: false },
+  { reading: false },
+  { game: false },
+  { coding: false },
+  { fantasy: false },
+  { sports: false },
+  { entertainment: false },
+  { music: false },
+  { fashion: false },
+  { art: false },
+  { travel: false },
+];
 
 const theme = createTheme({
   palette: {
@@ -46,27 +57,14 @@ const Form = styled.form`
 `;
 
 const UserInfoEditArea = () => {
-  const userData = useSelector(state => {
-    return state;
-  });
-
-  const [user, setUser] = useState(userData);
-  const [currentPassword, setCurrentPassword] = useState(userData.password);
   const [open, setOpen] = useState(false);
-  const handleEditState = e => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  };
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
-  const dispatch = useDispatch();
 
   return (
     <div className="setting">
@@ -90,11 +88,8 @@ const UserInfoEditArea = () => {
                 <input
                   id="nickname"
                   type="text"
-                  placeholder={user.nickname}
+                  placeholder="{user.nickname}"
                   name="nickname"
-                  onChange={e => {
-                    handleEditState(e);
-                  }}
                 />
               </label>
               <label htmlFor="profileText">
@@ -102,29 +97,18 @@ const UserInfoEditArea = () => {
                 <input
                   id="profileText"
                   type="text"
-                  placeholder={user.profileText}
+                  placeholder="{user.profileText}"
                   name="profileText"
-                  onChange={e => {
-                    handleEditState(e);
-                  }}
                 />
               </label>
               <label htmlFor="birthday">
                 생일
-                <input
-                  id="birthday"
-                  type="date"
-                  name="birthday"
-                  value={user.birthday}
-                  onChange={e => {
-                    handleEditState(e);
-                  }}
-                />
+                <input id="birthday" type="date" name="birthday" />
               </label>
               <p>관심사를 선택해주세요.</p>
 
               <p id="favoriteTopic">
-                {Object.entries(userData.favor).map(e => {
+                {favor.map(e => {
                   return (
                     <span key={e[0]}>
                       <input
@@ -148,31 +132,19 @@ const UserInfoEditArea = () => {
                 </select>
               </label>
               <label htmlFor="currentPassowrd">
-                <p>현재 비밀번호를 입력해주세요.</p>
+                현재 비밀번호를 입력해주세요.
                 <input
                   id="currentPassowrd"
                   type="password"
                   placeholder="현재 비밀번호"
-                  onChange={e => {
-                    setCurrentPassword(e.target.value);
-                  }}
                 />
-                {userData.password !== currentPassword ? (
-                  <p>현재 비밀번호를 다시 확인해주세요.</p>
-                ) : (
-                  ''
-                )}
               </label>
-              <label htmlFor="password">
-                <p>변경 할 비밀번호를 입력해주세요.</p>
+              <label htmlFor="changedPassowrd">
+                변경 할 비밀번호를 입력해주세요.
                 <input
-                  id="password"
+                  id="changedPassowrd"
                   type="password"
                   placeholder="새로운 비밀번호"
-                  name="password"
-                  onChange={e => {
-                    handleEditState(e);
-                  }}
                 />
               </label>
               <ThemeProvider theme={theme}>
@@ -182,11 +154,6 @@ const UserInfoEditArea = () => {
                   color="neutral"
                   disabled={false}
                   sx={{ mr: 1 }}
-                  onClick={e => {
-                    e.preventDefault();
-                    dispatch({ type: 'EDITUSERINFO', data: user });
-                    handleClose();
-                  }}
                 >
                   변경하기
                 </Button>
