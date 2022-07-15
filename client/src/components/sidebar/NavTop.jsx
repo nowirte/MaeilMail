@@ -71,7 +71,7 @@ const NavTopArea = () => {
       //   const res = await axios.get(`주소`,{
       //     headers: {
       //       'Content-Type': 'application/json; charset=utf-8',
-      //       authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      //       authorization: `Bearer ${localStorage.getItem('token')}`,
       //    },
       //  }
       // )

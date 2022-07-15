@@ -14,6 +14,16 @@ const SideBar = () => {
     try {
       const res = await axios.get(`http://localhost:3333/user`);
       const data = res.data;
+
+      // 헤더에 토큰 보내고 친구 데이터 받아오기 / 추후 친구 컴포넌트에서 get할 예정
+      //   const res = await axios.get(`주소`,{
+      //     headers: {
+      //       'Content-Type': 'application/json; charset=utf-8',
+      //       authorization: `Bearer ${localStorage.getItem('token')}`,
+      //    },
+      //  }
+      // )
+
       setFriend(data);
     } catch (err) {
       console.log(err);
