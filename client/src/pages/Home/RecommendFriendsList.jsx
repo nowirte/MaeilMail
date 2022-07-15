@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -18,7 +16,7 @@ const RecommendFriendsList = props => {
           <SwiperSlide>
             <RecommendationFriendBox>
               <RecommendFriend>
-                <img src={props.data.img} alt={props.data.name} />
+                <img src="/img/뚱이.png" alt={props.data.name} />
               </RecommendFriend>
               <RecommendFriendName>
                 <span>{props.data.name}</span>

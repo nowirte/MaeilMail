@@ -1,0 +1,28 @@
+{
+  "letter": [
+{   "letterId":3,
+    "sendId": 1,
+    "receiveId": 2,
+    "status": "incoming",
+    "sendDate":	"30/05/2022 02:34:56",
+    "deliveryTime":	9,
+    "receiveDate":	"30/05/2022 11:34:56",
+    "sendLocation":	"United States",
+    "receiveLocation":"Korea",
+    "send_img": "https://www.pngwing.com/en/search?q=emoji",
+    "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
+  },
+  {   "letterId":3,
+    "sendId": 1,
+    "receiveId": 2,
+    "status": "arrived",
+    "sendDate":	"30/05/2022 02:34:56",
+    "deliveryTime":	9,
+    "receiveDate":	"30/05/2022 11:34:56",
+    "sendLocation":	"United States",
+    "receiveLocation":"Korea",
+    "send_img": "https://www.pngwing.com/en/search?q=emoji",
+    "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
+  }
+  ]
+}
