@@ -12,7 +12,7 @@ const UserInfoEditArea = props => {
   const userData = props.data;
 
   const [inputData, setInputData] = useState({});
-  const [checkFavor, setCheckFavor] = useState([]);
+  const [checkFavor, setCheckFavor] = useState(userData.favor);
   const [currentPassword, setCurrentPassword] = useState('');
   const [changedPassword, setChangedPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -34,9 +34,18 @@ const UserInfoEditArea = props => {
   );
 
   const handlecheckedfavor = e => {
-    // setCheckFavor(e);
-    const checked = e.map(el => el.value);
-    // userData.favor.filter(e => e.value === )
+    const value = e[0].selected === null ? true : null;
+    setCheckFavor({
+      ...checkFavor,
+      selected: value,
+    });
+
+    console.log(checkFavor);
+    // const newArray = [...userData.favor];
+
+    // const updated = newArray.map(data => {
+    //   e.selected === null ? {...e, selected: true} : e.selected === true ? {...e, selected: null} : e
+    // })
   };
 
   const handleOnChange = e => {
@@ -74,6 +83,7 @@ const UserInfoEditArea = props => {
       console.log('바뀐 비번', changedPassword);
       handleModal();
       alert('회원 정보가 변경되었습니다.');
+      alert(checkFavor);
     } catch (err) {
       console.log(err);
     }

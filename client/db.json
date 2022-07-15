@@ -4,34 +4,132 @@
       "id": 1,
       "userId": 0,
       "email": "user@example.com",
-      "password": "11111",
-      "nickname": "재영",
+      "password": "",
+      "nickname": "string",
       "gender": "string",
-      "language": "string",
-      "birthday": "2022-10-18",
+      "language": [
+        {
+          "value": "afrikaans",
+          "label": "Afrikaans",
+          "selected": null
+        },
+        {
+          "value": "chinese",
+          "label": "Chinese",
+          "selected": null
+        },
+        {
+          "value": "english",
+          "label": "English",
+          "selected": null
+        },
+        {
+          "value": "french",
+          "label": "French",
+          "selected": null
+        },
+        {
+          "value": "german",
+          "label": "German",
+          "selected": null
+        },
+        {
+          "value": "japanese",
+          "label": "Japanese",
+          "selected": null
+        },
+        {
+          "value": "korean",
+          "label": "Korean",
+          "selected": null
+        },
+        {
+          "value": "russian",
+          "label": "Russian",
+          "selected": null
+        },
+        {
+          "value": "spanish",
+          "label": "Spanish",
+          "selected": null
+        },
+        {
+          "value": "uzbek",
+          "label": "Uzbek",
+          "selected": null
+        }
+      ],
+      "birthday": "2022-07-14",
       "location": "string",
       "latitude": 0,
       "longitude": 0,
       "status": "string",
-      "profileText": "안녕하시렵니까",
+      "profileText": "string",
       "profileImage": "/img/뚱이.png",
       "createdAt": "2022-07-14T10:55:27.089Z",
       "updatedAt": "2022-07-14T10:55:27.089Z",
-      "favor": {
-        "userId": 0,
-        "movie": true,
-        "language": true,
-        "reading": true,
-        "game": true,
-        "coding": true,
-        "fantasy": true,
-        "sports": true,
-        "entertainment": true,
-        "music": true,
-        "fashion": true,
-        "art": true,
-        "travel": true
-      }
+      "favor": [
+        {
+          "value": "movie",
+          "label": "Movie",
+          "selected": null
+        },
+        {
+          "value": "language",
+          "label": "Language",
+          "selected": null
+        },
+        {
+          "value": "reading",
+          "label": "Reading",
+          "selected": null
+        },
+        {
+          "value": "game",
+          "label": "Game",
+          "selected": null
+        },
+        {
+          "value": "coding",
+          "label": "Coding",
+          "selected": null
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy",
+          "selected": null
+        },
+        {
+          "value": "sports",
+          "label": "Sports",
+          "selected": null
+        },
+        {
+          "value": "entertainment",
+          "label": "Entertainment",
+          "selected": null
+        },
+        {
+          "value": "music",
+          "label": "Music",
+          "selected": null
+        },
+        {
+          "value": "fashion",
+          "label": "Fashion",
+          "selected": null
+        },
+        {
+          "value": "art",
+          "label": "Art",
+          "selected": null
+        },
+        {
+          "value": "travel",
+          "label": "Travel",
+          "selected": null
+        }
+      ]
     },
     {
       "id": 2,

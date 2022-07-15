@@ -13,7 +13,6 @@ const MyPage = () => {
       const res = await axios.get(`http://localhost:3333/user`);
       const data = res.data[0];
       setUserData(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

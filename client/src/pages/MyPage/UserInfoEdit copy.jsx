@@ -5,18 +5,34 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
-import Select from 'react-select';
 import axios from 'axios';
+
+const favor = {
+  userId: 0,
+  movie: true,
+  language: true,
+  reading: true,
+  game: true,
+  coding: true,
+  fantasy: true,
+  sports: true,
+  entertainment: true,
+  music: true,
+  fashion: true,
+  art: true,
+  travel: true,
+};
 
 const UserInfoEditArea = props => {
   const userData = props.data;
 
   const [inputData, setInputData] = useState({});
-  const [checkFavor, setCheckFavor] = useState([]);
   const [currentPassword, setCurrentPassword] = useState('');
   const [changedPassword, setChangedPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
+
+  console.log(userData.favor);
 
   const handleModal = () => {
     if (open) {
@@ -26,18 +42,9 @@ const UserInfoEditArea = props => {
     }
   };
 
-  const favorSelectList = (userData.favor || []).filter(
-    e => e.selected === true
-  );
-  const languageSelectList = (userData.language || []).filter(
-    e => e.selected === true
-  );
-
-  const handlecheckedfavor = e => {
-    // setCheckFavor(e);
-    const checked = e.map(el => el.value);
-    // userData.favor.filter(e => e.value === )
-  };
+  useEffect(() => {
+    setInputData(userData);
+  }, []);
 
   const handleOnChange = e => {
     const { value, name } = e.target;
@@ -59,10 +66,9 @@ const UserInfoEditArea = props => {
         alert('새로운 비밀번호를 다시 확인해주세요.');
         return;
       }
-
-      // if (changedPassword === '') {
-      //   setChangedPassword(userData.password);
-      // }
+      if (changedPassword === '') {
+        setChangedPassword(userData.password);
+      }
 
       await axios.patch(`http://localhost:3333/user/1`, {
         nickname: inputData.nickname,
@@ -91,12 +97,15 @@ const UserInfoEditArea = props => {
         aria-labelledby="userInfoEdit-title"
         aria-describedby="userInfoEdit-description"
       >
-        <ModalStyle style={{ width: 600 }}>
+        <ModalStyle>
           {/* 모달 스타일 박스 쉐도우 값 설정 필요 */}
           <Title id="userInfoEdit-title">회원정보 수정</Title>
           <div id="userInfoEdit-description">
             <Form className="userInfoEditForm" onSubmit={handleSubmit}>
-              <EditTitle className="nickname">
+              <EditTitle
+                className="nickname"
+                style={{ position: 'absolute', left: '10%', top: ' 55px' }}
+              >
                 닉네임
                 <input
                   id="nickname"
@@ -106,7 +115,10 @@ const UserInfoEditArea = props => {
                   onChange={handleOnChange}
                 />
               </EditTitle>
-              <EditTitle className="profileText">
+              <EditTitle
+                className="profileText"
+                style={{ position: 'absolute', right: '10%', top: ' 55px' }}
+              >
                 한 줄 소개
                 <input
                   id="profileText"
@@ -116,17 +128,23 @@ const UserInfoEditArea = props => {
                   onChange={handleOnChange}
                 />
               </EditTitle>
-              <EditTitle className="location">
+              <EditTitle
+                className="location"
+                style={{ position: 'absolute', right: '10%', top: ' 140px' }}
+              >
                 위치
                 <input
                   id="location"
-                  type="text"
+                  type="date"
                   name="location"
                   value={userData.location || ''}
                   onChange={handleOnChange}
                 />
               </EditTitle>
-              <EditTitle className="birthday">
+              <EditTitle
+                className="birthday"
+                style={{ position: 'absolute', left: '10%', top: ' 140px' }}
+              >
                 생일
                 <input
                   id="birthday"
@@ -136,43 +154,66 @@ const UserInfoEditArea = props => {
                   onChange={handleOnChange}
                 />
               </EditTitle>
-              <EditTitle className="favor">
+              <EditTitle
+                style={{ position: 'absolute', left: '10%', top: ' 225px' }}
+              >
                 관심사
-                <StyledSelect
-                  defaultValue={favorSelectList}
-                  isMulti
-                  name="favor"
-                  options={userData.favor}
-                  className="favorSelect"
-                  placeholder="관심사 선택"
-                  onChange={handlecheckedfavor}
+                <input
+                  id="birthday"
+                  type="date"
+                  name="birthday"
+                  value={userData.birthday || ''}
+                  onChange={handleOnChange}
                 />
+                <p id="favoriteTopic">
+                  {/* {Object.keys(favor).map(e => {
+                  console.log(e); */}
+                  {/* return (
+                    <span key={e}>
+                      <input
+                        type="checkbox"
+                        name={e}
+                        value={e || ''}
+                        // checked={e[1]}
+                      />
+                      <EditTitle className="favoriteTopic">{e}</EditTitle>
+                    </span> */}
+                  {/* ); */}
+                  {/* })} */}
+                </p>
               </EditTitle>
-              <EditTitle className="language">
+              <EditTitle
+                className="language"
+                style={{ position: 'absolute', right: '10%', top: ' 225px' }}
+              >
                 사용 언어
-                <StyledSelect
-                  defaultValue={languageSelectList}
-                  isMulti
-                  name="language"
-                  options={userData.language}
-                  className="languageSelect"
-                  classNamePrefix="language"
-                  placeholder="언어 선택"
-                />
+                <select name="language" id="language">
+                  <option value="">선택해주세요.</option>
+                  <option value="korean">한국어</option>
+                  <option value="english">영어</option>
+                  <option value="chinese">중국어</option>
+                </select>
               </EditTitle>
-              <EditTitle className="changedPassowrd">
+              <EditTitle
+                className="changedPassowrd"
+                style={{ position: 'absolute', left: '10%', top: ' 330px' }}
+              >
                 변경 할 비밀번호
                 <input
                   id="changedPassowrd"
                   type="password"
                   placeholder="새로운 비밀번호"
                   name="changedPassowrd"
+                  value={changedPassword || ''}
                   onChange={e => {
                     setChangedPassword(e.target.value);
                   }}
                 />
               </EditTitle>
-              <EditTitle className="checkPassowrd">
+              <EditTitle
+                className="checkPassowrd"
+                style={{ position: 'absolute', right: '10%', top: ' 330px' }}
+              >
                 비밀번호 확인
                 <input
                   id="checkPassowrd"
@@ -187,13 +228,20 @@ const UserInfoEditArea = props => {
                 {changedPassword !== checkPassword && (
                   <p
                     className="changedPasswordChecked"
-                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
+                    style={{ fontSize: '0.75rem', color: 'red' }}
                   >
                     새로운 비밀번호가 일치하지 않습니다.
                   </p>
                 )}
               </EditTitle>
-              <EditTitle className="currentPassowrd">
+              <EditTitle
+                className="currentPassowrd"
+                style={{
+                  position: 'absolute',
+                  left: '25%',
+                  top: ' 415px',
+                }}
+              >
                 현재 비밀번호를 입력해주세요.
                 <input
                   id="currentPassowrd"
@@ -208,13 +256,16 @@ const UserInfoEditArea = props => {
                 {userData.password !== currentPassword && (
                   <p
                     className="currentPasswordChecked"
-                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
+                    style={{ fontSize: '0.75rem', color: 'red' }}
                   >
-                    현재 비밀번호가 일치해야 정보를 변경할 수 있습니다.
+                    현재 비밀번호가 일치하지 않습니다.
                   </p>
                 )}
               </EditTitle>
-              <div className="editBtn">
+              <div
+                className="editBtn"
+                style={{ position: 'absolute', left: '32%', top: ' 500px' }}
+              >
                 <ThemeProvider theme={theme}>
                   <Button
                     type="submit"
@@ -258,22 +309,11 @@ const theme = createTheme({
 const Title = styled.h2`
   font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
 `;
 
 const Form = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(6, 0.5fr);
-  justify-items: center;
-
-  & input {
-    height: 25px;
-  }
-
-  & #profileText {
-    width: 200px;
-  }
+  display: block;
 
   & #favoriteTopic {
     display: flex;
@@ -291,17 +331,6 @@ const Form = styled.form`
       }
     }
   }
-
-  .currentPassowrd {
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-  > .currentPassowrd {
-    grid-column: 1/3;
-  }
-  > .editBtn {
-    grid-column: 1/3;
-  }
 `;
 
 const EditTitle = styled.h3`
@@ -309,12 +338,7 @@ const EditTitle = styled.h3`
   flex-direction: column;
   align-items: center;
 
-  margin: 7px 0;
+  margin-bottom: 15px;
 
   font-size: 1rem;
-`;
-
-const StyledSelect = styled(Select)`
-  width: 250px;
-  padding: 3px 0;
 `;

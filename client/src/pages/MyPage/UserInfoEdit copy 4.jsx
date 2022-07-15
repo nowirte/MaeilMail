@@ -34,9 +34,15 @@ const UserInfoEditArea = props => {
   );
 
   const handlecheckedfavor = e => {
-    // setCheckFavor(e);
-    const checked = e.map(el => el.value);
-    // userData.favor.filter(e => e.value === )
+    setCheckFavor(e);
+    // if (e) {
+    //   setCheckFavor([...checkFavor, e.target.value]);
+    // } else {
+    //   const newdata = checkFavor.filter(favor => favor !== e.target.value);
+    //   setCheckFavor([newdata]);
+    // }
+    // console.log(checkFavor);
+    // // const newArray = [...userData.favor];
   };
 
   const handleOnChange = e => {
@@ -63,6 +69,26 @@ const UserInfoEditArea = props => {
       // if (changedPassword === '') {
       //   setChangedPassword(userData.password);
       // }
+
+      const updated = checkFavor.map(e => {
+        const favor = [...userData.favor];
+        const index = (userData.favor || []).findIndex(
+          data => data.value === e.value
+        );
+        // return { ...favor, selected: true };
+        // const favorArray = [...favor, (favor[index] = '')];
+        return [...favor, (favor[index] = { ...e, selected: true })];
+      });
+      console.log(updated);
+      // const updated = checkFavor.map(e => {
+      //   return { ...e, selected: true };
+      // });
+
+      // const index = (userData.favor || []).findIndex(
+      //   data => data.value === e.value
+      // );
+      // // updateArray(userData.favor, )
+      // console.log(userData.favor[2]);
 
       await axios.patch(`http://localhost:3333/user/1`, {
         nickname: inputData.nickname,
@@ -147,6 +173,24 @@ const UserInfoEditArea = props => {
                   placeholder="관심사 선택"
                   onChange={handlecheckedfavor}
                 />
+                {/* <select
+                  value={checkFavor}
+                  onChange={handlecheckedfavor}
+                  multiple={true}
+
+                >
+                  {(userData.favor || []).map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <p>
+                  {checkFavor}
+                  <button type="button" onClick={handledeletefavor}>
+                    x
+                  </button>
+                </p> */}
               </EditTitle>
               <EditTitle className="language">
                 사용 언어
