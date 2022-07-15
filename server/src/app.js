@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import passportConfig from './middleware/passport';
-import { loginRouter, signupRouter, userRouter, usersRouter } from './routers'
+import { loginRouter, signupRouter, userRouter, usersRouter, lettersRouter } from './routers'
 import { errorHandler } from './middleware'
 import { db } from './db';
 
@@ -24,6 +24,7 @@ app.use('/login', loginRouter)
 app.use('/signup', signupRouter)
 app.use('/user', userRouter)
 app.use('/users', usersRouter)
+app.use('/letters', lettersRouter)
 
 app.use(errorHandler)
 export { app };

@@ -35,7 +35,7 @@ class UserService {
       gender,
     };
 
-    const newUser = await this.userModel.create(newUserInfo);
+    const newUser = await this.User.create(newUserInfo);
 
     return newUser;
   }
@@ -50,7 +50,7 @@ class UserService {
       throw new Error('중복된 이메일입니다.');
     }
 
-    const newUser = await this.userModel.create(userInfo);
+    const newUser = await this.User.create(userInfo);
 
     return newUser;
   }
