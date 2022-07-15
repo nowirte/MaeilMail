@@ -34,9 +34,9 @@ const UserInfoEditArea = props => {
   );
 
   const handlecheckedfavor = e => {
-    // const checked = e.map(el => el.value);
-    e.forEach(el => (el.selected = true));
-    setCheckFavor(e);
+    // setCheckFavor(e);
+    const checked = e.map(el => el.value);
+    // userData.favor.filter(e => e.value === )
   };
 
   const handleOnChange = e => {
@@ -59,12 +59,7 @@ const UserInfoEditArea = props => {
         alert('새로운 비밀번호를 다시 확인해주세요.');
         return;
       }
-      console.log(checkFavor);
 
-      // const test = userData.favor.
-      const index = (userData.favor || []).findIndex(
-        data => data.value === e.value
-      );
       // if (changedPassword === '') {
       //   setChangedPassword(userData.password);
       // }
@@ -172,7 +167,6 @@ const UserInfoEditArea = props => {
                   type="password"
                   placeholder="새로운 비밀번호"
                   name="changedPassowrd"
-                  value={changedPassword || ''}
                   onChange={e => {
                     setChangedPassword(e.target.value);
                   }}
