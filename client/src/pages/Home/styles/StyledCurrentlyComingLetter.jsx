@@ -19,7 +19,7 @@ export const CurrentlyComingContentContainer = styled.div`
   justify-content: center;
 `;
 export const LetterContent = styled.div`
-  width: 240px;
+  width: 80%;
   height: 150px;
   border: 1px solid black;
   font-size: 24px;

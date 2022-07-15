@@ -30,7 +30,7 @@ const CurrentlyComingLetter = () => {
           <div>현재 배송 중인 편지를 로딩중입니다.</div>
         ) : (
           currentlyLetters.map((letter, index) => (
-            <SwiperSlide key={`index`}>
+            <SwiperSlide key={index}>
               <CurrentlyComingContainer>
                 <CurrentlyComingContentContainer>
                   <LetterContent>{letter.content}</LetterContent>

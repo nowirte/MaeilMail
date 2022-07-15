@@ -8,12 +8,11 @@ import RecommendFriendsList from './RecommendFriendsList';
 const SearchBar = () => {
   const [users, setUsers] = useState([]);
   const [searchField, setSearchField] = useState('');
-  // const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:3333/user').then(res => {
       setUsers(res.data);
-      console.log('users', users);
+      // console.log('users', users);
     });
   }, []);
 
