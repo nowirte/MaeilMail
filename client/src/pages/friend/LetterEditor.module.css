@@ -1,0 +1,15 @@
+.LetterEditor {
+  border: 1px solid gray;
+  text-align: center;
+}
+
+.LetterEditor textarea {
+  margin-bottom: 20px;
+  width: 90%;
+  font-size: 1rem;
+}
+
+.LetterEditor button {
+  font-size: 1rem;
+  cursor: pointer;
+}

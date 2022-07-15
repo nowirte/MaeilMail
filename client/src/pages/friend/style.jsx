@@ -66,7 +66,7 @@ const WriteBtn = styled.button`
   position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 999;
+  z-index: 2;
   border: 1px solid #ccc;
   outline: none;
   background-color: #ccc;

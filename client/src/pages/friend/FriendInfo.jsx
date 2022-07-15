@@ -11,21 +11,23 @@ import {
   BadgeWrapper,
   Badge,
 } from './FriendInfoStyle';
+import { getBirth, getAge } from './module';
 
-const FriendInfo = props => {
-  const { onShowProfile } = props;
+const FriendInfo = ({ handleChange, data }) => {
   return (
     <User>
       <UserInfo>
-        <UserName>Arae Boram</UserName>
+        <UserName>{data.nickname}</UserName>
         <UserDetail>
           <DetailItem>
             <PinDropIcon style={{ fontSize: '1rem' }} />
-            브라질
+            {data.location}
           </DetailItem>
-          <DetailItem>3월 31일 (50)</DetailItem>
+          <DetailItem>
+            {getBirth(data.birthday)} ({getAge(data.birthday)})
+          </DetailItem>
         </UserDetail>
-        <UserBio>Hey, sorry I didn&apos;t get back to you sooner. 🥲</UserBio>
+        <UserBio>{data.profileText}</UserBio>
         <BadgeWrapper>
           <Badge>영화</Badge>
           <Badge>음악</Badge>
@@ -34,7 +36,7 @@ const FriendInfo = props => {
           <Badge>영어</Badge>
         </BadgeWrapper>
       </UserInfo>
-      <UserEmoji onClick={onShowProfile}>🐮</UserEmoji>
+      <UserEmoji onClick={handleChange}>🐮</UserEmoji>
     </User>
   );
 };
