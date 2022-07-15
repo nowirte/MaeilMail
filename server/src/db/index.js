@@ -1,7 +1,8 @@
 // import path from 'path';
 import Sequelize from 'sequelize';
-import {User} from './models/user'
-import {Favor} from './models/favor'
+import {User} from './models/user';
+import {Favor} from './models/favor';
+import {Letter} from './models/letter';
 // import dotenv from 'dotenv';
 // const env = process.env.NODE_ENV || 'development';
 // const config = require(
@@ -25,11 +26,14 @@ db.sequelize = sequelize;
 
 db.User = User;
 db.Favor = Favor;
+db.Letter = Letter;
 
 User.init(sequelize);
 Favor.init(sequelize);
+Letter.init(sequelize);
 
 User.associate(db);
 Favor.associate(db);
+Letter.associate(db);
 
 export { db };

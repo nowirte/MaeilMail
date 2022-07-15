@@ -11,9 +11,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-sequelize.sync({ force: false });
+sequelize.sync({force: false});
 app.get('/', (req, res) => {
   return res.send('express!');
 });
+
 
 export { app };
