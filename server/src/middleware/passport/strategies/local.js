@@ -6,7 +6,7 @@ const config = { usernameField: 'email', passwordField: 'password', session: fal
 
 const verify = async (email, password, done) => {
   try {
-    const user = userService.getUserByEmail({ where: { email } });
+    const user = userService.getUserByEmail(email);
     if (!user) {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;
