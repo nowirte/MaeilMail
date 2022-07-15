@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import Friend from './pages/friend';
-import SignUp from './pages/signup';
+import SignUp from './pages/Signup';
 import MyPage from './pages/MyPage';
-import Login from './pages/login';
+import Login from './pages/Login';
+import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route element={<LoginBackground />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/googleSignup" element={<GoogleSignup />} />
         </Route>
       </Routes>
     </Router>

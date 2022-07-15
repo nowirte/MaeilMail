@@ -7,7 +7,7 @@ import {
   LoginInput,
   LoginButton,
   LinkContainer,
-} from './SignupFormElements';
+} from './GoogleSignupFormElements';
 import PersonalInfo from './PersonalInfo';
 
 const SignupCard = styled.form`
@@ -20,28 +20,22 @@ const SignupCard = styled.form`
   justify-content: center;
   flex-direction: column;
   width: 900px;
-  height: 1100px;
+  height: 700px;
 
   border-radius: 48px;
 
   background-color: white;
 `;
 
-const SignUp = () => {
+const googleSignup = () => {
   return (
     <SignupCard>
       <Logo src={logo} alt="Logo" />
       <PersonalInfo />
       <LoginInput placeholder="닉네임" />
-      <LoginInput placeholder="이메일" type="email" />
-      <LoginInput placeholder="비밀번호" type="password" />
-      <LoginInput placeholder="비밀번호 확인" type="password" />
-      <LoginButton>회원가입하기</LoginButton>
-      <LinkContainer>
-        <Link to="/Login">로그인 페이지로 돌아가기</Link>
-      </LinkContainer>
+      <LoginButton>구글로 회원가입하기</LoginButton>
     </SignupCard>
   );
 };
 
-export default SignUp;
+export default googleSignup;
