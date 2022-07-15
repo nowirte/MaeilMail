@@ -31,7 +31,14 @@ const UserSignOutArea = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await axios.delete(`http://localhost:3333/user/1`);
+
+    await axios.patch(`http://localhost:3333/user/1`, {
+      // headers: {
+      //   'Content-Type': 'application/json; charset=utf-8',
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
+      password: checkPassowrd,
+    });
 
     handleModal();
     localStorage.clear();
