@@ -8,36 +8,32 @@ import RecommendFriendsList from './RecommendFriendsList';
 const SearchBar = () => {
   const [users, setUsers] = useState([]);
   const [searchField, setSearchField] = useState('');
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  // const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('/userurl') // 무작위로 추천 10개
-      .then(res => {
-        return res.data;
-      })
-      .then(a => {
-        return setUsers(a);
-      });
+    axios.get('http://localhost:3333/user').then(res => {
+      setUsers(res.data);
+      console.log('users', users);
+    });
   }, []);
 
   const onSearch = e => {
     e.preventDefault();
-    // if (searchField === null || searchField === '') {
-    //   axios.get('/users').then(res => {
-    //     setFilteredUsers(res.data);
-    //   });
-    // }
-    setFilteredUsers(() => {
+    if (searchField === null || searchField === '') {
+      axios.get('http://localhost:3333/user').then(res => {
+        setUsers(res.data);
+      });
+    }
+    setUsers(() => {
       return users.filter(user => {
-        return user.name.toLowerCase().includes(searchField.toLowerCase());
+        return user.nickname.toLowerCase().includes(searchField.toLowerCase());
       });
     });
   };
   return (
     <>
       <StyledSearchbar>
-        <form action="" onSubmit={onSearch}>
+        <form onSubmit={onSearch}>
           <input
             value={searchField}
             onChange={e => {
@@ -52,7 +48,7 @@ const SearchBar = () => {
         </form>
       </StyledSearchbar>
       <RecommendHeader />
-      <RecommendFriendsList data={filteredUsers} />
+      <RecommendFriendsList data={users} />
     </>
   );
 };
