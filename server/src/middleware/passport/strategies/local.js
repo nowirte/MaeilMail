@@ -1,17 +1,16 @@
 import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import { userService } from '../../../services/user-service';
+import { userService } from '../../../services';
 
 const config = { usernameField: 'email', passwordField: 'password', session: false };
 
 const verify = async (email, password, done) => {
   try {
-    const user = userService.getUserByEmail(email);
+    const user = await userService.validateUserByEmail(email);
     if (!user) {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;
     }
-    console.log('user:', user, 'password:', password)
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       done(null, { userId: user.user_id, status: user.status });

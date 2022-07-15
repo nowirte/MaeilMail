@@ -1,5 +1,5 @@
 import { ExtractJwt as Extract, Strategy } from 'passport-jwt';
-import { userService } from '../../../services/user-service';
+import { userService } from '../../../services';
 
 const config = {
   jwtFromRequest: Extract.fromHeader('authorization'),

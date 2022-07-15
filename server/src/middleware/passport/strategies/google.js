@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Strategy } from 'passport-google-oauth20';
 import bcrypt from 'bcrypt';
-import { userService } from '../../../services/user-service';
+import { userService } from '../../../services';
 
 const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
@@ -10,10 +10,11 @@ const config = {
   callbackURL: '/login/google/callback',
 };
 
-async function findOrCreateUser({ email, name }) {
-  const user = await userService.getUserByEmail({ email });
+async function findOrCreateUser(email, name) {
+  const user = await userService.getGoogleUserByEmail(email);
+
   if (user) {
-    return user;
+    return user
   }
 
   const hashed = await bcrypt.hash(name, 10);
@@ -21,8 +22,8 @@ async function findOrCreateUser({ email, name }) {
     email,
     password: hashed,
     nickname: hashed,
-    status: "google",
-    gender: "else"
+    status: 'google',
+    gender: 'else',
   });
 
   if (!newUser) {
@@ -34,9 +35,8 @@ async function findOrCreateUser({ email, name }) {
 
 const verify = async (a, b, profile, done) => {
   try {
-    console.log(profile)
     const { email, name } = profile._json;
-    const user = await findOrCreateUser({ email, name });
+    const user = await findOrCreateUser(email, name);
     if (user) {
       done(null, { userId: user.user_id, status: user.status });
       return;

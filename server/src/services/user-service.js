@@ -5,12 +5,13 @@ import { User, Favor } from '../db/models';
 
 const include = [{ model: Favor }];
 class UserService {
-  constructor(param) {
-    this.User = param;
+  constructor(param1, param2) {
+    this.User = param1;
+    this.Favor = param2;
   }
 
   async addUser(userInfo) {
-    const { nickname, email, password, gender, location, latitude, longitude, birthday} = userInfo;
+    const { nickname, email, password, gender, location, latitude, longitude, birthday } = userInfo;
 
     const emailResult = await this.User.findOne({
       where: { email, status: 'active' },
@@ -36,7 +37,7 @@ class UserService {
       location,
       latitude,
       longitude,
-      birthday
+      birthday,
     };
 
     const newUser = await this.User.create(newUserInfo);
@@ -46,7 +47,6 @@ class UserService {
 
   async addNullUser(userInfo) {
     const { email } = userInfo;
-
     const result = await this.User.findOne({
       where: { email, status: 'active' },
     });
@@ -59,25 +59,21 @@ class UserService {
     return newUser;
   }
 
+  // 재사용성 있는 모델로 바꾸면 좋을 것 같음. 괜히 한 군데 뭉쳐놓은 느낌
   async updateUser(id, password, toUpdate, favor) {
     if (password) {
-      const currentPassword = await this.User.findOne(
-        { where: { user_id: Number(id) } },
-        { attributes: ['password'] }
-      );
-      if (currentPassword !== password) {
+      const user = await this.User.findOne({ where: { user_id: Number(id) }, attributes: ['password'] });
+      const currentPassword = user.dataValues.password;
+      const result = await bcrypt.compare(password, currentPassword);
+      if (!result) {
         throw new Error('비밀번호가 일치하지 않습니다.');
       }
     }
-    const newPassword = toUpdate;
-    const hashedPassword =
-      password && toUpdate ? await bcrypt.hash(newPassword, 10) : null;
 
-    const update = !password
-      ? toUpdate
-      : !toUpdate
-      ? { status: 'inactive' }
-      : { password: hashedPassword };
+    const newPassword = toUpdate;
+    const hashedPassword = password && toUpdate ? await bcrypt.hash(newPassword, 10) : null;
+
+    const update = !password ? toUpdate : !toUpdate ? { status: 'inactive' } : { password: hashedPassword };
 
     const filter = {
       where: { user_id: Number(id), status: 'active' },
@@ -85,16 +81,17 @@ class UserService {
     };
 
     await this.User.update(update, filter);
-    await this.User.findOne(filter).then(async user => {
-      if (user) {
-        await user.Favor.updateAttributes(favor);
-      } else {
-        throw new Error('유저의 관심사를 가져올 수 없습니다.');
-      }
-    });
+
+    if (favor) {
+      await this.Favor.findOrCreate({
+        where: { userId: Number(id) },
+      });
+      await this.Favor.update(favor, {
+        where: { userId: Number(id) },
+      });
+    }
 
     const updated = await this.getUserById(id);
-
     return updated;
   }
 
@@ -104,8 +101,8 @@ class UserService {
   }
 
   async getUserById(id) {
-    const user = await this.User.findByPk({
-      where: { id: Number(id) },
+    const user = await this.User.findOne({
+      where: { user_id: Number(id) },
       include,
     });
     if (!user) {
@@ -114,23 +111,35 @@ class UserService {
     return user;
   }
 
-  async getUserByEmail(email) {
+  async validateUserByEmail(email) {
     const user = await this.User.findOne({
       where: { email, status: 'active' },
-      include
+      include,
     });
-    if (!user) {
-      throw new Error(
-        '해당 이메일과 일치하는 사용자 정보가 존재하지 않습니다.'
-      );
-    }
+
+    return user;
+  }
+
+  async getGoogleUserByEmail(email) {
+    const user = await this.User.findOne({
+      where: { email, status: 'google' },
+      include,
+    });
+
+    return user;
+  }
+
+  async updateGoogleUser(id, toUpdate) {
+    const data = { ...toUpdate, status: 'active' };
+    const user = await this.User.update(data, { where: { user_id: id, status: 'google' } });
+
     return user;
   }
 
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      include
+      include,
     });
     return users;
   }
@@ -145,6 +154,6 @@ class UserService {
   }
 }
 
-const userService = new UserService(User);
+const userService = new UserService(User, Favor);
 
 export { userService };

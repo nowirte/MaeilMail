@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { setUserToken } from '../utils/setUserToken';
+import { setUserToken } from '../utils';
 
 const loginRouter = Router();
 
@@ -14,7 +14,6 @@ loginRouter.post(
     try {
       // 토큰 제공
       await setUserToken(req.user, res);
-      res.redirect('/');
     } catch (err) {
       next(err);
     }
@@ -36,7 +35,6 @@ loginRouter.get(
   async (req, res, next) => {
     try {
       await setUserToken(req.user, res)
-      res.redirect('/');
     } catch (err) {
       next(err);
     }
