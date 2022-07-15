@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor } from '../db/models';
 
@@ -147,7 +147,9 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
-      order: 'random()',
+      order: [
+        Sequelize.fn('RAND')
+      ],
       limit: 10,
     });
     return users;
