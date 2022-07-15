@@ -34,7 +34,6 @@ class User extends Sequelize.Model {
 
       birthday: {
         type: DataTypes.DATE,
-        allowNull: false
       },
 
       location: {
