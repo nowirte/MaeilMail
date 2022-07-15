@@ -10,7 +10,7 @@ class UserService {
   }
 
   async addUser(userInfo) {
-    const { nickname, email, password, gender } = userInfo;
+    const { nickname, email, password, gender, location, latitude, longitude, birthday} = userInfo;
 
     const emailResult = await this.User.findOne({
       where: { email, status: 'active' },
@@ -33,6 +33,10 @@ class UserService {
       password: hashedPassword,
       status: 'active',
       gender,
+      location,
+      latitude,
+      longitude,
+      birthday
     };
 
     const newUser = await this.User.create(newUserInfo);
