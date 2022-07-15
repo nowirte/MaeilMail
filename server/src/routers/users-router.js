@@ -1,10 +1,38 @@
 import { Router } from 'express';
 // import passport from 'passport';
 import { userService } from '../services';
-import { loginRequired } from '../middleware';
+import { loginRequired } from '../middleware'
 
 const usersRouter = Router();
 
+usersRouter.post('/', async (req, res, next) => {
+  try {
+      const { nickname, email, password, gender, location, latitude, longitude, birthday } = req.body
+      const info = { nickname, email, password, gender, location, latitude, longitude, birthday }
+      const user = await userService.addUser(info) 
+      res.status(201).json(user)
+  } catch (err) {
+      next(err);
+  }
+});
+
+usersRouter.patch('/', loginRequired, async (req, res, next) => {
+  try {
+      const { isGoogle } = req.query;
+      if (isGoogle) {
+        const { id } = req.user
+        const info = userService.updateGoogleUser(id, req.body);
+        res.status(200).json(info);
+      } else {
+        throw new Error('비정상적인 접근입니다.')
+      }
+  } catch (err) {
+      next (err)
+  }
+})
+
+
+// 관리자 passport.authenticate('jwtAdmin')
 usersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
     const { isAdmin, search, recommend } = req.query;
