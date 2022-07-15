@@ -19,7 +19,7 @@ export const CurrentlyComingContentContainer = styled.div`
   justify-content: center;
 `;
 export const LetterContent = styled.div`
-  width: 80%;
+  width: 240px;
   height: 150px;
   border: 1px solid black;
   font-size: 24px;
@@ -57,6 +57,10 @@ export const CurrentlyDate = styled.div`
   line-height: 24px;
 `;
 export const CurrentlyLocation = styled.div`
+  font-size: 16px;
+  line-height: 24px;
+`;
+export const CurrentlyTickingTime = styled.div`
   font-size: 16px;
   line-height: 24px;
 `;

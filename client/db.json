@@ -1,7 +1,42 @@
-{
+{ "user":[
+  {
+    "userid":1,
+    "nickname":"펭수",
+    "image": "https://i.pinimg.com/236x/ac/be/55/acbe55bf3dd23717e74269d82a9b2c52.jpg"
+  },
+  {
+    "userid": 3,
+    "nickname": "징징이",
+    "image": "https://img.etoday.co.kr/pto_db/2021/05/600/20210513151949_1619895_1170_874.jpg"
+  }
+],
   "letter": [
 {   "letterId":3,
     "sendId": 1,
+    "receiveId": 2,
+    "status": "incoming",
+    "sendDate":	"15/07/2022 02:34:56",
+    "deliveryTime":	9,
+    "receiveDate":	"15/07/2022 11:34:56",
+    "sendLocation":	"United States",
+    "receiveLocation":"Korea",
+    "send_img": "https://w7.pngwing.com/pngs/407/764/png-transparent-yellow-smiley-emoji-emoji-computer-icons-emoticon-sunglasses-emoji-smiley-sticker-glasses-thumbnail.png",
+    "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
+  },
+  {   "letterId":4,
+    "sendId": 3,
+    "receiveId": 2,
+    "status": "incoming",
+    "sendDate":	"15/07/2022 02:34:56",
+    "deliveryTime":	9,
+    "receiveDate":	"30/05/2022 11:34:56",
+    "sendLocation":	"Spain",
+    "receiveLocation":"Korea",
+    "send_img": "https://w7.pngwing.com/pngs/407/764/png-transparent-yellow-smiley-emoji-emoji-computer-icons-emoticon-sunglasses-emoji-smiley-sticker-glasses-thumbnail.png",
+    "content": "Hola, ¿cómo va? Déjame hablar de mí mismo. Soy de los Estados Unidos y 18 años de edad y me gradué en la secundaria este año."
+  },
+  {   "letterId":5,
+    "sendId": 4,
     "receiveId": 2,
     "status": "incoming",
     "sendDate":	"30/05/2022 02:34:56",
@@ -9,19 +44,31 @@
     "receiveDate":	"30/05/2022 11:34:56",
     "sendLocation":	"United States",
     "receiveLocation":"Korea",
-    "send_img": "https://www.pngwing.com/en/search?q=emoji",
+    "send_img": "https://w7.pngwing.com/pngs/407/764/png-transparent-yellow-smiley-emoji-emoji-computer-icons-emoticon-sunglasses-emoji-smiley-sticker-glasses-thumbnail.png",
     "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
   },
-  {   "letterId":3,
-    "sendId": 1,
+  {   "letterId":6,
+    "sendId": 5,
     "receiveId": 2,
-    "status": "arrived",
+    "status": "incoming",
     "sendDate":	"30/05/2022 02:34:56",
     "deliveryTime":	9,
     "receiveDate":	"30/05/2022 11:34:56",
     "sendLocation":	"United States",
     "receiveLocation":"Korea",
-    "send_img": "https://www.pngwing.com/en/search?q=emoji",
+    "send_img": "https://w7.pngwing.com/pngs/407/764/png-transparent-yellow-smiley-emoji-emoji-computer-icons-emoticon-sunglasses-emoji-smiley-sticker-glasses-thumbnail.png",
+    "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
+  },
+  {   "letterId":2,
+    "sendId": 6,
+    "receiveId": 2,
+    "status": "arrived",
+    "sendDate":	"30/05/2022 00:34:56",
+    "deliveryTime":	9,
+    "receiveDate":	"30/05/2022 09:34:56",
+    "sendLocation":	"United States",
+    "receiveLocation":"Korea",
+    "send_img": "https://w7.pngwing.com/pngs/232/131/png-transparent-iphone-emoji-apple-ios-11-emojis-lol-emoji-electronics-smiley-apple-color-emoji-thumbnail.png",
     "content": "Hi, How is it going? Let me talk about myself. I am 뚱이 from United States and 18 yrs old and I graduated High school this year."
   }
   ]

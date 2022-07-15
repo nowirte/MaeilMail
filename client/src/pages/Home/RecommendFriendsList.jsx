@@ -8,23 +8,24 @@ import {
   RecommendFriendName,
 } from './styles/StyledRecommendFriendList';
 
-const RecommendFriendsList = props => {
+const RecommendFriendsList = ({ data }) => {
   return (
     <RecommendFriendsListContainer>
-      {props.data && (
-        <Swiper navigation spaceBetween={180} slidesPerView={6}>
-          <SwiperSlide>
-            <RecommendationFriendBox>
-              <RecommendFriend>
-                <img src="/img/뚱이.png" alt={props.data.name} />
-              </RecommendFriend>
-              <RecommendFriendName>
-                <span>{props.data.name}</span>
-              </RecommendFriendName>
-            </RecommendationFriendBox>
-          </SwiperSlide>
-        </Swiper>
-      )}
+      <Swiper navigation spaceBetween={180} slidesPerView={6}>
+        {data &&
+          data.map(item => (
+            <SwiperSlide>
+              <RecommendationFriendBox>
+                <RecommendFriend>
+                  <img src={item.image} alt={item.nickname} />
+                </RecommendFriend>
+                <RecommendFriendName>
+                  <span>{item.nickname}</span>
+                </RecommendFriendName>
+              </RecommendationFriendBox>
+            </SwiperSlide>
+          ))}
+      </Swiper>
     </RecommendFriendsListContainer>
   );
 };
