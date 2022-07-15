@@ -11,7 +11,7 @@ const verify = async (email, password, done) => {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;
     }
-
+    console.log('user:', user, 'password:', password)
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       done(null, { userId: user.user_id, status: user.status });
