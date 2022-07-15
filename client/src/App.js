@@ -14,7 +14,7 @@ const App = () => {
         {/* 사이드바가 보여지는 영역 */}
         <Route element={<SideBar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/:userid/recommenddetail" element={RecommendDetailPage}/>
+          <Route path="/:userid/recommenddetail" element={<RecommendDetailPage />}/>
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/friend" element={<Friend />} />
         </Route>
