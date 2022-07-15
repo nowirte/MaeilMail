@@ -1,10 +1,10 @@
 import passport from 'passport';
-import { local, google, jwt, jwtForAdmin } from './strategies';
+import { local, google, jwt, jwtAdmin } from './strategies';
 
 // eslint-disable-next-line func-names
 export default function () {
-  passport.use(google);
-  passport.use(local);
-  passport.use(jwt);
-  passport.use(jwtForAdmin)
+  passport.use('google', google);
+  passport.use('local', local);
+  passport.use('jwt', jwt);
+  passport.use('jwtAdmin', jwtAdmin);
 }

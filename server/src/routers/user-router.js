@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import passport from '../middleware/passport';
+import passport from 'passport';
 import { userService } from '../services/user-service';
 
 const userRouter = Router();
