@@ -7,7 +7,9 @@ import { Container, SideWrapper, Navbar } from './style';
 import axios from 'axios';
 
 const SideBar = () => {
+  // const [user, setUser] = useState([]);
   const [friend, setFriend] = useState([]);
+
   const fetchData = async () => {
     try {
       const res = await axios.get(`http://localhost:3333/user`);

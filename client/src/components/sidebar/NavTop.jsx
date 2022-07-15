@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from './img/logo.png';
+import axios from 'axios';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -58,6 +59,32 @@ const MyProfile = styled.div`
 `;
 
 const NavTopArea = () => {
+  const [user, setUser] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3333/user`);
+      const data = res.data[0];
+      setUser(data);
+
+      // 헤더에 토큰 보내고 유저 데이터 받아오기
+      //   const res = await axios.get(`주소`,{
+      //     headers: {
+      //       'Content-Type': 'application/json; charset=utf-8',
+      //       authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      //    },
+      //  }
+      // )
+      //setUser(res)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <NavTop>
       <StyledLink to="/">
@@ -67,9 +94,9 @@ const NavTopArea = () => {
       <StyledLink to="/mypage">
         <MyProfile>
           <div className="profileImgArea">
-            <img src="/img/뚱이.png" alt="profileImg" />
+            <img src={user.profileImage} alt="profileImg" />
           </div>
-          <span>닉네임</span>
+          <span>{user.nickname}</span>
         </MyProfile>
       </StyledLink>
       <Line />
