@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 
 import axios from 'axios';
-import { StyledSearchbar } from './styles/StyledSearchbar';
+import StyledSearchbar from './styles/StyledSearchbar';
 import RecommendHeader from './RecommendHeader';
 import RecommendFriendsList from './RecommendFriendsList';
 

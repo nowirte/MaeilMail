@@ -14,23 +14,9 @@ import {
 } from './styles/StyledRecommendFriendArea';
 
 export const RecommendFriendArea = props => {
-  const {
-    gender,
-    birthday,
-    location,
-    profileText,
-    email,
-    nickname,
-    favor,
-    language,
-  } = props.data;
+  const { gender, birthday, location, profileText, email, nickname } =
+    props.data;
 
-  // console.log(favor, 'favor');
-
-  const selectedFavor = favor.filter(e => e.selected === true);
-  const selectedLanguage = language.filter(e => e.selected === true);
-
-  // console.log(selectedFavor);
   return (
     <Friend>
       <Account>
