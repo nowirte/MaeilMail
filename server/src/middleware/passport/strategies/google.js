@@ -44,7 +44,6 @@ const verify = async (a, b, profile, done) => {
       return;
     }
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };
