@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { StyledSearchbar } from './styles/StyledSearchbar';
+import StyledSearchbar from './styles/StyledSearchbar';
 
 const SearchBar = () => {
   return (

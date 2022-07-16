@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledSearchbar = styled.div`
+const StyledSearchbar = styled.div`
   width: 40%;
   min-width: 360px;
   margin-top: 45px;
@@ -31,3 +31,5 @@ export const StyledSearchbar = styled.div`
     }
   }
 `;
+
+export default StyledSearchbar;

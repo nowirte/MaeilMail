@@ -1,0 +1,32 @@
+{
+  "userId": 1,
+  "email": "ouivve@gmail.com",
+  "password": "1234",
+  "nickname": "ouivve",
+  "gender": "여",
+  "language": "string",
+  "birthday": "2022-03-31T15:03:55.461Z",
+  "location": "string",
+  "latitude": 36.6331787,
+  "longitude": 126.0423927,
+  "status": "string",
+  "profileText": "hello, world",
+  "profileEmoji": "string",
+  "createdAt": "2022-07-15T15:03:55.461Z",
+  "updatedAt": "2022-07-15T15:03:55.461Z",
+  "favor": {
+    "userId": 1,
+    "movie": true,
+    "language": true,
+    "reading": false,
+    "game": false,
+    "coding": true,
+    "fantasy": false,
+    "sports": false,
+    "entertainment": false,
+    "music": false,
+    "fashion": false,
+    "art": false,
+    "travel": false
+  }
+}

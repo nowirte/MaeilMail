@@ -2,12 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
 import Home from './pages/Home';
-import Friend from './pages/friend';
 import SignUp from './pages/Signup';
+import FriendDetail from './pages/Friend';
+import LetterDetail from './pages/Friend/LetterDetail';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
+import LetterEditor from './pages/Friend/LetterEditor';
 
 const App = () => {
   return (
@@ -17,7 +19,10 @@ const App = () => {
         <Route element={<SideBar />}>
           <Route path="/" element={<Home />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/friend" element={<Friend />} />
+          {/* <Route element={<LetterEditor />}> */}
+          <Route path="/friend/:id" element={<FriendDetail />} />
+          <Route path="/friend/:id/:postId" element={<LetterDetail />} />
+          {/* </Route> */}
         </Route>
 
         <Route element={<LoginBackground />}>
