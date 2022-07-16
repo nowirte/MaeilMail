@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
@@ -26,12 +27,66 @@ const FormCard = styled.form`
 `;
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const axios = require('axios');
+
+  const email = useSelector(state => {
+    return state.loginEmail;
+  });
+
+  function emailHandleChange(e) {
+    dispatch({ type: 'LOGIN_EMAIL', email: e.target.value });
+  }
+
+  const password = useSelector(state => {
+    return state.loginPassword;
+  });
+
+  function passwordHandleChange(e) {
+    dispatch({ type: 'LOGIN_PASSWORD', password: e.target.value });
+  }
+
+  const state = useSelector(state => {
+    return state;
+  });
+
+  async function handleLoginSubmit(e) {
+    e.preventDefault();
+    const data = { email: email, password: password };
+    const bodyData = JSON.stringify(data);
+
+    //아직 백엔드와 연결 X
+    await axios
+      .post('http://localhost:3000/login', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(state);
+  }
+
   return (
-    <FormCard>
+    <FormCard onSubmit={handleLoginSubmit}>
       <Logo src={logo} alt="Logo" />
-      <LoginFormInput placeholder="이메일" type="email" />
-      <LoginFormInput placeholder="비밀번호" type="password" />
-      <LoginFormButton>로그인</LoginFormButton>
+      <LoginFormInput
+        placeholder="이메일"
+        type="email"
+        value={email}
+        onChange={emailHandleChange}
+      />
+      <LoginFormInput
+        placeholder="비밀번호"
+        type="password"
+        value={password}
+        onChange={passwordHandleChange}
+      />
+      <LoginFormButton type="submit">로그인</LoginFormButton>
       <LinkContainer>
         <Link to="/home">비밀번호 찾기</Link>
         <Link to="/signup">회원가입</Link>
