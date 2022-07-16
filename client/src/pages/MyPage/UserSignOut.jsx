@@ -33,11 +33,11 @@ const UserSignOutArea = props => {
     e.preventDefault();
 
     await axios.patch(`http://localhost:3333/user/1`, {
-      // headers: {
-      //   'Content-Type': 'application/json; charset=utf-8',
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
-      password: checkPassowrd,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      currentPassword: checkPassowrd,
     });
 
     handleModal();
