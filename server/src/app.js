@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 const { sequelize } = db;
-sequelize.sync({force: false});
+sequelize.sync({ force: false });
 
 app.use(cors());
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use(passport.initialize());
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/letters', lettersRouter)
+app.use('/api/letters', lettersRouter);
 
 app.use(errorHandler);
 

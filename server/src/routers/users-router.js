@@ -6,6 +6,7 @@ import { loginRequired } from '../middleware';
 
 const usersRouter = Router();
 
+// 회원 가입
 usersRouter.post('/', async (req, res, next) => {
   try {
       const { nickname, email, password, gender, location, latitude, longitude, birthday } = req.body
@@ -17,6 +18,7 @@ usersRouter.post('/', async (req, res, next) => {
   }
 });
 
+// 조건에 따라 유저들 정보 조회
 usersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
     const { isAdmin, search, recommend } = req.query;
