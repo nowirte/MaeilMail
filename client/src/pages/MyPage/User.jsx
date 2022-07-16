@@ -1,8 +1,5 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-shadow */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import FemaleIcon from '@mui/icons-material/Female';
 import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -67,44 +64,37 @@ const Introduction = styled.div`
   }
 `;
 
-const UserArea = () => {
-  const userData = useSelector(state => {
-    return state;
-  });
-  const birthday = userData.birthday.split('-');
-
+const UserArea = props => {
+  const { gender, birthday, location, profileText, email, nickname } =
+    props.data;
   return (
     <User>
       <Account>
-        <span className="userName">{userData.nickname}</span>
-        <span className="userEmail">{userData.email}</span>
+        <span className="userName">{nickname}</span>
+        <span className="userEmail">{email}</span>
       </Account>
       <Info>
         <div className="gender">
           <p>
             <FemaleIcon />
-            {userData.gender === 'female'
-              ? '여자'
-              : userData.gender === 'male'
-              ? '남자'
-              : '기타'}
+            {gender}
           </p>
         </div>
         <div className="birthday">
           <p>
-            <CakeOutlinedIcon className="birthday" />
-            {birthday[1]}월 {birthday[2]}일
+            <CakeOutlinedIcon />
+            {birthday}
           </p>
         </div>
         <div className="location">
           <p>
             <LocationOnIcon />
-            {userData.location}
+            {location}
           </p>
         </div>
       </Info>
       <Introduction>
-        <span>{userData.profileText}</span>
+        <span>{profileText}</span>
       </Introduction>
       <AdditionalUserInfoArea />
     </User>

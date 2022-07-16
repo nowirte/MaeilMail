@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { SettingBtn, ModalStyle } from './style';
+import axios from 'axios';
 
 const Title = styled.h2`
   font-size: 1.25rem;
@@ -15,24 +16,44 @@ const Input = styled.input`
   padding: 5px 5px;
 `;
 
-const UserSignOutArea = () => {
+const UserSignOutArea = props => {
+  const { password } = props.data;
+
+  const [checkPassowrd, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const handleModal = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    await axios.patch(`http://localhost:3333/user/1`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      currentPassword: checkPassowrd,
+    });
+
+    handleModal();
+    localStorage.clear();
+    alert('회원 탈퇴되었습니다. 지금까지 이용해주셔서 감사합니다.');
   };
 
   return (
     <div className="setting">
-      <SettingBtn className="userSignOut" onClick={handleOpen}>
+      <SettingBtn className="userSignOut" onClick={handleModal}>
         <DeleteForeverIcon />
         <p>회원 탈퇴</p>
       </SettingBtn>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModal}
         aria-labelledby="userSignOut-title"
         aria-describedby="userSignOut-description"
       >
@@ -41,10 +62,16 @@ const UserSignOutArea = () => {
           <div id="userSignOut-description">
             탈퇴하시려면 현재 비밀번호를 입력해주세요.
           </div>
-          <Input style={{ display: 'block' }} type="password" />
+          <Input
+            style={{ display: 'block' }}
+            type="password"
+            onChange={e => {
+              setCheckPassword(e.target.value);
+            }}
+          />
           <Button
             variant="outlined"
-            onClick={handleClose}
+            onClick={handleModal}
             color="error"
             sx={{ mr: 1 }}
           >
@@ -54,7 +81,8 @@ const UserSignOutArea = () => {
             variant="contained"
             type="submit"
             color="error"
-            disabled={false}
+            disabled={password !== checkPassowrd ? true : false}
+            onClick={handleSubmit}
           >
             탈퇴하기
           </Button>

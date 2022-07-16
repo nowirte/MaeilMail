@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const Friends = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0.25rem;
-  overflow: scroll;
 `;
 
 const FriendsList = styled.div`
@@ -33,28 +37,32 @@ const FriendsList = styled.div`
     border-radius: 100%;
     background-color: white;
 
-    & span {
-      font-size: 1.75rem;
-      padding-bottom: 2px;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
   }
 `;
 
-const NavFriendsArea = () => {
+const NavFriendsArea = props => {
+  const friendList = props.friend;
+
   return (
     <Friends>
-      <FriendsList>
-        <div className="profileImgArea">
-          <span className="profileEmoji">🥰</span>
-        </div>
-        <span>지재영</span>
-      </FriendsList>
-      <FriendsList>
-        <div className="profileImgArea">
-          <span className="profileEmoji">🤓</span>
-        </div>
-        <span>홍길동</span>
-      </FriendsList>
+      {friendList &&
+        friendList.map(friend => {
+          return (
+            <StyledLink to={`/friend/${friend.id}`} key={friend.id}>
+              <FriendsList>
+                <div className="profileImgArea">
+                  <img src={friend.profileImage} alt="friendImg" />
+                </div>
+                <span>{friend.nickname}</span>
+              </FriendsList>
+            </StyledLink>
+          );
+        })}
     </Friends>
   );
 };
