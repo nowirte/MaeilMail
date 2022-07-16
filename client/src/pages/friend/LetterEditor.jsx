@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import style from './LetterEditor.module.css';
+import CloseIcon from '@mui/icons-material/Close';
 
 const LetterEditor = ({ handleWrite, onCreate }) => {
   const contentInput = useRef();
@@ -30,18 +31,23 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
 
   return (
     <div className={style.LetterEditor}>
-      <h2>상대방 프로필</h2>
+      <div className={style.FlexBox}>
+        <CloseIcon
+          onClick={handleWrite}
+          style={{ width: '2rem', padding: '1rem .5rem', cursor: 'pointer' }}
+        />
+        <div className="btn" onClick={handleSubmit}>
+          보내기
+        </div>
+      </div>
       <div>
         <textarea
           ref={contentInput}
           name="content"
           value={state.content}
           onChange={handleChangeState}
+          placeholder="탭하여 편지 쓰기..."
         />
-      </div>
-      <div>
-        <button onClick={handleSubmit}>보내기</button>
-        <button onClick={handleWrite}>취소하기</button>
       </div>
     </div>
   );

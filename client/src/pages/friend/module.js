@@ -25,7 +25,8 @@ const getTime = distance => {
   return d / 2;
 };
 
-const formatDate = date => {
+const formatDate = receiveDate => {
+  const date = new Date(receiveDate);
   return `${date.getFullYear()}년 ${
     date.getMonth() + 1
   }월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;

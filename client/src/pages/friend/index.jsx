@@ -2,22 +2,14 @@ import React, { useState } from 'react';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
 import Modal from '../../components/ui/Modal';
-import Stamp from '../../assets/stamp.png';
-import {
-  LetterWrapper,
-  Letter,
-  LetterHeader,
-  LetterContent,
-  LetterFooter,
-  Writer,
-  Date,
-  WriteBtn,
-} from './style';
+import LetterList from './LetterList';
+import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
 import { getDistance, getTime, formatDate } from './module';
+import CreateIcon from '@mui/icons-material/Create';
 
 const FriendDetail = () => {
-  const user = {
+  const loginedUser = {
     userId: 1,
     email: 'ouivve@gmail.com',
     password: '1234',
@@ -49,7 +41,7 @@ const FriendDetail = () => {
       travel: false,
     },
   };
-  const friend = {
+  const friendInfo = {
     userId: 2,
     email: 'sdc@gmail.com',
     password: '3456',
@@ -83,6 +75,20 @@ const FriendDetail = () => {
   };
   const letters = [
     {
+      letterId: 2,
+      sendId: 2,
+      receiveId: 1,
+      status: 'send',
+      sendDate: '2022-07-15T17:23:03.717Z',
+      deliveryTime: 71,
+      receiveDate: '2022-07-16T17:23:03.717Z',
+      sendLocation: 'KR',
+      receiveLocation: 'KR',
+      content:
+        '안녕하세요 아무말입니다. 아무말 대잔치 장인이죠. 텍스트 넘치면 잘리는지 테스트 해봐야 하거등요? 우리 팀장은 배장한 팀원은 지재영 이주혁 위보람 김명균 박재현 총 육명이요!!!! 프로젝트 빨리 끝나서 영화 몰아보기 하고싶습니다',
+      isRead: 0,
+    },
+    {
       letterId: 1,
       sendId: 1,
       receiveId: 2,
@@ -92,21 +98,9 @@ const FriendDetail = () => {
       receiveDate: '2022-07-15T15:03:55.461Z',
       sendLocation: 'KR',
       receiveLocation: 'KR',
-      content: 'dummy text content',
+      content:
+        '안녕하세요 아무말입니다. 아무말 대잔치 장인이죠. 텍스트 넘치면 잘리는지 테스트 해봐야 하거등요? 우리 팀장은 배장한 팀원은 지재영 이주혁 위보람 김명균 박재현 총 육명이요!!!! 프로젝트 빨리 끝나서 영화 몰아보기 하고싶습니다',
       isRead: 1,
-    },
-    {
-      letterId: 2,
-      sendId: 2,
-      receiveId: 1,
-      status: 'send',
-      sendDate: '2022-07-16T15:03:55.461Z',
-      deliveryTime: 71,
-      receiveDate: '2022-07-17T15:03:55.461Z',
-      sendLocation: 'KR',
-      receiveLocation: 'KR',
-      content: 'dummy text content',
-      isRead: 0,
     },
   ];
 
@@ -116,22 +110,38 @@ const FriendDetail = () => {
   const [writeIsShown, setWriteIsShown] = useState(false);
   // 편지 리스트
   const [data, setData] = useState(letters);
+  // 로그인한 유저
+  const [user, setUser] = useState(loginedUser);
+  // 친구인 유저
+  const [friend, setFriend] = useState(friendInfo);
 
   // 편지 작성
   const createHandler = content => {
     const sendDate = new window.Date();
-    // const distance = getDistance(user.lat, user.lng, friend.lat, friend.lng)
+    const distance = getDistance(
+      user.longitude,
+      user.latitude,
+      friend.longitude,
+      friend.latitude
+    );
+    const deliveryTime = getTime(distance);
     const newLetter = {
-      // receiveId: 'friend.id'
+      status: 'send',
+      sendId: user.userId,
+      receiveId: friend.userId,
       status: 'send',
       sendDate: sendDate,
-      deliveryTime: getTime(100), // getTime(distance)
+      deliveryTime: deliveryTime,
       receiveDate: sendDate.setMinutes(sendDate.getMinutes() + deliveryTime),
-      // recieveLocation,
+      sendLocation: user.location,
+      receiveLocation: friend.location,
       content,
+      isRead: 0,
     };
     setData([newLetter, ...data]);
   };
+
+  console.log(data);
   // 프로필 모달
   const profileHandler = () => {
     setProfileIsShown(current => !current);
@@ -143,27 +153,19 @@ const FriendDetail = () => {
 
   return (
     <MainWrapper>
-      {profileIsShown && <Modal handleChange={profileHandler} />}
+      {/* 친구 프로필 영역 */}
+      {profileIsShown && <Modal data={friend} handleChange={profileHandler} />}
       <FriendInfo data={friend} handleChange={profileHandler} />
 
-      <LetterWrapper>
-        {data.length === 0 && <p>아직 편지가 없습니다.</p>}
-        {data.map(letter => (
-          <Letter key={letter.letterId}>
-            <LetterHeader>
-              <img src={Stamp} alt="" />
-            </LetterHeader>
-            <LetterContent>{letter.content}</LetterContent>
-            <LetterFooter>
-              <Writer>{letter.receiveId}</Writer>
-              <Date>{letter.receiveDate}</Date>
-            </LetterFooter>
-          </Letter>
-        ))}
-      </LetterWrapper>
+      {/* 편지 리스트 */}
+      <LetterList user={user} friend={friend} data={data} />
 
+      {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (
-        <WriteBtn onClick={writeHandler}>편지 보내기</WriteBtn>
+        <WriteBtn onClick={writeHandler}>
+          <CreateIcon />
+          편지 보내기
+        </WriteBtn>
       ) : (
         <LetterEditor handleWrite={writeHandler} onCreate={createHandler} />
       )}

@@ -11,8 +11,8 @@ const LetterWrapper = styled.ul`
 `;
 
 const Letter = styled.li`
+  /* cursor: pointer; */
   width: 300px;
-
   border-radius: 1rem;
   box-sizing: border-box;
   padding: 1rem;
@@ -20,9 +20,10 @@ const Letter = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  text-decoration: none;
 
   ${props =>
-    props.future ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
+    props.send ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
 `;
 
 const LetterHeader = styled.div`
@@ -44,11 +45,13 @@ const LetterContent = styled.p`
   line-height: 1.25rem;
   height: 6.25rem;
   color: #4f4f4f;
+  text-decoration: none;
 `;
 
 const LetterFooter = styled.div`
   display: flex;
   flex-direction: column;
+  text-decoration: none;
 `;
 
 const Writer = styled.p`
@@ -63,6 +66,8 @@ const Date = styled.p`
 `;
 
 const WriteBtn = styled.button`
+  display: flex;
+  align-items: center;
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -72,8 +77,8 @@ const WriteBtn = styled.button`
   background-color: #ccc;
   color: #333;
   cursor: pointer;
-  padding: 1rem 3rem;
-  border-radius: 10px;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
   font-weight: bold;
   font-size: 1rem;
 
