@@ -70,10 +70,13 @@ const UserInfoEditArea = props => {
       // favor 전체 데이터를 state로 관리 하는 방법!!
 
       await axios.patch(`http://localhost:3333/user/1`, {
+        // headers: {
+        //   'Content-Type': 'application/json; charset=utf-8',
+        //   authorization: `Bearer ${localStorage.getItem('token')}`,
+        // },
         nickname: inputData.nickname,
         profileText: inputData.profileText,
         birthday: inputData.birthday,
-        password: changedPassword,
         //백으로 비밀번호 input값 보내서 일치하는지 확인!
         newPassword: changedPassword ? changedPassword : currentPassword,
         currentPassword: currentPassword,
