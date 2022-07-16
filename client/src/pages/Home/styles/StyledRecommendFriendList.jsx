@@ -24,9 +24,9 @@ export const RecommendFriend = styled.div`
   justify-content: center;
   align-items: center;
   img {
-    width: 90%;
-    max-width: 150px;
+    width: 100%;
     height: 100%;
+    border-radius: 50%;
   }
 `;
 export const RecommendFriendName = styled.div`

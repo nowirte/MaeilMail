@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 import LetterEditor from './pages/Friend/LetterEditor';
+import RecommendDetailPage from './pages/Home/RecommendDetailPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         {/* 사이드바가 보여지는 영역 */}
         <Route element={<SideBar />}>
           <Route path="/" element={<Home />} />
+          <Route path="/:userid/recommenddetail" element={<RecommendDetailPage />}/>
           <Route path="/mypage" element={<MyPage />} />
           {/* <Route element={<LetterEditor />}> */}
           <Route path="/friend/:id" element={<FriendDetail />} />
