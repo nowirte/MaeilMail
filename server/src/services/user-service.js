@@ -19,6 +19,10 @@ class UserService {
 
   async addUser(userInfo) {
     const { nickname, email, password, gender, location, latitude, longitude, birthday } = userInfo;
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature-back-router-letter
     const emailResult = await this.User.findOne({
       where: { email, status: 'active', oauth: 'local' },
     });
@@ -163,10 +167,23 @@ class UserService {
     return user;
   }
 
+<<<<<<< HEAD
   async updateGoogleUser(id, toUpdate) {
     const data = { ...toUpdate, status: 'active' };
     const user = await this.User.update(data, { where: { user_id: id } });
 
+=======
+  async getUserByEmail(email) {
+    const user = await this.User.findOne({
+      where: { email, status: 'active' },
+      include,
+    });
+    if (!user) {
+      throw new Error(
+        '해당 이메일과 일치하는 사용자 정보가 존재하지 않습니다.'
+      );
+    }
+>>>>>>> feature-back-router-letter
     return user;
   }
 
