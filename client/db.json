@@ -5,13 +5,13 @@
       "userId": 0,
       "email": "user@example.com",
       "password": "",
-      "nickname": "string",
+      "nickname": "재영",
       "gender": "string",
       "language": [
         {
           "value": "afrikaans",
           "label": "Afrikaans",
-          "selected": null
+          "selected": true
         },
         {
           "value": "chinese",
@@ -82,7 +82,7 @@
         {
           "value": "reading",
           "label": "Reading",
-          "selected": null
+          "selected": true
         },
         {
           "value": "game",
@@ -129,7 +129,9 @@
           "label": "Travel",
           "selected": null
         }
-      ]
+      ],
+      "newPassword": "",
+      "currentPassword": ""
     }
   ],
   "friend": [

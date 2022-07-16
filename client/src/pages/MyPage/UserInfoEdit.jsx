@@ -11,12 +11,16 @@ import axios from 'axios';
 const UserInfoEditArea = props => {
   const userData = props.data;
 
+  const [favor, setFavor] = useState([]);
   const [inputData, setInputData] = useState({});
-  const [checkFavor, setCheckFavor] = useState([]);
   const [currentPassword, setCurrentPassword] = useState('');
   const [changedPassword, setChangedPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setFavor(userData.favor);
+  }, [userData]);
 
   const handleModal = () => {
     if (open) {
@@ -26,17 +30,17 @@ const UserInfoEditArea = props => {
     }
   };
 
-  const favorSelectList = (userData.favor || []).filter(
-    e => e.selected === true
-  );
+  const favorSelectList = (favor || []).filter(e => e.selected === true);
   const languageSelectList = (userData.language || []).filter(
     e => e.selected === true
   );
 
   const handlecheckedfavor = e => {
+    // 코드 변경 예정!
     // const checked = e.map(el => el.value);
-    e.forEach(el => (el.selected = true));
-    setCheckFavor(e);
+    // e.forEach(el => (el.selected = true));
+    // setCheckFavor(e);
+    // console.log(checkFavor);
   };
 
   const handleOnChange = e => {
@@ -59,29 +63,26 @@ const UserInfoEditArea = props => {
         alert('새로운 비밀번호를 다시 확인해주세요.');
         return;
       }
-      // if (changedPassword === '') {
-      //   setChangedPassword(userData.password);
-      // }
+      if (changedPassword === '') {
+        setChangedPassword(userData.password);
+      }
 
-      console.log(checkFavor);
-
-      // const test = userData.favor.
-      const index = (userData.favor || []).findIndex(
-        data => data.value === e.value
-      );
+      // favor 전체 데이터를 state로 관리 하는 방법!!
 
       await axios.patch(`http://localhost:3333/user/1`, {
         nickname: inputData.nickname,
         profileText: inputData.profileText,
         birthday: inputData.birthday,
         password: changedPassword,
+        //백으로 비밀번호 input값 보내서 일치하는지 확인!
+        newPassword: changedPassword ? changedPassword : currentPassword,
+        currentPassword: currentPassword,
       });
-      console.log('현재 비번', currentPassword);
-      console.log('바뀐 비번', changedPassword);
       handleModal();
       alert('회원 정보가 변경되었습니다.');
     } catch (err) {
       console.log(err);
+      alert(err.message);
     }
   };
 
@@ -128,7 +129,7 @@ const UserInfoEditArea = props => {
                   id="location"
                   type="text"
                   name="location"
-                  value={userData.location || ''}
+                  value={userData.location}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -138,7 +139,7 @@ const UserInfoEditArea = props => {
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={userData.birthday || ''}
+                  value={userData?.birthday || ''}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -148,7 +149,7 @@ const UserInfoEditArea = props => {
                   defaultValue={favorSelectList}
                   isMulti
                   name="favor"
-                  options={userData.favor}
+                  options={favor}
                   className="favorSelect"
                   placeholder="관심사 선택"
                   onChange={handlecheckedfavor}
@@ -173,7 +174,7 @@ const UserInfoEditArea = props => {
                   type="password"
                   placeholder="새로운 비밀번호"
                   name="changedPassowrd"
-                  value={changedPassword || ''}
+                  value={changedPassword}
                   onChange={e => {
                     setChangedPassword(e.target.value);
                   }}
