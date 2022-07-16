@@ -27,8 +27,8 @@ export const RecommendFriendArea = props => {
 
   // console.log(favor, 'favor');
 
-  const selectedFavor = favor.filter(e => e.selected == true);
-  const selectedLanguage = language.filter(e => e.selected == true);
+  const selectedFavor = favor.filter(e => e.selected === true);
+  const selectedLanguage = language.filter(e => e.selected === true);
 
   // console.log(selectedFavor);
   return (
@@ -60,19 +60,11 @@ export const RecommendFriendArea = props => {
       <AdditionalInfo>
         <InterestInfo>
           <p className="title">관심사</p>
-          {selectedFavor.map(item => (
-            <p className="tag" key={item.value}>
-              {item.value}
-            </p>
-          ))}
+          <p className="tag">축구</p>
         </InterestInfo>
         <LanguageInfo>
           <p className="title">언어</p>
-          {selectedLanguage.map(item => (
-            <p className="tag" key={item.value}>
-              {item.value}
-            </p>
-          ))}
+          <p className="tag">한국어</p>
         </LanguageInfo>
       </AdditionalInfo>
     </Friend>
