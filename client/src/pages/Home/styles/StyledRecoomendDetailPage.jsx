@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+const GoBackButton = styled.button`
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+`;
+
 const Wrapper = styled.div`
   width: 100%;
 
@@ -28,7 +35,6 @@ const MyProfile = styled.div`
 const Title = styled.p`
   font-weight: bold;
   font-size: 1.75rem;
-
   margin-left: 140px;
 `;
 
@@ -83,4 +89,4 @@ const ProfileImg = styled.div`
   }
 `;
 
-export { Wrapper, ProfileImg, Title, MyProfile };
+export { Wrapper, ProfileImg, Title, MyProfile, GoBackButton };

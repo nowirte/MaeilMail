@@ -1,15 +1,18 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Wrapper,
   ProfileImg,
   Title,
   MyProfile,
+  GoBackButton,
 } from './styles/StyledRecoomendDetailPage';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { RecommendFriendArea } from './RecommendFriendArea';
 
 function RecommendDetailPage() {
+  const navigate = useNavigate();
   let params = useParams();
   let userid = Number(params.userid);
 
@@ -31,7 +34,12 @@ function RecommendDetailPage() {
   return (
     <>
       <Wrapper>
-        <Title>{friendData.nickname}의 프로필</Title>
+        <Title>
+          <GoBackButton onClick={() => navigate(-1)}>
+            <ChevronLeftIcon />
+          </GoBackButton>
+          {friendData.nickname}의 프로필
+        </Title>
         <MyProfile>
           <ProfileImg>
             <div className="profileImgArea">
