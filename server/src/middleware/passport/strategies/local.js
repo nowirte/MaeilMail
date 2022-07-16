@@ -6,7 +6,7 @@ const config = { usernameField: 'email', passwordField: 'password', session: fal
 
 const verify = async (email, password, done) => {
   try {
-    const user = await userService.validateUserByEmail(email);
+    const user = await userService.validateEmail({oauth: 'local', email, status: 'active'});
     if (!user) {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;
@@ -18,7 +18,6 @@ const verify = async (email, password, done) => {
     }
     done(null, false, { reason: '비밀번호가 다릅니다.' });
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };

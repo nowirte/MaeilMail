@@ -59,7 +59,11 @@ class User extends Sequelize.Model {
 
       profileImage: {
         type: DataTypes.STRING(200)
-      }
+      },
+
+      oauth: {
+        type: DataTypes.STRING(200)
+      },
 
     },{
         intialAutoIncrement: 1,

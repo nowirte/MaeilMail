@@ -10,11 +10,17 @@ class UserService {
     this.Favor = param2;
   }
 
+  async validateEmail(filter) {
+    const result = await this.User.findOne({
+      where: filter,
+    });
+    return result;
+  }
+
   async addUser(userInfo) {
     const { nickname, email, password, gender, location, latitude, longitude, birthday } = userInfo;
-
     const emailResult = await this.User.findOne({
-      where: { email, status: 'active' },
+      where: { email, status: 'active', oauth: 'local' },
     });
     if (emailResult) {
       throw new Error('중복된 이메일입니다.');
@@ -45,10 +51,10 @@ class UserService {
     return newUser;
   }
 
-  async addNullUser(userInfo) {
+  async addGoogleUser(userInfo) {
     const { email } = userInfo;
     const result = await this.User.findOne({
-      where: { email, status: 'active' },
+      where: { email, status: 'active', oauth: 'google' },
     });
     if (result) {
       throw new Error('중복된 이메일입니다.');
@@ -59,39 +65,85 @@ class UserService {
     return newUser;
   }
 
-  // 재사용성 있는 모델로 바꾸면 좋을 것 같음. 괜히 한 군데 뭉쳐놓은 느낌
-  async updateUser(id, password, toUpdate, favor) {
-    if (password) {
-      const user = await this.User.findOne({ where: { user_id: Number(id) }, attributes: ['password'] });
-      const currentPassword = user.dataValues.password;
-      const result = await bcrypt.compare(password, currentPassword);
-      if (!result) {
-        throw new Error('비밀번호가 일치하지 않습니다.');
-      }
+  async updateUser(userId, body, del) {
+    const {
+      nickname,
+      gender,
+      birthday,
+      language,
+      location,
+      latitude,
+      longitude,
+      profileText,
+      profileImage,
+      favor,
+      currentPassword,
+      newPassword,
+    } = body;
+    
+    // validate
+    async function validatePassword(id, input) {
+      const user = await this.User.findOne({
+        where: { user_id: Number(id), status: 'active' },
+        attributes: ['password'],
+      });
+      const passwordInDB = user.dataValues.password;
+      const result = await bcrypt.compare(input, passwordInDB);
+      return result;
     }
 
-    const newPassword = toUpdate;
-    const hashedPassword = password && toUpdate ? await bcrypt.hash(newPassword, 10) : null;
+    if (!currentPassword) {
+      throw new Error('현재 비밀번호가 필요합니다.');
+    }
+    
+    const validate = await validatePassword(userId, currentPassword);
+    if (!validate) {
+      throw new Error('비밀번호가 일치하지 않습니다.');
+    }
 
-    const update = !password ? toUpdate : !toUpdate ? { status: 'inactive' } : { password: hashedPassword };
-
+    // 유저 필터
     const filter = {
-      where: { user_id: Number(id), status: 'active' },
-      include,
+      where: { user_id: Number(userId), status: 'active' },
     };
 
-    await this.User.update(update, filter);
+    // 회원 탈퇴
+    if (del) {
+      const result = await this.User.update({ status: 'inactive' }, filter);
+      console.log(result);
+      if (!result.status.ok) {
+        throw new Error('탈퇴가 정상적으로 이루어지지 않았습니다.');
+      }
+      return { message: '정상적으로 탈퇴되었습니다.' };
+    }
+
+    // 회원 정보 수정
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const toUpdate = {
+      ...(nickname && { nickname }),
+      ...(hashedPassword && { password: hashedPassword }),
+      ...(gender && { gender }),
+      ...(birthday && { birthday }),
+      ...(language && { language }),
+      ...(location && { location }),
+      ...(latitude && { latitude }),
+      ...(longitude && { longitude }),
+      ...(profileText && { profileText }),
+      ...(profileImage && { profileImage }),
+    };
+
+    await this.User.update(toUpdate, filter);
 
     if (favor) {
       await this.Favor.findOrCreate({
-        where: { userId: Number(id) },
+        where: { userId: Number(userId) },
       });
       await this.Favor.update(favor, {
-        where: { userId: Number(id) },
+        where: { userId: Number(userId) },
       });
     }
 
-    const updated = await this.getUserById(id);
+    const updated = await this.getUserById(userId);
     return updated;
   }
 
@@ -111,27 +163,9 @@ class UserService {
     return user;
   }
 
-  async validateUserByEmail(email) {
-    const user = await this.User.findOne({
-      where: { email, status: 'active' },
-      include,
-    });
-
-    return user;
-  }
-
-  async getGoogleUserByEmail(email) {
-    const user = await this.User.findOne({
-      where: { email, status: 'google' },
-      include,
-    });
-
-    return user;
-  }
-
   async updateGoogleUser(id, toUpdate) {
     const data = { ...toUpdate, status: 'active' };
-    const user = await this.User.update(data, { where: { user_id: id, status: 'google' } });
+    const user = await this.User.update(data, { where: { user_id: id } });
 
     return user;
   }
@@ -147,9 +181,7 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
-      order: [
-        Sequelize.fn('RAND')
-      ],
+      order: [Sequelize.fn('RAND')],
       limit: 10,
     });
     return users;

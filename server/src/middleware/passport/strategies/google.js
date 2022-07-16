@@ -7,23 +7,25 @@ const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
   clientSecret: process.env.GOOGLE_OAUTH_SECRET,
   // backend router 경로로 callback할 것
-  callbackURL: '/login/google/callback',
+  callbackURL: '/api/auth/login/google/callback',
 };
 
 async function findOrCreateUser(email, name) {
-  const user = await userService.getGoogleUserByEmail(email);
+  const user = await userService.validateEmail({oauth: 'google', email, status: 'active'});
 
   if (user) {
     return user
   }
 
   const hashed = await bcrypt.hash(name, 10);
-  const newUser = await userService.addNullUser({
+  const random = Math.floor( Math.random() * 10000 )
+  const newUser = await userService.addGoogleUser({
     email,
     password: hashed,
-    nickname: hashed,
-    status: 'google',
+    nickname: `google#${random}`,
+    status: 'temp',
     gender: 'else',
+    oauth: 'google'
   });
 
   if (!newUser) {
