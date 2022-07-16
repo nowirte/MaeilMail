@@ -130,7 +130,9 @@
           "selected": null
         }
       ]
-    },
+    }
+  ],
+  "friend": [
     {
       "id": 2,
       "userId": 0,

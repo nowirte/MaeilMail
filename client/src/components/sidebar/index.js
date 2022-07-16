@@ -12,7 +12,7 @@ const SideBar = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/user`);
+      const res = await axios.get(`http://localhost:3333/friend`);
       const data = res.data;
 
       // 헤더에 토큰 보내고 친구 데이터 받아오기 / 추후 친구 컴포넌트에서 get할 예정

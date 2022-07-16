@@ -59,15 +59,16 @@ const UserInfoEditArea = props => {
         alert('새로운 비밀번호를 다시 확인해주세요.');
         return;
       }
+      // if (changedPassword === '') {
+      //   setChangedPassword(userData.password);
+      // }
+
       console.log(checkFavor);
 
       // const test = userData.favor.
       const index = (userData.favor || []).findIndex(
         data => data.value === e.value
       );
-      // if (changedPassword === '') {
-      //   setChangedPassword(userData.password);
-      // }
 
       await axios.patch(`http://localhost:3333/user/1`, {
         nickname: inputData.nickname,
