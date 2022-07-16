@@ -10,7 +10,7 @@ const SearchBar = () => {
   const [searchField, setSearchField] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3333/user').then(res => {
+    axios.get('http://localhost:3333/recommenduser').then(res => {
       setUsers(res.data);
       // console.log('users', users);
     });
@@ -19,7 +19,7 @@ const SearchBar = () => {
   const onSearch = e => {
     e.preventDefault();
     if (searchField === null || searchField === '') {
-      axios.get('http://localhost:3333/user').then(res => {
+      axios.get('http://localhost:3333/recommenduser').then(res => {
         setUsers(res.data);
       });
     }

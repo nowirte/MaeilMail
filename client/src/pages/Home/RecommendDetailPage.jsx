@@ -19,7 +19,7 @@ function RecommendDetailPage() {
   const [friendData, setFriendData] = useState({});
   const fetchFriendData = async () => {
     try {
-      const res = await axios.get('http://localhost:3333/user');
+      const res = await axios.get('http://localhost:3333/recommenduser');
       const data = res.data.find(e => e.userid === userid);
       setFriendData(data);
     } catch (e) {
