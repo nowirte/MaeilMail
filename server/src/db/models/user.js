@@ -40,7 +40,7 @@ class User extends Sequelize.Model {
         type: DataTypes.STRING(200),
       },
 
-      lantitude: {
+      latitude: {
         type: DataTypes.DECIMAL(10,8),
       },
 

@@ -35,7 +35,7 @@ loginRouter.get(
   }),
   async (req, res, next) => {
     try {
-      await setUserToken(req.user, res)
+      await setUserToken(req.user, res);
       res.redirect('/');
     } catch (err) {
       next(err);
