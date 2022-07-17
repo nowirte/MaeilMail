@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
   LoginFormInput,
@@ -28,8 +29,6 @@ const FormCard = styled.form`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const axios = require('axios');
-
   const email = useSelector(state => {
     return state.loginEmail;
   });
