@@ -30,15 +30,14 @@ const FormCard = styled.form`
 const LoginForm = () => {
   const dispatch = useDispatch();
   const email = useSelector(state => {
-    return state.loginEmail;
+    return state.login.loginEmail;
   });
-
   function emailHandleChange(e) {
     dispatch({ type: 'LOGIN_EMAIL', email: e.target.value });
   }
 
   const password = useSelector(state => {
-    return state.loginPassword;
+    return state.login.loginPassword;
   });
 
   function passwordHandleChange(e) {

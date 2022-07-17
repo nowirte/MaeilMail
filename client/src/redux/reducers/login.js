@@ -1,6 +1,6 @@
 const initialState = {
   loginEmail: '',
-  lgoinPassword: '',
+  loginPassword: '',
 };
 
 export default function login(state = initialState, action) {
