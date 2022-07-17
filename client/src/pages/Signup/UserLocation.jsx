@@ -47,8 +47,10 @@ const UserLocation = () => {
           navigator.geolocation.getCurrentPosition(resolve, rejected);
         });
 
-        const Lat = position.coords.latitude;
-        const Lng = position.coords.longitude;
+        const latitude = position.coords.latitude;
+        const longtitude = position.coords.longitude;
+        dispatch({ type: 'SIGNUP_LATITUDE', latitude: latitude });
+        dispatch({ type: 'SIGNUP_LONGTITUDE', longtitude: longtitude });
 
         const data = getCountryData(Lat, Lng);
         return data;
