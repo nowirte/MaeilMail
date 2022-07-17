@@ -18,6 +18,7 @@ async function findOrCreateUser(email, name) {
   }
 
   const hashed = await bcrypt.hash(name, 10);
+  console.log('google password:', name)
   const random = Math.floor( Math.random() * 10000 )
   const newUser = await userService.addGoogleUser({
     email,

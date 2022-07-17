@@ -81,13 +81,16 @@ class UserService {
       currentPassword,
       newPassword,
     } = body;
-    
+
     // validate
     async function validatePassword(id, input) {
-      const user = await this.User.findOne({
+      const user = await User.findOne({
         where: { user_id: Number(id), status: 'active' },
         attributes: ['password'],
       });
+      if (!user) {
+        throw new Error('유저를 찾을 수 없습니다.')
+      }
       const passwordInDB = user.dataValues.password;
       const result = await bcrypt.compare(input, passwordInDB);
       return result;
@@ -96,7 +99,7 @@ class UserService {
     if (!currentPassword) {
       throw new Error('현재 비밀번호가 필요합니다.');
     }
-    
+
     const validate = await validatePassword(userId, currentPassword);
     if (!validate) {
       throw new Error('비밀번호가 일치하지 않습니다.');
@@ -110,15 +113,14 @@ class UserService {
     // 회원 탈퇴
     if (del) {
       const result = await this.User.update({ status: 'inactive' }, filter);
-      console.log(result);
-      if (!result.status.ok) {
+      if (result[0] !== 1) {
         throw new Error('탈퇴가 정상적으로 이루어지지 않았습니다.');
       }
       return { message: '정상적으로 탈퇴되었습니다.' };
     }
 
     // 회원 정보 수정
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null
 
     const toUpdate = {
       ...(nickname && { nickname }),
@@ -133,19 +135,49 @@ class UserService {
       ...(profileImage && { profileImage }),
     };
 
-    await this.User.update(toUpdate, filter);
+    const userAffectedRows = await this.User.update(toUpdate, filter);
+
+    if (userAffectedRows === 0) {
+      throw new Error('업데이트 대상을 찾지 못했습니다.');
+    }
 
     if (favor) {
       await this.Favor.findOrCreate({
         where: { userId: Number(userId) },
       });
-      await this.Favor.update(favor, {
+      const favorAffectedRows = await this.Favor.update(favor, {
         where: { userId: Number(userId) },
       });
+      if (favorAffectedRows === 0) {
+        throw new Error('업데이트 대상을 찾지 못했습니다.');
+      }
     }
 
     const updated = await this.getUserById(userId);
     return updated;
+  }
+
+  async updateGoogleUser(id, body) {
+    const { nickname, gender, birthday, language, location, latitude, longitude } = body;
+
+    const toUpdate = {
+      ...(nickname && { nickname }),
+      ...(gender && { gender }),
+      ...(birthday && { birthday }),
+      ...(language && { language }),
+      ...(location && { location }),
+      ...(latitude && { latitude }),
+      ...(longitude && { longitude }),
+      status: 'active',
+    };
+
+    const affectedRows = await this.User.update(toUpdate, { where: { user_id: id, status: 'temp', oauth: 'google' } });
+    if (affectedRows === 0 ) {
+      throw new Error('업데이트 대상을 찾지 못했습니다.');
+    }
+    const updated = await this.getUserById(id);
+
+    return updated
   }
 
   async getUsers() {
@@ -161,13 +193,6 @@ class UserService {
     if (!user) {
       throw new Error('일치하는 사용자 정보가 존재하지 않습니다.');
     }
-    return user;
-  }
-
-  async updateGoogleUser(id, toUpdate) {
-    const data = { ...toUpdate, status: 'active' };
-    const user = await this.User.update(data, { where: { user_id: id } });
-
     return user;
   }
 

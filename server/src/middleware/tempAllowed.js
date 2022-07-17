@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-function loginRequired(req, res, next) {
+function tempAllowed(req, res, next) {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token || token === 'null') {
     console.log('Authorization 토큰: 없음');
@@ -17,14 +17,9 @@ function loginRequired(req, res, next) {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const jwtDecoded = jwt.verify(token, secretKey);
 
-    const { userId, status } = jwtDecoded;
-
-    // if (status === "temp") {
-    //   return res.redirect('/googleSignup')
-    // }
+    const { userId } = jwtDecoded;
 
     req.userId = userId;
-    req.status = status;
 
     next();
   } catch (error) {
@@ -37,4 +32,4 @@ function loginRequired(req, res, next) {
   }
 }
 
-export { loginRequired };
+export { tempAllowed };

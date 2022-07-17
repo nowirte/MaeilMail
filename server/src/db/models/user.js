@@ -13,7 +13,6 @@ class User extends Sequelize.Model {
       nickname: {
         type: DataTypes.STRING(200),
         allowNull: false,
-        unique: true,
       },
 
       password: {
@@ -24,7 +23,6 @@ class User extends Sequelize.Model {
       email: {
         type: DataTypes.STRING(200),
         allowNull: false,
-        unique: true
       },
 
       gender: {

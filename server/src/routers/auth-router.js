@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import { Router } from 'express';
 import passport from 'passport';
-import { loginRequired } from '../middleware';
+import { loginRequired, tempAllowed } from '../middleware';
 import { userService } from '../services';
 import { setUserToken } from '../utils';
 
@@ -52,17 +52,21 @@ authRouter.get('/me', loginRequired, async (req, res, next) => {
   }
 });
 
-authRouter.patch('/me', loginRequired, async (req, res, next) => {
+authRouter.patch('/me', tempAllowed, async (req, res, next) => {
   try {
     const { userId } = req;
     if (!userId) {
       throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
     }
-    // del: 회원 탈퇴 여부, isGoogle: 구글 로그인 했으나 회원 정보 입력 안 한 경우
+    // del: 회원 탈퇴 요청여부, isGoogle: 구글 로그인 했으나 회원 정보 입력 안 한 경우
     const { del, isGoogle } = req.query;
     const result = isGoogle ? 
-        await userService.updateGoogleUser(userId, req.body)
-      : await userService.updateUser(userId, req.body, del);
+      await userService.updateGoogleUser(userId, req.body) 
+    : await userService.updateUser(userId, req.body, del)
+
+    if (!result) {
+      throw new Error('업데이트 된 정보를 불러오지 못했습니다.')
+    }
     res.status(200).json(result);
   } catch (err) {
     next(err);
