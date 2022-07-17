@@ -6,7 +6,7 @@ const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
 function setUserToken(user, res) {
     const { userId, status } = user
     const token = jwt.sign({ userId, status }, secretKey);
-    res.status(200).json({token, status})
+    res.status(200).json({token, userStatus: status})
 }
 
 export { setUserToken };
