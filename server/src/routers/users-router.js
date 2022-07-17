@@ -23,7 +23,7 @@ usersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
     const { isAdmin, search, recommend } = req.query;
     if (isAdmin) {
-      if (req.status !== 'admin') {
+      if (req.userStatus !== 'admin') {
         throw new Error('관리자만 접근할 수 있습니다.');
       }
       const users = await userService.getUsers();

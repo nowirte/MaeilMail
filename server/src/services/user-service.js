@@ -191,7 +191,7 @@ class UserService {
       include,
     });
     if (!user) {
-      throw new Error('일치하는 사용자 정보가 존재하지 않습니다.');
+      throw new Error('404 not found');
     }
     return user;
   }

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 function tempAllowed(req, res, next) {
-  const token = req.headers['authorization']?.split(' ')[1];
+  const token = req.headers.authorization
   if (!token || token === 'null') {
     console.log('Authorization 토큰: 없음');
     res.status(403).json({
@@ -27,8 +27,6 @@ function tempAllowed(req, res, next) {
       result: 'forbidden-approach',
       reason: '정상적인 토큰이 아닙니다.',
     });
-
-    return;
   }
 }
 
