@@ -12,6 +12,7 @@ const UserInfoEditArea = props => {
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [inputData, setInputData] = useState({});
   const [currentPassword, setCurrentPassword] = useState('');
   const [changedPassword, setChangedPassword] = useState('');
@@ -20,22 +21,18 @@ const UserInfoEditArea = props => {
 
   useEffect(() => {
     setFavor(userData.favor);
+    setLanguage(userData.language);
   }, [userData]);
 
   const handleModal = () => {
     setOpen(!open);
   };
 
-  const favorSelectList = (favor || []).filter(e => e.selected === true);
-  const languageSelectList = (userData.language || []).filter(
-    e => e.selected === true
-  );
-
-  const handlecheckedfavor = e => {
+  const handleCheckedFavor = e => {
     // 유저가 선택한 관심사의 value값 가져오는 코드
     const checkedFavor = e.map(el => el.value);
 
-    const testArray = favor.map(el => {
+    const checkedFavorArray = favor.map(el => {
       if (checkedFavor.includes(el.value)) {
         return { ...el, selected: true };
       } else if (!checkedFavor.includes(el.value)) {
@@ -45,7 +42,24 @@ const UserInfoEditArea = props => {
       return el;
     });
 
-    setFavor([...testArray]);
+    setFavor([...checkedFavorArray]);
+  };
+
+  const handleCheckedLanguage = e => {
+    // 유저가 선택한 관심사의 value값 가져오는 코드
+    const checkedLanguage = e.map(el => el.value);
+
+    const checkedLanguageArray = language.map(el => {
+      if (checkedLanguage.includes(el.value)) {
+        return { ...el, selected: true };
+      } else if (!checkedLanguage.includes(el.value)) {
+        return { ...el, selected: false };
+      }
+
+      return el;
+    });
+
+    setLanguage([...checkedLanguageArray]);
   };
 
   const handleOnChange = e => {
@@ -72,8 +86,6 @@ const UserInfoEditArea = props => {
         setChangedPassword(userData.password);
       }
 
-      // favor 전체 데이터를 state로 관리 하는 방법!!
-
       await axios.patch(`http://localhost:3333/user/1`, {
         // headers: {
         //   'Content-Type': 'application/json; charset=utf-8',
@@ -86,6 +98,7 @@ const UserInfoEditArea = props => {
         newPassword: changedPassword ? changedPassword : currentPassword,
         currentPassword: currentPassword,
         favor: favor,
+        language: language,
       });
       handleModal();
       alert('회원 정보가 변경되었습니다.');
@@ -155,25 +168,26 @@ const UserInfoEditArea = props => {
               <EditTitle className="favor">
                 관심사
                 <StyledSelect
-                  defaultValue={favorSelectList}
+                  defaultValue={(favor || []).filter(e => e.selected ?? [])}
                   isMulti
                   name="favor"
                   options={favor}
                   className="favorSelect"
                   placeholder="관심사 선택"
-                  onChange={handlecheckedfavor}
+                  onChange={handleCheckedFavor}
                 />
               </EditTitle>
               <EditTitle className="language">
                 사용 언어
                 <StyledSelect
-                  defaultValue={languageSelectList}
+                  defaultValue={(language || []).filter(e => e.selected ?? [])}
                   isMulti
                   name="language"
-                  options={userData.language}
+                  options={language}
                   className="languageSelect"
                   classNamePrefix="language"
                   placeholder="언어 선택"
+                  onChange={handleCheckedLanguage}
                 />
               </EditTitle>
               <EditTitle className="changedPassowrd">
