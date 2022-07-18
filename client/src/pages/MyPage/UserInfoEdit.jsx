@@ -23,11 +23,7 @@ const UserInfoEditArea = props => {
   }, [userData]);
 
   const handleModal = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!open);
   };
 
   const favorSelectList = (favor || []).filter(e => e.selected === true);

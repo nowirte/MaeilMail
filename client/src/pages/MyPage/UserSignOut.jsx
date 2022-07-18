@@ -81,8 +81,7 @@ const UserSignOutArea = props => {
             variant="contained"
             type="submit"
             color="error"
-            disabled={password !== checkPassowrd ? true : false}
-            onClick={handleSubmit}
+            disabled={password !== checkPassowrd}
           >
             탈퇴하기
           </Button>
