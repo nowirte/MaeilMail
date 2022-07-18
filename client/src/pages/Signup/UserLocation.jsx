@@ -52,19 +52,20 @@ const UserLocation = () => {
         dispatch({ type: 'SIGNUP_LATITUDE', latitude: latitude });
         dispatch({ type: 'SIGNUP_LONGTITUDE', longtitude: longtitude });
 
-        const data = getCountryData(Lat, Lng);
+        const data = await getCountryData(latitude, longtitude);
         return data;
       } catch (err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
       }
     }
 
-    function getCountryData(lat, lng) {
+    async function getCountryData(lat, lng) {
       return fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
       )
         .then(res => res.json())
         .then(data => {
+          console.log(data);
           dispatch({ type: 'SIGNUP_LOCATION', location: data.countryName });
           return data.countryName;
         });
