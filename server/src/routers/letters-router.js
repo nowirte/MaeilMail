@@ -27,7 +27,7 @@ lettersRouter.post('/:userId', async (req, res, next) => {
     if (!userId) {
       throw new Error('존재하지 않는 상대입니다.');
     }
-    const result = await letterService.createLetterTo(2, userId, content);
+    const result = await letterService.createLetterTo(1, userId, content);
 
     res.status(200).json(result);
     } catch (err) {

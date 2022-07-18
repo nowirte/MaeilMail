@@ -19,7 +19,7 @@ class Letter extends Sequelize.Model {
       },
 
       receive_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
 
       delivery_time: {

@@ -29,9 +29,12 @@ class LetterService {
         sendId: yourId,
         receiveId: targetId,
         content,
+        send_date: new Date(),
+        isArrived: false,
+        isRead: false,
       });
 
-      return mail;
+    return mail;
   }
 
   // 상대방과 나눴던 쪽지 모두 가져오기
