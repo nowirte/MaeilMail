@@ -8,25 +8,26 @@ import axios from 'axios';
 
 const SideBar = () => {
   // const [user, setUser] = useState([]);
-  const [friend, setFriend] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const fetchData = async () => {
     try {
       const res = await axios.get(`http://localhost:3333/friend`);
       const data = res.data;
 
-      // 헤더에 토큰 보내고 친구 데이터 받아오기 / 추후 친구 컴포넌트에서 get할 예정
-      //   const res = await axios.get(`주소`,{
-      //     headers: {
-      //       'Content-Type': 'application/json; charset=utf-8',
-      //       authorization: `Bearer ${localStorage.getItem('token')}`,
-      //    },
-      //  }
-      // )
+      // 추후 친구 컴포넌트에서 get할 예정
+      // const res = await axios.get(`http://localhost:3001/api/auth/me`, {
+      //   headers: {
+      //     'Content-Type': 'application/json; charset=utf-8',
+      //     authorization: `Bearer ${localStorage.getItem('token')}`,
+      //   },
+      // });
+      // console.log(res);
 
-      setFriend(data);
+      setFriends(data);
     } catch (err) {
       console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -39,7 +40,7 @@ const SideBar = () => {
       <SideWrapper>
         <Navbar>
           <NavTopArea />
-          <NavFriendsArea friend={friend} />
+          <NavFriendsArea friends={friends} />
         </Navbar>
         <LogoutArea />
       </SideWrapper>
