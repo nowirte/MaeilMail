@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   LoginFormInput,
   LoginFormButton,
@@ -27,19 +28,17 @@ const FormCard = styled.form`
 `;
 
 const LoginForm = () => {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
-  const axios = require('axios');
-
   const email = useSelector(state => {
-    return state.loginEmail;
+    return state.login.loginEmail;
   });
-
   function emailHandleChange(e) {
     dispatch({ type: 'LOGIN_EMAIL', email: e.target.value });
   }
 
   const password = useSelector(state => {
-    return state.loginPassword;
+    return state.login.loginPassword;
   });
 
   function passwordHandleChange(e) {
@@ -63,10 +62,10 @@ const LoginForm = () => {
         },
       })
       .then(function (response) {
-        console.log(response);
+        navigate('/');
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error);
       });
     console.log(state);
   }

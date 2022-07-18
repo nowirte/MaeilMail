@@ -17,19 +17,19 @@ export default function login(state = initialState, action) {
       return { ...state, signupPassword: action.password };
 
     case 'SIGNUP_NICKNAME':
-      return { ...state, signupNickname: action.password };
+      return { ...state, signupNickname: action.nickname };
 
     case 'SIGNUP_GENDER':
-      return { ...state, signupGender: action.email };
+      return { ...state, signupGender: action.gender };
 
     case 'SIGNUP_LOCATION':
-      return { ...state, signupLocation: action.password };
+      return { ...state, signupLocation: action.location };
 
     case 'SIGNUP_LATITUDE':
-      return { ...state, signupLatitude: action.password };
+      return { ...state, signupLatitude: action.latitude };
 
     case 'SIGNUP_LONGTITUDE':
-      return { ...state, signupLongitude: action.password };
+      return { ...state, signupLongitude: action.longtitude };
 
     default:
       return state;
