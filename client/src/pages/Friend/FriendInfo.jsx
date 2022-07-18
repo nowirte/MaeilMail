@@ -11,7 +11,7 @@ import {
   BadgeWrapper,
   Badge,
 } from './FriendInfoStyle';
-import { getBirth, getAge } from './module';
+import { getBirth, getAge } from './utils';
 
 const FriendInfo = ({ handleChange, data }) => {
   return (
