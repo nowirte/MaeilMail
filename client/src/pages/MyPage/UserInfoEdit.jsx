@@ -34,9 +34,23 @@ const UserInfoEditArea = props => {
   const handlecheckedfavor = e => {
     // 코드 변경 예정!
     // const checked = e.map(el => el.value);
-    // e.forEach(el => (el.selected = true));
-    // setCheckFavor(e);
-    // console.log(checkFavor);
+
+    // 유저가 선택한 관심사의 value값 가져오는 코드
+    const checkedFavor = e.map(el => el.value);
+    console.log(checkedFavor);
+
+    const testArray = favor.forEach(el => {
+      if (el.value === checkedFavor) {
+        //checkedFavor = ["movie", "game", "reading"]
+        el.selected === true;
+      }
+    });
+    console.log(testArray);
+
+    // setFavor([...favor, e.selcted : true ]);
+    // console.log(e);
+    // console.log(favor);
+    // console.log([...favor, e]);
   };
 
   const handleOnChange = e => {

@@ -16,47 +16,47 @@
         {
           "value": "chinese",
           "label": "Chinese",
-          "selected": null
+          "selected": false
         },
         {
           "value": "english",
           "label": "English",
-          "selected": null
+          "selected": false
         },
         {
           "value": "french",
           "label": "French",
-          "selected": null
+          "selected": false
         },
         {
           "value": "german",
           "label": "German",
-          "selected": null
+          "selected": false
         },
         {
           "value": "japanese",
           "label": "Japanese",
-          "selected": null
+          "selected": false
         },
         {
           "value": "korean",
           "label": "Korean",
-          "selected": null
+          "selected": false
         },
         {
           "value": "russian",
           "label": "Russian",
-          "selected": null
+          "selected": false
         },
         {
           "value": "spanish",
           "label": "Spanish",
-          "selected": null
+          "selected": false
         },
         {
           "value": "uzbek",
           "label": "Uzbek",
-          "selected": null
+          "selected": false
         }
       ],
       "birthday": "2022-07-14",
@@ -72,12 +72,12 @@
         {
           "value": "movie",
           "label": "Movie",
-          "selected": null
+          "selected": false
         },
         {
           "value": "language",
           "label": "Language",
-          "selected": null
+          "selected": false
         },
         {
           "value": "reading",
@@ -87,47 +87,47 @@
         {
           "value": "game",
           "label": "Game",
-          "selected": null
+          "selected": false
         },
         {
           "value": "coding",
           "label": "Coding",
-          "selected": null
+          "selected": false
         },
         {
           "value": "fantasy",
           "label": "Fantasy",
-          "selected": null
+          "selected": false
         },
         {
           "value": "sports",
           "label": "Sports",
-          "selected": null
+          "selected": false
         },
         {
           "value": "entertainment",
           "label": "Entertainment",
-          "selected": null
+          "selected": false
         },
         {
           "value": "music",
           "label": "Music",
-          "selected": null
+          "selected": false
         },
         {
           "value": "fashion",
           "label": "Fashion",
-          "selected": null
+          "selected": false
         },
         {
           "value": "art",
           "label": "Art",
-          "selected": null
+          "selected": false
         },
         {
           "value": "travel",
           "label": "Travel",
-          "selected": null
+          "selected": false
         }
       ],
       "newPassword": "",
