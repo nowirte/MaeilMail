@@ -92,7 +92,7 @@
         {
           "value": "coding",
           "label": "Coding",
-          "selected": false
+          "selected": true
         },
         {
           "value": "fantasy",

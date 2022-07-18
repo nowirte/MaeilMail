@@ -65,8 +65,16 @@ const Introduction = styled.div`
 `;
 
 const UserArea = props => {
-  const { gender, birthday, location, profileText, email, nickname } =
-    props.data;
+  const {
+    gender,
+    birthday,
+    location,
+    profileText,
+    email,
+    nickname,
+    favor,
+    language,
+  } = props.data;
   return (
     <User>
       <Account>
@@ -96,7 +104,7 @@ const UserArea = props => {
       <Introduction>
         <span>{profileText}</span>
       </Introduction>
-      <AdditionalUserInfoArea />
+      <AdditionalUserInfoArea favor={favor} language={language} />
     </User>
   );
 };
