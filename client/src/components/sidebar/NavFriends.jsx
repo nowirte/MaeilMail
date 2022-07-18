@@ -46,7 +46,7 @@ const FriendsList = styled.div`
 `;
 
 const NavFriendsArea = props => {
-  const friendList = props.friend;
+  const friendList = props.friends;
 
   return (
     <Friends>

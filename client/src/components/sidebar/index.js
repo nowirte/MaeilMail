@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const SideBar = () => {
   // const [user, setUser] = useState([]);
-  const [friend, setFriend] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -24,7 +24,7 @@ const SideBar = () => {
       //  }
       // )
 
-      setFriend(data);
+      setFriends(data);
     } catch (err) {
       console.log(err);
     }
@@ -39,7 +39,7 @@ const SideBar = () => {
       <SideWrapper>
         <Navbar>
           <NavTopArea />
-          <NavFriendsArea friend={friend} />
+          <NavFriendsArea friends={friends} />
         </Navbar>
         <LogoutArea />
       </SideWrapper>
