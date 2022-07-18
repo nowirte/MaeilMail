@@ -5,7 +5,7 @@ import Modal from '../../components/ui/Modal';
 import LetterList from './LetterList';
 import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
-import { getDistance, getTime, formatDate } from './module';
+import { getDistance, getTime, formatDate } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
 
 const FriendDetail = () => {
@@ -129,7 +129,6 @@ const FriendDetail = () => {
       status: 'send',
       sendId: user.userId,
       receiveId: friend.userId,
-      status: 'send',
       sendDate: sendDate,
       deliveryTime: deliveryTime,
       receiveDate: sendDate.setMinutes(sendDate.getMinutes() + deliveryTime),

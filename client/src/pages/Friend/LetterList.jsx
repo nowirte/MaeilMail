@@ -11,7 +11,7 @@ import {
   Writer,
   Date,
 } from './LetterStyle';
-import { formatDate } from './module';
+import { formatDate } from './utils';
 
 const LetterList = ({ user, data, friend }) => {
   return (

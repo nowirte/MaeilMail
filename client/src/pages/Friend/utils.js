@@ -2,6 +2,7 @@ const deg2rad = deg => {
   return deg * (Math.PI / 180);
 };
 
+// 나와 친구 사이의 거리 구하기
 const getDistance = (lat1, lng1, lat2, lng2) => {
   const R = 6371; // Radius of the earth in km
   const dLat = deg2rad(lat2 - lat1);
@@ -18,6 +19,7 @@ const getDistance = (lat1, lng1, lat2, lng2) => {
   // test => 서울부터 부산까지 322.4091958604872 (km)
 };
 
+// 나와 친구사이에 걸리는 시간
 const getTime = distance => {
   // 단위 m
   const d = Math.round(distance);
@@ -25,18 +27,21 @@ const getTime = distance => {
   return d / 2;
 };
 
+// 편지 받은 시간
 const formatDate = receiveDate => {
-  const date = new Date(receiveDate);
+  const date = new Date(receiveDate); // "2022-07-14T15:03:55.461Z"
   return `${date.getFullYear()}년 ${
     date.getMonth() + 1
   }월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
 };
 
+// 친구 생일
 const getBirth = date => {
   const birth = new window.Date(date);
   return `${birth.getMonth() + 1}월 ${birth.getDate()}일`;
 };
 
+// 만나이로 친구 나이 구하기
 const getAge = date => {
   const now = new window.Date().getFullYear();
   const birth = new window.Date(date).getFullYear();
