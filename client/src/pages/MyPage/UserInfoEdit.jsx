@@ -32,25 +32,20 @@ const UserInfoEditArea = props => {
   );
 
   const handlecheckedfavor = e => {
-    // 코드 변경 예정!
-    // const checked = e.map(el => el.value);
-
     // 유저가 선택한 관심사의 value값 가져오는 코드
     const checkedFavor = e.map(el => el.value);
-    console.log(checkedFavor);
 
-    const testArray = favor.forEach(el => {
-      if (el.value === checkedFavor) {
-        //checkedFavor = ["movie", "game", "reading"]
-        el.selected === true;
+    const testArray = favor.map(el => {
+      if (checkedFavor.includes(el.value)) {
+        return { ...el, selected: true };
+      } else if (!checkedFavor.includes(el.value)) {
+        return { ...el, selected: false };
       }
-    });
-    console.log(testArray);
 
-    // setFavor([...favor, e.selcted : true ]);
-    // console.log(e);
-    // console.log(favor);
-    // console.log([...favor, e]);
+      return el;
+    });
+
+    setFavor([...testArray]);
   };
 
   const handleOnChange = e => {
@@ -90,6 +85,7 @@ const UserInfoEditArea = props => {
         //백으로 비밀번호 input값 보내서 일치하는지 확인!
         newPassword: changedPassword ? changedPassword : currentPassword,
         currentPassword: currentPassword,
+        favor: favor,
       });
       handleModal();
       alert('회원 정보가 변경되었습니다.');

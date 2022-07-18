@@ -253,34 +253,118 @@
       "createdAt": "2022-07-14T10:55:27.089Z",
       "updatedAt": "2022-07-14T10:55:27.089Z",
       "favor": [
-        { "value": "movie", "label": "Movie", "selected": true },
-        { "value": "language", "label": "Language", "selected": true },
-        { "value": "reading", "label": "Reading", "selected": true },
-        { "value": "game", "label": "Game", "selected": true },
-        { "value": "coding", "label": "Coding", "selected": true },
-        { "value": "fantasy", "label": "Fantasy", "selected": true },
-        { "value": "sports", "label": "Sports", "selected": true },
+        {
+          "value": "movie",
+          "label": "Movie",
+          "selected": true
+        },
+        {
+          "value": "language",
+          "label": "Language",
+          "selected": true
+        },
+        {
+          "value": "reading",
+          "label": "Reading",
+          "selected": true
+        },
+        {
+          "value": "game",
+          "label": "Game",
+          "selected": true
+        },
+        {
+          "value": "coding",
+          "label": "Coding",
+          "selected": true
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy",
+          "selected": true
+        },
+        {
+          "value": "sports",
+          "label": "Sports",
+          "selected": true
+        },
         {
           "value": "entertainment",
           "label": "Entertainment",
           "selected": true
         },
-        { "value": "music", "label": "Music", "selected": true },
-        { "value": "fashion", "label": "Fashion", "selected": true },
-        { "value": "art", "label": "Art", "selected": true },
-        { "value": "travel", "label": "Travel", "selected": false }
+        {
+          "value": "music",
+          "label": "Music",
+          "selected": true
+        },
+        {
+          "value": "fashion",
+          "label": "Fashion",
+          "selected": true
+        },
+        {
+          "value": "art",
+          "label": "Art",
+          "selected": true
+        },
+        {
+          "value": "travel",
+          "label": "Travel",
+          "selected": false
+        }
       ],
       "language": [
-        { "value": "afrikaans", "label": "Afrikaans", "selected": null },
-        { "value": "chinese", "label": "Chinese", "selected": null },
-        { "value": "english", "label": "English", "selected": null },
-        { "value": "french", "label": "French", "selected": null },
-        { "value": "german", "label": "German", "selected": null },
-        { "value": "japanese", "label": "Japanese", "selected": null },
-        { "value": "korean", "label": "Korean", "selected": true },
-        { "value": "russian", "label": "Russian", "selected": null },
-        { "value": "spanish", "label": "Spanish", "selected": null },
-        { "value": "uzbek", "label": "Uzbek", "selected": null }
+        {
+          "value": "afrikaans",
+          "label": "Afrikaans",
+          "selected": null
+        },
+        {
+          "value": "chinese",
+          "label": "Chinese",
+          "selected": null
+        },
+        {
+          "value": "english",
+          "label": "English",
+          "selected": null
+        },
+        {
+          "value": "french",
+          "label": "French",
+          "selected": null
+        },
+        {
+          "value": "german",
+          "label": "German",
+          "selected": null
+        },
+        {
+          "value": "japanese",
+          "label": "Japanese",
+          "selected": null
+        },
+        {
+          "value": "korean",
+          "label": "Korean",
+          "selected": true
+        },
+        {
+          "value": "russian",
+          "label": "Russian",
+          "selected": null
+        },
+        {
+          "value": "spanish",
+          "label": "Spanish",
+          "selected": null
+        },
+        {
+          "value": "uzbek",
+          "label": "Uzbek",
+          "selected": null
+        }
       ]
     },
     {
@@ -300,34 +384,118 @@
       "createdAt": "2022-07-14T10:55:27.089Z",
       "updatedAt": "2022-07-14T10:55:27.089Z",
       "favor": [
-        { "value": "movie", "label": "Movie", "selected": true },
-        { "value": "language", "label": "Language", "selected": true },
-        { "value": "reading", "label": "Reading", "selected": true },
-        { "value": "game", "label": "Game", "selected": true },
-        { "value": "coding", "label": "Coding", "selected": true },
-        { "value": "fantasy", "label": "Fantasy", "selected": true },
-        { "value": "sports", "label": "Sports", "selected": true },
+        {
+          "value": "movie",
+          "label": "Movie",
+          "selected": true
+        },
+        {
+          "value": "language",
+          "label": "Language",
+          "selected": true
+        },
+        {
+          "value": "reading",
+          "label": "Reading",
+          "selected": true
+        },
+        {
+          "value": "game",
+          "label": "Game",
+          "selected": true
+        },
+        {
+          "value": "coding",
+          "label": "Coding",
+          "selected": true
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy",
+          "selected": true
+        },
+        {
+          "value": "sports",
+          "label": "Sports",
+          "selected": true
+        },
         {
           "value": "entertainment",
           "label": "Entertainment",
           "selected": true
         },
-        { "value": "music", "label": "Music", "selected": true },
-        { "value": "fashion", "label": "Fashion", "selected": true },
-        { "value": "art", "label": "Art", "selected": true },
-        { "value": "travel", "label": "Travel", "selected": false }
+        {
+          "value": "music",
+          "label": "Music",
+          "selected": true
+        },
+        {
+          "value": "fashion",
+          "label": "Fashion",
+          "selected": true
+        },
+        {
+          "value": "art",
+          "label": "Art",
+          "selected": true
+        },
+        {
+          "value": "travel",
+          "label": "Travel",
+          "selected": false
+        }
       ],
       "language": [
-        { "value": "afrikaans", "label": "Afrikaans", "selected": null },
-        { "value": "chinese", "label": "Chinese", "selected": null },
-        { "value": "english", "label": "English", "selected": null },
-        { "value": "french", "label": "French", "selected": null },
-        { "value": "german", "label": "German", "selected": null },
-        { "value": "japanese", "label": "Japanese", "selected": null },
-        { "value": "korean", "label": "Korean", "selected": true },
-        { "value": "russian", "label": "Russian", "selected": null },
-        { "value": "spanish", "label": "Spanish", "selected": null },
-        { "value": "uzbek", "label": "Uzbek", "selected": null }
+        {
+          "value": "afrikaans",
+          "label": "Afrikaans",
+          "selected": null
+        },
+        {
+          "value": "chinese",
+          "label": "Chinese",
+          "selected": null
+        },
+        {
+          "value": "english",
+          "label": "English",
+          "selected": null
+        },
+        {
+          "value": "french",
+          "label": "French",
+          "selected": null
+        },
+        {
+          "value": "german",
+          "label": "German",
+          "selected": null
+        },
+        {
+          "value": "japanese",
+          "label": "Japanese",
+          "selected": null
+        },
+        {
+          "value": "korean",
+          "label": "Korean",
+          "selected": true
+        },
+        {
+          "value": "russian",
+          "label": "Russian",
+          "selected": null
+        },
+        {
+          "value": "spanish",
+          "label": "Spanish",
+          "selected": null
+        },
+        {
+          "value": "uzbek",
+          "label": "Uzbek",
+          "selected": null
+        }
       ]
     }
   ],
