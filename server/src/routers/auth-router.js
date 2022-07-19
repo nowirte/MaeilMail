@@ -7,31 +7,35 @@ import { setUserToken } from '../utils';
 
 const authRouter = Router();
 
-authRouter.post(
-  '/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login',
-    session: false,
-  }),
-  async (req, res, next) => {
-    try {
-      // 토큰 제공
-      await setUserToken(req.user, res);
-    } catch (err) {
-      next(err);
+authRouter.post('/login', async (req, res, next) => {
+  passport.authenticate(
+    'local',
+    async (error, user, info) => {
+      try {
+        if (error) {
+          throw new Error(error);
+        }
+        if (!user) {
+          res.status(401).json(info);
+          return;
+        }
+        await setUserToken(user, res);
+      } catch (err) {
+        next(err);
+      }
+    },
+    {
+      session: false,
     }
-  }
-);
+  )(req, res, next);
+});
 
 // 구글 로그인
 authRouter.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 authRouter.get(
   '/login/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/login',
-    session: false,
-  }),
+  passport.authenticate('google', { session: false, failureMessage: true }),
   async (req, res, next) => {
     try {
       await setUserToken(req.user, res);
