@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 import Select from 'react-select';
 import axios from 'axios';
+import useLoc from '../Signup/userLocationFunction';
 
 const UserInfoEditArea = props => {
   const token = localStorage.getItem('token');
@@ -71,6 +72,15 @@ const UserInfoEditArea = props => {
     });
   };
 
+  const handleLocation = async e => {
+    e.preventDefault();
+    const data = await useLoc();
+    setInputData({
+      ...inputData,
+      location: data,
+    });
+  };
+
   const handleSubmit = async e => {
     try {
       if (checkPassword !== changedPassword) {
@@ -78,25 +88,27 @@ const UserInfoEditArea = props => {
         return;
       }
 
-      await axios.patch(
-        'http://localhost:3001/api/auth/me',
-        {
-          nickname: inputData.nickname,
-          profileText: inputData.profileText,
-          birthday: inputData.birthday,
-          //백으로 비밀번호 input값 보내서 일치하는지 확인!
-          newPassword: changedPassword ? changedPassword : currentPassword,
-          currentPassword: currentPassword,
-          favor: favor,
-          language: language,
+      //바디데이터로 수정
+      const data = {
+        nickname: inputData.nickname,
+        profileText: inputData.profileText,
+        birthday: inputData.birthday,
+        //백으로 비밀번호 input값 보내서 일치하는지 확인!
+        newPassword: changedPassword ? changedPassword : currentPassword,
+        currentPassword: currentPassword,
+        favor: favor,
+        language: language,
+        location: inputData.location,
+      };
+
+      const bodyData = JSON.stringify(data);
+
+      await axios.patch('http://localhost:3001/api/auth/me', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        }
-      );
+      });
 
       handleModal();
       alert('회원 정보가 변경되었습니다.');
@@ -145,13 +157,18 @@ const UserInfoEditArea = props => {
               </EditTitle>
               <EditTitle className="location">
                 위치
-                <input
+                <br />
+                {/* <input
                   id="location"
                   type="text"
                   name="location"
-                  value={inputData.location}
-                  onChange={handleOnChange}
-                />
+                  placeholder={inputData.location}
+                  value={inputData.location || ''}
+                /> */}
+                {inputData.location}
+                <button type="button" onClick={handleLocation}>
+                  테스트
+                </button>
               </EditTitle>
               <EditTitle className="birthday">
                 생일
