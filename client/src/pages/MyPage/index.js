@@ -8,6 +8,8 @@ import axios from 'axios';
 
 const MyPage = () => {
   const [userData, setUserData] = useState({});
+  const [img, setImg] = useState('');
+
   const fetchUserData = async () => {
     try {
       const res = await axios.get(`http://localhost:3333/user`);
@@ -24,7 +26,22 @@ const MyPage = () => {
 
   const imgInput = useRef();
 
-  const handleImgUpload = () => {
+  const handleImgUpload = e => {
+    const uploadFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append('files', uploadFile);
+
+    //   await axios.patch({
+    //     url: '/api/files/images',
+    //     data: formData,
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   });
+  };
+
+  const handleUploadBtn = e => {
+    e.preventDefault();
     imgInput.current.click();
   };
   return (
@@ -33,16 +50,23 @@ const MyPage = () => {
       <MyProfile>
         <ProfileImg>
           <div className="profileImgArea">
-            <img className="profileEmoji" src="/img/뚱이.png" alt="뚱이" />
+            <img
+              className="profileEmoji"
+              src={
+                userData.profileImage ? userData.profileImage : '/img/뚱이.png'
+              }
+              alt="뚱이"
+            />
             <input
               type="file"
               style={{ display: 'none' }}
               ref={imgInput}
               accept="image/jpg, image/png, image/jpeg"
+              onClick={handleImgUpload}
             />
             <button
               className="imgUploadBtn"
-              onClick={handleImgUpload}
+              onClick={handleUploadBtn}
               type="button"
             >
               <AddPhotoAlternateIcon />

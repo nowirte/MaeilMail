@@ -92,7 +92,10 @@ const NavTopArea = () => {
       <StyledLink to="/mypage">
         <MyProfile>
           <div className="profileImgArea">
-            <img src={user.profileImage} alt="profileImg" />
+            <img
+              src={user.profileImage ? user.profileImage : '/img/뚱이.png'}
+              alt="profileImg"
+            />
           </div>
           <span>{user.nickname}</span>
         </MyProfile>
