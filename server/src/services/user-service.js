@@ -74,6 +74,11 @@ class UserService {
 
     const newUser = await this.User.create(userInfo);
 
+    const userId = newUser.dataValues.user_id
+
+    await this.Favor.create({userId})
+    await this.Language.create({userId})
+
     return newUser;
   }
 
@@ -227,7 +232,29 @@ class UserService {
     if (!user) {
       throw new Error('404 not found');
     }
-    return user;
+
+    const favObj = user.dataValues.Favor.dataValues
+    const langObj = user.dataValues.Language.dataValues
+
+    function getArray(obj) {
+      const result = []
+      const keys = Object.keys(obj)
+      
+      keys.forEach(key => {
+        const element = {}
+        element.value = key
+        element.label = key.charAt(0).toUpperCase() + key.slice(1)
+        element.selected = obj[key]
+        result.push(element);
+      })
+      return result
+    }
+    const favorArray = getArray(favObj)
+    const languageArray = getArray(langObj)
+
+    const result = user ? "success" : "fail"
+
+    return {favorArray, languageArray, result}
   }
 
   async getUsersBySearch(nickname) {
