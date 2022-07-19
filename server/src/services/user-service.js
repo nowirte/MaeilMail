@@ -3,7 +3,11 @@ import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
 
-const include = [{ model: Favor }];
+const include = [
+  { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
+  { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
+];
+const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
@@ -11,7 +15,8 @@ class UserService {
     this.Language = param3;
   }
 
-  async validateEmail(filter) {
+  async validateEmail(email, oauth) {
+    const filter = { email, oauth, status: { [Op.not]: 'inactive' } };
     const result = await this.User.findOne({
       where: filter,
     });
@@ -204,7 +209,7 @@ class UserService {
   }
 
   async getUsers() {
-    const users = await this.User.findAll({ include });
+    const users = await this.User.findAll({ include, attributes });
     return users;
   }
 
@@ -212,6 +217,7 @@ class UserService {
     const user = await this.User.findOne({
       where: { user_id: Number(id) },
       include,
+      attributes,
     });
     if (!user) {
       throw new Error('404 not found');
@@ -222,7 +228,7 @@ class UserService {
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      include,
+      attributes: ['nickname', 'user_id', 'profileImage'],
     });
     return users;
   }
@@ -230,6 +236,7 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
+      attributes: ['nickname', 'user_id', 'profileImage'],
       order: [Sequelize.fn('RAND')],
       limit: 10,
     });
