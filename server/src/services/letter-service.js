@@ -10,8 +10,7 @@ class LetterService {
 
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
-    const targetId = await this.Letter.findAll({[Op.in]: [{where: {sendId: myId}, attributes: ['receiveId']},
-                                                            {where: {receiveId: myId}, attributes: ['sendId']}], raw: true});
+    const targetId = await this.Letter.findAll({where: {[Op.or] : [{sendId: myId}, {receiveId: myId}]}, raw: true});
     const idArray = [];
     
     for (let i=0; i<targetId.length; i+=1) {
@@ -21,7 +20,7 @@ class LetterService {
         idArray.push(targetId[i].receiveId);
       }
     }
- 
+  
     const peoples = await this.User.findAll({ where: { user_id: {[Op.in]: idArray} }, attributes: ['user_id', 'nickname', 'profileImage']});
     
     return peoples;
@@ -43,8 +42,9 @@ class LetterService {
         send_location: sendLocation[0]['location'],
         receive_location: receiveLocation[0]['location']
       });
-
-    return mail;
+    
+    const reqMail = await this.Letter.findAll({ where: {letter_id: mail['letter_id']}, attributes: {exclude: ['created_at', 'updated_at']} })
+    return reqMail;
   }
 
   // 상대방과 나눴던 쪽지 모두 가져오기
