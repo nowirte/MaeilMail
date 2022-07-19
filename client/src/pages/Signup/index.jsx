@@ -32,10 +32,10 @@ const SignUp = () => {
   });
   async function handleSignupSubmit() {
     const bodyData = JSON.stringify(state);
-
+    console.log(bodyData);
     //아직 백엔드와 연결 X
     await axios
-      .post('http://localhost:3000/signup', bodyData, {
+      .post('http://localhost:3001/api/users', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -56,16 +56,17 @@ const LoginForm = () => {
 
     //아직 백엔드와 연결 X
     await axios
-      .post('http://localhost:3000/login', bodyData, {
+      .post('http://localhost:3001/api/auth/login', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then(function (response) {
+        console.log(response);
         navigate('/');
       })
       .catch(function (error) {
-        alert(error);
+        console.log(error);
       });
     console.log(state);
   }

@@ -5,21 +5,21 @@ import { LoginInput } from './SignupFormElements';
 const SignupInput = () => {
   const dispatch = useDispatch();
   const nickname = useSelector(state => {
-    return state.signup.signupNickname;
+    return state.signup.nickname;
   });
   function nicknameHandleChange(e) {
     dispatch({ type: 'SIGNUP_NICKNAME', nickname: e.target.value });
   }
 
   const email = useSelector(state => {
-    return state.signup.signupEmail;
+    return state.signup.email;
   });
   function emailHandleChange(e) {
     dispatch({ type: 'SIGNUP_EMAIL', email: e.target.value });
   }
 
   const password = useSelector(state => {
-    return state.signup.signupPassword;
+    return state.signup.password;
   });
 
   function passwordHandleChange(e) {
