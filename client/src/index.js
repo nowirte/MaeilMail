@@ -1,23 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
-
+import GlobalStyles from './styles/GlobalStyles';
 import App from './App';
-
-const GlobalStyles = createGlobalStyle`
-  ${reset}
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-`;
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <GlobalStyles />
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <GlobalStyles />
+      <App />
+    </React.StrictMode>
+  </Provider>
 );

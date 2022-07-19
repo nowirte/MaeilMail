@@ -10,32 +10,33 @@ class Letter extends Sequelize.Model {
         primaryKey: true,
       },
 
-      status: {
-        type: DataTypes.STRING(200),
-      },
-
       send_date: {
         type: DataTypes.DATE,
       },
 
       receive_date: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
       },
 
-      delivery_time: {
-        type: DataTypes.STRING(200),
-      },
-
-      send_loction: {
-        type: DataTypes.STRING(200),
+      send_location: {
+        type: DataTypes.STRING(1234),
       },
 
       receive_location: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(1234),
       },
 
       content: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(1234),
+      },
+
+      is_read: {
+        type: DataTypes.BOOLEAN
+      },
+
+      
+      is_arrived: {
+        type: DataTypes.BOOLEAN
       }
 
     },{

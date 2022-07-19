@@ -1,17 +1,16 @@
 import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import { userService } from '../../../services/user-service';
+import { userService } from '../../../services';
 
 const config = { usernameField: 'email', passwordField: 'password', session: false };
 
 const verify = async (email, password, done) => {
   try {
-    const user = userService.getUserByEmail({ where: { email } });
+    const user = await userService.validateEmail({oauth: 'local', email, status: 'active'});
     if (!user) {
       done(null, false, { reason: '계정이 존재하지 않습니다.' });
       return;
     }
-
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       done(null, { userId: user.user_id, status: user.status });
@@ -19,7 +18,6 @@ const verify = async (email, password, done) => {
     }
     done(null, false, { reason: '비밀번호가 다릅니다.' });
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };

@@ -1,28 +1,32 @@
 /* eslint-disable no-underscore-dangle */
 import { Strategy } from 'passport-google-oauth20';
 import bcrypt from 'bcrypt';
-import { userService } from '../../../services/user-service';
+import { userService } from '../../../services';
 
 const config = {
   clientID: process.env.GOOGLE_OAUTH_ID,
   clientSecret: process.env.GOOGLE_OAUTH_SECRET,
   // backend router 경로로 callback할 것
-  callbackURL: '/login/google/callback',
+  callbackURL: '/api/auth/login/google/callback',
 };
 
-async function findOrCreateUser({ email, name }) {
-  const user = await userService.getUserByEmail({ email });
+async function findOrCreateUser(email, name) {
+  const user = await userService.validateEmail({oauth: 'google', email, status: 'active'});
+
   if (user) {
-    return user;
+    return user
   }
 
   const hashed = await bcrypt.hash(name, 10);
-  const newUser = await userService.addNullUser({
+  console.log('google password:', name)
+  const random = Math.floor( Math.random() * 10000 )
+  const newUser = await userService.addGoogleUser({
     email,
     password: hashed,
-    nickname: hashed,
-    status: "google",
-    gender: "else"
+    nickname: `google#${random}`,
+    status: 'temp',
+    gender: 'else',
+    oauth: 'google'
   });
 
   if (!newUser) {
@@ -34,15 +38,13 @@ async function findOrCreateUser({ email, name }) {
 
 const verify = async (a, b, profile, done) => {
   try {
-    console.log(profile)
     const { email, name } = profile._json;
-    const user = await findOrCreateUser({ email, name });
+    const user = await findOrCreateUser(email, name);
     if (user) {
       done(null, { userId: user.user_id, status: user.status });
       return;
     }
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };

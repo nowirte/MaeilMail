@@ -13,7 +13,6 @@ class User extends Sequelize.Model {
       nickname: {
         type: DataTypes.STRING(200),
         allowNull: false,
-        unique: true,
       },
 
       password: {
@@ -24,7 +23,6 @@ class User extends Sequelize.Model {
       email: {
         type: DataTypes.STRING(200),
         allowNull: false,
-        unique: true
       },
 
       gender: {
@@ -33,7 +31,7 @@ class User extends Sequelize.Model {
       },
 
       birthday: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
       },
 
       location: {
@@ -59,7 +57,11 @@ class User extends Sequelize.Model {
 
       profileImage: {
         type: DataTypes.STRING(200)
-      }
+      },
+
+      oauth: {
+        type: DataTypes.STRING(200)
+      },
 
     },{
         intialAutoIncrement: 1,

@@ -1,9 +1,9 @@
+/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 
 function loginRequired(req, res, next) {
-  const userToken = req.headers['authorization']?.split(' ')[1];
-
-  if (!userToken || userToken === 'null') {
+  const token = req.headers.authorization;
+  if (!token || token === 'null') {
     console.log('Authorization 토큰: 없음');
     res.status(403).json({
       result: 'forbidden-approach',
@@ -15,11 +15,17 @@ function loginRequired(req, res, next) {
 
   // 해당 token 이 정상적인 token인지 확인
   try {
-    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
-    const jwtDecoded = jwt.verify(userToken, secretKey);
+    const secretKey = process.env.JWT_SECRET_KEY
+    const jwtDecoded = jwt.verify(token, secretKey);
 
-    const userId = jwtDecoded.user_id;
-    req.currentUserId = userId
+    const { userId, status } = jwtDecoded;
+
+    if (status === "temp") {
+      return res.redirect('/googleSignup')
+    }
+
+    req.userId = userId;
+    req.userStatus = status;
 
     next();
   } catch (error) {
@@ -27,8 +33,6 @@ function loginRequired(req, res, next) {
       result: 'forbidden-approach',
       reason: '정상적인 토큰이 아닙니다.',
     });
-
-    return;
   }
 }
 
