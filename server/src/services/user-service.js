@@ -247,3 +247,4 @@ class UserService {
 const userService = new UserService(User, Favor, Language);
 
 export { userService };
+

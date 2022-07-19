@@ -9,12 +9,12 @@ const usersRouter = Router();
 // 회원 가입
 usersRouter.post('/', async (req, res, next) => {
   try {
-      const { nickname, email, password, gender, location, latitude, longitude, birthday } = req.body
-      const info = { nickname, email, password, gender, location, latitude, longitude, birthday }
-      const user = await userService.addUser(info) 
-      res.status(201).json(user)
+    const { nickname, email, password, gender, location, latitude, longitude, birthday } = req.body;
+    const info = { nickname, email, password, gender, location, latitude, longitude, birthday };
+    const user = await userService.addUser(info);
+    res.status(201).json(user);
   } catch (err) {
-      next(err);
+    next(err);
   }
 });
 
