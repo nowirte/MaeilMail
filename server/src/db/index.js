@@ -1,7 +1,5 @@
 import Sequelize from 'sequelize';
-import {User} from './models/user';
-import {Favor} from './models/favor';
-import {Letter} from './models/letter';
+import {User, Favor, Language, Letter} from './models'
 
 const db = {};
 
@@ -21,13 +19,16 @@ db.sequelize = sequelize;
 db.User = User;
 db.Favor = Favor;
 db.Letter = Letter;
+db.Language = Language
 
 User.init(sequelize);
 Favor.init(sequelize);
 Letter.init(sequelize);
+Language.init(sequelize)
 
 User.associate(db);
 Favor.associate(db);
 Letter.associate(db);
+Language.associate(db);
 
 export { db };
