@@ -3,13 +3,16 @@ import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
 
-const include = [{ model: Favor }];
-const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
+const include = [
+  { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
+  { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
+];
+const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
     this.Favor = param2;
-    this.Language = param3
+    this.Language = param3;
   }
 
   async validateEmail(email, oauth) {
@@ -85,16 +88,17 @@ class UserService {
       newPassword,
     } = body;
 
-
     async function createObject(array) {
-      const result = {}
-      await array.forEach(el => {result[el.value] = el.selected})
-      return result
+      const result = {};
+      await array.forEach(el => {
+        result[el.value] = el.selected;
+      });
+      return result;
     }
 
-    const languageUpdate = await createObject(language)
-    const favorUpdate = await createObject(favor)
-    
+    const languageUpdate = await createObject(language);
+    const favorUpdate = await createObject(favor);
+
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
@@ -150,7 +154,7 @@ class UserService {
     const userAffectedRows = await this.User.update(toUpdate, filter);
 
     if (userAffectedRows === 0) {
-      console.log("변경된 정보가 없습니다.")
+      console.log('변경된 정보가 없습니다.');
     }
 
     if (favorUpdate) {
