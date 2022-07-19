@@ -4,15 +4,13 @@ import bcrypt from 'bcrypt';
 import { User, Favor } from '../db/models';
 
 const include = [{ model: Favor }];
-const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
 class UserService {
   constructor(param1, param2) {
     this.User = param1;
     this.Favor = param2;
   }
 
-  async validateEmail(email, oauth) {
-    const filter = { email, oauth, status: { [Op.not]: 'inactive' } };
+  async validateEmail(filter) {
     const result = await this.User.findOne({
       where: filter,
     });
@@ -84,18 +82,6 @@ class UserService {
       newPassword,
     } = body;
 
-
-    async function createObject(array) {
-      const result = {}
-      await array.forEach(el => {result[el.value] = el.selected})
-      return result
-    }
-
-    const languageUpdate = await createObject(language)
-    const favorUpdate = await createObject(favor)
-
-    console.log(languageUpdate, favorUpdate);
-    
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
@@ -103,7 +89,7 @@ class UserService {
         attributes: ['password'],
       });
       if (!user) {
-        throw new Error('유저를 찾을 수 없습니다.');
+        throw new Error('유저를 찾을 수 없습니다.')
       }
       const passwordInDB = user.dataValues.password;
       const result = await bcrypt.compare(input, passwordInDB);
@@ -134,7 +120,7 @@ class UserService {
     }
 
     // 회원 정보 수정
-    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
+    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null
 
     const toUpdate = {
       ...(nickname && { nickname }),
@@ -186,16 +172,16 @@ class UserService {
     };
 
     const affectedRows = await this.User.update(toUpdate, { where: { user_id: id, status: 'temp', oauth: 'google' } });
-    if (affectedRows === 0) {
+    if (affectedRows === 0 ) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
     const updated = await this.getUserById(id);
 
-    return updated;
+    return updated
   }
 
   async getUsers() {
-    const users = await this.User.findAll({ include, attributes });
+    const users = await this.User.findAll({ include });
     return users;
   }
 
@@ -203,7 +189,6 @@ class UserService {
     const user = await this.User.findOne({
       where: { user_id: Number(id) },
       include,
-      attributes,
     });
     if (!user) {
       throw new Error('404 not found');
@@ -214,7 +199,7 @@ class UserService {
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
+      include,
     });
     return users;
   }
@@ -222,7 +207,6 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
       order: [Sequelize.fn('RAND')],
       limit: 10,
     });

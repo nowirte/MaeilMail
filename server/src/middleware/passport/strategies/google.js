@@ -11,7 +11,7 @@ const config = {
 };
 
 async function findOrCreateUser(email, name) {
-  const user = await userService.validateEmail(email, 'google');
+  const user = await userService.validateEmail({oauth: 'google', email, status: 'active'});
 
   if (user) {
     return user

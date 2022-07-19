@@ -12,16 +12,16 @@ function loginRequired(req, res, next) {
 
     return;
   }
-  
+
   // 해당 token 이 정상적인 token인지 확인
   try {
-    const secretKey = process.env.JWT_SECRET_KEY;
+    const secretKey = process.env.JWT_SECRET_KEY
     const jwtDecoded = jwt.verify(token, secretKey);
 
     const { userId, status } = jwtDecoded;
 
-    if (status === 'temp') {
-      return res.redirect('/googleSignup');
+    if (status === "temp") {
+      return res.redirect('/googleSignup')
     }
 
     req.userId = userId;

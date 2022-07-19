@@ -1,7 +1,8 @@
 import { Op } from 'sequelize';
 import { Letter, User } from '../db/models';
-import { db } from '../db'
 
+
+//  const include = [{ model: Letter }];
 class LetterService {
   constructor(param1, param2) {
     this.User = param1;
@@ -10,98 +11,73 @@ class LetterService {
 
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
-    const targetId = await this.Letter.findAll({ where: { sendId: myId }, attributes: ['receiveId'] });
-
+    const targetId = await this.Letter.findAll({ where: { sendId: myId }, attributes: ['receiveId']});
+    
     const idArray = [];
-    for (let i = 0; i < targetId.length; i += 1) {
+    for (let i=0; i<targetId.length; i+=1) {
       idArray.push(targetId[i].receiveId);
     }
 
-    const peoples = await this.User.findAll({ where: { user_id: { [Op.in]: idArray } } });
+    const peoples = await this.User.findAll({ where: { user_id: {[Op.in]: idArray} }});
     return peoples;
   }
 
   // 편지쓰기
   async createLetterTo(yourId, targetId, content) {
+      
     const mail = await this.Letter.create({
-      sendId: yourId,
-      receiveId: targetId,
-      content,
-    });
+        sendId: yourId,
+        receiveId: targetId,
+        content,
+      });
 
-    const letterId = mail.dataValues.letter_id;
-    const arriveDate = new Date();
-    const { sequelize } = db
-
-    const update = await sequelize.query(
-      'CREATE EVENT :letterId; ON SCHEDULE AT :arriveDate; DO UPDATE Letters SET is_arrived=true WHERE letter_id=:letterId;',
-      {
-        replacements: { letterId, arriveDate },
-      }
-    );
-
-    console.log(update)
-
-    return mail;
+      return mail;
   }
 
   // 상대방과 나눴던 쪽지 모두 가져오기
   async getLettersById(myId, oponentId) {
-    const target = await this.Letter.findOne({ where: { sendId: oponentId, receiveId: myId } });
-    const my = await this.Letter.findOne({ where: { sendId: myId, receiveId: oponentId } });
-
+    const target = await this.Letter.findOne({ where: {sendId: oponentId, receiveId: myId} });
+    const my = await this.Letter.findOne({ where: {sendId: myId, receiveId: oponentId} });
+  
     if (!target || !my) {
-      throw new Error('상대방과의 쪽지 내역이 존재하지 않습니다.');
-    }
-
-    const findedLetter = await this.Letter.findAll({
-      where: {
-        [Op.or]: [
-          { sendId: myId, receiveId: oponentId },
-          { sendId: oponentId, receiveId: myId },
-        ],
-      },
-    });
-
+      throw new Error("상대방과의 쪽지 내역이 존재하지 않습니다."); 
+    };
+    
+    const findedLetter = await this.Letter.findAll({ where: {[Op.or]: 
+      [{ sendId: myId, receiveId: oponentId }, {sendId: oponentId, receiveId: myId}]} });  
+    
     return findedLetter;
-  }
+  };
 
   // 상대방과 나눴던 쪽지 상세 보기
   async getLetterById(myId, oponentId, letterId) {
-    const target = await this.Letter.findOne({ where: { receiveId: oponentId } });
-    const my = await this.Letter.findOne({ where: { sendId: myId } });
+    const target = await this.Letter.findOne({ where: {receiveId: oponentId} });
+    const my = await this.Letter.findOne({ where: {sendId: myId} });
     if (!target || !my) {
-      throw new Error('상대방과의 쪽지 내역이 존재하지 않습니다.');
-    }
-
-    const findedLetter = await this.Letter.findOne({
-      where: { sendId: myId, receiveId: oponentId, letter_id: letterId },
-    });
-
+      throw new Error("상대방과의 쪽지 내역이 존재하지 않습니다."); 
+    };
+    
+    const findedLetter = await this.Letter.findOne({ where: { sendId: myId, receiveId: oponentId, letter_id: letterId } });  
+    
     return findedLetter;
-  }
+  };
 
   // 상대방과 대화내역 삭제
   async deleteLetterById(myId, oponentId) {
-    const target = await this.Letter.findOne({ where: { sendId: oponentId, receiveId: myId } });
-    const my = await this.Letter.findOne({ where: { sendId: myId, receiveId: oponentId } });
-
+    const target = await this.Letter.findOne({ where: {sendId: oponentId, receiveId: myId} });
+    const my = await this.Letter.findOne({ where: {sendId: myId, receiveId: oponentId} });
+    
     if (!target || !my) {
-      throw new Error('상대방과의 쪽지 내역이 존재하지 않습니다.');
-    }
+      throw new Error("상대방과의 쪽지 내역이 존재하지 않습니다."); 
+    };
 
-    const deletedLetter = await this.Letter.destroy({
-      where: {
-        [Op.or]: [
-          { sendId: myId, receiveId: oponentId },
-          { sendId: oponentId, receiveId: myId },
-        ],
-      },
-    });
-
+    const deletedLetter = await this.Letter.destroy({ where: {[Op.or]: 
+      [{ sendId: myId, receiveId: oponentId }, {sendId: oponentId, receiveId: myId}]} });
+     
     return deletedLetter;
   }
-}
+
+};
 
 const letterService = new LetterService(User, Letter);
 
