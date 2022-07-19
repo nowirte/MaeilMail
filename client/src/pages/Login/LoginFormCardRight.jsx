@@ -62,14 +62,12 @@ const LoginForm = () => {
       })
       .then(function (response) {
         const { role, token } = response.data;
-        console.log(`${role}, ${token}`);
         localStorage.setItem('token', token);
         navigate('/');
       })
       .catch(function (error) {
         console.log(error);
       });
-    console.log(state);
   }
 
   async function handleGoogleLoginClick(e) {
@@ -77,19 +75,13 @@ const LoginForm = () => {
 
     //CORS에러 있음
     await axios
-      .get('http://localhost:3001/api/auth/login/google', {
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-      })
+      .get('http://localhost:3001/api/auth/login/google')
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-    console.log(state);
   }
 
   return (

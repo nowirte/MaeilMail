@@ -30,9 +30,10 @@ const SignUp = () => {
   const state = useSelector(state => {
     return state.signup;
   });
-  async function handleSignupSubmit() {
+  async function handleSignupSubmit(e) {
+    e.preventDefault();
     const bodyData = JSON.stringify(state);
-    console.log(bodyData);
+    alert('가입 성공');
     //아직 백엔드와 연결 X
     await axios
       .post('http://localhost:3001/api/users', bodyData, {
@@ -41,13 +42,13 @@ const SignUp = () => {
         },
       })
       .then(function (response) {
-        console.log(response);
-        navigate('/login');
+        if (response.status === 201) {
+          navigate('/login');
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
-    console.log(state);
   }
   return (
     <SignupCard onSubmit={handleSignupSubmit}>
