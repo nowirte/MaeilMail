@@ -23,7 +23,7 @@ authRouter.post(
   }
 );
 
-// 구글 로그인
+// 구글 로그인 
 authRouter.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 authRouter.get(
