@@ -37,7 +37,7 @@ const Refresh = styled.img`
 
 const UserLocation = () => {
   const dispatch = useDispatch();
-  const country = useSelector(state => state.signup.signupLocation);
+  const country = useSelector(state => state.signup.location);
 
   //추후 useEffect 분리 필요
   useEffect(() => {
@@ -65,20 +65,17 @@ const UserLocation = () => {
       )
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           dispatch({ type: 'SIGNUP_LOCATION', location: data.countryName });
           return data.countryName;
         });
     }
     getLocInfo();
-    console.log('change');
   }, []);
 
   async function refreshHandleClick(e) {
     e.preventDefault();
     const data = await useLoc();
     dispatch({ type: 'SIGNUP_LOCATION', location: data });
-    console.log('click');
   }
 
   return (

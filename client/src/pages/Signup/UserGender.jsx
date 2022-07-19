@@ -72,7 +72,7 @@ const Female = styled.input`
 const UserGender = () => {
   const dispatch = useDispatch();
   const gender = useSelector(state => {
-    return state.signup.signupGender;
+    return state.signup.gender;
   });
 
   function genderHandleChange(e) {

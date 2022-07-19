@@ -71,8 +71,6 @@ const UserInfoEditArea = props => {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-
     try {
       if (userData.password !== currentPassword) {
         alert('현재 비밀번호를 확인해주세요.');

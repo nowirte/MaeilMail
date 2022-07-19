@@ -54,20 +54,34 @@ const LoginForm = () => {
     const data = { email: email, password: password };
     const bodyData = JSON.stringify(data);
 
-    //아직 백엔드와 연결 X
     await axios
-      .post('http://localhost:3000/login', bodyData, {
+      .post('http://localhost:3001/api/auth/login', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then(function (response) {
+        const { role, token } = response.data;
+        localStorage.setItem('token', token);
         navigate('/');
       })
       .catch(function (error) {
-        alert(error);
+        console.log(error);
       });
-    console.log(state);
+  }
+
+  async function handleGoogleLoginClick(e) {
+    e.preventDefault();
+
+    //CORS에러 있음
+    await axios
+      .get('http://localhost:3001/api/auth/login/google')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -90,7 +104,7 @@ const LoginForm = () => {
         <Link to="/home">비밀번호 찾기</Link>
         <Link to="/signup">회원가입</Link>
       </LinkContainer>
-      <LoginGoogleButton>
+      <LoginGoogleButton onClick={handleGoogleLoginClick}>
         <GoogleLogo src={googleLogo} alt="googleLogo" />
         Google
       </LoginGoogleButton>
