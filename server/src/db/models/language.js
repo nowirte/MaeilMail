@@ -12,42 +12,52 @@ class Language extends Sequelize.Model {
 
         afrikaans: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         chinese: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         english: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         french: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         german: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         japanese: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         korean: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         russian: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         spanish: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
 
         uzbek: {
           type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
       },
       {

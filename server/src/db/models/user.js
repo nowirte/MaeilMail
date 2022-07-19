@@ -56,7 +56,8 @@ class User extends Sequelize.Model {
       },
 
       profileImage: {
-        type: DataTypes.STRING(200)
+        type: DataTypes.STRING(200),
+        defaultValue: 'img/뚱이.png'
       },
 
       oauth: {
