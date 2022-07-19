@@ -1,14 +1,15 @@
 /* eslint-disable no-nested-ternary */
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
-import { User, Favor } from '../db/models';
+import { User, Favor, Language } from '../db/models';
 
 const include = [{ model: Favor }];
 const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
 class UserService {
-  constructor(param1, param2) {
+  constructor(param1, param2, param3) {
     this.User = param1;
     this.Favor = param2;
+    this.Language = param3
   }
 
   async validateEmail(email, oauth) {
@@ -93,8 +94,6 @@ class UserService {
 
     const languageUpdate = await createObject(language)
     const favorUpdate = await createObject(favor)
-
-    console.log(languageUpdate, favorUpdate);
     
     // validate
     async function validatePassword(id, input) {
@@ -141,7 +140,6 @@ class UserService {
       ...(hashedPassword && { password: hashedPassword }),
       ...(gender && { gender }),
       ...(birthday && { birthday }),
-      ...(language && { language }),
       ...(location && { location }),
       ...(latitude && { latitude }),
       ...(longitude && { longitude }),
@@ -152,18 +150,30 @@ class UserService {
     const userAffectedRows = await this.User.update(toUpdate, filter);
 
     if (userAffectedRows === 0) {
-      throw new Error('업데이트 대상을 찾지 못했습니다.');
+      console.log("변경된 정보가 없습니다.")
     }
 
-    if (favor) {
+    if (favorUpdate) {
       await this.Favor.findOrCreate({
         where: { userId: Number(userId) },
       });
-      const favorAffectedRows = await this.Favor.update(favor, {
+      const affected = await this.Favor.update(favorUpdate, {
         where: { userId: Number(userId) },
       });
-      if (favorAffectedRows === 0) {
-        throw new Error('업데이트 대상을 찾지 못했습니다.');
+      if (affected === 0) {
+        console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
+      }
+    }
+
+    if (languageUpdate) {
+      await this.Language.findOrCreate({
+        where: { userId: Number(userId) },
+      });
+      const affected = await this.Language.update(languageUpdate, {
+        where: { userId: Number(userId) },
+      });
+      if (affected === 0) {
+        console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
       }
     }
 
@@ -230,6 +240,6 @@ class UserService {
   }
 }
 
-const userService = new UserService(User, Favor);
+const userService = new UserService(User, Favor, Language);
 
 export { userService };
