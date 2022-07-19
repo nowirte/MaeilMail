@@ -14,7 +14,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/recommenduser', {
+      .get('http://localhost:3001/api/users', {
         headers: {
           Authorization: token,
         },
@@ -29,7 +29,7 @@ const SearchBar = () => {
     e.preventDefault();
     if (searchField === null || searchField === '') {
       axios
-        .get('http://localhost:3001/recommenduser', {
+        .get(`http://localhost:3001/api/users?search=${searchField}`, {
           headers: {
             Authorization: token,
           },
