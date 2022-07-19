@@ -27,7 +27,7 @@ class LetterService {
   }
 
   // 편지쓰기
-  async createLetterTo(yourId, targetId, content) {
+  async createLetterTo(yourId, targetId, content, sendDate, receiveDate) {
     const sendLocation = await this.User.findAll({ where : { user_id: yourId }, attributes: ['location'], raw: true });
     const receiveLocation = await this.User.findAll({ where : { user_id: targetId }, attributes: ['location'], raw: true}); 
 
@@ -35,6 +35,8 @@ class LetterService {
         sendId: yourId,
         receiveId: targetId,
         content,
+        send_date: sendDate,
+        receive_date: receiveDate,
         is_arrived: false,
         is_read: false,
         send_location: sendLocation[0]['location'],
@@ -42,6 +44,7 @@ class LetterService {
       });
     
     const reqMail = await this.Letter.findAll({ where: {letter_id: mail['letter_id']}, attributes: {exclude: ['created_at', 'updated_at']} })
+    
     return reqMail;
   }
 
