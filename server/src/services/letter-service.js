@@ -10,7 +10,7 @@ class LetterService {
 
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
-    const targetId = await this.Letter.findAll({[Op.or]: [{where: {sendId: myId}, attributes: ['receiveId']},
+    const targetId = await this.Letter.findAll({[Op.in]: [{where: {sendId: myId}, attributes: ['receiveId']},
                                                             {where: {receiveId: myId}, attributes: ['sendId']}], raw: true});
     const idArray = [];
     
@@ -21,7 +21,7 @@ class LetterService {
         idArray.push(targetId[i].receiveId);
       }
     }
-    
+ 
     const peoples = await this.User.findAll({ where: { user_id: {[Op.in]: idArray} }, attributes: ['user_id', 'nickname', 'profileImage']});
     
     return peoples;
@@ -80,6 +80,18 @@ class LetterService {
      
     return deletedLetter;
   }
+
+  async incomingLetters(myId, isArrived) {
+    if (isArrived){
+
+      throw new Error('배송중인 쪽지가 존재하지 없습니다.') 
+    
+    } else {
+      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: isArrived}});
+      
+      return myLetter; 
+    }
+  };
 
 };
 
