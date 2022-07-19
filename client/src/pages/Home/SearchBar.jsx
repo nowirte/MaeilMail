@@ -14,14 +14,13 @@ const SearchBar = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/users', {
+      .get('http://localhost:3001/api/users?recommend=true', {
         headers: {
           Authorization: token,
         },
       })
       .then(res => {
         setUsers(res.data);
-        // console.log('users', users);
       });
   }, []);
 
@@ -29,7 +28,7 @@ const SearchBar = () => {
     e.preventDefault();
     if (searchField === null || searchField === '') {
       axios
-        .get(`http://localhost:3001/api/users?search=${searchField}`, {
+        .get(`http://localhost:3001/api/users?recommend=true`, {
           headers: {
             Authorization: token,
           },
@@ -38,11 +37,15 @@ const SearchBar = () => {
           setUsers(res.data);
         });
     }
-    setUsers(() => {
-      return users.filter(user => {
-        return user.nickname.toLowerCase().includes(searchField.toLowerCase());
+    axios
+      .get(`http://localhost:3001/api/users?search=${searchField}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setUsers(res.data);
       });
-    });
   };
   return (
     <>
