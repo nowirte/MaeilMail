@@ -55,6 +55,11 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
+    const userId = newUser.dataValues.user_id
+
+    await this.Favor.create({userId})
+    await this.Language.create({userId})
+
     return newUser;
   }
 
