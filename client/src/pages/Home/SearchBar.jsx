@@ -7,22 +7,36 @@ import RecommendHeader from './RecommendHeader';
 import RecommendFriendsList from './RecommendFriendsList';
 
 const SearchBar = () => {
+  const token = localStorage.getItem('token');
+
   const [users, setUsers] = useState([]);
   const [searchField, setSearchField] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3333/recommenduser').then(res => {
-      setUsers(res.data);
-      // console.log('users', users);
-    });
+    axios
+      .get('http://localhost:3001/recommenduser', {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setUsers(res.data);
+        // console.log('users', users);
+      });
   }, []);
 
   const onSearch = e => {
     e.preventDefault();
     if (searchField === null || searchField === '') {
-      axios.get('http://localhost:3333/recommenduser').then(res => {
-        setUsers(res.data);
-      });
+      axios
+        .get('http://localhost:3001/recommenduser', {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(res => {
+          setUsers(res.data);
+        });
     }
     setUsers(() => {
       return users.filter(user => {

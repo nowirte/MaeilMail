@@ -17,10 +17,15 @@ import {
 } from './styles/StyledCurrentlyComingLetter';
 
 const CurrentlyComingLetter = () => {
+  const token = localStorage.getItem('token');
   const [currentlyLetters, setCurrentlyLetters] = useState(undefined);
   useEffect(() => {
     axios
-      .get('http://localhost:3333/letter?receiveId=2&status=incoming')
+      .get('http://localhost:3001/api/letters', {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then(res => setCurrentlyLetters(res.data));
   }, []);
   return (
