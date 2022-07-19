@@ -12,8 +12,14 @@ const MyPage = () => {
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/user`);
-      const data = res.data[0];
+      const token = localStorage.getItem('token');
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          Authorization: token,
+        },
+      });
+      const data = res.data;
       setUserData(data);
     } catch (error) {
       console.error(error);

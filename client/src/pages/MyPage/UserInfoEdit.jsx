@@ -9,6 +9,7 @@ import Select from 'react-select';
 import axios from 'axios';
 
 const UserInfoEditArea = props => {
+  const token = localStorage.getItem('token');
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
@@ -72,32 +73,31 @@ const UserInfoEditArea = props => {
 
   const handleSubmit = async e => {
     try {
-      if (userData.password !== currentPassword) {
-        alert('현재 비밀번호를 확인해주세요.');
-        return;
-      }
       if (checkPassword !== changedPassword) {
         alert('새로운 비밀번호를 다시 확인해주세요.');
         return;
       }
-      if (changedPassword === '') {
-        setChangedPassword(userData.password);
-      }
 
-      await axios.patch(`http://localhost:3333/user/1`, {
-        // headers: {
-        //   'Content-Type': 'application/json; charset=utf-8',
-        //   authorization: `Bearer ${localStorage.getItem('token')}`,
-        // },
-        nickname: inputData.nickname,
-        profileText: inputData.profileText,
-        birthday: inputData.birthday,
-        //백으로 비밀번호 input값 보내서 일치하는지 확인!
-        newPassword: changedPassword ? changedPassword : currentPassword,
-        currentPassword: currentPassword,
-        favor: favor,
-        language: language,
-      });
+      await axios.patch(
+        'http://localhost:3001/api/auth/me',
+        {
+          nickname: inputData.nickname,
+          profileText: inputData.profileText,
+          birthday: inputData.birthday,
+          //백으로 비밀번호 input값 보내서 일치하는지 확인!
+          newPassword: changedPassword ? changedPassword : currentPassword,
+          currentPassword: currentPassword,
+          favor: favor,
+          language: language,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        }
+      );
+
       handleModal();
       alert('회원 정보가 변경되었습니다.');
     } catch (err) {
@@ -128,7 +128,7 @@ const UserInfoEditArea = props => {
                 <input
                   id="nickname"
                   type="text"
-                  placeholder={userData.nickname}
+                  placeholder={inputData.nickname}
                   name="nickname"
                   onChange={handleOnChange}
                 />
@@ -138,7 +138,7 @@ const UserInfoEditArea = props => {
                 <input
                   id="profileText"
                   type="text"
-                  placeholder={userData.profileText}
+                  placeholder={inputData.profileText}
                   name="profileText"
                   onChange={handleOnChange}
                 />
@@ -149,7 +149,7 @@ const UserInfoEditArea = props => {
                   id="location"
                   type="text"
                   name="location"
-                  value={userData.location}
+                  value={inputData.location}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -159,7 +159,7 @@ const UserInfoEditArea = props => {
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={userData?.birthday || ''}
+                  value={inputData.birthday || ''}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -234,14 +234,14 @@ const UserInfoEditArea = props => {
                     setCurrentPassword(e.target.value);
                   }}
                 />
-                {userData.password !== currentPassword && (
+                {/* {userData.password !== currentPassword && (
                   <p
                     className="currentPasswordChecked"
                     style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
                   >
                     현재 비밀번호가 일치해야 정보를 변경할 수 있습니다.
                   </p>
-                )}
+                )} */}
               </EditTitle>
               <div className="editBtn">
                 <ThemeProvider theme={theme}>
