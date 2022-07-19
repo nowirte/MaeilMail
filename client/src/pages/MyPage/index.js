@@ -26,10 +26,17 @@ const MyPage = () => {
 
   const imgInput = useRef();
 
-  const handleImgUpload = e => {
+  const handleImgUpload = async e => {
     const uploadFile = e.target.files[0];
     const formData = new FormData();
     formData.append('files', uploadFile);
+
+    await axios.patch(`http://localhost:3333/user/1`, formData, {
+      // headers: {
+      //   'Content-Type': 'application/json; charset=utf-8',
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
+    });
 
     //   await axios.patch({
     //     url: '/api/files/images',
