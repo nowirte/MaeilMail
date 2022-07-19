@@ -15,6 +15,7 @@ const app = express();
 const { sequelize } = db;
 sequelize.sync({ force: false });
 
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
