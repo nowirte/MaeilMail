@@ -35,8 +35,6 @@ class LetterService {
         sendId: yourId,
         receiveId: targetId,
         content,
-        send_date: new Date(),
-        receive_date: new Date(),
         is_arrived: false,
         is_read: false,
         send_location: sendLocation[0]['location'],
