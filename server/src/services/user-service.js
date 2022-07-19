@@ -252,9 +252,7 @@ class UserService {
     const favorArray = getArray(favObj)
     const languageArray = getArray(langObj)
 
-    const result = user ? "success" : "fail"
-
-    return {favorArray, languageArray, result}
+    return {favorArray, languageArray, user}
   }
 
   async getUsersBySearch(nickname) {
