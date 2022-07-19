@@ -63,19 +63,17 @@ const NavTopArea = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/user`);
-      const data = res.data[0];
-      setUser(data);
+      const token = localStorage.getItem('token');
 
-      // 헤더에 토큰 보내고 유저 데이터 받아오기
-      //   const res = await axios.get(`주소`,{
-      //     headers: {
-      //       'Content-Type': 'application/json; charset=utf-8',
-      //       authorization: `Bearer ${localStorage.getItem('token')}`,
-      //    },
-      //  }
-      // )
-      //setUser(res)
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          Authorization: token,
+        },
+      });
+      const data = res.data;
+
+      setUser(data);
     } catch (err) {
       console.log(err);
     }
@@ -94,7 +92,10 @@ const NavTopArea = () => {
       <StyledLink to="/mypage">
         <MyProfile>
           <div className="profileImgArea">
-            <img src={user.profileImage} alt="profileImg" />
+            <img
+              src={user.profileImage ? user.profileImage : '/img/뚱이.png'}
+              alt="profileImg"
+            />
           </div>
           <span>{user.nickname}</span>
         </MyProfile>
