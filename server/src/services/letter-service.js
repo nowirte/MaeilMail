@@ -89,14 +89,34 @@ class LetterService {
     return deletedLetter;
   }
 
+  // 오고 있는 편지
   async incomingLetters(myId, isArrived) {
     if (isArrived){
 
       throw new Error('배송중인 쪽지가 존재하지 없습니다.') 
     
     } else {
-      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: isArrived}});
+      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: isArrived}, raw:true});
+   
+      const idArrayTemp = [];
       
+      for (let i=0; i<myLetter.length; i+=1) {
+        idArrayTemp.push(myLetter[i].sendId);
+      }
+      const idArray = [...new Set(idArrayTemp)];
+
+      const userInfo = await this.User.findAll({where: { user_id: { [Op.in]: idArray } },raw: true, attributes: ['user_id', 'nickname', 'profileImage']}); 
+
+      for (let i=0; i<myLetter.length; i+=1) {
+        for (let j=0; j<userInfo.length; j+=1) {
+          if (myLetter[i].sendId === userInfo[j].user_id) {
+            myLetter[i].user_id = userInfo[j].user_id;
+            myLetter[i].nickname = userInfo[j].nickname;
+            myLetter[i].profileImage = userInfo[j].profileImage;
+          }
+        }
+      }
+
       return myLetter; 
     }
   };
