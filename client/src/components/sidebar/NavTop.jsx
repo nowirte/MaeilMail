@@ -70,7 +70,6 @@ const NavTopArea = () => {
           Authorization: token,
         },
       });
-      console.log(res);
       const data = res.data.user;
       setUser(data);
     } catch (err) {

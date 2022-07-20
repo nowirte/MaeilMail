@@ -18,7 +18,7 @@ const NavFriendsArea = () => {
       // const data = res.data.user;
       console.log(res);
       // const res = await axios.get('http://localhost:3333/friend');
-      // const data = res.data;
+      const data = res.data;
       setFriends(data);
     } catch (err) {
       console.log(err);
@@ -35,10 +35,17 @@ const NavFriendsArea = () => {
       {friends &&
         friends?.map(friend => {
           return (
-            <StyledLink to={`/friend/${friend.id}`} key={friend.id}>
+            <StyledLink to={`/friend/${friend.id}`} key={friend.user_id}>
               <FriendsList>
                 <div className="profileImgArea">
-                  <img src={friend.profileImage} alt="friendImg" />
+                  <img
+                    src={
+                      friend.profileImage
+                        ? friend.profileImage
+                        : '/img/뚱이.png'
+                    }
+                    alt="friendImg"
+                  />
                 </div>
                 <span>{friend.nickname}</span>
               </FriendsList>
