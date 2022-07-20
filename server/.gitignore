@@ -1,4 +1,2 @@
-/node_modules
 .env
-/build
-/src/db/config
+/node_modules
