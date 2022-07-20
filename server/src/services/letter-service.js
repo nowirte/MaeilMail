@@ -65,7 +65,7 @@ class LetterService {
       throw new Error("삭제되었거나 쪽지 내역이 존재하지 않습니다.")
     } else {
       return findedLetter;
-    }  
+    } 
   };
 
   // 상대방과 나눴던 쪽지 상세 보기
