@@ -8,25 +8,24 @@ const NavFriendsArea = () => {
 
   const fetchData = async () => {
     try {
-      // const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');
 
-      // const res = await axios.get('http://localhost:3001/api/auth/me', {
-      //   headers: {
-      //     // Authorization: `Bearer ${token}`,
-      //     Authorization: token,
-      //   },
-      // });
+      const res = await axios.get('http://localhost:3001/api/letters', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      // const data = res.data.user;
+      console.log(res);
+      // const res = await axios.get('http://localhost:3333/friend');
       // const data = res.data;
-
-      const res = await axios.get('http://localhost:3333/friend');
-      const data = res.data;
       setFriends(data);
     } catch (err) {
       console.log(err);
       console.log(err.message);
     }
   };
-
+  console.log(friends);
   useEffect(() => {
     fetchData();
   }, []);
@@ -34,7 +33,7 @@ const NavFriendsArea = () => {
   return (
     <Friends>
       {friends &&
-        friends.map(friend => {
+        friends?.map(friend => {
           return (
             <StyledLink to={`/friend/${friend.id}`} key={friend.id}>
               <FriendsList>

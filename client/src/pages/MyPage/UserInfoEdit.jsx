@@ -34,9 +34,6 @@ const UserInfoEditArea = props => {
     setOpen(!open);
   };
 
-  // console.log('favor:', favor);
-  // console.log('language:', language);
-
   const handleCheckedFavor = e => {
     // 유저가 선택한 관심사의 value값 가져오는 코드
     const checkedFavor = e.map(el => el.value);
@@ -115,8 +112,9 @@ const UserInfoEditArea = props => {
       });
 
       handleModal();
-      alert('회원 정보가 변경되었습니다.');
       document.location.href = '/mypage';
+      // location.reload();
+      // window.location.replace('/mypage');
     } catch (err) {
       console.log(err);
       alert(err.message);
@@ -254,7 +252,6 @@ const UserInfoEditArea = props => {
                 <p>
                   현재 비밀번호를 입력해주세요.
                   <span style={{ fontSize: '0.75rem', color: 'red' }}>
-                    {' '}
                     *필수
                   </span>
                 </p>
