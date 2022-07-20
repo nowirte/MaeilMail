@@ -53,4 +53,4 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
   );
 };
 
-export default LetterEditor;
+export default React.memo(LetterEditor);

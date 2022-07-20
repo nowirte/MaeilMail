@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
 import LetterList from './LetterList';
@@ -101,7 +101,7 @@ const FriendDetail = () => {
   }, []);
 
   // 편지 작성
-  const createHandler = content => {
+  const createHandler = useCallback(content => {
     const distance = getDistance(
       user.longitude,
       user.latitude,
@@ -125,7 +125,7 @@ const FriendDetail = () => {
     postLetter(newLetter);
     setLetters(letters => [newLetter, ...letters]);
     fetchLetters();
-  };
+  }, []);
 
   // 편지 보내기 버튼
   const writeHandler = () => {
