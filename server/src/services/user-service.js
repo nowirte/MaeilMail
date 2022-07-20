@@ -232,9 +232,9 @@ class UserService {
     if (!user) {
       throw new Error('404 not found');
     }
-
-    const favObj = user.dataValues.Favor.dataValues
-    const langObj = user.dataValues.Language.dataValues
+    
+    const favObj = user.dataValues.Favor
+    const langObj = user.dataValues.Language
 
     function getArray(obj) {
       const result = []
@@ -249,8 +249,8 @@ class UserService {
       })
       return result
     }
-    const favorArray = getArray(favObj)
-    const languageArray = getArray(langObj)
+    const favorArray = favObj ? getArray(favObj.dataValues) : null
+    const languageArray = langObj? getArray(langObj) : null
 
     return {favorArray, languageArray, user}
   }
