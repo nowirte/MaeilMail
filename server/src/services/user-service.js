@@ -98,17 +98,6 @@ class UserService {
       newPassword,
     } = body;
 
-    async function createObject(array) {
-      const result = {};
-      await array.forEach(el => {
-        result[el.value] = el.selected;
-      });
-      return result;
-    }
-
-    const languageUpdate = await createObject(language);
-    const favorUpdate = await createObject(favor);
-
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
@@ -134,7 +123,7 @@ class UserService {
 
     // 유저 필터
     const filter = {
-      where: { user_id: Number(userId), status: 'active' },
+      where: { user_id: Number(userId), status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -147,6 +136,17 @@ class UserService {
     }
 
     // 회원 정보 수정
+    async function createObject(array) {
+      const result = {};
+      await array.forEach(el => {
+        result[el.value] = el.selected;
+      });
+      return result;
+    }
+
+    const languageUpdate = await createObject(language);
+    const favorUpdate = await createObject(favor);
+
     const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
 
     const toUpdate = {
