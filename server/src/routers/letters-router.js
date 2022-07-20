@@ -72,6 +72,17 @@ lettersRouter.get('/:userId/:letterId', loginRequired, async (req, res, next) =>
   }
 });
 
+lettersRouter.get('/recent', loginRequired, async (req, res, next) => {
+  try {
+    const myId = req.userId;
+
+    const result = await letterService.getRecentLetters(myId);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // isRead
 lettersRouter.patch('/:letterId', loginRequired, async (req, res, next) => {
   try {
