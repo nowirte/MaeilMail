@@ -71,14 +71,26 @@ class LetterService {
   // 상대방과 나눴던 쪽지 상세 보기
   async getLetterById(myId, oponentId, letterId) {
     
-    const findedLetter = await this.Letter.findOne({ where: { sendId: myId, receiveId: oponentId, letter_id: letterId } });  
+    const findedLetter = await this.Letter.findOne({ where: {[Op.or]: [{ sendId: myId, receiveId: oponentId, letter_id: letterId },
+                                                                        {sendId: oponentId, receiveId: myId, letter_id: letterId }] }, raw: true});  
     
-    if (!findedLetter) {
-      throw new Error("삭제되었거나 쪽지 내역이 존재하지 않습니다.")
+    if (findedLetter.sendId === myId) {
+      const myNickname = await this.User.findAll({where: {user_id: myId}, attributes: ['nickname'], raw: true});  
+      findedLetter.nickname = myNickname[0].nickname;
     } else {
-      return findedLetter;
+      const opponentNickname = await this.User.findAll({where: {user_id: oponentId}, attributes: ['nickname'], raw: true});  
+      findedLetter.nickname = opponentNickname[0].nickname;
     }
+    
+    return findedLetter;
   };
+
+
+  // isRead 
+  async updateLetterById(myId, letterId, isRead) {
+    const updatedLetter = await this.Letter.update({is_read: isRead}, {where: {letter_id: letterId, receiveId: myId}});
+    return updatedLetter;
+  }
 
   // 상대방과 대화내역 삭제
   async deleteLetterById(myId, oponentId) {
@@ -90,13 +102,9 @@ class LetterService {
   }
 
   // 오고 있는 편지
-  async incomingLetters(myId, isArrived) {
-    if (isArrived){
-
-      throw new Error('배송중인 쪽지가 존재하지 없습니다.') 
+  async incomingLetters(myId) {
     
-    } else {
-      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: isArrived}, raw:true});
+      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: 0, is_read: 0}, raw:true, order: [['receive_date', 'DESC']]});
    
       const idArrayTemp = [];
       
@@ -121,7 +129,6 @@ class LetterService {
     }
   };
 
-};
 
 const letterService = new LetterService(User, Letter);
 

@@ -18,11 +18,10 @@ lettersRouter.get('/', loginRequired, async (req, res, next) => {
 });
 
 // 오고 있는 편지
-lettersRouter.get('/status', loginRequired, async (req, res, next) => {
+lettersRouter.get('/incoming', loginRequired, async (req, res, next) => {
   try{
     const myId = req.userId;
-    const { isArrived } = req.query;
-    const result = await letterService.incomingLetters(myId, JSON.parse(isArrived));
+    const result = await letterService.incomingLetters(myId);
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -67,6 +66,19 @@ lettersRouter.get('/:userId/:letterId', loginRequired, async (req, res, next) =>
     const { userId, letterId } = req.params;
 
     const result = await letterService.getLetterById(myId, userId, letterId);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// isRead
+lettersRouter.patch('/:letterId', loginRequired, async (req, res, next) => {
+  try {
+    const myId = req.userId;
+    const { letterId } = req.params;
+    const { isRead } = req.body
+    const result = await letterService.updateLetterById(myId, letterId, isRead);
     res.status(200).json(result);
   } catch (err) {
     next(err);
