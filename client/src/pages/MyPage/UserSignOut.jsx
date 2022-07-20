@@ -31,11 +31,12 @@ const UserSignOutArea = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
 
     await axios.patch(`http://localhost:3333/user/1`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: token,
       },
       currentPassword: checkPassowrd,
     });
@@ -43,6 +44,7 @@ const UserSignOutArea = props => {
     handleModal();
     localStorage.clear();
     alert('회원 탈퇴되었습니다. 지금까지 이용해주셔서 감사합니다.');
+    document.location.href = '/login';
   };
 
   return (
@@ -81,7 +83,7 @@ const UserSignOutArea = props => {
             variant="contained"
             type="submit"
             color="error"
-            disabled={password !== checkPassowrd}
+            onClick={handleSubmit}
           >
             탈퇴하기
           </Button>
