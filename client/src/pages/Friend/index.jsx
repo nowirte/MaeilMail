@@ -74,18 +74,22 @@ const FriendDetail = () => {
   }, [friendId]);
 
   const postLetter = useCallback(
-    newLetter => {
+    async newLetter => {
       try {
         const token = localStorage.getItem('token');
-        axios.post(`http://localhost:3001/api/letters/${friendId}`, newLetter, {
-          headers: {
-            Authorization: token,
-          },
-        });
-        // fetchLetters();
+        await axios.post(
+          `http://localhost:3001/api/letters/${friendId}`,
+          newLetter,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
       } catch (error) {
         console.error(error);
       }
+      await fetchLetters();
     },
     [friendId]
   );
@@ -122,7 +126,6 @@ const FriendDetail = () => {
         receiveDate: receiveDate,
         content,
       };
-      setLetters(letters => [newLetter, ...letters]);
       postLetter(newLetter);
     },
     [writeIsShown]
