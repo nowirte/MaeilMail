@@ -84,6 +84,7 @@ authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, r
     if (!userId) {
       throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
     }
+    res.json({url: `/src/uploads/${req.file.filename}`})
   } catch (err) {
     next(err);
   }

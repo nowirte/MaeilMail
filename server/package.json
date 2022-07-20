@@ -18,6 +18,7 @@
     "locate-path": "^7.1.1",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
+    "node-schedule": "^2.1.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
