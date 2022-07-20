@@ -142,7 +142,7 @@ const UserInfoEditArea = props => {
           <div id="userInfoEdit-description">
             <Form className="userInfoEditForm" onSubmit={handleSubmit}>
               <EditTitle className="nickname">
-                닉네임
+                <p>닉네임</p>
                 <input
                   id="nickname"
                   type="text"
@@ -152,7 +152,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="profileText">
-                한 줄 소개
+                <p>한 줄 소개</p>
                 <input
                   id="profileText"
                   type="text"
@@ -162,7 +162,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="location">
-                위치
+                <p>위치</p>
                 <div className="locationBtn">
                   <input
                     id="location"
@@ -178,7 +178,7 @@ const UserInfoEditArea = props => {
                 </div>
               </EditTitle>
               <EditTitle className="birthday">
-                생일
+                <p>생일</p>
                 <input
                   id="birthday"
                   type="date"
@@ -188,7 +188,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="favor">
-                관심사
+                <p>관심사</p>
                 <StyledSelect
                   defaultValue={(favor || []).filter(e => e.selected)}
                   isMulti
@@ -200,7 +200,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="language">
-                사용 언어
+                <p>사용 언어</p>
                 <StyledSelect
                   // defaultValue={(language || []).filter(e => e.selected)}
                   isMulti
@@ -213,7 +213,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="changedPassowrd">
-                변경 할 비밀번호
+                <p>변경 할 비밀번호</p>
                 <input
                   id="changedPassowrd"
                   type="password"
@@ -226,7 +226,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="checkPassowrd">
-                비밀번호 확인
+                <p>비밀번호 확인</p>
                 <input
                   id="checkPassowrd"
                   type="password"
@@ -240,14 +240,24 @@ const UserInfoEditArea = props => {
                 {changedPassword !== checkPassword && (
                   <p
                     className="changedPasswordChecked"
-                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
+                    style={{
+                      fontSize: '0.75rem',
+                      color: 'red',
+                      marginTop: '0.5rem',
+                    }}
                   >
                     새로운 비밀번호가 일치하지 않습니다.
                   </p>
                 )}
               </EditTitle>
               <EditTitle className="currentPassowrd">
-                현재 비밀번호를 입력해주세요.
+                <p>
+                  현재 비밀번호를 입력해주세요.
+                  <span style={{ fontSize: '0.75rem', color: 'red' }}>
+                    {' '}
+                    *필수
+                  </span>
+                </p>
                 <input
                   id="currentPassowrd"
                   type="password"
@@ -258,14 +268,6 @@ const UserInfoEditArea = props => {
                     setCurrentPassword(e.target.value);
                   }}
                 />
-                {/* {userData.password !== currentPassword && (
-                  <p
-                    className="currentPasswordChecked"
-                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
-                  >
-                    현재 비밀번호가 일치해야 정보를 변경할 수 있습니다.
-                  </p>
-                )} */}
               </EditTitle>
               <div className="editBtn">
                 <ThemeProvider theme={theme}>
@@ -315,17 +317,12 @@ const Title = styled.h2`
 `;
 
 const Form = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(6, 0.5fr);
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  & input {
-    height: 25px;
-  }
-
-  & #profileText {
-    width: 200px;
+  input {
+    width: 240px;
   }
 
   & #favoriteTopic {
@@ -333,7 +330,7 @@ const Form = styled.form`
     flex-wrap: wrap;
     margin: 0;
     align-items: center;
-    margin-bottom: 13px;
+    margin-bottom: 8px;
 
     > span {
       display: flex;
@@ -346,30 +343,27 @@ const Form = styled.form`
   }
 
   .currentPassowrd {
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-  > .currentPassowrd {
-    grid-column: 1/3;
-  }
-  > .editBtn {
-    grid-column: 1/3;
+    margin-bottom: 1rem;
   }
 `;
 
 const EditTitle = styled.h3`
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   margin: 7px 0;
 
-  font-size: 1rem;
+  font-size: 0.8rem;
+  > p {
+    margin-bottom: 0.5rem;
+  }
   > .locationBtn {
     display: flex;
 
     > button {
-      background-color: #fff;
+      position: absolute;
+      right: 30%;
+      background-color: #fff0;
       border: none;
       cursor: pointer;
     }

@@ -61,11 +61,11 @@ const UserSignOutArea = props => {
       >
         <ModalStyle>
           <Title id="userSignOut-title">정말 탈퇴하시겠습니까?</Title>
-          <div id="userSignOut-description">
+          <div id="userSignOut-description" style={{ fontSize: '0.8rem' }}>
             탈퇴하시려면 현재 비밀번호를 입력해주세요.
           </div>
           <Input
-            style={{ display: 'block' }}
+            style={{ display: 'block', marginBottom: '20px', marginTop: '8px' }}
             type="password"
             onChange={e => {
               setCheckPassword(e.target.value);
