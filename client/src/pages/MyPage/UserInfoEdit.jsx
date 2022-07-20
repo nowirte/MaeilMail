@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import axios from 'axios';
 //mui
 import EditIcon from '@mui/icons-material/Edit';
+import CachedIcon from '@mui/icons-material/Cached';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -14,12 +14,8 @@ import { SettingBtn, ModalStyle } from './style';
 import useLoc from '../Signup/userLocationFunction';
 
 const UserInfoEditArea = props => {
-  const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const userData = props.data;
-  const favorInit = props.favor;
-  const languageInit = props.language;
-  console.log(userData);
 
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
@@ -30,16 +26,16 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(favorInit);
-    setLanguage(languageInit);
+    setFavor(props.favor);
+    setLanguage(props.language);
   }, [userData]);
 
   const handleModal = () => {
     setOpen(!open);
   };
 
-  console.log('favor:', favor);
-  console.log('language:', language);
+  // console.log('favor:', favor);
+  // console.log('language:', language);
 
   const handleCheckedFavor = e => {
     // 유저가 선택한 관심사의 value값 가져오는 코드
@@ -118,14 +114,13 @@ const UserInfoEditArea = props => {
         },
       });
 
+      handleModal();
       alert('회원 정보가 변경되었습니다.');
-      // handleModal();
-      // navigate('/mypage');
-      document.location.href = '/';
+      document.location.href = '/mypage';
     } catch (err) {
       console.log(err);
       alert(err.message);
-      navigate('/mypage');
+      document.location.href = '/mypage';
     }
   };
 
@@ -151,7 +146,7 @@ const UserInfoEditArea = props => {
                 <input
                   id="nickname"
                   type="text"
-                  placeholder={inputData.nickname}
+                  placeholder={userData.nickname}
                   name="nickname"
                   onChange={handleOnChange}
                 />
@@ -161,25 +156,26 @@ const UserInfoEditArea = props => {
                 <input
                   id="profileText"
                   type="text"
-                  placeholder={inputData.profileText}
+                  placeholder={userData.profileText}
                   name="profileText"
                   onChange={handleOnChange}
                 />
               </EditTitle>
               <EditTitle className="location">
                 위치
-                <br />
-                {/* <input
-                  id="location"
-                  type="text"
-                  name="location"
-                  placeholder={inputData.location}
-                  value={inputData.location || ''}
-                /> */}
-                {inputData.location ? inputData.location : userData.location}
-                <button type="button" onClick={handleLocation}>
-                  테스트
-                </button>
+                <div className="locationBtn">
+                  <input
+                    id="location"
+                    type="text"
+                    name="location"
+                    placeholder={userData.location}
+                    value={inputData.location || ''}
+                    readOnly
+                  />
+                  <button type="button" onClick={handleLocation}>
+                    <CachedIcon />
+                  </button>
+                </div>
               </EditTitle>
               <EditTitle className="birthday">
                 생일
@@ -187,7 +183,7 @@ const UserInfoEditArea = props => {
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={inputData.birthday || ''}
+                  value={userData.birthday || inputData.birthday || ''}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -369,6 +365,15 @@ const EditTitle = styled.h3`
   margin: 7px 0;
 
   font-size: 1rem;
+  > .locationBtn {
+    display: flex;
+
+    > button {
+      background-color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  }
 `;
 
 const StyledSelect = styled(Select)`
