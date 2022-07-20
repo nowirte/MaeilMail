@@ -17,6 +17,7 @@ lettersRouter.get('/', loginRequired, async (req, res, next) => {
   }
 });
 
+// 오고 있는 편지
 lettersRouter.get('/status', loginRequired, async (req, res, next) => {
   try{
     const myId = req.userId;
