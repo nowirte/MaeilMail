@@ -2,6 +2,7 @@
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
+import { getArrayForInputTag, getObjectForDB } from '../utils'
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
@@ -55,10 +56,10 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
-    const userId = newUser.dataValues.user_id
+    const userId = newUser.dataValues.user_id;
 
-    await this.Favor.create({userId})
-    await this.Language.create({userId})
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
 
     return newUser;
   }
@@ -74,10 +75,10 @@ class UserService {
 
     const newUser = await this.User.create(userInfo);
 
-    const userId = newUser.dataValues.user_id
+    const userId = newUser.dataValues.user_id;
 
-    await this.Favor.create({userId})
-    await this.Language.create({userId})
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
 
     return newUser;
   }
@@ -97,17 +98,6 @@ class UserService {
       currentPassword,
       newPassword,
     } = body;
-
-    async function createObject(array) {
-      const result = {};
-      await array.forEach(el => {
-        result[el.value] = el.selected;
-      });
-      return result;
-    }
-
-    const languageUpdate = await createObject(language);
-    const favorUpdate = await createObject(favor);
 
     // validate
     async function validatePassword(id, input) {
@@ -134,7 +124,7 @@ class UserService {
 
     // 유저 필터
     const filter = {
-      where: { user_id: Number(userId), status: 'active' },
+      where: { user_id: Number(userId), status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -147,6 +137,9 @@ class UserService {
     }
 
     // 회원 정보 수정
+    const languageUpdate = await getObjectForDB(language);
+    const favorUpdate = await getObjectForDB(favor);
+
     const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
 
     const toUpdate = {
@@ -233,26 +226,13 @@ class UserService {
       throw new Error('404 not found');
     }
 
-    const favObj = user.dataValues.Favor.dataValues
-    const langObj = user.dataValues.Language.dataValues
+    const favObj = user.dataValues.Favor;
+    const langObj = user.dataValues.Language;
 
-    function getArray(obj) {
-      const result = []
-      const keys = Object.keys(obj)
-      
-      keys.forEach(key => {
-        const element = {}
-        element.value = key
-        element.label = key.charAt(0).toUpperCase() + key.slice(1)
-        element.selected = obj[key]
-        result.push(element);
-      })
-      return result
-    }
-    const favorArray = getArray(favObj)
-    const languageArray = getArray(langObj)
+    const favorArray = favObj ? getArrayForInputTag(favObj.dataValues) : null;
+    const languageArray = langObj ? getArrayForInputTag(langObj.dataValues) : null;
 
-    return {favorArray, languageArray, user}
+    return { favorArray, languageArray, user };
   }
 
   async getUsersBySearch(nickname) {

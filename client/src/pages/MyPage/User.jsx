@@ -5,6 +5,46 @@ import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';
 
+const UserArea = props => {
+  const { gender, birthday, location, profileText, email, nickname } =
+    props.data;
+
+  return (
+    <User>
+      <Account>
+        <span className="userName">{nickname}</span>
+        <span className="userEmail">{email}</span>
+      </Account>
+      <Info>
+        <div className="gender">
+          <p>
+            <FemaleIcon />
+            {gender}
+          </p>
+        </div>
+        <div className="birthday">
+          <p>
+            <CakeOutlinedIcon />
+            {birthday}
+          </p>
+        </div>
+        <div className="location">
+          <p>
+            <LocationOnIcon />
+            {location}
+          </p>
+        </div>
+      </Info>
+      <Introduction>
+        <span>{profileText}</span>
+      </Introduction>
+      <AdditionalUserInfoArea />
+    </User>
+  );
+};
+
+export default UserArea;
+
 const User = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,50 +103,3 @@ const Introduction = styled.div`
     font-size: 1.25rem;
   }
 `;
-
-const UserArea = props => {
-  const {
-    gender,
-    birthday,
-    location,
-    profileText,
-    email,
-    nickname,
-    favor,
-    language,
-  } = props.data;
-  return (
-    <User>
-      <Account>
-        <span className="userName">{nickname}</span>
-        <span className="userEmail">{email}</span>
-      </Account>
-      <Info>
-        <div className="gender">
-          <p>
-            <FemaleIcon />
-            {gender}
-          </p>
-        </div>
-        <div className="birthday">
-          <p>
-            <CakeOutlinedIcon />
-            {birthday}
-          </p>
-        </div>
-        <div className="location">
-          <p>
-            <LocationOnIcon />
-            {location}
-          </p>
-        </div>
-      </Info>
-      <Introduction>
-        <span>{profileText}</span>
-      </Introduction>
-      <AdditionalUserInfoArea favor={favor} language={language} />
-    </User>
-  );
-};
-
-export default UserArea;

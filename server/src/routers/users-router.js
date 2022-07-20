@@ -47,7 +47,6 @@ usersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await userService.getUserById(userId);
-    console.log(user.user)
     res.status(200).json(user);
   } catch (err) {
     next(err);

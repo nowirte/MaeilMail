@@ -34,6 +34,9 @@ const UserInfoEditArea = props => {
     setOpen(!open);
   };
 
+  // console.log('favor:', favor);
+  // console.log('language:', language);
+
   const handleCheckedFavor = e => {
     // 유저가 선택한 관심사의 value값 가져오는 코드
     const checkedFavor = e.map(el => el.value);
@@ -112,9 +115,8 @@ const UserInfoEditArea = props => {
       });
 
       handleModal();
+      alert('회원 정보가 변경되었습니다.');
       document.location.href = '/mypage';
-      // location.reload();
-      // window.location.replace('/mypage');
     } catch (err) {
       console.log(err);
       alert(err.message);
@@ -140,7 +142,7 @@ const UserInfoEditArea = props => {
           <div id="userInfoEdit-description">
             <Form className="userInfoEditForm" onSubmit={handleSubmit}>
               <EditTitle className="nickname">
-                <p>닉네임</p>
+                닉네임
                 <input
                   id="nickname"
                   type="text"
@@ -150,7 +152,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="profileText">
-                <p>한 줄 소개</p>
+                한 줄 소개
                 <input
                   id="profileText"
                   type="text"
@@ -160,7 +162,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="location">
-                <p>위치</p>
+                위치
                 <div className="locationBtn">
                   <input
                     id="location"
@@ -176,7 +178,7 @@ const UserInfoEditArea = props => {
                 </div>
               </EditTitle>
               <EditTitle className="birthday">
-                <p>생일</p>
+                생일
                 <input
                   id="birthday"
                   type="date"
@@ -186,7 +188,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="favor">
-                <p>관심사</p>
+                관심사
                 <StyledSelect
                   defaultValue={(favor || []).filter(e => e.selected)}
                   isMulti
@@ -198,9 +200,9 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="language">
-                <p>사용 언어</p>
+                사용 언어
                 <StyledSelect
-                  defaultValue={(language || []).filter(e => e.selected)}
+                  // defaultValue={(language || []).filter(e => e.selected)}
                   isMulti
                   name="language"
                   options={language}
@@ -211,7 +213,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="changedPassowrd">
-                <p>변경 할 비밀번호</p>
+                변경 할 비밀번호
                 <input
                   id="changedPassowrd"
                   type="password"
@@ -224,7 +226,7 @@ const UserInfoEditArea = props => {
                 />
               </EditTitle>
               <EditTitle className="checkPassowrd">
-                <p>비밀번호 확인</p>
+                비밀번호 확인
                 <input
                   id="checkPassowrd"
                   type="password"
@@ -238,23 +240,14 @@ const UserInfoEditArea = props => {
                 {changedPassword !== checkPassword && (
                   <p
                     className="changedPasswordChecked"
-                    style={{
-                      fontSize: '0.75rem',
-                      color: 'red',
-                      marginTop: '0.5rem',
-                    }}
+                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
                   >
                     새로운 비밀번호가 일치하지 않습니다.
                   </p>
                 )}
               </EditTitle>
               <EditTitle className="currentPassowrd">
-                <p>
-                  현재 비밀번호를 입력해주세요.
-                  <span style={{ fontSize: '0.75rem', color: 'red' }}>
-                    *필수
-                  </span>
-                </p>
+                현재 비밀번호를 입력해주세요.
                 <input
                   id="currentPassowrd"
                   type="password"
@@ -265,6 +258,14 @@ const UserInfoEditArea = props => {
                     setCurrentPassword(e.target.value);
                   }}
                 />
+                {/* {userData.password !== currentPassword && (
+                  <p
+                    className="currentPasswordChecked"
+                    style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
+                  >
+                    현재 비밀번호가 일치해야 정보를 변경할 수 있습니다.
+                  </p>
+                )} */}
               </EditTitle>
               <div className="editBtn">
                 <ThemeProvider theme={theme}>
@@ -314,12 +315,17 @@ const Title = styled.h2`
 `;
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(6, 0.5fr);
+  justify-items: center;
 
-  input {
-    width: 240px;
+  & input {
+    height: 25px;
+  }
+
+  & #profileText {
+    width: 200px;
   }
 
   & #favoriteTopic {
@@ -327,7 +333,7 @@ const Form = styled.form`
     flex-wrap: wrap;
     margin: 0;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 13px;
 
     > span {
       display: flex;
@@ -340,27 +346,30 @@ const Form = styled.form`
   }
 
   .currentPassowrd {
-    margin-bottom: 1rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  > .currentPassowrd {
+    grid-column: 1/3;
+  }
+  > .editBtn {
+    grid-column: 1/3;
   }
 `;
 
 const EditTitle = styled.h3`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   margin: 7px 0;
 
-  font-size: 0.8rem;
-  > p {
-    margin-bottom: 0.5rem;
-  }
+  font-size: 1rem;
   > .locationBtn {
     display: flex;
 
     > button {
-      position: absolute;
-      right: 30%;
-      background-color: #fff0;
+      background-color: #fff;
       border: none;
       cursor: pointer;
     }

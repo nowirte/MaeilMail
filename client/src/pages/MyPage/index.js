@@ -8,6 +8,8 @@ import axios from 'axios';
 
 const MyPage = () => {
   const [userData, setUserData] = useState({});
+  const [favor, setFavor] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [img, setImg] = useState('');
 
   const fetchUserData = async () => {
@@ -18,9 +20,11 @@ const MyPage = () => {
           Authorization: token,
         },
       });
-      const data = res.data;
-      console.log(res);
-      setUserData(data);
+
+      const { favorArray, languageArray, user } = res.data;
+      setFavor(favorArray);
+      setLanguage(languageArray);
+      setUserData(user);
     } catch (error) {
       console.error(error);
     }
@@ -79,9 +83,9 @@ const MyPage = () => {
             </button>
           </div>
         </ProfileImg>
-        <UserArea data={userData} />
+        <UserArea data={userData} favor={favor} language={language} />
         <div className="setting">
-          <UserInfoEditArea data={userData} />
+          <UserInfoEditArea data={userData} favor={favor} language={language} />
           <UserSignOutArea data={userData} />
         </div>
       </MyProfile>
