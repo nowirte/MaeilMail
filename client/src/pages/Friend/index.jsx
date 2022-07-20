@@ -23,7 +23,7 @@ const FriendDetail = () => {
   // 친구인 유저
   const [friend, setFriend] = useState({});
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
@@ -36,7 +36,8 @@ const FriendDetail = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user]);
+
   const fetchFriend = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -54,7 +55,7 @@ const FriendDetail = () => {
       console.error(error);
     }
   };
-  const fetchLetters = async () => {
+  const fetchLetters = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get(
@@ -70,73 +71,73 @@ const FriendDetail = () => {
     } catch (error) {
       console.error(error);
     }
-  };
-  const postLetter = newLetter => {
-    try {
-      const token = localStorage.getItem('token');
-      axios.post(`http://localhost:3001/api/letters/${friendId}`, newLetter, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      // fetchLetters();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [friendId]);
+
+  const postLetter = useCallback(
+    newLetter => {
+      try {
+        const token = localStorage.getItem('token');
+        axios.post(`http://localhost:3001/api/letters/${friendId}`, newLetter, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        // fetchLetters();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [friendId]
+  );
 
   useEffect(() => {
     // 유저 정보 받아오기
     fetchUser();
-  }, []);
-
-  useEffect(() => {
     // 친구 정보 받아오기
     fetchFriend();
-  }, []);
-
-  useEffect(() => {
     // 편지 리스트 받아오기
     fetchLetters();
-  }, []);
+  }, [fetchLetters]);
 
   // 편지 작성
-  const createHandler = useCallback(content => {
-    const distance = getDistance(
-      user.longitude,
-      user.latitude,
-      friend.longitude,
-      friend.latitude
-    );
-    const sendDate = new window.Date();
-    let receiveDate = new window.Date();
-    const deliveryTime = getTime(distance);
-    receiveDate = new window.Date(
-      receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
-    );
+  const createHandler = useCallback(
+    content => {
+      const distance = getDistance(
+        user.longitude,
+        user.latitude,
+        friend.longitude,
+        friend.latitude
+      );
+      const sendDate = new window.Date();
+      let receiveDate = new window.Date();
+      const deliveryTime = getTime(distance);
+      receiveDate = new window.Date(
+        receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
+      );
 
-    const newLetter = {
-      sendId: user.user_id,
-      receiveId: friend.user_id,
-      sendDate: sendDate,
-      receiveDate: receiveDate,
-      content,
-    };
-    postLetter(newLetter);
-    setLetters(letters => [newLetter, ...letters]);
-    fetchLetters();
-  }, []);
+      const newLetter = {
+        sendId: user.user_id,
+        receiveId: friend.user_id,
+        sendDate: sendDate,
+        receiveDate: receiveDate,
+        content,
+      };
+      setLetters(letters => [newLetter, ...letters]);
+      postLetter(newLetter);
+    },
+    [writeIsShown]
+  );
 
   // 편지 보내기 버튼
-  const writeHandler = () => {
+  const writeHandler = useCallback(() => {
     setWriteIsShown(current => !current);
-  };
+  }, [writeIsShown]);
 
   // 편지 세부내용 보기
-  const detailHandler = () => {
+  const detailHandler = useCallback(() => {
     setDetailIsShown(current => !current);
-  };
-  console.log(letters);
+  }, [detailIsShown]);
+
   return (
     <MainWrapper>
       {/* 친구 프로필 영역 */}

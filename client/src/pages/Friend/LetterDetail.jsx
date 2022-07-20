@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import style from './LetterDetail.module.css';
 
-const LetterDetail = props => {
+const LetterDetail = () => {
   const userId = useParams().id;
   const postId = useParams().postId;
 
@@ -31,8 +31,6 @@ const LetterDetail = props => {
   useEffect(() => {
     fetchLetter();
   }, []);
-
-  console.log(letter);
 
   return (
     <MainWrapper>

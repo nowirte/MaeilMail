@@ -42,4 +42,4 @@ const FriendInfo = ({ handleChange, friend }) => {
   );
 };
 
-export default FriendInfo;
+export default React.memo(FriendInfo);
