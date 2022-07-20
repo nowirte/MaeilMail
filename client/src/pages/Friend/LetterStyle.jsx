@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const LetterWrapper = styled.ul`
   overflow: hidden;
@@ -8,6 +9,7 @@ const LetterWrapper = styled.ul`
   flex-wrap: wrap;
   width: 90%;
   gap: 1.5rem;
+  text-decoration: none;
 `;
 
 const Letter = styled.li`
@@ -26,9 +28,14 @@ const Letter = styled.li`
     props.send ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 const LetterHeader = styled.div`
   display: flex;
   justify-content: flex-end;
+  text-decoration: none;
 
   & > img {
     width: 3rem;
@@ -91,6 +98,7 @@ const WriteBtn = styled.button`
 export {
   LetterWrapper,
   Letter,
+  StyledLink,
   LetterHeader,
   LetterContent,
   LetterFooter,

@@ -23,10 +23,10 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
       return;
     }
     onCreate(state.content);
+    handleWrite();
     setState({
       content: '',
     });
-    handleWrite();
   };
 
   return (
