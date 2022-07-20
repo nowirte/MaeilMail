@@ -1,0 +1,4 @@
+.letterHeader {
+  width: calc(100% - 390px);
+  background: #ccc;
+}

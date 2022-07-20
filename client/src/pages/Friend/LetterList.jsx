@@ -19,9 +19,9 @@ const LetterList = props => {
     <LetterWrapper>
       {letters.length === 0 && <p>아직 편지가 없습니다.</p>}
       {letters.map(letter => (
-        <Letter key={letter.letterId}>
+        <Letter key={letter.letterId} onClick={props.detailHandler}>
           <StyledLink
-            to={`/friend/${friend.id}/${letter.id}`}
+            to={`/friend/${friend.user_id}/${letter.letter_id}`}
             key={letter.letterId}
           >
             <LetterHeader>

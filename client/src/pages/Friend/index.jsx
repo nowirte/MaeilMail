@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
-import Modal from '../../components/ui/Modal';
 import LetterList from './LetterList';
 import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
@@ -15,6 +14,8 @@ const FriendDetail = () => {
 
   // 편지 보내기 버튼
   const [writeIsShown, setWriteIsShown] = useState(false);
+  // 편지 세부 내용 보기 버튼
+  const [detailIsShown, setDetailIsShown] = useState(false);
   // 편지 리스트
   const [letters, setLetters] = useState([]);
   // 로그인한 유저
@@ -65,7 +66,6 @@ const FriendDetail = () => {
         }
       );
       const data = res.data;
-      console.log(data);
       setLetters(data);
     } catch (error) {
       console.error(error);
@@ -74,7 +74,6 @@ const FriendDetail = () => {
   const postLetter = newLetter => {
     try {
       const token = localStorage.getItem('token');
-      console.log(newLetter);
       axios.post(`http://localhost:3001/api/letters/${friendId}`, newLetter, {
         headers: {
           Authorization: token,
@@ -89,12 +88,17 @@ const FriendDetail = () => {
   useEffect(() => {
     // 유저 정보 받아오기
     fetchUser();
+  }, []);
+
+  useEffect(() => {
     // 친구 정보 받아오기
     fetchFriend();
+  }, []);
+
+  useEffect(() => {
     // 편지 리스트 받아오기
     fetchLetters();
   }, []);
-  console.log(letters);
 
   // 편지 작성
   const createHandler = content => {
@@ -128,13 +132,27 @@ const FriendDetail = () => {
     setWriteIsShown(current => !current);
   };
 
+  // 편지 세부내용 보기
+  const detailHandler = () => {
+    setDetailIsShown(current => !current);
+  };
+  console.log(letters);
   return (
     <MainWrapper>
       {/* 친구 프로필 영역 */}
       <FriendInfo friend={friend} />
 
       {/* 편지 리스트 */}
-      <LetterList user={user} friend={friend} letters={letters} />
+      {detailIsShown ? (
+        <LetterDetail handleClick={detailHandler} />
+      ) : (
+        <LetterList
+          user={user}
+          friend={friend}
+          letters={letters}
+          handleClick={detailHandler}
+        />
+      )}
 
       {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (

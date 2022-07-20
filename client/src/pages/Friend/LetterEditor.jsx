@@ -18,7 +18,7 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (state.content.length < 1) {
-      alert('편지 내용을 입력해주세요.');
+      // alert('편지 내용을 입력해주세요.');
       contentInput.current.focus();
       return;
     }
