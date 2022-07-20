@@ -17,8 +17,10 @@ const UserInfoEditArea = props => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const userData = props.data;
-
+  const favorInit = props.favor;
+  const languageInit = props.language;
   console.log(userData);
+
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
   const [inputData, setInputData] = useState({});
@@ -28,13 +30,16 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(userData.Favor);
-    setLanguage(userData.language);
+    setFavor(favorInit);
+    setLanguage(languageInit);
   }, [userData]);
 
   const handleModal = () => {
     setOpen(!open);
   };
+
+  console.log('favor:', favor);
+  console.log('language:', language);
 
   const handleCheckedFavor = e => {
     // 유저가 선택한 관심사의 value값 가져오는 코드
@@ -189,7 +194,7 @@ const UserInfoEditArea = props => {
               <EditTitle className="favor">
                 관심사
                 <StyledSelect
-                  defaultValue={(favor || []).filter(e => e.selected ?? [])}
+                  defaultValue={(favor || []).filter(e => e.selected)}
                   isMulti
                   name="favor"
                   options={favor}
@@ -201,7 +206,7 @@ const UserInfoEditArea = props => {
               <EditTitle className="language">
                 사용 언어
                 <StyledSelect
-                  defaultValue={(language || []).filter(e => e.selected ?? [])}
+                  // defaultValue={(language || []).filter(e => e.selected)}
                   isMulti
                   name="language"
                   options={language}

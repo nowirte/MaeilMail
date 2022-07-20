@@ -1,5 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
+const AdditionalUserInfoArea = () => {
+  const [favor, setFavor] = useState([]);
+  const [language, setLanguage] = useState([]);
+
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const { favorArray, languageArray } = res.data;
+      setFavor(favorArray);
+      setLanguage(languageArray);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  return (
+    <AdditionalInfo>
+      <Info className="interest">
+        <p className="title">관심사</p>
+        {favor &&
+          (favor || []).map(e =>
+            e.selected === true ? (
+              <p key={e.value} className="tag">
+                {e.label}
+              </p>
+            ) : (
+              ''
+            )
+          )}
+      </Info>
+      <Info className="language">
+        <p className="title">언어</p>
+        {language &&
+          (language || []).map(e =>
+            e.selected === true ? (
+              <p key={e.value} className="tag">
+                {e.label}
+              </p>
+            ) : (
+              ''
+            )
+          )}
+      </Info>
+    </AdditionalInfo>
+  );
+};
+
+export default AdditionalUserInfoArea;
 
 const AdditionalInfo = styled.div`
   display: flex;
@@ -38,39 +98,3 @@ const Info = styled.div`
     line-height: 12px;
   }
 `;
-
-const AdditionalUserInfoArea = props => {
-  const { favor, language } = props;
-  return (
-    <AdditionalInfo>
-      <Info className="interest">
-        <p className="title">관심사</p>
-        {favor &&
-          favor.map(e =>
-            e.selected === true ? (
-              <p key={e.value} className="tag">
-                {e.label}
-              </p>
-            ) : (
-              ''
-            )
-          )}
-      </Info>
-      <Info className="language">
-        <p className="title">언어</p>
-        {language &&
-          language.map(e =>
-            e.selected === true ? (
-              <p key={e.value} className="tag">
-                {e.label}
-              </p>
-            ) : (
-              ''
-            )
-          )}
-      </Info>
-    </AdditionalInfo>
-  );
-};
-
-export default AdditionalUserInfoArea;
