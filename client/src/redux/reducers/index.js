@@ -1,8 +1,14 @@
-import { combineReducers } from 'redux';
-import login from './login';
-import signup from './signup';
+import loginSlice from './login';
+import signupSlice from './signup';
 
-export default combineReducers({
-  login,
-  signup,
-});
+const reducer = {
+  login: loginSlice.reducer,
+  signup: signupSlice.reducer
+}
+
+export default reducer;
+
+// export default combineReducers({
+//   login,
+//   signup,
+// });
