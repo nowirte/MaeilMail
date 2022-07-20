@@ -80,6 +80,13 @@ class LetterService {
     }
   };
 
+
+  // isRead 
+  async updateLetterById(myId, letterId, isRead) {
+    const updatedLetter = await this.Letter.update({is_read: isRead}, {where: {letter_id: letterId, receiveId: myId}});
+    return updatedLetter;
+  }
+
   // 상대방과 대화내역 삭제
   async deleteLetterById(myId, oponentId) {
     
@@ -90,13 +97,9 @@ class LetterService {
   }
 
   // 오고 있는 편지
-  async incomingLetters(myId, isArrived) {
-    if (isArrived){
-
-      throw new Error('배송중인 쪽지가 존재하지 없습니다.') 
+  async incomingLetters(myId) {
     
-    } else {
-      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: isArrived}, raw:true});
+      const myLetter = await this.Letter.findAll({where: {receiveId: myId, is_arrived: 0, is_read: 0}, raw:true});
    
       const idArrayTemp = [];
       
@@ -121,7 +124,6 @@ class LetterService {
     }
   };
 
-};
 
 const letterService = new LetterService(User, Letter);
 
