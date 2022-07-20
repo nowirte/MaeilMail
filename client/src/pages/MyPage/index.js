@@ -9,7 +9,7 @@ import axios from 'axios';
 const MyPage = () => {
   const [userData, setUserData] = useState({});
   const [favor, setFavor] = useState([]);
-  const [language, setLanguage] = useState({});
+  const [language, setLanguage] = useState([]);
   const [img, setImg] = useState('');
 
   const fetchUserData = async () => {

@@ -202,7 +202,7 @@ const UserInfoEditArea = props => {
               <EditTitle className="language">
                 <p>사용 언어</p>
                 <StyledSelect
-                  // defaultValue={(language || []).filter(e => e.selected)}
+                  defaultValue={(language || []).filter(e => e.selected)}
                   isMulti
                   name="language"
                   options={language}
