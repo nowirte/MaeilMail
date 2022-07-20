@@ -22,7 +22,7 @@ const CurrentlyComingLetter = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get(
-        'http://localhost:3001/api/letters/?isArrived=false',
+        'http://localhost:3001/api/letters/incoming',
         {
           headers: {
             Authorization: token,
@@ -51,7 +51,7 @@ const CurrentlyComingLetter = () => {
             <SwiperSlide key={index}>
               <CurrentlyComingContainer>
                 <CurrentlyComingContentContainer>
-                  <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
+                  <LetterContent>{letter.content}</LetterContent>
                 </CurrentlyComingContentContainer>
                 <CurrentlyProfile>
                   <CurrentlyImageContainer>
@@ -59,10 +59,12 @@ const CurrentlyComingLetter = () => {
                   </CurrentlyImageContainer>
                   <CurrentlyIntroduction>
                     <CurrentlyFriendName>{letter.nickname}</CurrentlyFriendName>
-                    <CurrentlyDate>{letter.user_id}</CurrentlyDate>
-                    <CurrentlyLocation>{letter.sendLocation}</CurrentlyLocation>
+                    <CurrentlyDate>{letter.send_date}</CurrentlyDate>
+                    <CurrentlyLocation>
+                      {letter.send_location}
+                    </CurrentlyLocation>
                     <CurrentlyTickingTime>
-                      {letter.deliveryTime}
+                      {letter.receive_date}
                     </CurrentlyTickingTime>
                   </CurrentlyIntroduction>
                 </CurrentlyProfile>

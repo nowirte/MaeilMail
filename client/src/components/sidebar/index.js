@@ -12,18 +12,17 @@ const SideBar = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/friend`);
+      // const res = await axios.get(`http://localhost:3333/friend`);
+      // const data = res.data;
+
+      const res = await axios.get(`http://localhost:3001/api/auth/me`, {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      console.log(res);
       const data = res.data;
-
-      // 추후 친구 컴포넌트에서 get할 예정
-      // const res = await axios.get(`http://localhost:3001/api/auth/me`, {
-      //   headers: {
-      //     'Content-Type': 'application/json; charset=utf-8',
-      //     authorization: `Bearer ${localStorage.getItem('token')}`,
-      //   },
-      // });
-      // console.log(res);
-
       setFriends(data);
     } catch (err) {
       console.log(err);

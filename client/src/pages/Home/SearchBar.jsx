@@ -5,6 +5,9 @@ import axios from 'axios';
 import StyledSearchbar from './styles/StyledSearchbar';
 import RecommendHeader from './RecommendHeader';
 import RecommendFriendsList from './RecommendFriendsList';
+import RecentlyArrivedLetter from './RecentlyArrivedLetter';
+
+import styled from 'styled-components';
 
 const SearchBar = () => {
   const token = localStorage.getItem('token');
@@ -49,25 +52,34 @@ const SearchBar = () => {
   };
   return (
     <>
-      <StyledSearchbar>
-        <form onSubmit={onSearch}>
-          <input
-            value={searchField}
-            onChange={e => {
-              setSearchField(e.target.value);
-            }}
-            type="text"
-            placeholder="당신과 취향이 비슷한 친구를 만나보세요!"
-          />
-          <button type="submit">
-            <SearchIcon />
-          </button>
-        </form>
-      </StyledSearchbar>
+      <MainTop>
+        <StyledSearchbar>
+          <form onSubmit={onSearch}>
+            <input
+              value={searchField}
+              onChange={e => {
+                setSearchField(e.target.value);
+              }}
+              type="text"
+              placeholder="당신과 취향이 비슷한 친구를 만나보세요!"
+            />
+            <button type="submit">
+              <SearchIcon />
+            </button>
+          </form>
+        </StyledSearchbar>
+        <RecentlyArrivedLetter />
+      </MainTop>
       <RecommendHeader />
       <RecommendFriendsList data={users} />
     </>
   );
 };
+
+const MainTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 export default SearchBar;
