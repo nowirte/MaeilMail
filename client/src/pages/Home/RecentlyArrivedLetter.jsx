@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { styled } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { initArrivedLetter } from '../../redux/reducers/mainLetters';
 
 const style = {
   position: 'absolute',
@@ -25,22 +27,22 @@ const StyledCurrentlyContent = styled(Typography)({
 
 export default function RecentlyArrivedLetter() {
   const [open, setOpen] = useState(false);
-  const [recentlyLetter, setRecentlyLetter] = useState({});
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
+  const recentlyArrivedLetter = useSelector(
+    state => state.mainLetters.mainArrivedLetter
+  );
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get(
-        'http://localhost:3001/api/letters/status?isArrived=true',
-        {
-          headers: {
-            Authorization: `${localStorage.getItem('token')}`,
-          },
-        }
-      );
-      const data = await res.data;
-      setRecentlyLetter(data);
+      const res = await axios.get('http://localhost:3001/api/letters/recent', {
+        headers: {
+          Authorization: `${localStorage.getItem('token')}`,
+        },
+      });
+      const data = await res.data[0];
+      dispatch(initArrivedLetter({ mainArrivedLetter: data }));
     } catch (e) {
       console.error(e);
     }
@@ -48,7 +50,6 @@ export default function RecentlyArrivedLetter() {
 
   useEffect(() => {
     fetchRecentlyLetter();
-    console.log(recentlyLetter);
   }, []);
 
   return (
@@ -64,10 +65,10 @@ export default function RecentlyArrivedLetter() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            From. {recentlyLetter.nickname}
+            From. {recentlyArrivedLetter?.nickname}
           </Typography>
           <StyledCurrentlyContent>
-            {recentlyLetter.content}
+            {recentlyArrivedLetter?.content}
           </StyledCurrentlyContent>
         </Box>
       </Modal>

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { initComingLetters } from '../../redux/reducers/mainLetters';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -17,7 +19,11 @@ import {
 } from './styles/StyledCurrentlyComingLetter';
 
 const CurrentlyComingLetter = () => {
-  const [currentlyLetters, setCurrentlyLetters] = useState([]);
+  const dispatch = useDispatch();
+  const mainComingLetters = useSelector(
+    state => state.mainLetters.mainComingLetters
+  );
+  console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -30,7 +36,8 @@ const CurrentlyComingLetter = () => {
         }
       );
       const data = await res.data;
-      setCurrentlyLetters(data);
+      console.log('data', data);
+      dispatch(initComingLetters({ mainComingLetters: data }));
     } catch (e) {
       console.error(e);
     }
@@ -39,15 +46,14 @@ const CurrentlyComingLetter = () => {
     fetchCurrentlyComingLetter();
   }, []);
 
-  console.log(currentlyLetters);
-
+  console.log('mainComingLetters', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>
-        {!currentlyLetters ? (
+        {!mainComingLetters ? (
           <div>현재 배송 중인 편지를 로딩중입니다.</div>
         ) : (
-          currentlyLetters.map((letter, index) => (
+          mainComingLetters.map((letter, index) => (
             <SwiperSlide key={index}>
               <CurrentlyComingContainer>
                 <CurrentlyComingContentContainer>
