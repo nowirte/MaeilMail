@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-nested-ternary */
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
-import { getArrayForInputTag, getObjectForDB } from '../utils'
+import { getArrayForInputTag, getObjectForDB } from '../utils';
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
@@ -102,7 +103,7 @@ class UserService {
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
-        where: { user_id: Number(id), status: 'active' },
+        where: { user_id: id, status: 'active' },
         attributes: ['password'],
       });
       if (!user) {
@@ -124,7 +125,7 @@ class UserService {
 
     // 유저 필터
     const filter = {
-      where: { user_id: Number(userId), status: { [Op.not]: 'inactive' } },
+      where: { user_id: userId, status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -162,10 +163,10 @@ class UserService {
 
     if (favorUpdate) {
       await this.Favor.findOrCreate({
-        where: { userId: Number(userId) },
+        where: { userId },
       });
       const affected = await this.Favor.update(favorUpdate, {
-        where: { userId: Number(userId) },
+        where: { userId },
       });
       if (affected === 0) {
         console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
@@ -174,10 +175,10 @@ class UserService {
 
     if (languageUpdate) {
       await this.Language.findOrCreate({
-        where: { userId: Number(userId) },
+        where: { userId },
       });
       const affected = await this.Language.update(languageUpdate, {
-        where: { userId: Number(userId) },
+        where: { userId },
       });
       if (affected === 0) {
         console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
@@ -185,6 +186,16 @@ class UserService {
     }
 
     const updated = await this.getUserById(userId);
+    return updated;
+  }
+
+  async updateUserProfileImage(user_id, profileImage) {
+    const affectedRows = await this.User.update({ profileImage }, { where: { user_id } });
+    if (affectedRows === 0) {
+      throw new Error('업데이트 대상을 찾지 못했습니다.');
+    }
+    const updated = await this.User.findOne({ where: { user_id } });
+
     return updated;
   }
 

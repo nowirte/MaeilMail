@@ -7,6 +7,7 @@ const upload = multer({
       cb(null, 'src/uploads/');
     },
     filename(req, file, cb) {
+      console.log('in multer:', file)
       const ext = path.extname(file.originalname);
       cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
     },
