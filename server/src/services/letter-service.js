@@ -34,8 +34,19 @@ class LetterService {
     return peoples;
   }
 
-  async updateIsArrivedBySchedule(letter_id, receive_date) {
-    const job = await scheduleJob(receive_date, async () => {
+  async updateIsArrivedBySchedule(letter_id, deliveryTime) {
+    const elapsedDay = parseInt(Number(deliveryTime) / 1440, 10);
+    const elapsedHours = parseInt(Number(deliveryTime) / 60, 10);
+    const elpasedMinutes = Number(deliveryTime) % 60;
+
+    const arriveDate = new Date();
+    console.log('서버 현재 시간:', arriveDate);
+
+    arriveDate.setDate(arriveDate.getDate() + elapsedDay);
+    arriveDate.setHours(arriveDate.getHours() + elapsedHours);
+    arriveDate.setMinutes(arriveDate.getMinutes() + elpasedMinutes);
+    console.log('도착 예정 시간:', arriveDate);
+    const job = await scheduleJob(arriveDate, async () => {
       console.log(`${letter_id}번 편지 도착`);
       await this.Letter.update({ is_arrived: true }, { where: { letter_id } });
     });
@@ -43,7 +54,7 @@ class LetterService {
   }
 
   // 편지쓰기
-  async createLetterTo(yourId, targetId, content, sendDate, receiveDate) {
+  async createLetterTo(yourId, targetId, content, sendDate, receiveDate, deliveryTime) {
     const sendLocation = await this.User.findAll({ where: { user_id: yourId }, attributes: ['location'], raw: true });
     const receiveLocation = await this.User.findAll({
       where: { user_id: targetId },
@@ -63,7 +74,7 @@ class LetterService {
       receive_location: receiveLocation[0]['location'],
     });
 
-    const cronJob = await this.updateIsArrivedBySchedule(mail['letter_id'], receiveDate);
+    const cronJob = await this.updateIsArrivedBySchedule(mail['letter_id'], deliveryTime);
     if (!cronJob) {
       throw new Error('도착시간 설정에 실패하였습니다. 입력 값을 확인해주세요.');
     }
