@@ -78,12 +78,8 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
   }
 });
 
-authRouter.patch('/me/image', upload.single('img'), async (req, res, next) => {
-  try {
-    res.json({url: `/src/uploads/${req.file.filename}`})
-  } catch (err) {
-    next(err);
-  }
+authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
+  res.json({ url: `/src/uploads/${req.file.filename}` });
 });
 
 authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
