@@ -21,7 +21,11 @@ const FriendDetail = () => {
   // 로그인한 유저
   const [user, setUser] = useState({});
   // 친구인 유저
-  const [friend, setFriend] = useState({});
+  const [friend, setFriend] = useState({
+    favor: [],
+    language: [],
+    info: {},
+  });
 
   const fetchUser = useCallback(async () => {
     try {
@@ -31,7 +35,7 @@ const FriendDetail = () => {
           Authorization: token,
         },
       });
-      const data = res.data;
+      const data = res.data.user;
       setUser(data);
     } catch (error) {
       console.error(error);
@@ -50,7 +54,11 @@ const FriendDetail = () => {
         }
       );
       const data = res.data;
-      setFriend(data);
+      setFriend({
+        favor: data.user.Favor,
+        language: data.user.Language,
+        info: data.user,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -109,8 +117,8 @@ const FriendDetail = () => {
       const distance = getDistance(
         user.longitude,
         user.latitude,
-        friend.longitude,
-        friend.latitude
+        friend.info.longitude,
+        friend.info.latitude
       );
       const sendDate = new window.Date();
       let receiveDate = new window.Date();
@@ -118,13 +126,12 @@ const FriendDetail = () => {
       receiveDate = new window.Date(
         receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
       );
-
       const newLetter = {
         sendId: user.user_id,
         receiveId: friend.user_id,
         sendDate: sendDate,
         receiveDate: receiveDate,
-        content,
+        content: content,
       };
       postLetter(newLetter);
     },
@@ -152,7 +159,7 @@ const FriendDetail = () => {
       ) : (
         <LetterList
           user={user}
-          friend={friend}
+          friend={friend.info}
           letters={letters}
           handleClick={detailHandler}
         />

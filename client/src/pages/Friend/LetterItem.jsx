@@ -27,9 +27,11 @@ const LetterItem = ({ friend, letter, handleClick }) => {
           )}
         </LetterHeader>
         <LetterContent>
-          {friend.userId === letter.sendId && letter.status === 'send'
-            ? '✉️ 편지가 오고 있습니다.'
-            : letter.content}
+          <pre>
+            {friend.userId === letter.sendId && letter.status === 'send'
+              ? '✉️ 편지가 오고 있습니다.'
+              : letter.content}
+          </pre>
         </LetterContent>
         <LetterFooter>
           <Writer>{letter.nickname}</Writer>

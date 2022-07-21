@@ -13,31 +13,30 @@ import {
 } from './FriendInfoStyle';
 import { getBirth, getAge } from './utils';
 
-const FriendInfo = ({ handleChange, friend }) => {
-  const favorite = friend.Favor;
+const FriendInfo = ({ friend }) => {
   return (
     <User>
       <UserInfo>
-        <UserName>{friend.nickname}</UserName>
+        <UserName>{friend.info.nickname}</UserName>
         <UserDetail>
           <DetailItem>
             <PinDropIcon style={{ fontSize: '1rem' }} />
-            {friend.location}
+            {friend.info.location}
           </DetailItem>
           <DetailItem>
-            {friend.birthday && getBirth(friend.birthday)}
-            {friend.birthday ? '(' + getAge(friend.birthday) + ')' : ''}
+            {friend.info.birthday && getBirth(friend.info.birthday)}
+            {friend.info.birthday
+              ? '(' + getAge(friend.info.birthday) + ')'
+              : ''}
           </DetailItem>
         </UserDetail>
-        <UserBio>{friend.profileText}</UserBio>
+        <UserBio>{friend.info.profileText}</UserBio>
         <BadgeWrapper>
           <Badge>한국어</Badge>
-          <Badge>영어</Badge>
+          <Badge>영화</Badge>
         </BadgeWrapper>
       </UserInfo>
-      <UserEmoji onClick={handleChange}>
-        {friend.profileImage ? profile.profileImage : '✉️'}
-      </UserEmoji>
+      <UserEmoji>{friend.profileImage ? profile.profileImage : '✉️'}</UserEmoji>
     </User>
   );
 };

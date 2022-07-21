@@ -65,6 +65,7 @@ const Writer = styled.p`
   font-size: 1.25rem;
   margin: 0.75rem 0;
   font-weight: bold;
+  color: #4f4f4f;
 `;
 
 const Date = styled.p`
