@@ -8,10 +8,18 @@ import axios from 'axios';
 
 const MyPage = () => {
   const [userData, setUserData] = useState({});
+  const [img, setImg] = useState('');
+
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/user`);
-      const data = res.data[0];
+      const token = localStorage.getItem('token');
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = res.data;
+      console.log(res);
       setUserData(data);
     } catch (error) {
       console.error(error);
@@ -24,7 +32,22 @@ const MyPage = () => {
 
   const imgInput = useRef();
 
-  const handleImgUpload = () => {
+  const handleImgUpload = async e => {
+    const uploadFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append('files', uploadFile);
+
+    await axios.patch(`http://localhost:3333/user/1`, formData, {
+      // headers: {
+      //   'Content-Type': 'application/json; charset=utf-8',
+      // 'Content-Type': 'multipart/form-data',
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
+    });
+  };
+
+  const handleUploadBtn = e => {
+    e.preventDefault();
     imgInput.current.click();
   };
   return (
@@ -33,16 +56,23 @@ const MyPage = () => {
       <MyProfile>
         <ProfileImg>
           <div className="profileImgArea">
-            <img className="profileEmoji" src="/img/뚱이.png" alt="뚱이" />
+            <img
+              className="profileEmoji"
+              src={
+                userData.profileImage ? userData.profileImage : '/img/뚱이.png'
+              }
+              alt="뚱이"
+            />
             <input
               type="file"
               style={{ display: 'none' }}
               ref={imgInput}
               accept="image/jpg, image/png, image/jpeg"
+              onClick={handleImgUpload}
             />
             <button
               className="imgUploadBtn"
-              onClick={handleImgUpload}
+              onClick={handleUploadBtn}
               type="button"
             >
               <AddPhotoAlternateIcon />

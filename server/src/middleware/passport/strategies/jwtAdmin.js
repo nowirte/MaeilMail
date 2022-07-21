@@ -8,8 +8,8 @@ const config = {
 
 const verify = async (jwtPayload, done) => {
   try {
-    const {status} = await userService.getUserById({ where: { id: jwtPayload.id } });
-    if (status === "admin") {
+    const { status } = await userService.getUserById({ where: { id: jwtPayload.id } });
+    if (status === 'admin') {
       done(null, status);
       return;
     }
@@ -19,7 +19,6 @@ const verify = async (jwtPayload, done) => {
     done(err);
   }
 };
-
 
 const jwtAdmin = new Strategy(config, verify);
 export { jwtAdmin };

@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Select from 'react-select';
+import axios from 'axios';
+//mui
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+//style
 import { SettingBtn, ModalStyle } from './style';
-import Select from 'react-select';
-import axios from 'axios';
+//function
+import useLoc from '../Signup/userLocationFunction';
 
 const UserInfoEditArea = props => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
   const userData = props.data;
 
+  console.log(userData);
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
   const [inputData, setInputData] = useState({});
@@ -20,7 +28,7 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(userData.favor);
+    setFavor(userData.Favor);
     setLanguage(userData.language);
   }, [userData]);
 
@@ -46,7 +54,7 @@ const UserInfoEditArea = props => {
   };
 
   const handleCheckedLanguage = e => {
-    // 유저가 선택한 관심사의 value값 가져오는 코드
+    // 유저가 선택한 사용 언어의 value값 가져오는 코드
     const checkedLanguage = e.map(el => el.value);
 
     const checkedLanguageArray = language.map(el => {
@@ -62,6 +70,15 @@ const UserInfoEditArea = props => {
     setLanguage([...checkedLanguageArray]);
   };
 
+  const handleLocation = async e => {
+    e.preventDefault();
+    const data = await useLoc();
+    setInputData({
+      ...inputData,
+      location: data,
+    });
+  };
+
   const handleOnChange = e => {
     const { value, name } = e.target;
     setInputData({
@@ -72,37 +89,38 @@ const UserInfoEditArea = props => {
 
   const handleSubmit = async e => {
     try {
-      if (userData.password !== currentPassword) {
-        alert('현재 비밀번호를 확인해주세요.');
-        return;
-      }
       if (checkPassword !== changedPassword) {
         alert('새로운 비밀번호를 다시 확인해주세요.');
-        return;
-      }
-      if (changedPassword === '') {
-        setChangedPassword(userData.password);
       }
 
-      await axios.patch(`http://localhost:3333/user/1`, {
-        // headers: {
-        //   'Content-Type': 'application/json; charset=utf-8',
-        //   authorization: `Bearer ${localStorage.getItem('token')}`,
-        // },
+      const data = {
         nickname: inputData.nickname,
         profileText: inputData.profileText,
         birthday: inputData.birthday,
-        //백으로 비밀번호 input값 보내서 일치하는지 확인!
         newPassword: changedPassword ? changedPassword : currentPassword,
         currentPassword: currentPassword,
         favor: favor,
         language: language,
+        location: inputData.location,
+      };
+
+      const bodyData = JSON.stringify(data);
+
+      await axios.patch('http://localhost:3001/api/auth/me', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
       });
-      handleModal();
+
       alert('회원 정보가 변경되었습니다.');
+      // handleModal();
+      // navigate('/mypage');
+      document.location.href = '/';
     } catch (err) {
       console.log(err);
       alert(err.message);
+      navigate('/mypage');
     }
   };
 
@@ -128,7 +146,7 @@ const UserInfoEditArea = props => {
                 <input
                   id="nickname"
                   type="text"
-                  placeholder={userData.nickname}
+                  placeholder={inputData.nickname}
                   name="nickname"
                   onChange={handleOnChange}
                 />
@@ -138,20 +156,25 @@ const UserInfoEditArea = props => {
                 <input
                   id="profileText"
                   type="text"
-                  placeholder={userData.profileText}
+                  placeholder={inputData.profileText}
                   name="profileText"
                   onChange={handleOnChange}
                 />
               </EditTitle>
               <EditTitle className="location">
                 위치
-                <input
+                <br />
+                {/* <input
                   id="location"
                   type="text"
                   name="location"
-                  value={userData.location}
-                  onChange={handleOnChange}
-                />
+                  placeholder={inputData.location}
+                  value={inputData.location || ''}
+                /> */}
+                {inputData.location ? inputData.location : userData.location}
+                <button type="button" onClick={handleLocation}>
+                  테스트
+                </button>
               </EditTitle>
               <EditTitle className="birthday">
                 생일
@@ -159,7 +182,7 @@ const UserInfoEditArea = props => {
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={userData?.birthday || ''}
+                  value={inputData.birthday || ''}
                   onChange={handleOnChange}
                 />
               </EditTitle>
@@ -234,14 +257,14 @@ const UserInfoEditArea = props => {
                     setCurrentPassword(e.target.value);
                   }}
                 />
-                {userData.password !== currentPassword && (
+                {/* {userData.password !== currentPassword && (
                   <p
                     className="currentPasswordChecked"
                     style={{ fontSize: '0.75rem', color: 'red', marginTop: 0 }}
                   >
                     현재 비밀번호가 일치해야 정보를 변경할 수 있습니다.
                   </p>
-                )}
+                )} */}
               </EditTitle>
               <div className="editBtn">
                 <ThemeProvider theme={theme}>

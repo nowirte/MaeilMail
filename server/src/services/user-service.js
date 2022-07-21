@@ -1,16 +1,23 @@
 /* eslint-disable no-nested-ternary */
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
-import { User, Favor } from '../db/models';
+import { User, Favor, Language } from '../db/models';
+import { getArrayForInputTag, getObjectForDB } from '../utils'
 
-const include = [{ model: Favor }];
+const include = [
+  { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
+  { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
+];
+const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
 class UserService {
-  constructor(param1, param2) {
+  constructor(param1, param2, param3) {
     this.User = param1;
     this.Favor = param2;
+    this.Language = param3;
   }
 
-  async validateEmail(filter) {
+  async validateEmail(email, oauth) {
+    const filter = { email, oauth, status: { [Op.not]: 'inactive' } };
     const result = await this.User.findOne({
       where: filter,
     });
@@ -49,6 +56,11 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
+    const userId = newUser.dataValues.user_id;
+
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
+
     return newUser;
   }
 
@@ -62,6 +74,11 @@ class UserService {
     }
 
     const newUser = await this.User.create(userInfo);
+
+    const userId = newUser.dataValues.user_id;
+
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
 
     return newUser;
   }
@@ -89,7 +106,7 @@ class UserService {
         attributes: ['password'],
       });
       if (!user) {
-        throw new Error('유저를 찾을 수 없습니다.')
+        throw new Error('유저를 찾을 수 없습니다.');
       }
       const passwordInDB = user.dataValues.password;
       const result = await bcrypt.compare(input, passwordInDB);
@@ -107,7 +124,7 @@ class UserService {
 
     // 유저 필터
     const filter = {
-      where: { user_id: Number(userId), status: 'active' },
+      where: { user_id: Number(userId), status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -120,14 +137,16 @@ class UserService {
     }
 
     // 회원 정보 수정
-    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null
+    const languageUpdate = await getObjectForDB(language);
+    const favorUpdate = await getObjectForDB(favor);
+
+    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
 
     const toUpdate = {
       ...(nickname && { nickname }),
       ...(hashedPassword && { password: hashedPassword }),
       ...(gender && { gender }),
       ...(birthday && { birthday }),
-      ...(language && { language }),
       ...(location && { location }),
       ...(latitude && { latitude }),
       ...(longitude && { longitude }),
@@ -138,18 +157,30 @@ class UserService {
     const userAffectedRows = await this.User.update(toUpdate, filter);
 
     if (userAffectedRows === 0) {
-      throw new Error('업데이트 대상을 찾지 못했습니다.');
+      console.log('변경된 정보가 없습니다.');
     }
 
-    if (favor) {
+    if (favorUpdate) {
       await this.Favor.findOrCreate({
         where: { userId: Number(userId) },
       });
-      const favorAffectedRows = await this.Favor.update(favor, {
+      const affected = await this.Favor.update(favorUpdate, {
         where: { userId: Number(userId) },
       });
-      if (favorAffectedRows === 0) {
-        throw new Error('업데이트 대상을 찾지 못했습니다.');
+      if (affected === 0) {
+        console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
+      }
+    }
+
+    if (languageUpdate) {
+      await this.Language.findOrCreate({
+        where: { userId: Number(userId) },
+      });
+      const affected = await this.Language.update(languageUpdate, {
+        where: { userId: Number(userId) },
+      });
+      if (affected === 0) {
+        console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
       }
     }
 
@@ -172,16 +203,16 @@ class UserService {
     };
 
     const affectedRows = await this.User.update(toUpdate, { where: { user_id: id, status: 'temp', oauth: 'google' } });
-    if (affectedRows === 0 ) {
+    if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
     const updated = await this.getUserById(id);
 
-    return updated
+    return updated;
   }
 
   async getUsers() {
-    const users = await this.User.findAll({ include });
+    const users = await this.User.findAll({ include, attributes });
     return users;
   }
 
@@ -189,17 +220,25 @@ class UserService {
     const user = await this.User.findOne({
       where: { user_id: Number(id) },
       include,
+      attributes,
     });
     if (!user) {
       throw new Error('404 not found');
     }
-    return user;
+
+    const favObj = user.dataValues.Favor;
+    const langObj = user.dataValues.Language;
+
+    const favorArray = favObj ? getArrayForInputTag(favObj.dataValues) : null;
+    const languageArray = langObj ? getArrayForInputTag(langObj.dataValues) : null;
+
+    return { favorArray, languageArray, user };
   }
 
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      include,
+      attributes: ['nickname', 'user_id', 'profileImage'],
     });
     return users;
   }
@@ -207,6 +246,7 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
+      attributes: ['nickname', 'user_id', 'profileImage'],
       order: [Sequelize.fn('RAND')],
       limit: 10,
     });
@@ -214,6 +254,6 @@ class UserService {
   }
 }
 
-const userService = new UserService(User, Favor);
+const userService = new UserService(User, Favor, Language);
 
 export { userService };

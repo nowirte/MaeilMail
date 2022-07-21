@@ -5,6 +5,7 @@
     "start": "concurrently —kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
-    "concurrently": "^7.2.2"
+    "concurrently": "^7.3.0",
+    "yarn": "^1.22.19"
   }
 }
