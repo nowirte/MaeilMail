@@ -7,6 +7,8 @@ import {
   Title,
   MyProfile,
   GoBackButton,
+  StyledWriteButton,
+  StyledWriteButtonContainer,
 } from './styles/StyledRecoomendDetailPage';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { RecommendFriendArea } from './RecommendFriendArea';
@@ -19,7 +21,7 @@ function RecommendDetailPage() {
   const token = useSelector(state => state.auth.token);
   const searchUser = useSelector(state => state.searchUser.searchUser);
   const searchUserId = useSelector(state => state.searchUser.searchUserId);
-  // console.log('searchUserId', searchUserId);
+  console.log('searchUserId', searchUserId);
   const fetchSearchUserDetail = async id => {
     try {
       const res = await axios.get(`http://localhost:3001/api/users/${id}`, {
@@ -36,7 +38,7 @@ function RecommendDetailPage() {
   useEffect(() => {
     fetchSearchUserDetail(searchUserId);
   }, []);
-  // console.log('searchUser', searchUser);
+  console.log('searchUser', searchUser);
   return (
     <>
       <Wrapper>
@@ -44,20 +46,23 @@ function RecommendDetailPage() {
           <GoBackButton onClick={() => navigate(-1)}>
             <ChevronLeftIcon />
           </GoBackButton>
-          {searchUser.user.nickname}의 프로필
+          {searchUser.user?.nickname}의 프로필
         </Title>
         <MyProfile>
           <ProfileImg>
             <div className="profileImgArea">
               <img
                 className="profileEmoji"
-                src={searchUser.user.profileImage}
+                src={searchUser.user?.profileImage}
                 alt=""
               />
             </div>
           </ProfileImg>
-          <RecommendFriendArea data={searchUser.user} />
+          {searchUser.user && <RecommendFriendArea data={searchUser.user} />}
         </MyProfile>
+        <StyledWriteButtonContainer>
+          <StyledWriteButton>📧 작성</StyledWriteButton>
+        </StyledWriteButtonContainer>
       </Wrapper>
     </>
   );
