@@ -11,11 +11,11 @@ class Letter extends Sequelize.Model {
       },
 
       send_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING(1234),
       },
 
       receive_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING(1234),
       },
 
       send_location: {
