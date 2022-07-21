@@ -80,11 +80,11 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 
 authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
   const { userId, file } = await req;
-  const url = (await file) ? `/src/uploads/${file.filename}` : null;
-
-  if (url) {
-    await userService.updateUserProfileImage(Number(userId), url);
-    res.json({ url });
+  const imageUrl = await file.location
+  console.log(imageUrl)
+  if (imageUrl) {
+    await userService.updateUserProfileImage(Number(userId), imageUrl);
+    res.json({ imageUrl });
   } else {
     res.json({ result: 'error', message: '이미지가 제대로 업로드되지 않았습니다.' });
   }
