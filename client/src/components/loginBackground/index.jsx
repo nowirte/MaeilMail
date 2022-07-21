@@ -1,7 +1,8 @@
 import React from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, Navigate } from 'react-router';
 import styled from 'styled-components';
 import backgroundImage from './img/mailboxBG.jpg';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: relative;
@@ -23,10 +24,11 @@ const Background = styled.div`
 `;
 
 const loginBackground = () => {
+  const auth = useSelector(state => state.auth.auth);
   return (
     <Container>
       <Background />
-      <Outlet />
+      {!auth ? <Outlet /> : <Navigate to="login" />}
     </Container>
   );
 };

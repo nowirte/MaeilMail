@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const SideBar = () => {
   const { auth, role } = useSelector(state => state.auth);
-  return auth ? (
+  return (
     <Container>
       <SideWrapper>
         <Navbar>
@@ -17,10 +17,8 @@ const SideBar = () => {
         </Navbar>
         <LogoutArea />
       </SideWrapper>
-      <Outlet />
+      {auth ? <Outlet /> : <Navigate to="/login" />}
     </Container>
-  ) : (
-    <Navigate to="/login" />
   );
 };
 
