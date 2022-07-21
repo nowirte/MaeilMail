@@ -13,6 +13,7 @@ const LetterList = props => {
         <LetterItem
           letter={letter}
           friend={friend}
+          user={user}
           handleClick={props.handleClick}
         />
       ))}
