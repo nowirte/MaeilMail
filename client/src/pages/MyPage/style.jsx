@@ -108,11 +108,6 @@ const ModalStyle = styled.div`
   border: 2px solid #000;
   /* boxShadow: 24, */
   padding: 20px;
-  & p,
-  input {
-    margin-top: 10px;
-    margin-bottom: 13px;
-  }
 
   & input,
   select {

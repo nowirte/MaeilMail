@@ -10,11 +10,15 @@ const UserInfoContainer = styled.div`
   width: 670px;
   margin: 40px 0;
 `;
-const PersonalInfo = () => {
+const PersonalInfo = props => {
+  const { locationInfo, setLocationInfo, gender, setGender } = props;
   return (
     <UserInfoContainer>
-      <UserGender />
-      <UserLocation />
+      <UserGender gender={gender} setGender={setGender} />
+      <UserLocation
+        locationInfo={locationInfo}
+        setLocationInfo={setLocationInfo}
+      />
     </UserInfoContainer>
   );
 };

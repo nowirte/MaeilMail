@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from './logo.png';
@@ -8,7 +7,7 @@ import { Logo, LoginButton, LinkContainer } from './SignupFormElements';
 import SignupInput from './SignupInput';
 import PersonalInfo from './PersonalInfo';
 
-const SignupCard = styled.form`
+const SignupCard = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -27,13 +26,25 @@ const SignupCard = styled.form`
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const state = useSelector(state => {
-    return state.signup;
+
+  const [userInfo, setUserInfo] = useState({
+    email: '',
+    password: '',
+    nickname: '',
   });
-  async function handleSignupSubmit(e) {
+  const [checkPassword, setCheckPassword] = useState('');
+  const [locationInfo, setLocationInfo] = useState({
+    location: '',
+    latitude: 0,
+    longitude: 0,
+  });
+  const [gender, setGender] = useState({
+    gender: '',
+  });
+  const state = { ...userInfo, ...locationInfo, ...gender };
+  async function handleSignupClick(e) {
     e.preventDefault();
     const bodyData = JSON.stringify(state);
-    alert('가입 성공');
     //아직 백엔드와 연결 X
     await axios
       .post('http://localhost:3001/api/users', bodyData, {
@@ -43,6 +54,7 @@ const SignUp = () => {
       })
       .then(function (response) {
         if (response.status === 201) {
+          alert('가입 성공');
           navigate('/login');
         }
       })
@@ -51,11 +63,21 @@ const SignUp = () => {
       });
   }
   return (
-    <SignupCard onSubmit={handleSignupSubmit}>
+    <SignupCard>
       <Logo src={logo} alt="Logo" />
-      <PersonalInfo />
-      <SignupInput />
-      <LoginButton type="submit">회원가입하기</LoginButton>
+      <PersonalInfo
+        locationInfo={locationInfo}
+        setLocationInfo={setLocationInfo}
+        gender={gender}
+        setGender={setGender}
+      />
+      <SignupInput
+        userInfo={userInfo}
+        setUserInfo={setUserInfo}
+        checkPassword={checkPassword}
+        setCheckPassword={setCheckPassword}
+      />
+      <LoginButton onClick={handleSignupClick}>회원가입하기</LoginButton>
       <LinkContainer>
         <Link to="/Login">로그인 페이지로 돌아가기</Link>
       </LinkContainer>
