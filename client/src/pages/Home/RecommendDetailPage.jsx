@@ -16,18 +16,18 @@ import { setSearchUser } from '../../redux/reducers/searchUser';
 function RecommendDetailPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = useSelector(state => state.auth.token);
   const searchUser = useSelector(state => state.searchUser.searchUser);
   const searchUserId = useSelector(state => state.searchUser.searchUserId);
-  console.log('searchUserId', searchUserId);
+  // console.log('searchUserId', searchUserId);
   const fetchSearchUserDetail = async id => {
     try {
       const res = await axios.get(`http://localhost:3001/api/users/${id}`, {
         headers: {
-          Authorization: `${localStorage.getItem('token')}`,
+          Authorization: token,
         },
       });
       const data = await res.data;
-      // console.log('fetchSearchUserData', data);
       dispatch(setSearchUser({ searchUser: data }));
     } catch (e) {
       console.error(e);

@@ -26,6 +26,7 @@ const StyledCurrentlyContent = styled(Typography)({
 });
 
 export default function RecentlyArrivedLetter() {
+  const token = useSelector(state => state.auth.token);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -38,7 +39,7 @@ export default function RecentlyArrivedLetter() {
     try {
       const res = await axios.get('http://localhost:3001/api/letters/recent', {
         headers: {
-          Authorization: `${localStorage.getItem('token')}`,
+          Authorization: token,
         },
       });
       const data = await res.data[0];

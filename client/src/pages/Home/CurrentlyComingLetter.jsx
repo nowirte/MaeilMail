@@ -20,13 +20,13 @@ import {
 
 const CurrentlyComingLetter = () => {
   const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
   const mainComingLetters = useSelector(
     state => state.mainLetters.mainComingLetters
   );
   // console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
         'http://localhost:3001/api/letters/incoming',
         {
@@ -45,7 +45,7 @@ const CurrentlyComingLetter = () => {
     fetchCurrentlyComingLetter();
   }, []);
 
-  console.log('mainComingLetters', mainComingLetters);
+  // console.log('mainComingLetters', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>

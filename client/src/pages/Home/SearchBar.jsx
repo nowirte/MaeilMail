@@ -14,6 +14,7 @@ import styled from 'styled-components';
 const SearchBar = () => {
   const dispatch = useDispatch();
   const searchUsers = useSelector(state => state.searchUser.searchUsers);
+  const token = useSelector(state => state.auth.token);
 
   const [query, setQuery] = useState('');
 
@@ -21,7 +22,7 @@ const SearchBar = () => {
     axios
       .get('http://localhost:3001/api/users?recommend=true', {
         headers: {
-          Authorization: `${localStorage.getItem('token')}`,
+          Authorization: token,
         },
       })
       .then(res => res.data)
@@ -34,7 +35,7 @@ const SearchBar = () => {
       axios
         .get(`http://localhost:3001/api/users?recommend=true`, {
           headers: {
-            Authorization: `${localStorage.getItem('token')}`,
+            Authorization: token,
           },
         })
         .then(res => res.data)
@@ -43,7 +44,7 @@ const SearchBar = () => {
     axios
       .get(`http://localhost:3001/api/users?search=${query}`, {
         headers: {
-          Authorization: `${localStorage.getItem('token')}`,
+          Authorization: token,
         },
       })
       .then(res => res.data)
