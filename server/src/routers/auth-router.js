@@ -79,7 +79,11 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 });
 
 authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
-  res.json({ url: `/src/uploads/${req.file.filename}` });
+  if (!req.file) {
+    res.json({ result: 'error', message: '파일이 제대로 업로드되지 않았습니다.' });
+  } else {
+    res.json({ url: `/src/uploads/${req.file.filename}` });
+  }
 });
 
 authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
