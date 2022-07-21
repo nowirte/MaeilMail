@@ -36,7 +36,6 @@ class LetterService {
 
   async cronUpdateLetter(letter_id, receive_date) {
     const job = await scheduleJob(receive_date, async () => {
-      console.log(`${letter_id}번 편지 도착`);
       await this.Letter.update({ is_arrived: true }, { where: { letter_id } });
     });
     return job;
@@ -67,7 +66,6 @@ class LetterService {
     if (!cronJob) {
       throw new Error('도착시간 설정에 실패하였습니다. 입력 값을 확인해주세요.');
     }
-    console.log(cronJob);
 
     const reqMail = await this.Letter.findAll({
       where: { letter_id: mail['letter_id'] },
