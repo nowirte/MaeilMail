@@ -5,52 +5,83 @@ import axios from 'axios';
 import StyledSearchbar from './styles/StyledSearchbar';
 import RecommendHeader from './RecommendHeader';
 import RecommendFriendsList from './RecommendFriendsList';
+import RecentlyArrivedLetter from './RecentlyArrivedLetter';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchUsers } from '../../redux/reducers/searchUser';
+import styled from 'styled-components';
 
 const SearchBar = () => {
-  const [users, setUsers] = useState([]);
-  const [searchField, setSearchField] = useState('');
+  const dispatch = useDispatch();
+  const searchUsers = useSelector(state => state.searchUser.searchUsers);
+
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3333/recommenduser').then(res => {
-      setUsers(res.data);
-      // console.log('users', users);
-    });
+    axios
+      .get('http://localhost:3001/api/users?recommend=true', {
+        headers: {
+          Authorization: `${localStorage.getItem('token')}`,
+        },
+      })
+      .then(res => res.data)
+      .then(data => dispatch(setSearchUsers({ searchUsers: data })));
   }, []);
 
   const onSearch = e => {
     e.preventDefault();
-    if (searchField === null || searchField === '') {
-      axios.get('http://localhost:3333/recommenduser').then(res => {
-        setUsers(res.data);
-      });
+    if (query === null || query === '') {
+      axios
+        .get(`http://localhost:3001/api/users?recommend=true`, {
+          headers: {
+            Authorization: `${localStorage.getItem('token')}`,
+          },
+        })
+        .then(res => res.data)
+        .then(data => dispatch(setSearchUsers({ searchUsers: data })));
     }
-    setUsers(() => {
-      return users.filter(user => {
-        return user.nickname.toLowerCase().includes(searchField.toLowerCase());
+    axios
+      .get(`http://localhost:3001/api/users?search=${query}`, {
+        headers: {
+          Authorization: `${localStorage.getItem('token')}`,
+        },
+      })
+      .then(res => res.data)
+      .then(data => {
+        dispatch(setSearchUsers({ searchUsers: data }));
+        console.log('searchUsers', searchUsers);
       });
-    });
   };
   return (
     <>
-      <StyledSearchbar>
-        <form onSubmit={onSearch}>
-          <input
-            value={searchField}
-            onChange={e => {
-              setSearchField(e.target.value);
-            }}
-            type="text"
-            placeholder="당신과 취향이 비슷한 친구를 만나보세요!"
-          />
-          <button type="submit">
-            <SearchIcon />
-          </button>
-        </form>
-      </StyledSearchbar>
+      <MainTop>
+        <StyledSearchbar>
+          <form onSubmit={onSearch}>
+            <input
+              value={query}
+              onChange={e => {
+                setQuery(e.target.value);
+              }}
+              type="text"
+              placeholder="당신과 취향이 비슷한 친구를 만나보세요!"
+            />
+            <button type="submit">
+              <SearchIcon />
+            </button>
+          </form>
+        </StyledSearchbar>
+        <RecentlyArrivedLetter />
+      </MainTop>
       <RecommendHeader />
-      <RecommendFriendsList data={users} />
+      <RecommendFriendsList data={searchUsers} />
     </>
   );
 };
+
+const MainTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 export default SearchBar;

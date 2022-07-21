@@ -13,3 +13,27 @@ export default function login(state = initialState, action) {
       return state;
   }
 }
+
+// import { createSlice } from "@reduxjs/toolkit";
+
+// const initialState = {
+//   loginEmail: '',
+//   loginPassword: '',
+// };
+
+// const loginSlice = createSlice({
+//   name:'login',
+//   initialState,
+//   reducers: {
+//     LOGIN_EMAIL (state,action) {
+//       state.loginEmail= action.email
+//       // payload 값으로 바꿔줘야 할 듯??
+//     },
+//     LOGIN_PASSWORD (state,action) {
+//       state.loginPassword= action.password
+//     }
+//   }
+// })
+
+
+// export default loginSlice;
