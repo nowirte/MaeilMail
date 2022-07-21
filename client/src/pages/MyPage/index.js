@@ -3,7 +3,14 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
-import { Wrapper, ProfileImg, Title, MyProfile } from './style';
+import {
+  Wrapper,
+  ProfileImg,
+  Title,
+  MyProfile,
+  ImageSubmitBtn,
+  ImageCancleBtn,
+} from './style';
 import axios from 'axios';
 
 const MyPage = () => {
@@ -37,20 +44,30 @@ const MyPage = () => {
   const imgInput = useRef();
 
   const handleImgUpload = async e => {
+    setImg(e.target.files[0]);
+  };
+
+  const handleImgSubmit = async e => {
     const token = localStorage.getItem('token');
-
-    const uploadFile = e.target.files[0];
-
     const formData = new FormData();
-    formData.append('img', uploadFile);
+    formData.append('img', img);
 
-    console.log(uploadFile);
-
-    await axios.patch(`http://localhost:3001/api/auth/me/image`, formData, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    try {
+      const res = await axios.patch(
+        `http://localhost:3001/api/auth/me/image`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: token,
+          },
+        }
+      );
+      console.log(res);
+      setImg('');
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const handleUploadBtn = e => {
@@ -66,7 +83,9 @@ const MyPage = () => {
             <img
               className="profileEmoji"
               src={
-                userData.profileImage ? userData.profileImage : '/img/뚱이.png'
+                userData.profileImage
+                  ? userData.profileImage
+                  : '/img/defaultImg.png'
               }
               alt="뚱이"
             />
@@ -84,6 +103,14 @@ const MyPage = () => {
             >
               <AddPhotoAlternateIcon />
             </button>
+            {img ?? (
+              <>
+                <ImageSubmitBtn onClick={handleImgSubmit}>
+                  적용하기
+                </ImageSubmitBtn>
+                <ImageCancleBtn onClick={() => setImg('')}>닫기</ImageCancleBtn>
+              </>
+            )}
           </div>
         </ProfileImg>
         <UserArea data={userData} favor={favor} language={language} />
