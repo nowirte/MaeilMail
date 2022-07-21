@@ -91,7 +91,9 @@ const NavTopArea = () => {
         <MyProfile>
           <div className="profileImgArea">
             <img
-              src={user.profileImage ? user.profileImage : '/img/뚱이.png'}
+              src={
+                user.profileImage ? user.profileImage : '/img/defaultImg.png'
+              }
               alt="profileImg"
             />
           </div>
