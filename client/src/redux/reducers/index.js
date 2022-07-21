@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import login from './login';
-import signup from './signup';
+import authReducer from './auth';
+import { combineReducers } from '@reduxjs/toolkit';
 
-export default combineReducers({
-  login,
-  signup,
+const rootReducer = combineReducers({
+  auth: authReducer,
 });
+
+export default rootReducer;

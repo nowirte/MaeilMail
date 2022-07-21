@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/reducers/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   LoginFormInput,
@@ -27,6 +29,9 @@ const FormCard = styled.div`
 `;
 
 const LoginForm = props => {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
   const { loginForm, setLoginForm } = props;
   const { email, password } = loginForm;
   let navigate = useNavigate();
@@ -51,7 +56,8 @@ const LoginForm = props => {
       })
       .then(function (response) {
         const { role, token } = response.data;
-        localStorage.setItem('token', token);
+        dispatch(setAuth({ role: role, token: token, auth: true }));
+        alert(auth.token);
         navigate('/');
       })
       .catch(function (error) {
