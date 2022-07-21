@@ -13,6 +13,8 @@ import SendStamp from '../../assets/send-stamp.png';
 import { formatDate } from './utils';
 
 const LetterItem = ({ friend, letter, handleClick }) => {
+  const { content, is_arrived, letter_id, nickname, receiveId, receive_date } =
+    letter;
   return (
     <Letter key={letter.letterId} onClick={handleClick}>
       <StyledLink
@@ -27,11 +29,9 @@ const LetterItem = ({ friend, letter, handleClick }) => {
           )}
         </LetterHeader>
         <LetterContent>
-          <pre>
-            {friend.userId === letter.sendId && letter.status === 'send'
-              ? '✉️ 편지가 오고 있습니다.'
-              : letter.content}
-          </pre>
+          {friend.userId === letter.sendId && letter.status === 'send'
+            ? '✉️ 편지가 오고 있습니다.'
+            : letter.content}
         </LetterContent>
         <LetterFooter>
           <Writer>{letter.nickname}</Writer>

@@ -120,19 +120,20 @@ const FriendDetail = () => {
         friend.info.longitude,
         friend.info.latitude
       );
-      const sendDate = new window.Date();
+      const sendDate = new window.Date().toISOString();
       let receiveDate = new window.Date();
       const deliveryTime = getTime(distance);
       receiveDate = new window.Date(
         receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
-      );
+      ).toISOString();
       const newLetter = {
         sendId: user.user_id,
-        receiveId: friend.user_id,
+        receiveId: friend.info.user_id,
         sendDate: sendDate,
         receiveDate: receiveDate,
         content: content,
       };
+      console.log(newLetter);
       postLetter(newLetter);
     },
     [writeIsShown]
