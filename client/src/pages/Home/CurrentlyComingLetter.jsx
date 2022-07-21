@@ -23,7 +23,7 @@ const CurrentlyComingLetter = () => {
   const mainComingLetters = useSelector(
     state => state.mainLetters.mainComingLetters
   );
-  console.log('mainComing', mainComingLetters);
+  // console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -36,7 +36,6 @@ const CurrentlyComingLetter = () => {
         }
       );
       const data = await res.data;
-      console.log('data', data);
       dispatch(initComingLetters({ mainComingLetters: data }));
     } catch (e) {
       console.error(e);

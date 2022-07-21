@@ -7,47 +7,49 @@ import RecommendHeader from './RecommendHeader';
 import RecommendFriendsList from './RecommendFriendsList';
 import RecentlyArrivedLetter from './RecentlyArrivedLetter';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchUsers } from '../../redux/reducers/searchUser';
 import styled from 'styled-components';
 
 const SearchBar = () => {
-  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const searchUsers = useSelector(state => state.searchUser.searchUsers);
 
-  const [users, setUsers] = useState([]);
-  const [searchField, setSearchField] = useState('');
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/users?recommend=true', {
         headers: {
-          Authorization: token,
+          Authorization: `${localStorage.getItem('token')}`,
         },
       })
-      .then(res => {
-        setUsers(res.data);
-      });
+      .then(res => res.data)
+      .then(data => dispatch(setSearchUsers({ searchUsers: data })));
   }, []);
 
   const onSearch = e => {
     e.preventDefault();
-    if (searchField === null || searchField === '') {
+    if (query === null || query === '') {
       axios
         .get(`http://localhost:3001/api/users?recommend=true`, {
           headers: {
-            Authorization: token,
+            Authorization: `${localStorage.getItem('token')}`,
           },
         })
-        .then(res => {
-          setUsers(res.data);
-        });
+        .then(res => res.data)
+        .then(data => dispatch(setSearchUsers({ searchUsers: data })));
     }
     axios
-      .get(`http://localhost:3001/api/users?search=${searchField}`, {
+      .get(`http://localhost:3001/api/users?search=${query}`, {
         headers: {
-          Authorization: token,
+          Authorization: `${localStorage.getItem('token')}`,
         },
       })
-      .then(res => {
-        setUsers(res.data);
+      .then(res => res.data)
+      .then(data => {
+        dispatch(setSearchUsers({ searchUsers: data }));
+        console.log('searchUsers', searchUsers);
       });
   };
   return (
@@ -56,9 +58,9 @@ const SearchBar = () => {
         <StyledSearchbar>
           <form onSubmit={onSearch}>
             <input
-              value={searchField}
+              value={query}
               onChange={e => {
-                setSearchField(e.target.value);
+                setQuery(e.target.value);
               }}
               type="text"
               placeholder="당신과 취향이 비슷한 친구를 만나보세요!"
@@ -71,7 +73,7 @@ const SearchBar = () => {
         <RecentlyArrivedLetter />
       </MainTop>
       <RecommendHeader />
-      <RecommendFriendsList data={users} />
+      <RecommendFriendsList data={searchUsers} />
     </>
   );
 };
