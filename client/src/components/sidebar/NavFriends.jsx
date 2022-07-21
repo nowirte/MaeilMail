@@ -16,7 +16,6 @@ const NavFriendsArea = () => {
         },
       });
       // const data = res.data.user;
-      console.log(res);
       // const res = await axios.get('http://localhost:3333/friend');
       const data = res.data;
       setFriends(data);
@@ -25,7 +24,6 @@ const NavFriendsArea = () => {
       console.log(err.message);
     }
   };
-  console.log(friends);
   useEffect(() => {
     fetchData();
   }, []);
