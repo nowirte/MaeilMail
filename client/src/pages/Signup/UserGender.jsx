@@ -69,14 +69,10 @@ const Female = styled.input`
   }
 `;
 
-const UserGender = () => {
-  const dispatch = useDispatch();
-  const gender = useSelector(state => {
-    return state.signup.gender;
-  });
-
+const UserGender = props => {
+  const { setGender } = props;
   function genderHandleChange(e) {
-    dispatch({ type: 'SIGNUP_GENDER', gender: e.target.value });
+    setGender({ gender: e.target.value });
   }
 
   return (
