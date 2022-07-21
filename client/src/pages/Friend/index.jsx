@@ -131,9 +131,9 @@ const FriendDetail = () => {
         receiveId: friend.info.user_id,
         sendDate: sendDate,
         receiveDate: receiveDate,
+        deliveryTime: deliveryTime,
         content: content,
       };
-      console.log(newLetter);
       postLetter(newLetter);
     },
     [writeIsShown]
