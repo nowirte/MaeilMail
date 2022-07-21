@@ -53,3 +53,45 @@
 | 지재영 | 프론트엔드 |           |
 | 김명균 | 백엔드     |           |
 | 배장한 | 백엔드     |           |
+
+#### 🔗 링크
+---
+<table align="center">
+<thead>
+  <tr>
+    <th colspan=5>
+      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13">🏠 GitLab Wiki Home</a>
+    </th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td align="center">
+      <a href="https://www.figma.com/file/x6VNP5t97mEBBGZtwBxNiB/%EC%B5%9C%EA%B0%9513%ED%8C%80?node-id=367%3A232">🎨 WireFrame</a>
+    </td>
+    <td align="center">
+      <a href="">📕 Code Convention</a>
+    </td>
+    <td align="center">
+      <a href="">💾 ERD</a>
+    </td>
+    <td align="center">
+      <a href="">🧶 Backlog</a>
+    </td>
+    <td align="center">
+      <a href="">⚙ Skills</a>
+    </td>
+  </tr>
+    <tr>
+    <td align="center" colspan=2>
+      <a href="">🔑 API Specification</a>
+    </td>
+    <td align="center">
+      <a href="">💡 Ideas</a>
+    </td>
+    <td align="center" colspan=2>
+      <a href="">📂 Directory Structure</a>
+    </td>
+  </tr>
+</tbody>
+<table>
