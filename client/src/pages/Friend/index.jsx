@@ -134,6 +134,7 @@ const FriendDetail = () => {
         deliveryTime: deliveryTime,
         content: content,
       };
+
       postLetter(newLetter);
     },
     [writeIsShown]
@@ -152,7 +153,11 @@ const FriendDetail = () => {
   return (
     <MainWrapper>
       {/* 친구 프로필 영역 */}
-      <FriendInfo friend={friend} />
+      <FriendInfo
+        friend={friend.info}
+        favor={friend.favor}
+        language={friend.language}
+      />
 
       {/* 편지 리스트 */}
       {detailIsShown ? (
