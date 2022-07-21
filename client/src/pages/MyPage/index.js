@@ -37,16 +37,19 @@ const MyPage = () => {
   const imgInput = useRef();
 
   const handleImgUpload = async e => {
-    const uploadFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('files', uploadFile);
+    const token = localStorage.getItem('token');
 
-    await axios.patch(`http://localhost:3333/user/1`, formData, {
-      // headers: {
-      //   'Content-Type': 'application/json; charset=utf-8',
-      // 'Content-Type': 'multipart/form-data',
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
+    const uploadFile = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('img', uploadFile);
+
+    console.log(uploadFile);
+
+    await axios.patch(`http://localhost:3001/api/auth/me/image`, formData, {
+      headers: {
+        Authorization: token,
+      },
     });
   };
 
