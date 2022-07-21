@@ -28,7 +28,7 @@ const loginBackground = () => {
   return (
     <Container>
       <Background />
-      {!auth ? <Outlet /> : <Navigate to="login" />}
+      {!auth ? <Outlet /> : <Navigate to="/" />}
     </Container>
   );
 };
