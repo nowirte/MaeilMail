@@ -78,12 +78,17 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
   }
 });
 
-authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
-  if (!req.file) {
-    return;
-  }
+authRouter.patch('/me/image', upload.single('img'), async (req, res) => {
+  console.log('요청');
+  const { file } = req;
+  console.log(file);
+  const url = file ? `/src/uploads/${file.filename}` : null;
 
-  res.json({ url: `/src/uploads/${req.file.filename}` });
+  if (url) {
+    res.json({ url });
+  } else {
+    res.json({ result: 'error', message: '이미지가 제대로 업로드되지 않았습니다.' });
+  }
 });
 
 authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
