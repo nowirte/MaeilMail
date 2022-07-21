@@ -1,6 +1,6 @@
 import { React, useEffect } from 'react';
 import styled from 'styled-components';
-import location from './location.png';
+import loc from './location.png';
 import refresh from './refresh.png';
 import { useSelector, useDispatch } from 'react-redux';
 import useLoc from './userLocationFunction';
@@ -35,53 +35,29 @@ const Refresh = styled.img`
   border: none;
 `;
 
-const UserLocation = () => {
-  const dispatch = useDispatch();
-  const country = useSelector(state => state.signup.location);
+const UserLocation = props => {
+  const { locationInfo, setLocationInfo } = props;
 
-  //추후 useEffect 분리 필요
   useEffect(() => {
-    async function getLocInfo() {
-      try {
-        const position = await new Promise((resolve, rejected) => {
-          navigator.geolocation.getCurrentPosition(resolve, rejected);
-        });
-
-        const latitude = position.coords.latitude;
-        const longtitude = position.coords.longitude;
-        dispatch({ type: 'SIGNUP_LATITUDE', latitude: latitude });
-        dispatch({ type: 'SIGNUP_LONGTITUDE', longtitude: longtitude });
-
-        const data = await getCountryData(latitude, longtitude);
-        return data;
-      } catch (err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
-    }
-
-    async function getCountryData(lat, lng) {
-      return fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-      )
-        .then(res => res.json())
-        .then(data => {
-          dispatch({ type: 'SIGNUP_LOCATION', location: data.countryName });
-          return data.countryName;
-        });
-    }
-    getLocInfo();
+    useLoc().then(res => {
+      setLocationInfo(state => {
+        return { ...state, ...res };
+      });
+    });
   }, []);
 
   async function refreshHandleClick(e) {
     e.preventDefault();
-    const data = await useLoc();
-    dispatch({ type: 'SIGNUP_LOCATION', location: data });
+    const locInfo = await useLoc();
+    setLocationInfo(state => {
+      return { ...state, ...locInfo };
+    });
   }
 
   return (
     <LocationContainer>
-      <Location src={location} alt="location" />
-      <span>{country}</span>
+      <Location src={loc} alt="location" />
+      <span>{locationInfo.location}</span>
       <Refresh src={refresh} alt="refresh" onClick={refreshHandleClick} />
     </LocationContainer>
   );

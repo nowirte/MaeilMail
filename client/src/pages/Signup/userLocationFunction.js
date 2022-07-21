@@ -4,11 +4,11 @@ export default async function getLocInfo() {
       navigator.geolocation.getCurrentPosition(resolve, rejected);
     });
 
-    const Lat = position.coords.latitude;
-    const Lng = position.coords.longitude;
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
 
-    const data = getCountryData(Lat, Lng);
-    return data;
+    const data = await getCountryData(lat, lng);
+    return { location: data, latitude: lat, longitude: lng };
   } catch (err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
