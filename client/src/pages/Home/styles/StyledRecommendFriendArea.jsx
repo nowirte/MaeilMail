@@ -103,7 +103,7 @@ export const InterestInfo = styled.div`
 
   margin-bottom: 10px;
 
-  & .title {
+  .title {
     font-size: 1.25rem;
     font-weight: bold;
     text-align: end;
@@ -113,7 +113,7 @@ export const InterestInfo = styled.div`
     width: 60px;
   }
 
-  & .tag {
+  .tag {
     width: fit-content;
     padding: 10px 8px;
     margin-right: 10px;
