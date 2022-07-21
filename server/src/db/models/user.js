@@ -31,7 +31,7 @@ class User extends Sequelize.Model {
       },
 
       birthday: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
       },
 
       location: {
@@ -56,7 +56,8 @@ class User extends Sequelize.Model {
       },
 
       profileImage: {
-        type: DataTypes.STRING(200)
+        type: DataTypes.STRING(200),
+        defaultValue: 'img/뚱이.png'
       },
 
       oauth: {
@@ -77,6 +78,7 @@ class User extends Sequelize.Model {
 
   static associate(db) { 
     db.User.hasOne(db.Favor, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.User.hasOne(db.Language, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' })
     db.User.hasMany(db.Letter, { foreignKey: 'sendId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
     db.User.hasMany(db.Letter, { foreignKey: 'receiveId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
    }

@@ -1,35 +1,35 @@
 const initialState = {
-  signupEmail: '',
-  signupPassword: '',
-  signupNickname: '',
-  signupGender: '',
-  signupLocation: '',
-  signupLatitude: 0,
-  signupLongitude: 0,
+  email: '',
+  password: '',
+  nickname: '',
+  gender: '',
+  location: '',
+  latitude: 0,
+  longitude: 0,
 };
 
 export default function login(state = initialState, action) {
   switch (action.type) {
     case 'SIGNUP_EMAIL':
-      return { ...state, signupEmail: action.email };
+      return { ...state, email: action.email };
 
     case 'SIGNUP_PASSWORD':
-      return { ...state, signupPassword: action.password };
+      return { ...state, password: action.password };
 
     case 'SIGNUP_NICKNAME':
-      return { ...state, signupNickname: action.password };
+      return { ...state, nickname: action.nickname };
 
     case 'SIGNUP_GENDER':
-      return { ...state, signupGender: action.email };
+      return { ...state, gender: action.gender };
 
     case 'SIGNUP_LOCATION':
-      return { ...state, signupLocation: action.password };
+      return { ...state, location: action.location };
 
     case 'SIGNUP_LATITUDE':
-      return { ...state, signupLatitude: action.password };
+      return { ...state, latitude: action.latitude };
 
     case 'SIGNUP_LONGTITUDE':
-      return { ...state, signupLongitude: action.password };
+      return { ...state, longitude: action.longtitude };
 
     default:
       return state;

@@ -12,50 +12,62 @@ class Favor extends Sequelize.Model {
 
       movie: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       language: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       book: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       game: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       coding: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       fantacy: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       sports: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       entertainment: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       music: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       fashion: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       art: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       travel: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       }
 
     },{

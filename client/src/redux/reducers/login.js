@@ -1,6 +1,6 @@
 const initialState = {
   loginEmail: '',
-  lgoinPassword: '',
+  loginPassword: '',
 };
 
 export default function login(state = initialState, action) {
@@ -8,7 +8,7 @@ export default function login(state = initialState, action) {
     case 'LOGIN_EMAIL':
       return { ...state, loginEmail: action.email };
     case 'LOGIN_PASSWORD':
-      return { ...state, lgoinPassword: action.password };
+      return { ...state, loginPassword: action.password };
     default:
       return state;
   }

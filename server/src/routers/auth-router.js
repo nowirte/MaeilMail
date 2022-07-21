@@ -3,35 +3,39 @@ import { Router } from 'express';
 import passport from 'passport';
 import { loginRequired, tempAllowed } from '../middleware';
 import { userService } from '../services';
-import { setUserToken } from '../utils';
+import { setUserToken, upload } from '../utils';
 
 const authRouter = Router();
 
-authRouter.post(
-  '/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login',
-    session: false,
-  }),
-  async (req, res, next) => {
-    try {
-      // 토큰 제공
-      await setUserToken(req.user, res);
-    } catch (err) {
-      next(err);
+authRouter.post('/login', async (req, res, next) => {
+  passport.authenticate(
+    'local',
+    async (error, user, info) => {
+      try {
+        if (error) {
+          throw new Error(error);
+        }
+        if (!user) {
+          res.status(401).json(info);
+          return;
+        }
+        await setUserToken(user, res);
+      } catch (err) {
+        next(err);
+      }
+    },
+    {
+      session: false,
     }
-  }
-);
+  )(req, res, next);
+});
 
 // 구글 로그인
 authRouter.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 authRouter.get(
   '/login/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/login',
-    session: false,
-  }),
+  passport.authenticate('google', { session: false, failureMessage: true }),
   async (req, res, next) => {
     try {
       await setUserToken(req.user, res);
@@ -69,6 +73,18 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
       throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
     }
     res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res, next) => {
+  try {
+    const { userId } = req;
+    if (!userId) {
+      throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
+    }
+    res.json({url: `/src/uploads/${req.file.filename}`})
   } catch (err) {
     next(err);
   }

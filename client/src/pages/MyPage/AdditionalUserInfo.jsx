@@ -39,16 +39,35 @@ const Info = styled.div`
   }
 `;
 
-const AdditionalUserInfoArea = () => {
+const AdditionalUserInfoArea = props => {
+  const { favor, language } = props;
   return (
     <AdditionalInfo>
       <Info className="interest">
         <p className="title">관심사</p>
-        <p className="tag">스포츠</p>
+        {favor &&
+          favor.map(e =>
+            e.selected === true ? (
+              <p key={e.value} className="tag">
+                {e.label}
+              </p>
+            ) : (
+              ''
+            )
+          )}
       </Info>
       <Info className="language">
         <p className="title">언어</p>
-        <p className="tag">한국어</p>
+        {language &&
+          language.map(e =>
+            e.selected === true ? (
+              <p key={e.value} className="tag">
+                {e.label}
+              </p>
+            ) : (
+              ''
+            )
+          )}
       </Info>
     </AdditionalInfo>
   );
