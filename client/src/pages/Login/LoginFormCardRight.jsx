@@ -49,7 +49,7 @@ const LoginForm = props => {
     const bodyData = JSON.stringify(data);
 
     await axios
-      .post('/api/auth/login', bodyData, {
+      .post('34.64.149.17:80/api/auth/login', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
