@@ -233,7 +233,6 @@ class LetterService {
       }
     }
 
-
     return myLetters;
   }
 };

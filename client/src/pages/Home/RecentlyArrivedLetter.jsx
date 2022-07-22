@@ -39,13 +39,14 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/letters/recent', {
+      const res = await axios.get('/api/letters/recent', {
         headers: {
           Authorization: token,
         },
       });
       const data = await res.data[0];
       dispatch(initArrivedLetter({ mainArrivedLetter: data }));
+      console.log('mainArrivedLetter', mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
@@ -54,7 +55,7 @@ export default function RecentlyArrivedLetter() {
   const patchIsRead = async id => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/letters/${id}`,
+        `/api/letters/${id}`,
         {
           is_read: 1,
         },
@@ -64,7 +65,7 @@ export default function RecentlyArrivedLetter() {
           },
         }
       );
-      console.log('mainArrivdLetterPatch', mainArrivedLetter);
+      // console.log('mainArrivdLetterPatch', mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
