@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import style from './LetterEditor.module.css';
 import CloseIcon from '@mui/icons-material/Close';
+import { useParams, useLocation } from 'react-router-dom';
 
 const LetterEditor = ({ handleWrite, onCreate }) => {
+  const friendId = useParams().id;
   const contentInput = useRef();
   const [state, setState] = useState({
     content: '',
@@ -17,12 +19,14 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
     if (state.content.length < 1) {
       // alert('편지 내용을 입력해주세요.');
       contentInput.current.focus();
       return;
     }
-    onCreate(state.content);
+    const id = friendId;
+    onCreate([state.content, id]);
     handleWrite();
     setState({
       content: '',

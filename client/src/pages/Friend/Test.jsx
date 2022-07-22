@@ -6,7 +6,7 @@ import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
 import { getDistance, getTime } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -83,54 +83,51 @@ const FriendDetail = () => {
   }, [friendId]);
 
   // 편지 작성하기
-  const postLetter = useCallback(
-    async newLetter => {
-      try {
-        await axios.post(
-          `http://localhost:3001/api/letters/${friendId}`,
-          newLetter,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-      } catch (error) {
-        console.error(error);
-      }
-      await fetchLetters();
-    },
-    [friendId]
-  );
+  const postLetter = async newLetter => {
+    try {
+      await axios.post(
+        `http://localhost:3001/api/letters/${friendId}`,
+        newLetter,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    await fetchLetters();
+  };
 
   // 편지 작성
-  const createHandler = useCallback(
-    content => {
-      const distance = getDistance(
-        user.longitude,
-        user.latitude,
-        friend.info.longitude,
-        friend.info.latitude
-      );
-      const sendDate = new window.Date().toISOString();
-      let receiveDate = new window.Date();
-      const deliveryTime = getTime(distance);
-      receiveDate = new window.Date(
-        receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
-      ).toISOString();
-      const newLetter = {
-        sendId: user.user_id,
-        receiveId: friend.info.user_id,
-        sendDate: sendDate,
-        receiveDate: receiveDate,
-        deliveryTime: deliveryTime,
-        content: content,
-      };
+  const createHandler = content => {
+    const letter = content[0];
+    const friend_id = content[1];
+    console.log(letter, friend_id);
+    const distance = getDistance(
+      user.longitude,
+      user.latitude,
+      friend.info.longitude,
+      friend.info.latitude
+    );
+    const sendDate = new window.Date().toISOString();
+    let receiveDate = new window.Date();
+    const deliveryTime = getTime(distance);
+    receiveDate = new window.Date(
+      receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
+    ).toISOString();
+    const newLetter = {
+      sendId: user.user_id,
+      receiveId: friend_id,
+      sendDate: sendDate,
+      receiveDate: receiveDate,
+      deliveryTime: deliveryTime,
+      content: letter,
+    };
 
-      postLetter(newLetter);
-    },
-    [writeIsShown]
-  );
+    postLetter(newLetter);
+  };
 
   // 편지 보내기 버튼
   const writeHandler = useCallback(() => {
