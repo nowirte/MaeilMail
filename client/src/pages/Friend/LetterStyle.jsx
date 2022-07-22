@@ -25,7 +25,7 @@ const Letter = styled.li`
   text-decoration: none;
 
   ${props =>
-    props.send ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
+    props.future ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
 
   &:hover {
     transform: scale(0.98);
