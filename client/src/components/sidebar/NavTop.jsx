@@ -37,9 +37,8 @@ const NavTopArea = () => {
         <MyProfile>
           <div className="profileImgArea">
             <img
-              src={
-                user.profileImage ? user.profileImage : '/img/defaultImg.png'
-              }
+              className="profileImage"
+              src={user.profileImage}
               alt="profileImg"
             />
           </div>
@@ -99,7 +98,7 @@ const MyProfile = styled.div`
     border-radius: 100%;
     background-color: white;
 
-    & img {
+    .profileImage {
       width: 100%;
       height: 100%;
       border-radius: 50%;
