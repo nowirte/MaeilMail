@@ -109,6 +109,7 @@ const FriendDetail = () => {
     // 편지 리스트 받아오기
     fetchLetters();
   }, [fetchLetters]);
+  console.log('letters', letters);
 
   // 편지 작성
   const createHandler = useCallback(
