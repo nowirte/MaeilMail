@@ -125,7 +125,7 @@ function RecommendDetailPage() {
           <ProfileImg>
             <div className="profileImgArea">
               <img
-                className="profileEmoji"
+                className="profileImage"
                 src={searchUser?.profileImage}
                 alt=""
               />
