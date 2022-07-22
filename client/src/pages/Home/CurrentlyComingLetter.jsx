@@ -17,6 +17,7 @@ import {
   CurrentlyLocation,
   CurrentlyTickingTime,
 } from './styles/StyledCurrentlyComingLetter';
+import { formatDate } from '../Friend/utils';
 
 const CurrentlyComingLetter = () => {
   const dispatch = useDispatch();
@@ -67,12 +68,14 @@ const CurrentlyComingLetter = () => {
                   </CurrentlyImageContainer>
                   <CurrentlyIntroduction>
                     <CurrentlyFriendName>{letter.nickname}</CurrentlyFriendName>
-                    <CurrentlyDate>{letter.send_date}</CurrentlyDate>
+                    <CurrentlyDate>
+                      {formatDate(letter.send_date)}
+                    </CurrentlyDate>
                     <CurrentlyLocation>
                       {letter.send_location}
                     </CurrentlyLocation>
                     <CurrentlyTickingTime>
-                      {letter.receive_date}
+                      {formatDate(letter.receive_date)}
                     </CurrentlyTickingTime>
                   </CurrentlyIntroduction>
                 </CurrentlyProfile>
