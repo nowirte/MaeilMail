@@ -24,7 +24,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
   const patchReadLetter = async () => {
     const letterId = letter.letter_id;
     const token = useSelector(state => state.auth.token);
-    const data = { isRead: true };
+    const data = { is_read: 1 };
     try {
       await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
         headers: {

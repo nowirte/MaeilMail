@@ -31,7 +31,7 @@ export default function RecentlyArrivedLetter() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-  const recentlyArrivedLetter = useSelector(
+  const mainArrivedLetter = useSelector(
     state => state.mainLetters.mainArrivedLetter
   );
 
@@ -53,6 +53,26 @@ export default function RecentlyArrivedLetter() {
     fetchRecentlyLetter();
   }, []);
 
+  const id = mainArrivedLetter?.letter_id;
+
+  const patchIsRead = async id => {
+    try {
+      await axios.patch(
+        `http://localhost:3001/api/letters/${id}`,
+        {
+          is_read: 1,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  // console.log('mainArrivedLetter', mainArrivedLetter);
   return (
     <div style={{ marginTop: 45 }}>
       <Button variant="contained" onClick={handleOpen}>
@@ -66,11 +86,19 @@ export default function RecentlyArrivedLetter() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            From. {recentlyArrivedLetter?.nickname}
+            From. {mainArrivedLetter?.nickname}
           </Typography>
           <StyledCurrentlyContent>
-            {recentlyArrivedLetter?.content}
+            {mainArrivedLetter?.content}
           </StyledCurrentlyContent>
+          <Button
+            variant="contained"
+            onClick={() => {
+              patchIsRead(id);
+            }}
+          >
+            ✔ 확인
+          </Button>
         </Box>
       </Modal>
     </div>
