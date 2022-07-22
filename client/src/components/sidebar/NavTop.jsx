@@ -5,6 +5,55 @@ import logo from './img/logo.png';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
+const NavTopArea = () => {
+  const [user, setUser] = useState([]);
+  const token = useSelector(state => state.auth.token);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = res.data.user;
+      setUser(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(user);
+  return (
+    <NavTop>
+      <StyledLink to="/">
+        <Logo src={logo} alt="logoImg" />
+      </StyledLink>
+      <Line />
+      <StyledLink to="/mypage">
+        <MyProfile>
+          <div className="profileImgArea">
+            <img
+              src={
+                user.profileImage ? user.profileImage : '/img/defaultImg.png'
+              }
+              alt="profileImg"
+            />
+          </div>
+          <span>{user.nickname}</span>
+        </MyProfile>
+      </StyledLink>
+      <Line />
+    </NavTop>
+  );
+};
+
+export default NavTopArea;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
 `;
@@ -58,50 +107,3 @@ const MyProfile = styled.div`
     }
   }
 `;
-
-const NavTopArea = () => {
-  const [user, setUser] = useState([]);
-  const token = useSelector(state => state.auth.token);
-
-  const fetchData = async () => {
-    try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      const data = res.data.user;
-      setUser(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  console.log(user);
-  return (
-    <NavTop>
-      <StyledLink to="/">
-        <Logo src={logo} alt="logoImg" />
-      </StyledLink>
-      <Line />
-      <StyledLink to="/mypage">
-        <MyProfile>
-          <div className="profileImgArea">
-            <img
-              src={user.profileImage ? user.profileImage : '/img/뚱이.png'}
-              alt="profileImg"
-            />
-          </div>
-          <span>{user.nickname}</span>
-        </MyProfile>
-      </StyledLink>
-      <Line />
-    </NavTop>
-  );
-};
-
-export default NavTopArea;
