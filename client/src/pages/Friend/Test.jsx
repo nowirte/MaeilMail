@@ -42,6 +42,7 @@ const FriendDetail = () => {
     }
   }, [user]);
 
+  // 선택한 친구 정보 받아오기
   const fetchFriend = async () => {
     try {
       const res = await axios.get(
@@ -62,6 +63,8 @@ const FriendDetail = () => {
       console.error(error);
     }
   };
+
+  // 편지 리스트 받아오기
   const fetchLetters = useCallback(async () => {
     try {
       const res = await axios.get(
@@ -79,6 +82,7 @@ const FriendDetail = () => {
     }
   }, [friendId]);
 
+  // 편지 작성하기
   const postLetter = useCallback(
     async newLetter => {
       try {
@@ -98,15 +102,6 @@ const FriendDetail = () => {
     },
     [friendId]
   );
-
-  useEffect(() => {
-    // 유저 정보 받아오기
-    fetchUser();
-    // 친구 정보 받아오기
-    fetchFriend();
-    // 편지 리스트 받아오기
-    fetchLetters();
-  }, [fetchLetters]);
 
   // 편지 작성
   const createHandler = useCallback(
@@ -142,6 +137,15 @@ const FriendDetail = () => {
     setWriteIsShown(current => !current);
   }, [writeIsShown]);
 
+  useEffect(() => {
+    // 유저 정보 받아오기
+    fetchUser();
+    // 친구 정보 받아오기
+    fetchFriend();
+    // 편지 리스트 받아오기
+    fetchLetters();
+  }, [fetchLetters]);
+
   return (
     <MainWrapper>
       {/* 친구 프로필 영역 */}
@@ -152,9 +156,8 @@ const FriendDetail = () => {
       />
 
       {/* 하위 컴포넌트가 들어올 자리 */}
-      <Outlet
-        context={([user, setUser], [letters, setLetters], [friend, setFriend])}
-      />
+      <Outlet context={([user, setUser], [friend, setFriend])} />
+
       {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (
         <WriteBtn onClick={writeHandler}>
