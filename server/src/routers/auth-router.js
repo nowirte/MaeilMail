@@ -79,9 +79,10 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 });
 
 authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
-  const { userId, file } = await req;
-  const imageUrl = await file.location
-  console.log(imageUrl)
+  const { userId, file } = req;
+  console.log(file)
+  const imageUrl = file
+  
   if (imageUrl) {
     await userService.updateUserProfileImage(Number(userId), imageUrl);
     res.json({ imageUrl });

@@ -15,7 +15,7 @@ const upload = multer({
     acl: 'public-read-write',
     bucket: 'elice-everymail',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    key: async (req, file, cb) => {
+    key: (req, file, cb) => {
       console.log('in multer:', file)
       const ext = path.extname(file.originalname);
       cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext)
