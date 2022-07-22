@@ -4,14 +4,16 @@ import FriendInfo from './FriendInfo';
 import LetterList from './LetterList';
 import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
-import { getDistance, getTime, formatDate } from './utils';
+import { getDistance, getTime } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LetterDetail from './LetterDetail';
+import { useSelector } from 'react-redux';
 
 const FriendDetail = () => {
   const friendId = useParams().id;
+  const token = useSelector(state => state.auth.token);
 
   // 편지 보내기 버튼
   const [writeIsShown, setWriteIsShown] = useState(false);
@@ -30,7 +32,6 @@ const FriendDetail = () => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
@@ -45,7 +46,6 @@ const FriendDetail = () => {
 
   const fetchFriend = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
         `http://localhost:3001/api/users/${friendId}`,
         {
@@ -66,7 +66,6 @@ const FriendDetail = () => {
   };
   const fetchLetters = useCallback(async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
         `http://localhost:3001/api/letters/${friendId}`,
         {
@@ -85,7 +84,6 @@ const FriendDetail = () => {
   const postLetter = useCallback(
     async newLetter => {
       try {
-        const token = localStorage.getItem('token');
         await axios.post(
           `http://localhost:3001/api/letters/${friendId}`,
           newLetter,

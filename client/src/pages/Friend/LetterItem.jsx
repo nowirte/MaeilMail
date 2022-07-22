@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Letter,
   StyledLink,
@@ -22,7 +23,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
   // 편지 읽음 확인 전송
   const patchReadLetter = async () => {
     const letterId = letter.letter_id;
-    const token = localStorage.getItem('token');
+    const token = useSelector(state => state.auth.token);
     const data = { isRead: true };
     try {
       await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
@@ -54,7 +55,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
         user={user}
       >
         <LetterHeader>
-          {letter.is_read ? <DoneIcon /> : ''}
+          <span>{letter.is_read ? <DoneIcon /> : ''}</span>
           {timeRemaining > 0 ? (
             <img src={SendStamp} alt="stamp" />
           ) : (
