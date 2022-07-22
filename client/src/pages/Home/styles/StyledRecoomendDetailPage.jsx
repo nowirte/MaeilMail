@@ -53,6 +53,7 @@ const StyledWriteButton = styled.button`
   border-radius: 10px;
   font-size: 24px;
   color: #fff;
+  margin-right: 15px;
 `;
 
 const ProfileImg = styled.div`

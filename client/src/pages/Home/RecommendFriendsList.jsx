@@ -1,6 +1,8 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import 'swiper/css/scrollbar';
+import { Scrollbar } from 'swiper';
 import {
   RecommendFriendsListContainer,
   RecommendationFriendBox,
@@ -16,10 +18,12 @@ const RecommendFriendsList = ({ data }) => {
   const dispatch = useDispatch();
   return (
     <RecommendFriendsListContainer>
-      <Swiper navigation spaceBetween={180} slidesPerView={6}>
+      <Swiper spaceBetween={180} slidesPerView={6}>
         {data &&
           data.map((user, i) => (
             <SwiperSlide
+              scrollbar={{ hide: true }}
+              modules={[Scrollbar]}
               key={`user-${i}`}
               onClick={() => {
                 const id = user.user_id;
@@ -29,7 +33,10 @@ const RecommendFriendsList = ({ data }) => {
             >
               <RecommendationFriendBox>
                 <RecommendFriend>
-                  <img src={user.image} alt={user.nickname} />
+                  <img
+                    src={user.image || '/img/basic_profile.png'}
+                    alt={user.nickname}
+                  />
                 </RecommendFriend>
                 <RecommendFriendName>
                   <span>{user.nickname}</span>

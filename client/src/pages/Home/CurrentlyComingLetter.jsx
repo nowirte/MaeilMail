@@ -60,7 +60,10 @@ const CurrentlyComingLetter = () => {
                 </CurrentlyComingContentContainer>
                 <CurrentlyProfile>
                   <CurrentlyImageContainer>
-                    <img src={letter.send_img} alt={letter.sendId} />
+                    <img
+                      src={letter.send_img || '/img/basic_profile.png'}
+                      alt={letter.sendId}
+                    />
                   </CurrentlyImageContainer>
                   <CurrentlyIntroduction>
                     <CurrentlyFriendName>{letter.nickname}</CurrentlyFriendName>
