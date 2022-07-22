@@ -145,9 +145,9 @@ const Detail = () => {
         </Link>
 
         <li className={style.letterContainer}>
-          <p>{letter.nickname}</p>
           <pre className={style.letterContent}>{letter.content}</pre>
-          <p>{formatDate(letter.receive_date)}</p>
+          <p className={style.letterSender}>{letter.nickname}</p>
+          <p className={style.receiveDate}>{formatDate(letter.receive_date)}</p>
         </li>
       </LetterWrapper>
 
