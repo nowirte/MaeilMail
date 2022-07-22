@@ -63,7 +63,7 @@ const Badge = styled.span`
   color: #4f4f4f;
   position: relative;
   padding: 5px 10px;
-  line-height: 1rem;
+  line-height: 1.2rem;
 
   & + & {
     margin-left: 2px;
@@ -79,6 +79,7 @@ const Badge = styled.span`
     border: 1px solid #4f4f4f;
     opacity: 0.2;
     border-radius: 5px;
+    ${props => props.language && 'background: #007aff'};
   }
 `;
 

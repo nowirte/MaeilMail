@@ -11,6 +11,8 @@ import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 import LetterEditor from './pages/Friend/LetterEditor';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
+import Detail from './pages/Friend/Detail';
+import Test from './pages/Friend/Test';
 
 const App = () => {
   return (
@@ -24,10 +26,8 @@ const App = () => {
             element={<RecommendDetailPage />}
           />
           <Route path="/mypage" element={<MyPage />} />
-          {/* <Route element={<LetterEditor />}> */}
           <Route path="/friend/:id" element={<FriendDetail />} />
-          <Route path="/friend/:id/:postId" element={<LetterDetail />} />
-          {/* </Route> */}
+          <Route path="/friend/:id/:postId" element={<Detail />} />
         </Route>
 
         <Route element={<LoginBackground />}>
