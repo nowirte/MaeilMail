@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
 
-const FriendDetail = () => {
+const Letters = () => {
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 
@@ -47,4 +47,4 @@ const FriendDetail = () => {
   );
 };
 
-export default FriendDetail;
+export default Letters;
