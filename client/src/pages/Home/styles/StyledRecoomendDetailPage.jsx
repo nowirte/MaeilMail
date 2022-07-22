@@ -10,7 +10,7 @@ const GoBackButton = styled.button`
 const Wrapper = styled.div`
   width: 100%;
 
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 `;
@@ -36,6 +36,24 @@ const Title = styled.p`
   font-weight: bold;
   font-size: 1.75rem;
   margin-left: 140px;
+`;
+
+const StyledWriteButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const StyledWriteButton = styled.button`
+  width: 150px;
+  background: #40577a;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 24px;
+  color: #fff;
+  margin-right: 15px;
 `;
 
 const ProfileImg = styled.div`
@@ -89,4 +107,12 @@ const ProfileImg = styled.div`
   }
 `;
 
-export { Wrapper, ProfileImg, Title, MyProfile, GoBackButton };
+export {
+  Wrapper,
+  ProfileImg,
+  Title,
+  MyProfile,
+  GoBackButton,
+  StyledWriteButton,
+  StyledWriteButtonContainer,
+};

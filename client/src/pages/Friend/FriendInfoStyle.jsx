@@ -20,8 +20,7 @@ const UserInfo = styled.div`
 const UserEmoji = styled.div`
   font-size: 4rem;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 255, 0.2);
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 255, 0.2);
+  border: 1px solid #ccc;
   width: 100px;
   height: 100px;
   display: flex;
@@ -30,7 +29,12 @@ const UserEmoji = styled.div`
   cursor: pointer;
 
   &:hover {
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  & > img {
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -63,7 +67,7 @@ const Badge = styled.span`
   color: #4f4f4f;
   position: relative;
   padding: 5px 10px;
-  line-height: 1rem;
+  line-height: 1.2rem;
 
   & + & {
     margin-left: 2px;
@@ -79,6 +83,7 @@ const Badge = styled.span`
     border: 1px solid #4f4f4f;
     opacity: 0.2;
     border-radius: 5px;
+    ${props => props.language && 'background: #007aff'};
   }
 `;
 

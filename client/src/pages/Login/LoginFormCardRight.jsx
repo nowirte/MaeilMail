@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/reducers/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   LoginFormInput,
@@ -14,7 +15,7 @@ import {
 import logo from './logo.png';
 import googleLogo from './googleLogo.png';
 
-const FormCard = styled.form`
+const FormCard = styled.div`
   width: 700px;
   height: 800px;
   background-color: white;
@@ -27,29 +28,22 @@ const FormCard = styled.form`
   flex-direction: column;
 `;
 
-const LoginForm = () => {
-  let navigate = useNavigate();
+const LoginForm = props => {
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const email = useSelector(state => {
-    return state.login.loginEmail;
-  });
-  function emailHandleChange(e) {
-    dispatch({ type: 'LOGIN_EMAIL', email: e.target.value });
+
+  const { loginForm, setLoginForm } = props;
+  const { email, password } = loginForm;
+  let navigate = useNavigate();
+
+  function inputHandleChange(e) {
+    const { name, value } = e.target;
+    setLoginForm(state => {
+      return { ...state, [name]: value };
+    });
   }
 
-  const password = useSelector(state => {
-    return state.login.loginPassword;
-  });
-
-  function passwordHandleChange(e) {
-    dispatch({ type: 'LOGIN_PASSWORD', password: e.target.value });
-  }
-
-  const state = useSelector(state => {
-    return state;
-  });
-
-  async function handleLoginSubmit(e) {
+  async function handleLoginClick(e) {
     e.preventDefault();
     const data = { email: email, password: password };
     const bodyData = JSON.stringify(data);
@@ -62,11 +56,13 @@ const LoginForm = () => {
       })
       .then(function (response) {
         const { role, token } = response.data;
-        localStorage.setItem('token', token);
+        dispatch(setAuth({ role: role, token: token, auth: true }));
+        alert(auth.token);
         navigate('/');
       })
       .catch(function (error) {
         console.log(error);
+        alert('error');
       });
   }
 
@@ -85,21 +81,23 @@ const LoginForm = () => {
   }
 
   return (
-    <FormCard onSubmit={handleLoginSubmit}>
+    <FormCard>
       <Logo src={logo} alt="Logo" />
       <LoginFormInput
         placeholder="이메일"
         type="email"
+        name="email"
         value={email}
-        onChange={emailHandleChange}
+        onChange={inputHandleChange}
       />
       <LoginFormInput
         placeholder="비밀번호"
         type="password"
+        name="password"
         value={password}
-        onChange={passwordHandleChange}
+        onChange={inputHandleChange}
       />
-      <LoginFormButton type="submit">로그인</LoginFormButton>
+      <LoginFormButton onClick={handleLoginClick}>로그인</LoginFormButton>
       <LinkContainer>
         <Link to="/home">비밀번호 찾기</Link>
         <Link to="/signup">회원가입</Link>

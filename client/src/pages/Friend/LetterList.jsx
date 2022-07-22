@@ -1,46 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Stamp from '../../assets/stamp.png';
-import SendStamp from '../../assets/send-stamp.png';
-import {
-  LetterWrapper,
-  Letter,
-  LetterHeader,
-  LetterContent,
-  LetterFooter,
-  Writer,
-  Date,
-} from './LetterStyle';
-import { formatDate } from './utils';
 
-const LetterList = ({ user, data, friend }) => {
+import { LetterWrapper } from './LetterStyle';
+
+import LetterItem from './LetterItem';
+
+const LetterList = props => {
+  const { user, friend, letters } = props;
   return (
     <LetterWrapper>
-      {data.length === 0 && <p>아직 편지가 없습니다.</p>}
-      {data.map(letter => (
-        // <Link to={letter.letterId}>
-        <Letter key={letter.letterId}>
-          <LetterHeader>
-            {friend.userId === letter.sendId && letter.status === 'send' ? (
-              <img src={SendStamp} alt="stamp" />
-            ) : (
-              <img src={Stamp} alt="stamp" />
-            )}
-          </LetterHeader>
-          <LetterContent>
-            {friend.userId === letter.sendId && letter.status === 'send'
-              ? '✉️ 편지가 오고 있습니다.'
-              : letter.content}
-          </LetterContent>
-          <LetterFooter>
-            <Writer>{letter.receiveId}</Writer>
-            <Date>{formatDate(letter.receiveDate)}</Date>
-          </LetterFooter>
-        </Letter>
-        // </Link>
+      {letters.length === 0 && <p>아직 편지가 없습니다.</p>}
+      {letters.map(letter => (
+        <LetterItem
+          letter={letter}
+          friend={friend}
+          user={user}
+          handleClick={props.handleClick}
+        />
       ))}
     </LetterWrapper>
   );
 };
 
-export default LetterList;
+export default React.memo(LetterList);

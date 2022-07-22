@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const NavFriendsArea = () => {
   const [friends, setFriends] = useState([]);
+  const token = useSelector(state => state.auth.token);
 
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem('token');
-
       const res = await axios.get('http://localhost:3001/api/letters', {
         headers: {
           Authorization: token,
@@ -27,13 +27,14 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  console.log(friends);
 
   return (
     <Friends>
       {friends &&
         friends?.map(friend => {
           return (
-            <StyledLink to={`/friend/${friend.id}`} key={friend.user_id}>
+            <StyledLink to={`/friend/${friend.user_id}`} key={friend.user_id}>
               <FriendsList>
                 <div className="profileImgArea">
                   <img

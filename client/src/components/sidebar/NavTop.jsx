@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from './img/logo.png';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -60,11 +61,10 @@ const MyProfile = styled.div`
 
 const NavTopArea = () => {
   const [user, setUser] = useState([]);
+  const token = useSelector(state => state.auth.token);
 
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem('token');
-
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
@@ -81,6 +81,7 @@ const NavTopArea = () => {
     fetchData();
   }, []);
 
+  console.log(user);
   return (
     <NavTop>
       <StyledLink to="/">

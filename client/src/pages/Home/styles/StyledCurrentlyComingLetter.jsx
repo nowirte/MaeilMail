@@ -44,7 +44,7 @@ export const CurrentlyImageContainer = styled.div`
   align-items: center;
   border: 1px solid black;
   img {
-    width: 60%;
+    width: 100%;
   }
 `;
 export const CurrentlyIntroduction = styled.div``;

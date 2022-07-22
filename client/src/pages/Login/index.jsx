@@ -1,13 +1,14 @@
-import React from 'react';
-import LoginFormCard from './LoginFormCardRight';
-import LoginImageCard from './LoginImageCardLeft';
+import React, { useState } from 'react';
+import LoginFormCardRight from './LoginFormCardRight';
+import LoginImageCardLeft from './LoginImageCardLeft';
 import LoginCard from './LoginCard';
 
 const Login = () => {
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   return (
     <LoginCard>
-      <LoginImageCard />
-      <LoginFormCard />
+      <LoginImageCardLeft />
+      <LoginFormCardRight loginForm={loginForm} setLoginForm={setLoginForm} />
     </LoginCard>
   );
 };

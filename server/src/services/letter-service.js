@@ -10,6 +10,12 @@ class LetterService {
     this.Letter = param2;
   }
 
+  // 특정 유저가 보내거나 받은 쪽지 다 가져오기
+  async getUsersLetters(userId) {
+    const letters = await this.Letters.findAll({ where: { [Op.or]: [{sendId: userId}, {receiveId: userId}]}, raw: true});
+    return letters;
+  }
+
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
     const targetId = await this.Letter.findAll({
@@ -203,13 +209,12 @@ class LetterService {
   }
 
   // 가장 최근에 온 편지
-
   async getRecentLetters(myId) {
-    const myLetters = await this.Letter.findAll({ where: { receiveId: myId, is_arrived: 1 } });
+    const myLetters = await this.Letter.findAll({ where: { receiveId: myId, is_arrived: 1 }, raw: true});
 
     return myLetters;
   }
-}
+};
 
 const letterService = new LetterService(User, Letter);
 
