@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const NavFriendsArea = () => {
   const [friends, setFriends] = useState([]);
+  const token = useSelector(state => state.auth.token);
 
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem('token');
-
       const res = await axios.get('http://localhost:3001/api/letters', {
         headers: {
           Authorization: token,
@@ -25,10 +25,10 @@ const NavFriendsArea = () => {
       console.log(err.message);
     }
   };
-  console.log(friends);
   useEffect(() => {
     fetchData();
   }, []);
+  console.log(friends);
 
   return (
     <Friends>
