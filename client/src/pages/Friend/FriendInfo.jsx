@@ -59,9 +59,16 @@ const FriendInfo = ({ friend, favor, language }) => {
         </UserDetail>
         <UserBio>{friend.profileText}</UserBio>
         <BadgeWrapper>
-          {favorites.length > 0 && favorites.map(item => <Badge>{item}</Badge>)}
+          {favorites.length > 0 &&
+            favorites.map(item => (
+              <Badge key={Math.random().toString()}>{item}</Badge>
+            ))}
           {languages.length > 0 &&
-            languages.map(item => <Badge language>{item}</Badge>)}
+            languages.map(item => (
+              <Badge key={Math.random().toString()} language>
+                {item}
+              </Badge>
+            ))}
         </BadgeWrapper>
       </UserInfo>
       <UserEmoji>
