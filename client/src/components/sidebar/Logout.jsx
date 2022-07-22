@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { persistor } from '../../redux/store';
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,9 @@ const Container = styled.div`
 `;
 
 const LogoutArea = () => {
+  const purge = async () => {
+    await persistor.purge();
+  };
   const navigate = useNavigate();
   return (
     <Container>
@@ -34,12 +38,11 @@ const LogoutArea = () => {
         <IconButton
           aria-label="delete"
           color="neutral"
-          onClick={e => {
+          onClick={async e => {
             e.preventDefault();
             try {
-              localStorage.clear();
-              navigate(`/login`);
-              alert('로그아웃');
+              purge();
+              location.reload();
             } catch (err) {
               console.log(err);
             }

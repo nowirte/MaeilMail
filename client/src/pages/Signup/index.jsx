@@ -54,12 +54,12 @@ const SignUp = () => {
       })
       .then(function (response) {
         if (response.status === 201) {
-          alert('가입 성공');
+          alert('가입을 축하드립니다');
           navigate('/login');
         }
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error.response.data.reason);
       });
   }
   return (
