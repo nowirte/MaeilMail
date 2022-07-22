@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Wrapper,
   ProfileImg,
@@ -10,27 +10,33 @@ import {
 } from './styles/StyledRecoomendDetailPage';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { RecommendFriendArea } from './RecommendFriendArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchUser } from '../../redux/reducers/searchUser';
 
 function RecommendDetailPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  let params = useParams();
-  let userid = Number(params.userid);
-
-  const [friendData, setFriendData] = useState({});
-  const fetchFriendData = async () => {
+  const token = useSelector(state => state.auth.token);
+  const searchUser = useSelector(state => state.searchUser.searchUser);
+  const searchUserId = useSelector(state => state.searchUser.searchUserId);
+  // console.log('searchUserId', searchUserId);
+  const fetchSearchUserDetail = async id => {
     try {
-      const res = await axios.get('http://localhost:3333/recommenduser');
-      const data = res.data.find(e => e.userid === userid);
-      setFriendData(data);
+      const res = await axios.get(`http://localhost:3001/api/users/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = await res.data;
+      dispatch(setSearchUser({ searchUser: data }));
     } catch (e) {
       console.error(e);
     }
   };
-
   useEffect(() => {
-    fetchFriendData();
+    fetchSearchUserDetail(searchUserId);
   }, []);
-
+  // console.log('searchUser', searchUser);
   return (
     <>
       <Wrapper>
@@ -38,19 +44,19 @@ function RecommendDetailPage() {
           <GoBackButton onClick={() => navigate(-1)}>
             <ChevronLeftIcon />
           </GoBackButton>
-          {friendData.nickname}의 프로필
+          {searchUser.user.nickname}의 프로필
         </Title>
         <MyProfile>
           <ProfileImg>
             <div className="profileImgArea">
               <img
                 className="profileEmoji"
-                src={friendData.image}
-                alt={friendData.nickname}
+                src={searchUser.user.profileImage}
+                alt=""
               />
             </div>
           </ProfileImg>
-          <RecommendFriendArea data={friendData} />
+          <RecommendFriendArea data={searchUser.user} />
         </MyProfile>
       </Wrapper>
     </>

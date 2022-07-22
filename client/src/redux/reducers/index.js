@@ -1,8 +1,12 @@
-import { combineReducers } from 'redux';
-import login from './login';
-import signup from './signup';
+import authReducer from './auth';
+import { combineReducers } from '@reduxjs/toolkit';
+import searchUserSlice from './searchUser';
+import mainLettersSlice from './mainLetters';
 
-export default combineReducers({
-  login,
-  signup,
+const rootReducer = combineReducers({
+  auth: authReducer,
+  searchUser: searchUserSlice.reducer,
+  mainLetters: mainLettersSlice.reducer
 });
+
+export default rootReducer;
