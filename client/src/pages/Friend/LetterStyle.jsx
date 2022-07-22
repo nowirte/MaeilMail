@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const LetterWrapper = styled.ul`
   overflow: hidden;
   position: relative;
-  margin: 200px 1rem 20rem 1rem;
+  margin: 220px 1rem 20rem 1rem;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -25,7 +25,13 @@ const Letter = styled.li`
   text-decoration: none;
 
   ${props =>
-    props.future ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
+    props.future ? 'border: 1px dashed #ccc' : 'border: 2px solid #ccc'};
+
+  &::before {
+    backdrop-filter: 2px;
+    background: #ccc;
+    opacity: 0.4;
+  }
 
   &:hover {
     transform: scale(0.98);

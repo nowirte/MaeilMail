@@ -15,7 +15,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { formatDate } from './utils';
 import axios from 'axios';
 
-const LetterItem = ({ user, friend, letter, handleClick }) => {
+const LetterItem = ({ user, friend, letter }) => {
   const now = new window.Date();
   const receiveDate = new window.Date(letter.receive_date);
   const timeRemaining = new window.Date(receiveDate) - new window.Date(now);
@@ -39,7 +39,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
   // 도착시간에 따른 편지 읽기, 읽음 유무 확인 처리
   const showDetail = async e => {
     // 친구가 보낸 편지, 도착시간이 남음
-    if (letter.sendId === friend.info.user_id && timeRemaining > 0) {
+    if (letter.sendId === friend.user_id && timeRemaining > 0) {
       e.preventDefault();
       console.log('아직 못 읽음');
     } else {
@@ -53,8 +53,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
   return (
     <Letter key={letter.letterId} future={timeRemaining > 0}>
       <StyledLink
-        to={`/friend/${friend.info.user_id}/${letter.letter_id}`}
-        key={letter.letterId}
+        to={`/friend/${friend.user_id}/${letter.letter_id}`}
         onClick={showDetail}
         user={user}
       >
@@ -67,7 +66,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
           )}
         </LetterHeader>
         <LetterContent>
-          {timeRemaining > 0 && letter.sendId === friend.info.user_id
+          {timeRemaining > 0 && letter.sendId === friend.user_id
             ? '✉️ 편지가 오고 있습니다.'
             : letter.content}
         </LetterContent>

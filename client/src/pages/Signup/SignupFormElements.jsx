@@ -28,6 +28,9 @@ export const LoginButton = styled.button`
   color: white;
 
   cursor: pointer;
+  &:disabled {
+    background-color: #dddddd;
+  }
 `;
 
 export const LinkContainer = styled.div`
