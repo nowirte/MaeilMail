@@ -27,6 +27,12 @@ const FriendDetail = () => {
     info: {},
   });
 
+  const [context, setContext] = useState({
+    user: {},
+    friend: {},
+    letters: [],
+  });
+
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
     try {
@@ -153,7 +159,7 @@ const FriendDetail = () => {
       />
 
       {/* 하위 컴포넌트가 들어올 자리 */}
-      <Outlet context={([user, setUser], [friend, setFriend])} />
+      <Outlet context={[letters, setLetters]} />
 
       {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (

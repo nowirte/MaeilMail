@@ -9,39 +9,56 @@ const Letters = () => {
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 
-  // 편지 리스트
-  const [letters, setLetters] = useState([]);
   // 로그인한 유저
-  const [user, setUser] = useOutletContext();
+  // const [user, setUser] = useState([]);
   // 친구인 유저
-  const [friend, setFriend] = useOutletContext();
+  // const [friend, setFriend] = useState([]);
+  // 편지 리스트
+  const [letters, setLetters] = useOutletContext();
 
-  const fetchLetters = useCallback(async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      const data = res.data;
-      setLetters(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [friendId]);
+  // 로그인한 유저 정보 받아오기
+  // const fetchUser = useCallback(async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:3001/api/auth/me', {
+  //       headers: {
+  //         Authorization: token,
+  //       },
+  //     });
+  //     const data = res.data.user;
+  //     setUser(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [user]);
 
-  useEffect(() => {
-    fetchLetters();
-  }, [fetchLetters]);
+  // 선택한 친구 정보 받아오기
+  // const fetchFriend = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:3001/api/users/${friendId}`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     const data = res.data.user;
+  //     setFriend(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchUser();
+  //   fetchFriend();
+  // }, []);
 
   return (
     <LetterList
       key={Math.random()}
-      user={user}
-      friend={friend}
+      // user={user}
+      // friend={friend}
       letters={letters}
     />
   );
