@@ -69,16 +69,8 @@
   <tr>
     <td>배포 페이지</td>
     <td>
-      <a href="">
+      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/">
         👉 배포 페이지 바로가기
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>노션</td>
-    <td>
-      <a href="">
-        👉 Notion Project 바로가기
       </a>
     </td>
   </tr>
@@ -91,10 +83,10 @@
 
 | 이름   | 역할       | 구현 기능 |
 | ------ | ---------- | --------- |
-| 박재현 | 프론트엔드 |           |
-| 위보람 | 프론트엔드 |           |
-| 이주혁 | 프론트엔드 |           |
-| 지재영 | 프론트엔드 |           |
+| 박재현 | 프론트엔드 | 메인페이지 및 친구추천 상세페이지 |
+| 위보람 | 프론트엔드 | 친구 페이지 |
+| 이주혁 | 프론트엔드 | 로그인, 회원가입 페이지 |
+| 지재영 | 프론트엔드 | 사이드 바 및 마이페이지 |
 | 김명균 | 백엔드     |           |
 | 배장한 | 백엔드     |           |
 
@@ -123,7 +115,7 @@
       <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/team-code-convention">📕 Code Convention</a>
     </td>
     <td align="center">
-      <a href="https://www.notion.so/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
+      <a href="https://amethyst-earl-96d.notion.site/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
     </td>
 
   </tr>
@@ -131,11 +123,8 @@
     <td align="center" colspan=2>
       <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
     </td>
-    <td align="center">
-      <a href="">💡 Ideas</a>
-    </td>
     <td align="center" colspan=2>
-      <a href="">📂 Directory Structure</a>
+      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0">📂 Directory Structure</a>
     </td>
   </tr>
 </tbody>
