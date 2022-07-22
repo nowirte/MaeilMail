@@ -148,7 +148,7 @@ const FriendDetail = () => {
   const detailHandler = useCallback(() => {
     setDetailIsShown(current => !current);
   }, [detailIsShown]);
-
+  console.log(friend);
   return (
     <MainWrapper>
       {/* 친구 프로필 영역 */}

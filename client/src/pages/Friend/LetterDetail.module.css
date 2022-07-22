@@ -9,6 +9,9 @@
 }
 
 .letterContent {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   padding: 1rem;
+  width: 90%;
+  white-space: pre-wrap;
+  line-height: 2;
 }
