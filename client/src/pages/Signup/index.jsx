@@ -77,7 +77,12 @@ const SignUp = () => {
         checkPassword={checkPassword}
         setCheckPassword={setCheckPassword}
       />
-      <LoginButton onClick={handleSignupClick}>회원가입하기</LoginButton>
+      <LoginButton
+        onClick={handleSignupClick}
+        disabled={userInfo.password === checkPassword ? false : true}
+      >
+        회원가입하기
+      </LoginButton>
       <LinkContainer>
         <Link to="/Login">로그인 페이지로 돌아가기</Link>
       </LinkContainer>
