@@ -34,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "127.0.0.1",
+  "proxy": "34.64.149.17:80",
   "browserslist": {
     "production": [
       ">0.2%",
