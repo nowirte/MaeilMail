@@ -42,6 +42,7 @@ function RecommendDetailPage() {
   }, [user]);
 
   // console.log(user);
+  // console.log('token', token);
 
   const fetchSearchUserDetail = async id => {
     try {
@@ -123,7 +124,7 @@ function RecommendDetailPage() {
             <div className="profileImgArea">
               <img
                 className="profileEmoji"
-                src={searchUser?.profileImage}
+                src={searchUser?.profileImage || '/img/basic_profile.png'}
                 alt=""
               />
             </div>
