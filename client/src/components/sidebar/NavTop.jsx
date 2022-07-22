@@ -81,7 +81,6 @@ const NavTopArea = () => {
     fetchData();
   }, []);
 
-  console.log(user);
   return (
     <NavTop>
       <StyledLink to="/">

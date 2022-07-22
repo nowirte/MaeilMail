@@ -10,6 +10,7 @@ import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
 import Detail from './pages/Friend/Detail';
+import Test from './pages/Friend/Test';
 
 const App = () => {
   return (
@@ -23,8 +24,10 @@ const App = () => {
             element={<RecommendDetailPage />}
           />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/friend/:id" element={<FriendDetail />} />
-          <Route path="/friend/:id/:postId" element={<Detail />} />
+          <Route element={<Test />}>
+            <Route path="/friend/:id" element={<FriendDetail />} />
+            <Route path="/friend/:id/:postId" element={<Detail />} />
+          </Route>
         </Route>
 
         <Route element={<LoginBackground />}>
