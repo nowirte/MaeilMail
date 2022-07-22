@@ -18,12 +18,28 @@ const Detail = () => {
   const postId = useParams().postId;
 
   const [writeIsShown, setWriteIsShown] = useState(false);
+  const [user, setUser] = useState({});
   const [friend, setFriend] = useState({
     favor: [],
     language: [],
     info: {},
   });
   const [letter, setLetter] = useState({});
+
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = res.data.user;
+      setUser(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchFriend = async () => {
     try {
@@ -46,7 +62,6 @@ const Detail = () => {
       console.error(error);
     }
   };
-  const userId = friend.info.user_id;
 
   const fetchLetter = async () => {
     try {
@@ -66,7 +81,51 @@ const Detail = () => {
     }
   };
 
+  const postLetter = async newLetter => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        `http://localhost:3001/api/letters/${friendId}`,
+        newLetter,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 편지 작성
+  const createHandler = content => {
+    const distance = getDistance(
+      user.longitude,
+      user.latitude,
+      friend.info.longitude,
+      friend.info.latitude
+    );
+    const sendDate = new window.Date().toISOString();
+    let receiveDate = new window.Date();
+    const deliveryTime = getTime(distance);
+    receiveDate = new window.Date(
+      receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
+    ).toISOString();
+    const newLetter = {
+      sendId: user.user_id,
+      receiveId: friend.info.user_id,
+      sendDate: sendDate,
+      receiveDate: receiveDate,
+      deliveryTime: deliveryTime,
+      content: content,
+    };
+
+    postLetter(newLetter);
+  };
+
   useEffect(() => {
+    fetchUser();
     fetchFriend();
     fetchLetter();
   }, []);
@@ -91,7 +150,7 @@ const Detail = () => {
 
         <li className={style.letterContainer}>
           <p>{letter.nickname}</p>
-          <p className={style.letterContent}>{letter.content}</p>
+          <pre className={style.letterContent}>{letter.content}</pre>
           <p>{formatDate(letter.receive_date)}</p>
         </li>
       </LetterWrapper>
@@ -103,7 +162,7 @@ const Detail = () => {
           편지 보내기
         </WriteBtn>
       ) : (
-        <LetterEditor handleWrite={writeHandler} />
+        <LetterEditor handleWrite={writeHandler} onCreate={createHandler} />
       )}
     </MainWrapper>
   );

@@ -51,6 +51,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
         to={`/friend/${friend.info.user_id}/${letter.letter_id}`}
         key={letter.letterId}
         onClick={showDetail}
+        user={user}
       >
         <LetterHeader>
           {letter.is_read ? <DoneIcon /> : ''}
