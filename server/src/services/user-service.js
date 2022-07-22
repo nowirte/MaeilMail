@@ -2,7 +2,7 @@
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
-import { getArrayForInputTag, getObjectForDB } from '../utils'
+import { getArrayForInputTag, getObjectForDB } from '../utils';
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
@@ -229,8 +229,8 @@ class UserService {
     const favObj = user.dataValues.Favor;
     const langObj = user.dataValues.Language;
 
-    const favorArray = favObj ? getArrayForInputTag(favObj.dataValues) : null;
-    const languageArray = langObj ? getArrayForInputTag(langObj.dataValues) : null;
+    const favorArray = favObj ? await getArrayForInputTag(favObj.dataValues) : null;
+    const languageArray = langObj ? await getArrayForInputTag(langObj.dataValues) : null;
 
     return { favorArray, languageArray, user };
   }
