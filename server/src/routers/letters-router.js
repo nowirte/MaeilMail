@@ -33,12 +33,12 @@ lettersRouter.post('/:userId', loginRequired ,async (req, res, next) => {
   try {
     const myId = req.userId;
     const { userId } = req.params;
-    const { content, sendDate, receiveDate } = req.body;
+    const { content, sendDate, receiveDate, deliveryTime } = req.body;
 
     if (!userId) {
       throw new Error('존재하지 않는 상대입니다.');
     }
-    const result = await letterService.createLetterTo(myId, userId, content, sendDate, receiveDate);
+    const result = await letterService.createLetterTo(myId, userId, content, sendDate, receiveDate, deliveryTime);
 
     res.status(200).json(result);
   } catch (err) {

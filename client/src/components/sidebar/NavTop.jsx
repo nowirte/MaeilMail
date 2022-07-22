@@ -67,12 +67,10 @@ const NavTopArea = () => {
 
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
-          // Authorization: `Bearer ${token}`,
           Authorization: token,
         },
       });
-      const data = res.data;
-
+      const data = res.data.user;
       setUser(data);
     } catch (err) {
       console.log(err);
@@ -93,7 +91,9 @@ const NavTopArea = () => {
         <MyProfile>
           <div className="profileImgArea">
             <img
-              src={user.profileImage ? user.profileImage : '/img/뚱이.png'}
+              src={
+                user.profileImage ? user.profileImage : '/img/defaultImg.png'
+              }
               alt="profileImg"
             />
           </div>

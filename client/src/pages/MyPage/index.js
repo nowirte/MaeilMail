@@ -3,11 +3,20 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
 import UserInfoEditArea from './UserInfoEdit';
-import { Wrapper, ProfileImg, Title, MyProfile } from './style';
+import {
+  Wrapper,
+  ProfileImg,
+  Title,
+  MyProfile,
+  ImageSubmitBtn,
+  ImageCancleBtn,
+} from './style';
 import axios from 'axios';
 
 const MyPage = () => {
   const [userData, setUserData] = useState({});
+  const [favor, setFavor] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [img, setImg] = useState('');
 
   const fetchUserData = async () => {
@@ -18,9 +27,11 @@ const MyPage = () => {
           Authorization: token,
         },
       });
-      const data = res.data;
-      console.log(res);
-      setUserData(data);
+
+      const { favorArray, languageArray, user } = res.data;
+      setFavor(favorArray);
+      setLanguage(languageArray);
+      setUserData(user);
     } catch (error) {
       console.error(error);
     }
@@ -33,17 +44,30 @@ const MyPage = () => {
   const imgInput = useRef();
 
   const handleImgUpload = async e => {
-    const uploadFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('files', uploadFile);
+    setImg(e.target.files[0]);
+  };
 
-    await axios.patch(`http://localhost:3333/user/1`, formData, {
-      // headers: {
-      //   'Content-Type': 'application/json; charset=utf-8',
-      // 'Content-Type': 'multipart/form-data',
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
-    });
+  const handleImgSubmit = async e => {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append('img', img);
+
+    try {
+      const res = await axios.patch(
+        `http://localhost:3001/api/auth/me/image`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: token,
+          },
+        }
+      );
+      console.log(res);
+      setImg('');
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const handleUploadBtn = e => {
@@ -59,7 +83,9 @@ const MyPage = () => {
             <img
               className="profileEmoji"
               src={
-                userData.profileImage ? userData.profileImage : '/img/뚱이.png'
+                userData.profileImage
+                  ? userData.profileImage
+                  : '/img/defaultImg.png'
               }
               alt="뚱이"
             />
@@ -77,11 +103,19 @@ const MyPage = () => {
             >
               <AddPhotoAlternateIcon />
             </button>
+            {img ?? (
+              <>
+                <ImageSubmitBtn onClick={handleImgSubmit}>
+                  적용하기
+                </ImageSubmitBtn>
+                <ImageCancleBtn onClick={() => setImg('')}>닫기</ImageCancleBtn>
+              </>
+            )}
           </div>
         </ProfileImg>
-        <UserArea data={userData} />
+        <UserArea data={userData} favor={favor} language={language} />
         <div className="setting">
-          <UserInfoEditArea data={userData} />
+          <UserInfoEditArea data={userData} favor={favor} language={language} />
           <UserSignOutArea data={userData} />
         </div>
       </MyProfile>

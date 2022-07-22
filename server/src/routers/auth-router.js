@@ -49,7 +49,7 @@ authRouter.get(
 authRouter.get('/me', loginRequired, async (req, res, next) => {
   try {
     const { userId } = req;
-    const info = await userService.getUserById(userId);
+    const info = await userService.getUserById(Number(userId));
     res.status(200).json(info);
   } catch (err) {
     next(err);
@@ -67,7 +67,7 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 
     const result = isGoogle
       ? await userService.updateGoogleUser(userId, req.body)
-      : await userService.updateUser(userId, req.body, false);
+      : await userService.updateUser(Number(userId), req.body, false);
 
     if (!result) {
       throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
@@ -78,15 +78,15 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
   }
 });
 
-authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res, next) => {
-  try {
-    const { userId } = req;
-    if (!userId) {
-      throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
-    }
-    res.json({url: `/src/uploads/${req.file.filename}`})
-  } catch (err) {
-    next(err);
+authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
+  const { userId, file } = await req;
+  const imageUrl = await file.location
+  console.log(imageUrl)
+  if (imageUrl) {
+    await userService.updateUserProfileImage(Number(userId), imageUrl);
+    res.json({ imageUrl });
+  } else {
+    res.json({ result: 'error', message: '이미지가 제대로 업로드되지 않았습니다.' });
   }
 });
 
@@ -97,7 +97,7 @@ authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
       throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
     }
 
-    const result = await userService.updateUser(userId, req.body, true);
+    const result = await userService.updateUser(Number(userId), req.body, true);
 
     if (!result) {
       throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
