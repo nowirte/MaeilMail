@@ -34,7 +34,7 @@ const UserEmoji = styled.div`
 
   & > img {
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
   }
 `;
