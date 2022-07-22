@@ -27,7 +27,7 @@ export const RecommendFriend = styled.div`
     width: 160px;
     height: 160px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 export const RecommendFriendName = styled.div`
