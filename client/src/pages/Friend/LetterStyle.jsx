@@ -26,6 +26,11 @@ const Letter = styled.li`
 
   ${props =>
     props.send ? 'border: 1px dashed #ccc' : 'border: 1px solid #ccc'};
+
+  &:hover {
+    transform: scale(0.98);
+    z-index: 1;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -34,7 +39,7 @@ const StyledLink = styled(Link)`
 
 const LetterHeader = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   text-decoration: none;
 
   & > img {

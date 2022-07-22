@@ -9,8 +9,9 @@ import CreateIcon from '@mui/icons-material/Create';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LetterDetail from './LetterDetail';
+import { LetterWrapper } from './LetterStyle';
 
-const FriendDetail = () => {
+const Frame = props => {
   const friendId = useParams().id;
 
   // 편지 보내기 버튼
@@ -18,7 +19,6 @@ const FriendDetail = () => {
   // 편지 세부 내용 보기 버튼
   const [detailIsShown, setDetailIsShown] = useState(false);
   // 편지 리스트
-  const [letters, setLetters] = useState([]);
   // 로그인한 유저
   const [user, setUser] = useState({});
   // 친구인 유저
@@ -64,23 +64,23 @@ const FriendDetail = () => {
       console.error(error);
     }
   };
-  const fetchLetters = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      const data = res.data;
-      setLetters(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [friendId]);
+  //   const fetchLetters = useCallback(async () => {
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       const res = await axios.get(
+  //         `http://localhost:3001/api/letters/${friendId}`,
+  //         {
+  //           headers: {
+  //             Authorization: token,
+  //           },
+  //         }
+  //       );
+  //       const data = res.data;
+  //       setLetters(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }, [friendId]);
 
   const postLetter = useCallback(
     async newLetter => {
@@ -108,9 +108,7 @@ const FriendDetail = () => {
     fetchUser();
     // 친구 정보 받아오기
     fetchFriend();
-    // 편지 리스트 받아오기
-    fetchLetters();
-  }, [fetchLetters]);
+  }, []);
 
   // 편지 작성
   const createHandler = useCallback(
@@ -160,17 +158,8 @@ const FriendDetail = () => {
         language={friend.language}
       />
 
-      {/* 편지 리스트 */}
-      {detailIsShown ? (
-        <LetterDetail handleClick={detailHandler} />
-      ) : (
-        <LetterList
-          user={user}
-          friend={friend}
-          letters={letters}
-          handleClick={detailHandler}
-        />
-      )}
+      {/* 편지 리스트, 세부 */}
+      {props.children}
 
       {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (
@@ -185,4 +174,4 @@ const FriendDetail = () => {
   );
 };
 
-export default FriendDetail;
+export default Frame;
