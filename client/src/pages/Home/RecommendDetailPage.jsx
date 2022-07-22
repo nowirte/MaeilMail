@@ -94,7 +94,7 @@ function RecommendDetailPage() {
         sendDate: sendDate,
         receiveDate: receiveDate,
         deliveryTime: deliveryTime,
-        content: content,
+        content: content[0],
       };
 
       postLetter(newLetter);
