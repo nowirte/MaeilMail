@@ -27,6 +27,7 @@ const StyledCurrentlyContent = styled(Typography)({
 
 export default function RecentlyArrivedLetter() {
   const token = useSelector(state => state.auth.token);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,12 +51,6 @@ export default function RecentlyArrivedLetter() {
     }
   };
 
-  useEffect(() => {
-    fetchRecentlyLetter();
-  }, []);
-
-  const id = mainArrivedLetter?.letter_id;
-
   const patchIsRead = async id => {
     try {
       await axios.patch(
@@ -69,11 +64,20 @@ export default function RecentlyArrivedLetter() {
           },
         }
       );
+      console.log('mainArrivdLetterPatch', mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
   };
   // console.log('mainArrivedLetter', mainArrivedLetter);
+
+  useEffect(() => {
+    fetchRecentlyLetter();
+  }, []);
+
+  useEffect(() => {
+    patchIsRead(mainArrivedLetter?.letter_id);
+  }, [isConfirmed]);
 
   return (
     <div style={{ marginTop: 45 }}>
@@ -88,16 +92,16 @@ export default function RecentlyArrivedLetter() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            From. {mainArrivedLetter?.sendId}
+            From. {mainArrivedLetter?.nickname}
           </Typography>
           <StyledCurrentlyContent>
             {mainArrivedLetter?.content}
           </StyledCurrentlyContent>
           <Button
+            style={{ marginTop: 15 }}
             variant="contained"
             onClick={() => {
-              patchIsRead(id);
-              // console.log('mainArrivdLetterPatch', mainArrivedLetter);
+              setIsConfirmed(true);
             }}
           >
             ✔ 확인
