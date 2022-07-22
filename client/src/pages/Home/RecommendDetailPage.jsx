@@ -42,6 +42,7 @@ function RecommendDetailPage() {
   }, [user]);
 
   // console.log(user);
+  // console.log('token', token);
 
   const fetchSearchUserDetail = async id => {
     try {
