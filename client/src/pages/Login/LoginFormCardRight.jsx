@@ -71,7 +71,7 @@ const LoginForm = props => {
 
     //CORS에러 있음
     await axios
-      .get('/api/auth/login/google')
+      .get('34.64.149.17:80/api/auth/login/google')
       .then(function (response) {
         console.log(response);
       })
