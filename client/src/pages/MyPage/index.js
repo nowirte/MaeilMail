@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
@@ -10,11 +11,11 @@ const MyPage = () => {
   const [userData, setUserData] = useState({});
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
-  const [img, setImg] = useState('');
+  const [profilImg, setProfilImg] = useState();
+  const token = useSelector(state => state.auth.token);
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
@@ -37,42 +38,45 @@ const MyPage = () => {
   const imgInput = useRef();
 
   const handleImgUpload = async e => {
-    const uploadFile = e.target.files[0];
     const formData = new FormData();
-    formData.append('files', uploadFile);
 
-    await axios.patch(`http://localhost:3333/user/1`, formData, {
-      // headers: {
-      //   'Content-Type': 'application/json; charset=utf-8',
-      // 'Content-Type': 'multipart/form-data',
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
-    });
+    formData.append('img', e.target.files[0]);
+
+    try {
+      const res = await axios.patch(
+        `http://localhost:3001/api/auth/me/image`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: token,
+          },
+        }
+      );
+      // for (const keyValue of formData) console.log(keyValue); < formData 확인하는 코드
+      setProfilImg(res.data.url);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const handleUploadBtn = e => {
-    e.preventDefault();
     imgInput.current.click();
   };
+
   return (
     <Wrapper>
       <Title>나의 프로필</Title>
       <MyProfile>
         <ProfileImg>
           <div className="profileImgArea">
-            <img
-              className="profileEmoji"
-              src={
-                userData.profileImage ? userData.profileImage : '/img/뚱이.png'
-              }
-              alt="뚱이"
-            />
+            <img className="profileImage" src={userData.profileImage} alt="" />
             <input
               type="file"
               style={{ display: 'none' }}
               ref={imgInput}
               accept="image/jpg, image/png, image/jpeg"
-              onClick={handleImgUpload}
+              onChange={handleImgUpload}
             />
             <button
               className="imgUploadBtn"

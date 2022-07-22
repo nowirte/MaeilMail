@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Select from 'react-select';
 import axios from 'axios';
@@ -14,7 +15,7 @@ import { SettingBtn, ModalStyle } from './style';
 import useLoc from '../Signup/userLocationFunction';
 
 const UserInfoEditArea = props => {
-  const token = localStorage.getItem('token');
+  const token = useSelector(state => state.auth.token);
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
@@ -86,6 +87,7 @@ const UserInfoEditArea = props => {
   };
 
   const handleSubmit = async e => {
+    e.preventDefault();
     try {
       if (checkPassword !== changedPassword) {
         alert('새로운 비밀번호를 다시 확인해주세요.');
@@ -113,11 +115,12 @@ const UserInfoEditArea = props => {
 
       handleModal();
       document.location.href = '/mypage';
+      alert('회원 정보가 수정되었습니다.');
       // location.reload();
       // window.location.replace('/mypage');
     } catch (err) {
-      console.log(err);
-      alert(err.message);
+      console.log(err.response);
+      alert(err.response.data.reason);
       document.location.href = '/mypage';
     }
   };
@@ -205,7 +208,6 @@ const UserInfoEditArea = props => {
                   name="language"
                   options={language}
                   className="languageSelect"
-                  classNamePrefix="language"
                   placeholder="언어 선택"
                   onChange={handleCheckedLanguage}
                 />
