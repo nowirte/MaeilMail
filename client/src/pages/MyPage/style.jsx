@@ -64,6 +64,7 @@ const ProfileImg = styled.div`
     & img {
       width: 100%;
       height: 100%;
+      border-radius: 100%;
       object-fit: contain;
     }
 
@@ -80,30 +81,6 @@ const ProfileImg = styled.div`
       border-radius: 100%;
     }
   }
-`;
-
-const ImageSubmitBtn = styled.button`
-  position: absolute;
-  left: 30px;
-  top: 200px;
-  border: none;
-  border-radius: 5px;
-  background-color: #59b1fc;
-  padding: 5px 8px;
-  color: white;
-  cursor: pointer;
-`;
-
-const ImageCancleBtn = styled.button`
-  position: absolute;
-  left: 100px;
-  top: 200px;
-  border: none;
-  border-radius: 5px;
-  background-color: gray;
-  padding: 5px 8px;
-  color: white;
-  cursor: pointer;
 `;
 
 const SettingBtn = styled.button`
@@ -140,13 +117,4 @@ const ModalStyle = styled.div`
   }
 `;
 
-export {
-  Wrapper,
-  ProfileImg,
-  Title,
-  MyProfile,
-  SettingBtn,
-  ModalStyle,
-  ImageSubmitBtn,
-  ImageCancleBtn,
-};
+export { Wrapper, ProfileImg, Title, MyProfile, SettingBtn, ModalStyle };
