@@ -55,7 +55,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
         user={user}
       >
         <LetterHeader>
-          {letter.is_read ? <DoneIcon /> : ''}
+          <span>{letter.is_read ? <DoneIcon /> : ''}</span>
           {timeRemaining > 0 ? (
             <img src={SendStamp} alt="stamp" />
           ) : (
