@@ -15,8 +15,6 @@ const NavFriendsArea = () => {
           Authorization: token,
         },
       });
-      // const data = res.data.user;
-      // const res = await axios.get('http://localhost:3333/friend');
       const data = res.data;
       setFriends(data);
     } catch (err) {
@@ -27,7 +25,6 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(friends);
 
   return (
     <Friends>
