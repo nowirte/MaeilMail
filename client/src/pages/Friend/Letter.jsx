@@ -7,7 +7,7 @@ import style from './LetterDetail.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useSelector } from 'react-redux';
 
-const Detail = () => {
+const Letter = () => {
   const friendId = useParams().id;
   const postId = useParams().postId;
   const token = useSelector(state => state.auth.token);
@@ -49,4 +49,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default Letter;
