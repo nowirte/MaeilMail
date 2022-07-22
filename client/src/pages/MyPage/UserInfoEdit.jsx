@@ -74,7 +74,7 @@ const UserInfoEditArea = props => {
     const data = await useLoc();
     setInputData({
       ...inputData,
-      location: data,
+      location: data.location,
     });
   };
 
