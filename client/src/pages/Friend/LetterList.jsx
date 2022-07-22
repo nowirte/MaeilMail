@@ -11,6 +11,7 @@ const LetterList = props => {
       {letters.length === 0 && <p>아직 편지가 없습니다.</p>}
       {letters.map(letter => (
         <LetterItem
+          key={Math.random().toString()}
           letter={letter}
           friend={friend}
           user={user}

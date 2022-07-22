@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import LetterList from './LetterList';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import LetterDetail from './LetterDetail';
 import { useSelector } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
 
@@ -38,7 +37,14 @@ const FriendDetail = () => {
     fetchLetters();
   }, [fetchLetters]);
 
-  return <LetterList user={user} friend={friend} letters={letters} />;
+  return (
+    <LetterList
+      key={Math.random()}
+      user={user}
+      friend={friend}
+      letters={letters}
+    />
+  );
 };
 
 export default FriendDetail;

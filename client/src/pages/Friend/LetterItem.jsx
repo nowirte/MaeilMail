@@ -15,7 +15,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { formatDate } from './utils';
 import axios from 'axios';
 
-const LetterItem = ({ user, friend, letter, handleClick }) => {
+const LetterItem = ({ user, friend, letter }) => {
   const now = new window.Date();
   const receiveDate = new window.Date(letter.receive_date);
   const timeRemaining = new window.Date(receiveDate) - new window.Date(now);
@@ -54,7 +54,6 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
     <Letter key={letter.letterId} future={timeRemaining > 0}>
       <StyledLink
         to={`/friend/${friend.info.user_id}/${letter.letter_id}`}
-        key={letter.letterId}
         onClick={showDetail}
         user={user}
       >
