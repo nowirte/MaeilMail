@@ -211,6 +211,27 @@ class LetterService {
   // 가장 최근에 온 편지
   async getRecentLetters(myId) {
     const myLetters = await this.Letter.findAll({ where: { receiveId: myId, is_arrived: 1 }, raw: true});
+    
+    const idArrayTemp = [];
+    
+    for (let i=0; i<myLetters.length; i+=1) {
+      idArrayTemp.push(myLetters[i].sendId);
+    }
+    const idArray = [...new Set(idArrayTemp)];
+    
+    const userNickname = await this.User.findAll({
+      where: { user_id: { [Op.in]: idArray } },
+      raw: true,
+      attributes: ['nickname','user_id'],
+    });
+
+    for (let i = 0; i < myLetters.length; i += 1) {
+      for (let j = 0; j < userNickname.length; j += 1) {
+        if (myLetters[i].sendId === userNickname[j].user_id) {
+          myLetters[i].nickname = userNickname[j].nickname;
+        }
+      }
+    }
 
     return myLetters;
   }
