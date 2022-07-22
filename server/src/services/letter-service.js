@@ -10,6 +10,12 @@ class LetterService {
     this.Letter = param2;
   }
 
+  // 특정 유저가 보내거나 받은 쪽지 다 가져오기
+  async getUsersLetters(userId) {
+    const letters = await this.Letters.findAll({ where: { [Op.or]: [{sendId: userId}, {receiveId: userId}]}, raw: true});
+    return letters;
+  }
+
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
     const targetId = await this.Letter.findAll({
@@ -36,7 +42,6 @@ class LetterService {
 
   async cronUpdateLetter(letter_id, receive_date) {
     const job = await scheduleJob(receive_date, async () => {
-      console.log(`${letter_id}번 편지 도착`);
       await this.Letter.update({ is_arrived: true }, { where: { letter_id } });
     });
     return job;
@@ -67,7 +72,7 @@ class LetterService {
     if (!cronJob) {
       throw new Error('도착시간 설정에 실패하였습니다. 입력 값을 확인해주세요.');
     }
-    console.log(cronJob);
+
 
     const reqMail = await this.Letter.findAll({
       where: { letter_id: mail['letter_id'] },

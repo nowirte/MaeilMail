@@ -5,6 +5,20 @@ import { loginRequired } from '../middleware';
 
 const lettersRouter = Router();
 
+
+lettersRouter.get('/admin/:userId', loginRequired, async (req, res, next) => {
+  try {
+    if (req.userStatus === "admin" ) {
+      const userId = req.params;
+      const result = await letterService.getUsersLetters(userId);
+
+      res.status(200).json(result);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // 편지 주고받는 사람들 목록(Query String 이용)
 lettersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
