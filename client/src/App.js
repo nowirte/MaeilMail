@@ -4,15 +4,12 @@ import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import SignUp from './pages/Signup';
 import FriendDetail from './pages/Friend';
-import LetterDetail from './pages/Friend/LetterDetail';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
-import LetterEditor from './pages/Friend/LetterEditor';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
 import Detail from './pages/Friend/Detail';
-import Test from './pages/Friend/Test';
 
 const App = () => {
   return (
