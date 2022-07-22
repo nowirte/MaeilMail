@@ -39,7 +39,7 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/recent', {
+      const res = await axios.get('http://localhost:3001/api/letters/recent', {
         headers: {
           Authorization: token,
         },
@@ -55,7 +55,7 @@ export default function RecentlyArrivedLetter() {
   const patchIsRead = async id => {
     try {
       await axios.patch(
-        `/api/letters/${id}`,
+        `http://localhost:3001/api/letters/${id}`,
         {
           is_read: 1,
         },
