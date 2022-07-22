@@ -35,7 +35,7 @@ const NavFriendsArea = () => {
       {friends &&
         friends?.map(friend => {
           return (
-            <StyledLink to={`/friend/${friend.id}`} key={friend.user_id}>
+            <StyledLink to={`/friend/${friend.user_id}`} key={friend.user_id}>
               <FriendsList>
                 <div className="profileImgArea">
                   <img

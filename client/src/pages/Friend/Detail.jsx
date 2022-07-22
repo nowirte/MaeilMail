@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
-import LetterList from './LetterList';
 import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
 import { getDistance, getTime, formatDate } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import LetterDetail from './LetterDetail';
 import { LetterWrapper } from './LetterStyle';
 import style from './LetterDetail.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useSelector } from 'react-redux';
 
 const Detail = () => {
   const friendId = useParams().id;
   const postId = useParams().postId;
+  const token = useSelector(state => state.auth.token);
 
   const [writeIsShown, setWriteIsShown] = useState(false);
   const [user, setUser] = useState({});
@@ -28,7 +28,6 @@ const Detail = () => {
 
   const fetchUser = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
@@ -43,7 +42,6 @@ const Detail = () => {
 
   const fetchFriend = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
         `http://localhost:3001/api/users/${friendId}`,
         {
@@ -65,7 +63,6 @@ const Detail = () => {
 
   const fetchLetter = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
         `http://localhost:3001/api/letters/${friendId}/${postId}`,
         {
@@ -83,7 +80,6 @@ const Detail = () => {
 
   const postLetter = async newLetter => {
     try {
-      const token = localStorage.getItem('token');
       await axios.post(
         `http://localhost:3001/api/letters/${friendId}`,
         newLetter,
@@ -149,9 +145,9 @@ const Detail = () => {
         </Link>
 
         <li className={style.letterContainer}>
-          <p>{letter.nickname}</p>
           <pre className={style.letterContent}>{letter.content}</pre>
-          <p>{formatDate(letter.receive_date)}</p>
+          <p className={style.letterSender}>{letter.nickname}</p>
+          <p className={style.receiveDate}>{formatDate(letter.receive_date)}</p>
         </li>
       </LetterWrapper>
 

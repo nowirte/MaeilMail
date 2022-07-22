@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Letter,
   StyledLink,
@@ -22,8 +23,8 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
   // 편지 읽음 확인 전송
   const patchReadLetter = async () => {
     const letterId = letter.letter_id;
-    const token = localStorage.getItem('token');
-    const data = { isRead: true };
+    const token = useSelector(state => state.auth.token);
+    const data = { is_read: 1 };
     try {
       await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
         headers: {
@@ -34,6 +35,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
       console.error(error);
     }
   };
+
   // 도착시간에 따른 편지 읽기, 읽음 유무 확인 처리
   const showDetail = async e => {
     // 친구가 보낸 편지, 도착시간이 남음
@@ -41,12 +43,15 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
       e.preventDefault();
       console.log('아직 못 읽음');
     } else {
-      if (!letter.is_read) await patchReadLetter();
+      if (letter.is_read === 0) {
+        await patchReadLetter();
+      }
     }
+    return;
   };
 
   return (
-    <Letter key={letter.letterId} onClick={showDetail}>
+    <Letter key={letter.letterId} future={timeRemaining > 0}>
       <StyledLink
         to={`/friend/${friend.info.user_id}/${letter.letter_id}`}
         key={letter.letterId}
@@ -54,7 +59,7 @@ const LetterItem = ({ user, friend, letter, handleClick }) => {
         user={user}
       >
         <LetterHeader>
-          {letter.is_read ? <DoneIcon /> : ''}
+          <span>{letter.is_read ? <DoneIcon /> : ''}</span>
           {timeRemaining > 0 ? (
             <img src={SendStamp} alt="stamp" />
           ) : (
