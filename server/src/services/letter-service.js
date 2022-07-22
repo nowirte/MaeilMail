@@ -198,13 +198,12 @@ class LetterService {
   }
 
   // 가장 최근에 온 편지
-
   async getRecentLetters(myId) {
-    const myLetters = await this.Letter.findAll({ where: { receiveId: myId, is_arrived: 1 } });
+    const myLetters = await this.Letter.findAll({ where: { receiveId: myId, is_arrived: 1 }, raw: true});
 
     return myLetters;
   }
-}
+};
 
 const letterService = new LetterService(User, Letter);
 
