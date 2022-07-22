@@ -49,7 +49,7 @@ const LoginForm = props => {
     const bodyData = JSON.stringify(data);
 
     await axios
-      .post('http://localhost:3001/api/auth/login', bodyData, {
+      .post('/api/auth/login', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -71,7 +71,7 @@ const LoginForm = props => {
 
     //CORS에러 있음
     await axios
-      .get('http://localhost:3001/api/auth/login/google')
+      .get('/api/auth/login/google')
       .then(function (response) {
         console.log(response);
       })
