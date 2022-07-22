@@ -6,7 +6,7 @@ import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
 import { getDistance, getTime } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -25,12 +25,6 @@ const FriendDetail = () => {
     favor: [],
     language: [],
     info: {},
-  });
-
-  const [context, setContext] = useState({
-    user: {},
-    friend: {},
-    letters: [],
   });
 
   // 로그인한 유저 정보 받아오기

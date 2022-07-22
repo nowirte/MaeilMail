@@ -6,8 +6,6 @@ import { LetterWrapper } from './LetterStyle';
 import LetterItem from './LetterItem';
 
 const LetterList = ({ letters, handleClick }) => {
-  // const { user, friend, letters } = props;
-  // console.log(user, friend, letters);
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 

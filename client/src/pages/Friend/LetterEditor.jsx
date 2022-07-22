@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import style from './LetterEditor.module.css';
 import CloseIcon from '@mui/icons-material/Close';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const LetterEditor = ({ handleWrite, onCreate }) => {
   const friendId = useParams().id;
