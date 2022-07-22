@@ -43,9 +43,17 @@ const getBirth = date => {
 
 // 만나이로 친구 나이 구하기
 const getAge = date => {
-  const now = new window.Date().getFullYear();
-  const birth = new window.Date(date).getFullYear();
-  return now - birth;
+  // date: "1995-07-15"
+  const birth = date.split('-');
+  const today = new Date();
+  const birthDate = new Date(birth[0], birth[1] - 1, birth[2]);
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 };
 
 export { getDistance, getTime, formatDate, getBirth, getAge };

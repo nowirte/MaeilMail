@@ -27,7 +27,7 @@ const NavFriendsArea = () => {
   };
   console.log(friends);
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   return (
