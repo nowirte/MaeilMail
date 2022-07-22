@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -6,9 +7,10 @@ const AdditionalUserInfoArea = () => {
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
 
+  const token = useSelector(state => state.auth.token);
+
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,

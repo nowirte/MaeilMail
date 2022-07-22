@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import UserArea from './User';
 import UserSignOutArea from './UserSignOut';
@@ -11,10 +12,10 @@ const MyPage = () => {
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
   const [profilImg, setProfilImg] = useState();
+  const token = useSelector(state => state.auth.token);
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
@@ -37,7 +38,6 @@ const MyPage = () => {
   const imgInput = useRef();
 
   const handleImgUpload = async e => {
-    const token = localStorage.getItem('token');
     const formData = new FormData();
 
     formData.append('img', e.target.files[0]);

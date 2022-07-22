@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Select from 'react-select';
 import axios from 'axios';
@@ -14,7 +15,7 @@ import { SettingBtn, ModalStyle } from './style';
 import useLoc from '../Signup/userLocationFunction';
 
 const UserInfoEditArea = props => {
-  const token = localStorage.getItem('token');
+  const token = useSelector(state => state.auth.token);
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
