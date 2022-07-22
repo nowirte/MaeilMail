@@ -45,6 +45,7 @@ export const CurrentlyImageContainer = styled.div`
   border: 1px solid black;
   img {
     width: 100%;
+    object-fit: cover;
   }
 `;
 export const CurrentlyIntroduction = styled.div``;
