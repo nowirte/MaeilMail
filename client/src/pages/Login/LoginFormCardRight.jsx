@@ -57,12 +57,10 @@ const LoginForm = props => {
       .then(function (response) {
         const { role, token } = response.data;
         dispatch(setAuth({ role: role, token: token, auth: true }));
-        alert(auth.token);
         navigate('/');
       })
-      .catch(function (error) {
-        console.log(error);
-        alert('error');
+      .catch(function () {
+        alert('계정이나 비밀번호가 다릅니다.');
       });
   }
 
