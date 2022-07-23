@@ -30,7 +30,7 @@ const FriendDetail = () => {
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
+      const res = await axios.get('/api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -46,7 +46,7 @@ const FriendDetail = () => {
   const fetchFriend = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/users/${friendId}`,
+        `/api/users/${friendId}`,
         {
           headers: {
             Authorization: token,
@@ -68,7 +68,7 @@ const FriendDetail = () => {
   const fetchLetters = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}`,
+        `/api/letters/${friendId}`,
         {
           headers: {
             Authorization: token,
@@ -86,7 +86,7 @@ const FriendDetail = () => {
   const postLetter = async newLetter => {
     try {
       await axios.post(
-        `http://localhost:3001/api/letters/${friendId}`,
+        `/api/letters/${friendId}`,
         newLetter,
         {
           headers: {
