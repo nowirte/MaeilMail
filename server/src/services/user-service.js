@@ -30,29 +30,30 @@ class UserService {
     const emailResult = await this.User.findOne({
       where: { email, status: 'active', oauth: 'local' },
     });
-    if (emailResult) {
-      throw new Error('중복된 이메일입니다.');
-    }
-
     const nicknameResult = await this.User.findOne({
       where: { nickname, status: 'active' },
     });
-    if (nicknameResult) {
+
+    if (emailResult && nicknameResult) {
+      throw new Error('이메일과 닉네임이 중복되었습니다.');
+    } else if (emailResult) {
+      throw new Error('중복된 이메일입니다.');
+    } else if (nicknameResult) {
       throw new Error('중복된 닉네임입니다.');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
     const newUserInfo = {
-      nickname,
-      email,
-      password: hashedPassword,
+      ...(nickname && { nickname }),
+      ...(email && { email }),
+      ...(hashedPassword && { password: hashedPassword }),
+      ...(gender && { gender }),
+      ...(birthday && { birthday }),
+      ...(location && { location }),
+      ...(latitude && { latitude }),
+      ...(longitude && { longitude }),
       status: 'active',
       oauth: 'local',
-      gender,
-      location,
-      latitude,
-      longitude,
-      birthday,
     };
 
     const newUser = await this.User.create(newUserInfo);
