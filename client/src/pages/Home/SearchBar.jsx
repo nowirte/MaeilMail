@@ -20,7 +20,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/users?recommend=true', {
+      .get('/api/users?recommend=true', {
         headers: {
           Authorization: token,
         },
@@ -33,7 +33,7 @@ const SearchBar = () => {
     e.preventDefault();
     if (query === null || query === '') {
       axios
-        .get(`http://localhost:3001/api/users?recommend=true`, {
+        .get(`/api/users?recommend=true`, {
           headers: {
             Authorization: token,
           },
@@ -42,7 +42,7 @@ const SearchBar = () => {
         .then(data => dispatch(setSearchUsers({ searchUsers: data })));
     }
     axios
-      .get(`http://localhost:3001/api/users?search=${query}`, {
+      .get(`/api/users?search=${query}`, {
         headers: {
           Authorization: token,
         },
