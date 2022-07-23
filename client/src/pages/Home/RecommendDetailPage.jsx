@@ -110,7 +110,7 @@ function RecommendDetailPage() {
     fetchSearchUserDetail(searchUserId);
     fetchUser();
   }, []);
-  // console.log('searchUser', searchUser);
+  console.log('searchUser', searchUser);
 
   return (
     <>
@@ -126,8 +126,12 @@ function RecommendDetailPage() {
             <div className="profileImgArea">
               <img
                 className="profileImage"
-                src={searchUser?.profileImage}
-                alt=""
+                src={
+                  searchUser.profileImage === 'img/뚱이.png'
+                    ? '/img/뚱이.png'
+                    : searchUser.profileImage
+                }
+                alt={searchUser.nickname}
               />
             </div>
           </ProfileImg>
