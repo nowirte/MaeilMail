@@ -26,7 +26,7 @@ const LetterItem = ({ user, friend, letter }) => {
     const token = useSelector(state => state.auth.token);
     const data = { is_read: 1 };
     try {
-      await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
+      await axios.patch(`/api/letters/${letterId}`, data, {
         headers: {
           Authorization: token,
         },
