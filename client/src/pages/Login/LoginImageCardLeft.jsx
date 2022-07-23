@@ -27,9 +27,7 @@ const ImgCard = styled.div`
 
 const Login = () => {
   return (
-    <ImgCard>
-      <span>Lorem ipsum, dolor sit amet</span>
-    </ImgCard>
+    <ImgCard />
   );
 };
 
