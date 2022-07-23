@@ -63,7 +63,9 @@ function RecommendDetailPage() {
         await axios.post(
           `http://localhost:3001/api/letters/${searchUserId}`,
           newLetter,
-          { headers: { Authorization: token } }
+          {
+            headers: { Authorization: token },
+          }
         );
       } catch (e) {
         console.error(e);
@@ -92,7 +94,7 @@ function RecommendDetailPage() {
         sendDate: sendDate,
         receiveDate: receiveDate,
         deliveryTime: deliveryTime,
-        content: content,
+        content: content[0],
       };
 
       postLetter(newLetter);
@@ -108,7 +110,7 @@ function RecommendDetailPage() {
     fetchSearchUserDetail(searchUserId);
     fetchUser();
   }, []);
-  // console.log('searchUser', searchUser);
+  console.log('searchUser', searchUser);
 
   return (
     <>
@@ -123,9 +125,13 @@ function RecommendDetailPage() {
           <ProfileImg>
             <div className="profileImgArea">
               <img
-                className="profileEmoji"
-                src={searchUser?.profileImage || '/img/basic_profile.png'}
-                alt=""
+                className="profileImage"
+                src={
+                  searchUser.profileImage === 'img/뚱이.png'
+                    ? '/img/뚱이.png'
+                    : searchUser.profileImage
+                }
+                alt={searchUser.nickname}
               />
             </div>
           </ProfileImg>

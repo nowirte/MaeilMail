@@ -1,6 +1,6 @@
 ## **📫 매일메일**
 
-### **서비스 1줄 소개**
+### **매일 다양한 국적, 다양한 관심사를 가진 사람들을 만나보세요!**
 
 <br>
 
@@ -32,21 +32,20 @@
 ### 웹 서비스의 주제 및, 최종적인 메인 기능과 서브 기능 설명
 ---
 
-- 주제:
+- 주제: 아날로그 편지를 구현한 웹 서비스
 - 메인 기능
-  1.
-  2.
-  3.
+  1. 편지처럼 주고받는 대화기능 (node-schedule을 이용해 시간에 따른 배송상태 업데이트)
+  2. 위치 기반 편지 도착 시간 계산
+  3. 친구 랜덤 추천 및 검색 기능
+   
 - 서브 기능
-  1.
-  2.
-  3.
+  1. Private Routing을 이용한 로그인, 로그아웃
+  2. multer를 이용한 이미지 업로드 (마이페이지)
 
 ### 프로젝트만의 차별점, 기대 효과
 ---
 
-- 기존 서비스의 단점 -> 본 프로젝트의 장점
-- 본 웹서비스의 사용자가 경험할 효과 및 장점
+자신의 이름이 아닌 익명으로 가입이 가능하며 신분과 이름이 알려져 있지 않아 자유롭습니다. 또한 매일메일의 컨셉이 국가간 거리에 따라 편지가 도착하는 시간이 다르다 보니 편지에 따라 소요시간이 다양합니다. 소요시간이 길다보니 한 번 편지를 보낼 때 많이 대화를 하고 싶어 길게 보내고, 연락을 소중하게 여기게 됩니다. 마지막으로 검색이나 친구 추천을 통해서 나와 공통된 관심사가 있는지 확인할 수 있고, 나와 맞는 친구들을 찾을 수 있다는 장점이 있습니다.
 
 ### 프로젝트 구성
 ---
@@ -69,16 +68,8 @@
   <tr>
     <td>배포 페이지</td>
     <td>
-      <a href="">
+      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/">
         👉 배포 페이지 바로가기
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>노션</td>
-    <td>
-      <a href="">
-        👉 Notion Project 바로가기
       </a>
     </td>
   </tr>
@@ -91,17 +82,17 @@
 
 | 이름   | 역할       | 구현 기능 |
 | ------ | ---------- | --------- |
-| 박재현 | 프론트엔드 |           |
-| 위보람 | 프론트엔드 |           |
-| 이주혁 | 프론트엔드 |           |
-| 지재영 | 프론트엔드 |           |
-| 김명균 | 백엔드     |           |
-| 배장한 | 백엔드     |           |
+| 박재현 | 프론트엔드 | 메인페이지 및 친구추천 상세페이지 |
+| 위보람 | 프론트엔드 | 친구 페이지 , 편지 작성페이지 |
+| 이주혁 | 프론트엔드 | 로그인, 회원가입 페이지 |
+| 지재영 | 프론트엔드 | 사이드 바 및 마이페이지 |
+| 김명균 | 백엔드     | db 연결, 편지 api, 배포 |
+| 배장한 | 백엔드     | 사용자 api, 배포 |
 
 ### 💻 서비스 구조도
 ---
 <br/>
-<div><img src="https://media.discordapp.net/attachments/993788933915803768/999631718606704660/unknown.png"></div>
+<div><img src="https://cdn.discordapp.com/attachments/993788882397175862/1000205318074150922/unknown.png"></div>
 <br/>
 
 ### 🔗 링크
@@ -123,7 +114,7 @@
       <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/team-code-convention">📕 Code Convention</a>
     </td>
     <td align="center">
-      <a href="https://www.notion.so/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
+      <a href="https://amethyst-earl-96d.notion.site/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
     </td>
 
   </tr>
@@ -131,11 +122,8 @@
     <td align="center" colspan=2>
       <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
     </td>
-    <td align="center">
-      <a href="">💡 Ideas</a>
-    </td>
     <td align="center" colspan=2>
-      <a href="">📂 Directory Structure</a>
+      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0">📂 Directory Structure</a>
     </td>
   </tr>
 </tbody>

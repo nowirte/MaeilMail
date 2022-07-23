@@ -57,12 +57,16 @@ const CurrentlyComingLetter = () => {
             <SwiperSlide key={index}>
               <CurrentlyComingContainer>
                 <CurrentlyComingContentContainer>
-                  <LetterContent>{letter.content}</LetterContent>
+                  <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
                 </CurrentlyComingContentContainer>
                 <CurrentlyProfile>
                   <CurrentlyImageContainer>
                     <img
-                      src={letter.send_img || '/img/basic_profile.png'}
+                      src={
+                        letter.send_img === 'img/뚱이.png'
+                          ? '/img/뚱이.png'
+                          : letter.send_img
+                      }
                       alt={letter.sendId}
                     />
                   </CurrentlyImageContainer>

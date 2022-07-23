@@ -15,8 +15,6 @@ const NavFriendsArea = () => {
           Authorization: token,
         },
       });
-      // const data = res.data.user;
-      // const res = await axios.get('http://localhost:3333/friend');
       const data = res.data;
       setFriends(data);
     } catch (err) {
@@ -28,7 +26,6 @@ const NavFriendsArea = () => {
     fetchData();
   }, []);
   console.log(friends);
-
   return (
     <Friends>
       {friends &&
@@ -37,14 +34,7 @@ const NavFriendsArea = () => {
             <StyledLink to={`/friend/${friend.user_id}`} key={friend.user_id}>
               <FriendsList>
                 <div className="profileImgArea">
-                  <img
-                    src={
-                      friend.profileImage
-                        ? friend.profileImage
-                        : '/img/뚱이.png'
-                    }
-                    alt="friendImg"
-                  />
+                  <img src={friend.profileImage} alt="friendImg" />
                 </div>
                 <span>{friend.nickname}</span>
               </FriendsList>
@@ -95,6 +85,7 @@ const FriendsList = styled.div`
     & img {
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: contain;
     }
   }

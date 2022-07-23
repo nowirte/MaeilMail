@@ -33,10 +33,7 @@ const RecommendFriendsList = ({ data }) => {
             >
               <RecommendationFriendBox>
                 <RecommendFriend>
-                  <img
-                    src={user.image || '/img/basic_profile.png'}
-                    alt={user.nickname}
-                  />
+                  <img src={user.profileImage} alt={user.nickname} />
                 </RecommendFriend>
                 <RecommendFriendName>
                   <span>{user.nickname}</span>

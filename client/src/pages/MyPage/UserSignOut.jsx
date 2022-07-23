@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Modal from '@mui/material/Modal';
@@ -31,7 +32,7 @@ const UserSignOutArea = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = useSelector(state => state.auth.token);
 
     await axios.patch(`http://localhost:3333/user/1`, {
       headers: {

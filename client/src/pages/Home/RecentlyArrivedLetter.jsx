@@ -35,7 +35,7 @@ export default function RecentlyArrivedLetter() {
   const mainArrivedLetter = useSelector(
     state => state.mainLetters.mainArrivedLetter
   );
-  console.log('token', token);
+  // console.log('token', token);
 
   const fetchRecentlyLetter = async () => {
     try {
@@ -46,6 +46,7 @@ export default function RecentlyArrivedLetter() {
       });
       const data = await res.data[0];
       dispatch(initArrivedLetter({ mainArrivedLetter: data }));
+      // console.log('mainArrivedLetter', mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
@@ -64,7 +65,7 @@ export default function RecentlyArrivedLetter() {
           },
         }
       );
-      console.log('mainArrivdLetterPatch', mainArrivedLetter);
+      // console.log('mainArrivdLetterPatch', mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
