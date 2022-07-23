@@ -18,7 +18,7 @@ const LetterList = ({ letters, handleClick }) => {
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
+      const res = await axios.get('/api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -34,7 +34,7 @@ const LetterList = ({ letters, handleClick }) => {
   const fetchFriend = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/users/${friendId}`,
+        `/api/users/${friendId}`,
         {
           headers: {
             Authorization: token,
