@@ -16,7 +16,7 @@ const MyPage = () => {
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
+      const res = await axios.get('/api/auth/me', {
         headers: {
           Authorization: token,
         },
