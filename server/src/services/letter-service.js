@@ -235,6 +235,45 @@ class LetterService {
 
     return myLetters;
   }
+
+  // letter-Pagination
+  async getLettersByPage(myId, oponentId, pageNum){
+
+    let offset = 0;
+    if (pageNum > 1) {
+      offset = 10 * (pageNum - 1);
+    }
+
+    const findedLetter = await this.Letter.findAll({
+      where: {
+        [Op.or]: [
+          { sendId: myId, receiveId: oponentId },
+          { sendId: oponentId, receiveId: myId },
+        ],
+      },
+      order: [['receive_date', 'DESC']],
+      raw: true,
+      offset: offset,
+      limit: 10
+    });
+    
+    const nickname = await this.User.findAll({
+      where: { [Op.or]: [{ user_id: oponentId }, { user_id: myId }] },
+      attributes: ['nickname', 'user_id'],
+      raw: true,
+    });
+
+    for (let i = 0; i < findedLetter.length; i += 1) {
+      findedLetter[i].nickname =
+        Number(nickname[0].user_id) === Number(findedLetter[i].sendId) ? nickname[0].nickname : nickname[1].nickname;
+    }
+
+    if (!findedLetter) {
+      throw new Error('삭제되었거나 쪽지 내역이 존재하지 않습니다.');
+    } else {
+      return findedLetter;
+    }
+  }
 };
 
 const letterService = new LetterService(User, Letter);
