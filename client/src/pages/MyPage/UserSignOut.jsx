@@ -34,7 +34,7 @@ const UserSignOutArea = props => {
     e.preventDefault();
     const token = useSelector(state => state.auth.token);
 
-    await axios.patch(`/api/auth/me/withdrawal`, {
+    await axios.patch(`http://localhost:3001/api/auth/me/withdrawal`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: token,

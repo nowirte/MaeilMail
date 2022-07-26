@@ -10,7 +10,7 @@ const NavFriendsArea = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('/api/letters', {
+      const res = await axios.get('http://localhost:3001/api/letters', {
         headers: {
           Authorization: token,
         },
