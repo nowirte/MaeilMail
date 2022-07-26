@@ -17,10 +17,17 @@ const UserArea = props => {
       </Account>
       <Info>
         <div className="gender">
-          <p>
-            <FemaleIcon />
-            {gender}
-          </p>
+          {gender === 'male' ? (
+            <p>
+              <MaleIcon />
+              male
+            </p>
+          ) : (
+            <p>
+              <FemaleIcon />
+              female
+            </p>
+          )}
         </div>
         <div className="birthday">
           <p>
