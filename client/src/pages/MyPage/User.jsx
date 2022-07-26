@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FemaleIcon from '@mui/icons-material/Female';
+import MaleIcon from '@mui/icons-material/Male';
+
 import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdditionalUserInfoArea from './AdditionalUserInfo';

@@ -28,6 +28,7 @@ const StyledCurrentlyContent = styled(Typography)({
 export default function RecentlyArrivedLetter() {
   const token = useSelector(state => state.auth.token);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [letterId, setLetterId] = useState(null);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,7 +36,6 @@ export default function RecentlyArrivedLetter() {
   const mainArrivedLetter = useSelector(
     state => state.mainLetters.mainArrivedLetter
   );
-  // console.log('token', token);
 
   const fetchRecentlyLetter = async () => {
     try {
@@ -46,37 +46,38 @@ export default function RecentlyArrivedLetter() {
       });
       const data = await res.data[0];
       dispatch(initArrivedLetter({ mainArrivedLetter: data }));
-      // console.log('mainArrivedLetter', mainArrivedLetter);
+      setLetterId(mainArrivedLetter.letter_id);
     } catch (e) {
       console.error(e);
     }
   };
 
-  const patchIsRead = async id => {
+  const patchIsRead = async () => {
     try {
-      await axios.patch(
-        `/api/letters/${id}`,
-        { is_read: 1 },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      // console.log('mainArrivdLetterPatch', mainArrivedLetter);
+      const data = { isRead: 1 };
+      const response = await axios.patch(`/api/letters/${letterId}`, data, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log(response.data);
+      console.log('mainArrivedPatch', mainArrivedLetter);
+      // dispatch(initArrivedLetter({ mainArrivedLetter }));
     } catch (e) {
       console.error(e);
     }
   };
-  // console.log('mainArrivedLetter', mainArrivedLetter);
 
   useEffect(() => {
     fetchRecentlyLetter();
   }, []);
 
-  useEffect(() => {
-    patchIsRead(mainArrivedLetter?.letter_id);
-  }, [isConfirmed]);
+  console.log('mainArrivedLetter', mainArrivedLetter);
+
+  // useEffect(() => {
+  //   const id = mainArrivedLetter.letter_Id
+  //   patchIsRead(mainArrivedLetter?.letter_Id);
+  // }, [isConfirmed]);
 
   return (
     <div style={{ marginTop: 45 }}>
@@ -100,11 +101,13 @@ export default function RecentlyArrivedLetter() {
             style={{ marginTop: 15 }}
             variant="contained"
             onClick={() => {
-              setIsConfirmed(true);
+              patchIsRead(letterId);
+              // setIsConfirmed(true);
             }}
           >
             ✔ 확인
           </Button>
+          <div>{mainArrivedLetter.is_read}</div>
         </Box>
       </Modal>
     </div>
