@@ -60,8 +60,8 @@ export default function RecentlyArrivedLetter() {
           Authorization: token,
         },
       });
-      console.log(response.data);
-      console.log('mainArrivedPatch', mainArrivedLetter);
+      // console.log(response.data);
+      // console.log('mainArrivedPatch', mainArrivedLetter);
       // dispatch(initArrivedLetter({ mainArrivedLetter }));
     } catch (e) {
       console.error(e);
