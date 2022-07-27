@@ -224,7 +224,7 @@ class LetterService {
     const userInfo = await this.User.findAll({
       where: { user_id: { [Op.in]: idArray } },
       raw: true,
-      attributes: ['user_id', 'nickname', 'profileImage'],
+      attributes: ['user_id', 'nickname', 'profile_Image'],
     });
 
     for (let i = 0; i < myLetter.length; i += 1) {
@@ -232,7 +232,7 @@ class LetterService {
         if (myLetter[i].send_Id === userInfo[j].user_id) {
           myLetter[i].user_id = userInfo[j].user_id;
           myLetter[i].nickname = userInfo[j].nickname;
-          myLetter[i].profileImage = userInfo[j].profileImage;
+          myLetter[i].profile_Image = userInfo[j].profile_Image;
         }
       }
     }
