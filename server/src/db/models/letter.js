@@ -46,14 +46,17 @@ class Letter extends Sequelize.Model {
         charset: "utf8", // 한국어 설정
         collate: "utf8_general_ci", // 한국어 설정
         tableName: "Letters",
-        modelName: "Letter"
+        modelName: "Letter",
+        underscored: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
       }
     );
     }
 
   static associate(db) { 
-    db.Letter.belongsTo(db.User, { foreignKey: 'sendId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
-    db.Letter.belongsTo(db.User, { foreignKey: 'receiveId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.Letter.belongsTo(db.User, { foreignKey: 'send_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.Letter.belongsTo(db.User, { foreignKey: 'receive_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
   }
 };
 
