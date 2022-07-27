@@ -4,7 +4,6 @@ import { initComingLetters } from '../../redux/reducers/mainLetters';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Container } from './styles/StyledCurrentlyComingLetter';
 import { formatDate } from '../Friend/utils';
 import {
   Letter,
@@ -16,6 +15,7 @@ import {
 } from '../Friend/LetterStyle';
 import Stamp from '../../assets/stamp.png';
 import DoneIcon from '@mui/icons-material/Done';
+import styled from 'styled-components';
 
 const CurrentlyComingLetter = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ const CurrentlyComingLetter = () => {
     fetchCurrentlyComingLetter();
   }, []);
 
-  console.log('mainComingLetters', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>
@@ -69,4 +68,8 @@ const CurrentlyComingLetter = () => {
   );
 };
 
+const Container = styled.div`
+  margin-top: 45px;
+  margin-left: 10px;
+`;
 export default CurrentlyComingLetter;
