@@ -96,8 +96,8 @@ const FriendsList = styled.div`
 
     margin-right: 10px;
 
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
     background-color: white;
 
