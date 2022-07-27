@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 //function
 import useLoc from '../Signup/userLocationFunction';
+import objChangedarr from './util';
 
 const UserInfoEditArea = props => {
   const token = useSelector(state => state.auth.token);
@@ -27,8 +28,16 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(props.favor);
-    setLanguage(props.language);
+    setFavor(() => {
+      const favObj = userData.Favor;
+      const favArr = favObj ? objChangedarr(favObj) : null;
+      return favArr;
+    });
+    setLanguage(() => {
+      const langObj = userData.Language;
+      const langArr = langObj ? objChangedarr(langObj) : null;
+      return langArr;
+    });
   }, [userData]);
 
   const handleModal = () => {
