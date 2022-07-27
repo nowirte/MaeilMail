@@ -275,7 +275,19 @@ class LetterService {
     if (pageNum > 1) {
       offset = 10 * (pageNum - 1);
     }
+    const page = await this.Letter.findAll({
+      where: {
+        [Op.or]: [
+          { send_id: myId, receive_id: oponentId },
+          { send_id: oponentId, receive_id: myId },
+        ],
+      },
+      order: [['receive_date', 'DESC']],
+      raw: true,
+    });
 
+    const totalPage = page.length <= 10 ? 1 : parseInt(page.length / 10, 10) + 1;
+    
     const findedLetter = await this.Letter.findAll({
       where: {
         [Op.or]: [
@@ -303,7 +315,7 @@ class LetterService {
     if (!findedLetter) {
       throw new Error('삭제되었거나 쪽지 내역이 존재하지 않습니다.');
     } else {
-      return findedLetter;
+      return {findedLetter, totalPage};
     }
   }
 };
