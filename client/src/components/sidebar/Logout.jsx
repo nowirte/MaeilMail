@@ -6,27 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { persistor } from '../../redux/store';
 
-const theme = createTheme({
-  palette: {
-    neutral: {
-      main: '#fff',
-      contrastText: '#fff',
-    },
-  },
-});
-
-const Container = styled.div`
-  display: flex;
-
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-
-  > button {
-    border: none;
-  }
-`;
-
 const LogoutArea = () => {
   const purge = async () => {
     await persistor.purge();
@@ -56,3 +35,24 @@ const LogoutArea = () => {
 };
 
 export default LogoutArea;
+
+const theme = createTheme({
+  palette: {
+    neutral: {
+      main: '#fff',
+      contrastText: '#fff',
+    },
+  },
+});
+
+const Container = styled.div`
+  display: flex;
+
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+
+  > button {
+    border: none;
+  }
+`;

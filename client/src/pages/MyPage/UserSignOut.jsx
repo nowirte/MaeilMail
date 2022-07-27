@@ -7,16 +7,6 @@ import Button from '@mui/material/Button';
 import { SettingBtn, ModalStyle } from './style';
 import axios from 'axios';
 
-const Title = styled.h2`
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 13px;
-`;
-
-const Input = styled.input`
-  padding: 5px 5px;
-`;
-
 const UserSignOutArea = props => {
   const { password } = props.data;
 
@@ -95,3 +85,13 @@ const UserSignOutArea = props => {
 };
 
 export default UserSignOutArea;
+
+const Title = styled.h2`
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 13px;
+`;
+
+const Input = styled.input`
+  padding: 5px 5px;
+`;
