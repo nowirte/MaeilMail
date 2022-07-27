@@ -4,20 +4,18 @@ import { initComingLetters } from '../../redux/reducers/mainLetters';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import {
-  Container,
-  CurrentlyComingContainer,
-  CurrentlyComingContentContainer,
-  LetterContent,
-  CurrentlyProfile,
-  CurrentlyImageContainer,
-  CurrentlyIntroduction,
-  CurrentlyFriendName,
-  CurrentlyDate,
-  CurrentlyLocation,
-  CurrentlyTickingTime,
-} from './styles/StyledCurrentlyComingLetter';
+import { Container } from './styles/StyledCurrentlyComingLetter';
 import { formatDate } from '../Friend/utils';
+import {
+  Letter,
+  LetterHeader,
+  LetterContent,
+  LetterFooter,
+  Writer,
+  Date,
+} from '../Friend/LetterStyle';
+import Stamp from '../../assets/stamp.png';
+import DoneIcon from '@mui/icons-material/Done';
 
 const CurrentlyComingLetter = () => {
   const dispatch = useDispatch();
@@ -43,7 +41,7 @@ const CurrentlyComingLetter = () => {
     fetchCurrentlyComingLetter();
   }, []);
 
-  // console.log('mainComingLetters', mainComingLetters);
+  console.log('mainComingLetters', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>
@@ -52,28 +50,17 @@ const CurrentlyComingLetter = () => {
         ) : (
           mainComingLetters.map((letter, index) => (
             <SwiperSlide key={index}>
-              <CurrentlyComingContainer>
-                <CurrentlyComingContentContainer>
-                  <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
-                </CurrentlyComingContentContainer>
-                <CurrentlyProfile>
-                  <CurrentlyImageContainer>
-                    <img src={letter.send_img} alt={letter.sendId} />
-                  </CurrentlyImageContainer>
-                  <CurrentlyIntroduction>
-                    <CurrentlyFriendName>{letter.nickname}</CurrentlyFriendName>
-                    <CurrentlyDate>
-                      {formatDate(letter.send_date)}
-                    </CurrentlyDate>
-                    <CurrentlyLocation>
-                      {letter.send_location}
-                    </CurrentlyLocation>
-                    <CurrentlyTickingTime>
-                      {formatDate(letter.receive_date)}
-                    </CurrentlyTickingTime>
-                  </CurrentlyIntroduction>
-                </CurrentlyProfile>
-              </CurrentlyComingContainer>
+              <Letter key={letter.letterId}>
+                <LetterHeader>
+                  <span>{letter.is_read ? <DoneIcon /> : ''}</span>
+                  <img src={Stamp} alt="stamp" />
+                </LetterHeader>
+                <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
+                <LetterFooter>
+                  <Writer>{letter.nickname}</Writer>
+                  <Date>{formatDate(letter.receiveDate)}</Date>
+                </LetterFooter>
+              </Letter>
             </SwiperSlide>
           ))
         )}

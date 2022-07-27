@@ -123,7 +123,7 @@ export default function RecentlyArrivedLetter() {
                   fontSize: '24px',
                 }}
               >
-                <div>{formatDate(mainArrivedLetter.receive_date)}</div>
+                <div>{formatDate(mainArrivedLetter.receiveDate)}</div>
                 <div>From. {mainArrivedLetter.nickname}</div>
               </div>
               <div
