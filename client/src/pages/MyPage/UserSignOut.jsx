@@ -6,8 +6,10 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { SettingBtn, ModalStyle } from './style';
 import axios from 'axios';
+import { persistor } from '../../redux/store';
 
 const UserSignOutArea = () => {
+  const token = useSelector(state => state.auth.token);
   const [checkPassowrd, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
   const handleModal = () => {
@@ -20,20 +22,31 @@ const UserSignOutArea = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = useSelector(state => state.auth.token);
 
-    await axios.patch(`http://localhost:3001/api/auth/me/withdrawal`, {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: token,
-      },
-      currentPassword: checkPassowrd,
-    });
+    try {
+      const data = {
+        currentPassword: checkPassowrd,
+      };
+      const bodyData = JSON.stringify(data);
 
-    handleModal();
-    localStorage.clear();
-    alert('회원 탈퇴되었습니다. 지금까지 이용해주셔서 감사합니다.');
-    document.location.href = '/login';
+      await persistor.purge();
+
+      await axios.patch(
+        `http://localhost:3001/api/auth/me/withdrawal`,
+        bodyData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        }
+      );
+      handleModal();
+      alert('회원 탈퇴되었습니다. 지금까지 이용해주셔서 감사합니다.');
+      location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
