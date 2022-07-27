@@ -116,8 +116,6 @@ const UserInfoEditArea = props => {
       handleModal();
       document.location.href = '/mypage';
       alert('회원 정보가 수정되었습니다.');
-      // location.reload();
-      // window.location.replace('/mypage');
     } catch (err) {
       console.log(err.response);
       alert(err.response.data.reason);

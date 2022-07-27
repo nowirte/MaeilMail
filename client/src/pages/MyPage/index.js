@@ -11,7 +11,6 @@ const MyPage = () => {
   const [userData, setUserData] = useState({});
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
-  const [profilImg, setProfilImg] = useState();
   const token = useSelector(state => state.auth.token);
 
   const fetchUserData = async () => {
@@ -43,18 +42,14 @@ const MyPage = () => {
     formData.append('img', e.target.files[0]);
 
     try {
-      const res = await axios.patch(
-        `http://localhost:3001/api/auth/me/image`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: token,
-          },
-        }
-      );
+      await axios.patch(`http://localhost:3001/api/auth/me/image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: token,
+        },
+      });
       // for (const keyValue of formData) console.log(keyValue); < formData 확인하는 코드
-      setProfilImg(res.data.url);
+      location.reload();
     } catch (err) {
       alert(err);
     }
@@ -90,7 +85,7 @@ const MyPage = () => {
         <UserArea data={userData} favor={favor} language={language} />
         <div className="setting">
           <UserInfoEditArea data={userData} favor={favor} language={language} />
-          <UserSignOutArea data={userData} />
+          <UserSignOutArea />
         </div>
       </MyProfile>
     </Wrapper>

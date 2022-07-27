@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -7,9 +7,7 @@ import Button from '@mui/material/Button';
 import { SettingBtn, ModalStyle } from './style';
 import axios from 'axios';
 
-const UserSignOutArea = props => {
-  const { password } = props.data;
-
+const UserSignOutArea = () => {
   const [checkPassowrd, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
   const handleModal = () => {

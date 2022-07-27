@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +9,6 @@ const LogoutArea = () => {
   const purge = async () => {
     await persistor.purge();
   };
-  const navigate = useNavigate();
   return (
     <Container>
       <ThemeProvider theme={theme}>
