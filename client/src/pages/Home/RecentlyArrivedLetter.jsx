@@ -63,7 +63,9 @@ export default function RecentlyArrivedLetter() {
           Authorization: token,
         },
       });
+
       dispatch(setArrivedLetter({ mainArrivedLetter: response.data }));
+
     } catch (e) {
       console.error(e);
     }
