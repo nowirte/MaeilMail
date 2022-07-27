@@ -51,12 +51,14 @@ class User extends Sequelize.Model {
         allowNull: false
       },
 
-      profile_text: {
-        type: DataTypes.STRING(200)
+      profileText: {
+        type: DataTypes.STRING(200),
+        field: 'profile_text'
       },
 
-      profile_image: {
+      profileImage: {
         type: DataTypes.STRING(1234),
+        field: 'profile_image',
         defaultValue: 'https://elice-everymail.s3.ap-northeast-2.amazonaws.com/%C3%A1%C2%84%C2%84%C3%A1%C2%85%C2%AE%C3%A1%C2%86%C2%BC%C3%A1%C2%84%C2%8B%C3%A1%C2%85%C2%B51658513551791.png'
       },
 
