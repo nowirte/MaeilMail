@@ -14,7 +14,7 @@ const mainLettersSlice = createSlice({
       const { mainComingLetters } = action.payload;
       state.mainComingLetters = mainComingLetters;
     },
-    initArrivedLetter(state, action) {
+    setArrivedLetter(state, action) {
       const { mainArrivedLetter } = action.payload;
       state.mainArrivedLetter = mainArrivedLetter;
     },
@@ -23,6 +23,6 @@ const mainLettersSlice = createSlice({
     builder.addCase(PURGE, () => initialState);
   },
 });
-export const { initComingLetters, initArrivedLetter } =
+export const { initComingLetters, setArrivedLetter } =
   mainLettersSlice.actions;
 export default mainLettersSlice;
