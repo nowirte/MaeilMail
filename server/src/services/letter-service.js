@@ -12,14 +12,14 @@ class LetterService {
 
   // 특정 유저가 보내거나 받은 쪽지 다 가져오기
   async getUsersLetters(userId) {
-    const letters = await this.Letters.findAll({ where: { [Op.or]: [{send_Id: userId}, {receive_Id: userId}]}, raw: true});
+    const letters = await this.Letters.findAll({ where: { [Op.or]: [{send_id: userId}, {receive_id: userId}]}, raw: true});
     return letters;
   }
 
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
     const targetId = await this.Letter.findAll({
-      where: { [Op.or]: [{ send_Id: myId }, { receive_Id: myId }] },
+      where: { [Op.or]: [{ send_id: myId }, { receive_id: myId }] },
       raw: true,
     });
     
@@ -27,9 +27,9 @@ class LetterService {
 
     for (let i = 0; i < targetId.length; i += 1) {
       if (targetId[i].receive_Id === myId) {
-        idArrayTemp.push(targetId[i].send_Id);
+        idArrayTemp.push(targetId[i].send_id);
       } else {
-        idArrayTemp.push(targetId[i].receive_Id);
+        idArrayTemp.push(targetId[i].receive_id);
       }
     }
     const idArray = [...new Set(idArrayTemp)];
@@ -43,13 +43,13 @@ class LetterService {
 
     const myIdArrayTemp = [];
     for (let j=0; j<myLetter.length; j+=1) {
-      myIdArrayTemp.push(myLetter[j].send_Id);
+      myIdArrayTemp.push(myLetter[j].send_id);
     }
 
     const myIdArray = [...new Set(myIdArrayTemp)];
     
     const myLetterUnread = await this.Letter.findAll({
-      where: {send_Id: {[Op.in]: myIdArray}, receive_Id: myId, is_read: 0},
+      where: {send_id: {[Op.in]: myIdArray}, receive_id: myId, is_read: 0},
       raw: true
     });
 
@@ -65,7 +65,7 @@ class LetterService {
 
     for (let m=0; m<peoples.length; m+=1){
       for (let n=0; n<myLetterUnread.length; n+=1) {
-        if (peoples[m].user_Id === myLetterUnread[n].send_Id) {
+        if (peoples[m].user_Id === myLetterUnread[n].send_id) {
           peoples[m].count += 1;
         }
       }
@@ -93,6 +93,7 @@ class LetterService {
 
   // 편지쓰기
   async createLetterTo(yourId, targetId, content, sendDate, receiveDate, deliveryTime) {
+    console.log(yourId, typeof yourId, targetId, typeof targetId)
     const sendLocation = await this.User.findAll({ where: { user_id: yourId }, attributes: ['location'], raw: true });
     const receiveLocation = await this.User.findAll({
       where: { user_id: targetId },
@@ -101,8 +102,8 @@ class LetterService {
     });
 
     const mail = await this.Letter.create({
-      send_Id: yourId,
-      receive_Id: targetId,
+      send_id: yourId,
+      receive_id: targetId,
       content,
       send_date: sendDate,
       receive_date: receiveDate,
@@ -130,8 +131,8 @@ class LetterService {
     const findedLetter = await this.Letter.findAll({
       where: {
         [Op.or]: [
-          { send_Id: myId, receive_Id: oponentId },
-          { send_Id: oponentId, receive_Id: myId },
+          { send_id: myId, receive_id: oponentId },
+          { send_id: oponentId, receive_id: myId },
         ],
       },
       order: [['receive_date', 'DESC']],
@@ -146,7 +147,7 @@ class LetterService {
 
     for (let i = 0; i < findedLetter.length; i += 1) {
       findedLetter[i].nickname =
-        Number(nickname[0].user_id) === Number(findedLetter[i].send_Id) ? nickname[0].nickname : nickname[1].nickname;
+        Number(nickname[0].user_id) === Number(findedLetter[i].send_id) ? nickname[0].nickname : nickname[1].nickname;
     }
 
     if (!findedLetter) {
@@ -161,14 +162,14 @@ class LetterService {
     const findedLetter = await this.Letter.findOne({
       where: {
         [Op.or]: [
-          { send_Id: myId, receive_Id: oponentId, letter_id: letterId },
-          { send_Id: oponentId, receive_Id: myId, letter_id: letterId },
+          { send_id: myId, receive_id: oponentId, letter_id: letterId },
+          { send_id: oponentId, receive_id: myId, letter_id: letterId },
         ],
       },
       raw: true,
     });
 
-    if (findedLetter.send_Id === myId) {
+    if (findedLetter.send_id === myId) {
       const myNickname = await this.User.findAll({ where: { user_id: myId }, attributes: ['nickname'], raw: true });
       findedLetter.nickname = myNickname[0].nickname;
     } else {
@@ -187,7 +188,7 @@ class LetterService {
   async updateLetterById(myId, letterId, isRead) {
     const updatedLetter = await this.Letter.update(
       { is_read: isRead },
-      { where: { letter_id: letterId, receive_Id: myId } }
+      { where: { letter_id: letterId, receive_id: myId } }
     );
     return updatedLetter;
   }
@@ -197,8 +198,8 @@ class LetterService {
     const deletedLetter = await this.Letter.destroy({
       where: {
         [Op.or]: [
-          { send_Id: myId, receive_Id: oponentId },
-          { send_Id: oponentId, receive_Id: myId },
+          { send_id: myId, receive_id: oponentId },
+          { send_id: oponentId, receive_id: myId },
         ],
       },
     });
@@ -209,7 +210,7 @@ class LetterService {
   // 오고 있는 편지
   async incomingLetters(myId) {
     const myLetter = await this.Letter.findAll({
-      where: { receive_Id: myId, is_arrived: 0, is_read: 0 },
+      where: { receive_id: myId, is_arrived: 0, is_read: 0 },
       raw: true,
       order: [['receive_date', 'DESC']],
     });
@@ -217,22 +218,22 @@ class LetterService {
     const idArrayTemp = [];
 
     for (let i = 0; i < myLetter.length; i += 1) {
-      idArrayTemp.push(myLetter[i].send_Id);
+      idArrayTemp.push(myLetter[i].send_id);
     }
     const idArray = [...new Set(idArrayTemp)];
 
     const userInfo = await this.User.findAll({
       where: { user_id: { [Op.in]: idArray } },
       raw: true,
-      attributes: ['user_id', 'nickname', 'profile_Image'],
+      attributes: ['user_id', 'nickname', 'profile_image'],
     });
 
     for (let i = 0; i < myLetter.length; i += 1) {
       for (let j = 0; j < userInfo.length; j += 1) {
-        if (myLetter[i].send_Id === userInfo[j].user_id) {
+        if (myLetter[i].send_id === userInfo[j].user_id) {
           myLetter[i].user_id = userInfo[j].user_id;
           myLetter[i].nickname = userInfo[j].nickname;
-          myLetter[i].profile_Image = userInfo[j].profile_Image;
+          myLetter[i].profile_image = userInfo[j].profile_image;
         }
       }
     }
@@ -242,12 +243,12 @@ class LetterService {
 
   // 가장 최근에 온 편지
   async getRecentLetters(myId) {
-    const myLetters = await this.Letter.findAll({ where: { receive_Id: myId, is_arrived: 1, is_read: 0 }, raw: true});
+    const myLetters = await this.Letter.findAll({ where: { receive_id: myId, is_arrived: 1, is_read: 0 }, raw: true});
     
     const idArrayTemp = [];
     
     for (let i=0; i<myLetters.length; i+=1) {
-      idArrayTemp.push(myLetters[i].send_Id);
+      idArrayTemp.push(myLetters[i].send_id);
     }
     const idArray = [...new Set(idArrayTemp)];
     
@@ -259,7 +260,7 @@ class LetterService {
 
     for (let i = 0; i < myLetters.length; i += 1) {
       for (let j = 0; j < userNickname.length; j += 1) {
-        if (myLetters[i].send_Id === userNickname[j].user_id) {
+        if (myLetters[i].send_id === userNickname[j].user_id) {
           myLetters[i].nickname = userNickname[j].nickname;
         }
       }
@@ -279,8 +280,8 @@ class LetterService {
     const findedLetter = await this.Letter.findAll({
       where: {
         [Op.or]: [
-          { send_Id: myId, receive_Id: oponentId },
-          { send_Id: oponentId, receive_Id: myId },
+          { send_id: myId, receive_id: oponentId },
+          { send_id: oponentId, receive_id: myId },
         ],
       },
       order: [['receive_date', 'DESC']],
@@ -297,7 +298,7 @@ class LetterService {
 
     for (let i = 0; i < findedLetter.length; i += 1) {
       findedLetter[i].nickname =
-        Number(nickname[0].user_id) === Number(findedLetter[i].send_Id) ? nickname[0].nickname : nickname[1].nickname;
+        Number(nickname[0].user_id) === Number(findedLetter[i].send_id) ? nickname[0].nickname : nickname[1].nickname;
     }
 
     if (!findedLetter) {
