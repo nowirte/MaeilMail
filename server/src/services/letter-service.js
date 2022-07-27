@@ -65,7 +65,7 @@ class LetterService {
 
     for (let m=0; m<peoples.length; m+=1){
       for (let n=0; n<myLetterUnread.length; n+=1) {
-        if (peoples[m].user_Id === myLetterUnread[n].send_id) {
+        if (peoples[m].user_id === myLetterUnread[n].send_id) {
           peoples[m].count += 1;
         }
       }
