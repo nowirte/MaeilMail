@@ -93,7 +93,6 @@ class LetterService {
 
   // 편지쓰기
   async createLetterTo(yourId, targetId, content, sendDate, receiveDate, deliveryTime) {
-    console.log(yourId, typeof yourId, targetId, typeof targetId)
     const sendLocation = await this.User.findAll({ where: { user_id: yourId }, attributes: ['location'], raw: true });
     const receiveLocation = await this.User.findAll({
       where: { user_id: targetId },
