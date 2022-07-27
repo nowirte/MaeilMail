@@ -86,7 +86,7 @@ class Favor extends Sequelize.Model {
     }
 
   static associate(db) { 
-    db.Favor.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.Favor.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade' });
    }
 };
 
