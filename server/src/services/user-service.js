@@ -6,10 +6,10 @@ import { User, Favor, Language } from '../db/models';
 import { getArrayForInputTag, getObjectForDB } from '../utils';
 
 const include = [
-  { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
-  { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
+  { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
+  { model: Language, attributes: { exclude: ['language_id', 'user_id', 'created_at', 'updated_at'] } },
 ];
-const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
+const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'created_at', 'updated_at'] };
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
@@ -58,10 +58,10 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
-    const userId = newUser.dataValues.user_id;
+    const { user_id } = newUser.dataValues;
 
-    await this.Favor.create({ userId });
-    await this.Language.create({ userId });
+    await this.Favor.create({ user_id });
+    await this.Language.create({ user_id });
 
     return newUser;
   }
@@ -77,15 +77,15 @@ class UserService {
 
     const newUser = await this.User.create(userInfo);
 
-    const userId = newUser.dataValues.user_id;
+    const { user_id } = newUser.dataValues;
 
-    await this.Favor.create({ userId });
-    await this.Language.create({ userId });
+    await this.Favor.create({ user_id });
+    await this.Language.create({ user_id });
 
     return newUser;
   }
 
-  async updateUser(userId, body, del) {
+  async updateUser(user_id, body, del) {
     const {
       nickname,
       gender,
@@ -119,14 +119,14 @@ class UserService {
       throw new Error('현재 비밀번호가 필요합니다.');
     }
 
-    const validate = await validatePassword(userId, currentPassword);
+    const validate = await validatePassword(user_id, currentPassword);
     if (!validate) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
 
     // 유저 필터
     const filter = {
-      where: { user_id: userId, status: { [Op.not]: 'inactive' } },
+      where: { user_id, status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -164,10 +164,10 @@ class UserService {
 
     if (favorUpdate) {
       await this.Favor.findOrCreate({
-        where: { userId },
+        where: { user_id },
       });
       const affected = await this.Favor.update(favorUpdate, {
-        where: { userId },
+        where: { user_id },
       });
       if (affected === 0) {
         console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
@@ -176,17 +176,17 @@ class UserService {
 
     if (languageUpdate) {
       await this.Language.findOrCreate({
-        where: { userId },
+        where: { user_id },
       });
       const affected = await this.Language.update(languageUpdate, {
-        where: { userId },
+        where: { user_id },
       });
       if (affected === 0) {
         console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
       }
     }
 
-    const updated = await this.getUserById(userId);
+    const updated = await this.getUserById(user_id);
     return updated;
   }
 
@@ -200,7 +200,7 @@ class UserService {
     return updated;
   }
 
-  async updateGoogleUser(id, body) {
+  async updateGoogleUser(user_id, body) {
     const { nickname, gender, birthday, language, location, latitude, longitude } = body;
 
     const toUpdate = {
@@ -214,11 +214,11 @@ class UserService {
       status: 'active',
     };
 
-    const affectedRows = await this.User.update(toUpdate, { where: { user_id: id, status: 'temp', oauth: 'google' } });
+    const affectedRows = await this.User.update(toUpdate, { where: { user_id, status: 'temp', oauth: 'google' } });
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
-    const updated = await this.getUserById(id);
+    const updated = await this.getUserById(user_id);
 
     return updated;
   }
