@@ -73,7 +73,7 @@ const FriendInfo = ({ friend, favor, language }) => {
         </BadgeWrapper>
       </UserInfo>
       <UserEmoji>
-        <img src={`/${friend.profileImage}`} alt="friendImg" />
+        <img src={friend.profileImage} alt="friendImg" />
       </UserEmoji>
     </User>
   );
