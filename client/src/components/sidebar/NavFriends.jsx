@@ -25,7 +25,6 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(friends);
   return (
     <Friends>
       {friends &&
@@ -36,7 +35,10 @@ const NavFriendsArea = () => {
                 <div className="profileImgArea">
                   <img src={friend.profileImage} alt="friendImg" />
                 </div>
-                <span>{friend.nickname}</span>
+                <div className="friendInfo">
+                  <div className="friendName">{friend.nickname}</div>
+                  <div className="friendCount">{friend.count}</div>
+                </div>
               </FriendsList>
             </StyledLink>
           );
@@ -59,18 +61,35 @@ const Friends = styled.div`
 
 const FriendsList = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 10px 0;
 
   font-size: 1.2rem;
   padding-bottom: 20px;
 
-  > span {
-    font-weight: bold;
-    color: white;
-  }
+  font-weight: bold;
+  color: white;
 
+  & .friendInfo {
+    position: relative;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .friendCount {
+      position: absolute;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: pink;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   & .profileImgArea {
+    margin-left: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
