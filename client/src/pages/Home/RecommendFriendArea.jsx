@@ -22,7 +22,17 @@ export const RecommendFriendArea = ({ data }) => {
       </Account>
       <Info>
         <div className="gender">
-          <p>{data.gender === 'male' ? <MaleIcon /> : <FemaleIcon />}</p>
+          {data.gender === 'male' ? (
+            <p>
+              <MaleIcon />
+              male
+            </p>
+          ) : (
+            <p>
+              <FemaleIcon />
+              female
+            </p>
+          )}
         </div>
         <div className="birthday">
           <p>
