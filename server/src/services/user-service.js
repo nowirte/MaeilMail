@@ -228,9 +228,9 @@ class UserService {
     return users;
   }
 
-  async getUserById(id) {
+  async getUserById(user_id) {
     const user = await this.User.findOne({
-      where: { user_id: Number(id) },
+      where: { user_id },
       include,
       attributes,
     });
@@ -250,7 +250,7 @@ class UserService {
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
+      attributes: ['nickname', 'user_id', 'profile_image'],
     });
     return users;
   }
@@ -258,7 +258,7 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
+      attributes: ['nickname', 'user_id', 'profile_image'],
       order: [Sequelize.fn('RAND')],
       limit: 10,
     });
