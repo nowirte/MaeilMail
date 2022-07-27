@@ -16,7 +16,7 @@ const LetterDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get(
-        `/api/letters/${userId}/${postId}`,
+        `http://localhost:3001/api/letters/${userId}/${postId}`,
         {
           headers: {
             Authorization: token,

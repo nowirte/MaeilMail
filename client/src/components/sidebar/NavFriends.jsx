@@ -10,7 +10,7 @@ const NavFriendsArea = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('/api/letters', {
+      const res = await axios.get('http://localhost:3001/api/letters', {
         headers: {
           Authorization: token,
         },
@@ -25,22 +25,20 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(friends);
   return (
     <Friends>
-      {friends &&
-        friends?.map(friend => {
-          return (
-            <StyledLink to={`/friend/${friend.user_id}`} key={friend.user_id}>
-              <FriendsList>
-                <div className="profileImgArea">
-                  <img src={friend.profileImage} alt="friendImg" />
-                </div>
-                <span>{friend.nickname}</span>
-              </FriendsList>
-            </StyledLink>
-          );
-        })}
+      {friends?.map(friend => {
+        return (
+          <StyledLink to={`/friend/${friend.user_id}`} key={friend.user_id}>
+            <FriendsList>
+              <div className="profileImgArea">
+                <img src={friend.profileImage} alt="friendImg" />
+              </div>
+              <span>{friend.nickname}</span>
+            </FriendsList>
+          </StyledLink>
+        );
+      })}
     </Friends>
   );
 };

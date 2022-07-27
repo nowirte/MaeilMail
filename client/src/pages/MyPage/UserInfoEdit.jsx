@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 //function
 import useLoc from '../Signup/userLocationFunction';
+import objChangedarr from './util';
 
 const UserInfoEditArea = props => {
   const token = useSelector(state => state.auth.token);
@@ -27,8 +28,16 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(props.favor);
-    setLanguage(props.language);
+    setFavor(() => {
+      const favObj = userData.Favor;
+      const favArr = favObj ? objChangedarr(favObj) : null;
+      return favArr;
+    });
+    setLanguage(() => {
+      const langObj = userData.Language;
+      const langArr = langObj ? objChangedarr(langObj) : null;
+      return langArr;
+    });
   }, [userData]);
 
   const handleModal = () => {
@@ -106,7 +115,7 @@ const UserInfoEditArea = props => {
 
       const bodyData = JSON.stringify(data);
 
-      await axios.patch('/api/auth/me', bodyData, {
+      await axios.patch('http://localhost:3001/api/auth/me', bodyData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token,
@@ -116,8 +125,6 @@ const UserInfoEditArea = props => {
       handleModal();
       document.location.href = '/mypage';
       alert('회원 정보가 수정되었습니다.');
-      // location.reload();
-      // window.location.replace('/mypage');
     } catch (err) {
       console.log(err.response);
       alert(err.response.data.reason);

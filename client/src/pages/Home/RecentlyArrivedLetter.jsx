@@ -40,7 +40,7 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/recent', {
+      const res = await axios.get('http://localhost:3001/api/letters/recent', {
         headers: {
           Authorization: token,
         },
