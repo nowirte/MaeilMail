@@ -66,7 +66,7 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
     const { isGoogle } = req.query;
 
     const result = isGoogle
-      ? await userService.updateGoogleUser(userId, req.body)
+      ? await userService.updateGoogleUser(Number(userId), req.body)
       : await userService.updateUser(Number(userId), req.body, false);
 
     if (!result) {
@@ -80,7 +80,7 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 
 authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
   const { userId, file } = await req;
-  const imageUrl = await file.location
+  const imageUrl = await file.location;
 
   if (imageUrl) {
     await userService.updateUserProfileImage(Number(userId), imageUrl);

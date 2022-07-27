@@ -10,6 +10,7 @@ const include = [
   { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
 ];
 const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
+const raw = true;
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
@@ -29,7 +30,7 @@ class UserService {
     const password = await this.User.findOne({
       where: { user_id: id, status: 'active' },
       attributes: ['password'],
-      raw: true,
+      raw
     });
     const result = await bcrypt.compare(input, password.password);
     return result;
