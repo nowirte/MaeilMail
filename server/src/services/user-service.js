@@ -3,7 +3,7 @@
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
-import { getArrayForInputTag, getObjectForDB } from '../utils';
+import { reduceObjToArray, reduceArrayToObject } from '../utils';
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
@@ -22,6 +22,16 @@ class UserService {
     const result = await this.User.findOne({
       where: filter,
     });
+    return result;
+  }
+
+  async validatePassword(id, input) {
+    const password = await this.User.findOne({
+      where: { user_id: id, status: 'active' },
+      attributes: ['password'],
+      raw: true,
+    });
+    const result = await bcrypt.compare(input, password.password);
     return result;
   }
 
@@ -101,25 +111,11 @@ class UserService {
       newPassword,
     } = body;
 
-    // validate
-    async function validatePassword(id, input) {
-      const user = await User.findOne({
-        where: { user_id: id, status: 'active' },
-        attributes: ['password'],
-      });
-      if (!user) {
-        throw new Error('유저를 찾을 수 없습니다.');
-      }
-      const passwordInDB = user.dataValues.password;
-      const result = await bcrypt.compare(input, passwordInDB);
-      return result;
-    }
-
     if (!currentPassword) {
       throw new Error('현재 비밀번호가 필요합니다.');
     }
 
-    const validate = await validatePassword(userId, currentPassword);
+    const validate = await this.validatePassword(userId, currentPassword);
     if (!validate) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
@@ -139,8 +135,8 @@ class UserService {
     }
 
     // 회원 정보 수정
-    const languageUpdate = await getObjectForDB(language);
-    const favorUpdate = await getObjectForDB(favor);
+    const languageUpdate = await reduceArrayToObject(language);
+    const favorUpdate = await reduceArrayToObject(favor);
 
     const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
 
@@ -228,9 +224,9 @@ class UserService {
     return users;
   }
 
-  async getUserById(id) {
+  async getUserById(user_id) {
     const user = await this.User.findOne({
-      where: { user_id: Number(id) },
+      where: { user_id },
       include,
       attributes,
     });
@@ -241,8 +237,8 @@ class UserService {
     const favObj = user.dataValues.Favor;
     const langObj = user.dataValues.Language;
 
-    const favorArray = favObj ? await getArrayForInputTag(favObj.dataValues) : null;
-    const languageArray = langObj ? await getArrayForInputTag(langObj.dataValues) : null;
+    const favorArray = favObj ? await reduceObjToArray(favObj.dataValues) : null;
+    const languageArray = langObj ? await reduceObjToArray(langObj.dataValues) : null;
 
     return { favorArray, languageArray, user };
   }
