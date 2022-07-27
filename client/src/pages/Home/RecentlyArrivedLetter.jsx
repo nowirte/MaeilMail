@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import { styled } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { initArrivedLetter } from '../../redux/reducers/mainLetters';
+import { setArrivedLetter } from '../../redux/reducers/mainLetters';
 
 const style = {
   position: 'absolute',
@@ -44,9 +44,11 @@ export default function RecentlyArrivedLetter() {
           Authorization: token,
         },
       });
-      const data = await res.data[0];
-      dispatch(initArrivedLetter({ mainArrivedLetter: data }));
+      console.log('data', res.data);
+      const data = await res.data[res.data.length - 1];
+      dispatch(setArrivedLetter({ mainArrivedLetter: data }));
       setLetterId(mainArrivedLetter.letter_id);
+      console.log(mainArrivedLetter);
     } catch (e) {
       console.error(e);
     }
@@ -54,15 +56,13 @@ export default function RecentlyArrivedLetter() {
 
   const patchIsRead = async () => {
     try {
-      const data = { isRead: 1 };
+      const data = { ...mainArrivedLetter, isRead: 1 };
       const response = await axios.patch(`/api/letters/${letterId}`, data, {
         headers: {
           Authorization: token,
         },
       });
-      console.log(response.data);
-      console.log('mainArrivedPatch', mainArrivedLetter);
-      // dispatch(initArrivedLetter({ mainArrivedLetter }));
+      dispatch(setArrivedLetter({ mainArrivedLetter: response.data }));
     } catch (e) {
       console.error(e);
     }
@@ -72,11 +72,9 @@ export default function RecentlyArrivedLetter() {
     fetchRecentlyLetter();
   }, []);
 
-  console.log('mainArrivedLetter', mainArrivedLetter);
-
   // useEffect(() => {
-  //   const id = mainArrivedLetter.letter_Id
-  //   patchIsRead(mainArrivedLetter?.letter_Id);
+  //   // const id = mainArrivedLetter.letter_Id
+  //   patchIsRead(letterId);
   // }, [isConfirmed]);
 
   return (
@@ -86,28 +84,37 @@ export default function RecentlyArrivedLetter() {
       </Button>
       <Modal
         open={open}
-        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            From. {mainArrivedLetter?.nickname}
-          </Typography>
-          <StyledCurrentlyContent>
-            {mainArrivedLetter?.content}
-          </StyledCurrentlyContent>
-          <Button
-            style={{ marginTop: 15 }}
-            variant="contained"
-            onClick={() => {
-              patchIsRead(letterId);
-              // setIsConfirmed(true);
-            }}
-          >
-            ✔ 확인
-          </Button>
-          <div>{mainArrivedLetter.is_read}</div>
+          {mainArrivedLetter.length === 1 ? (
+            <Typography onClick={handleClose}>
+              아직 안 읽은 편지가 없습니다.
+            </Typography>
+          ) : (
+            <>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                From. {mainArrivedLetter?.nickname}
+              </Typography>
+              <StyledCurrentlyContent>
+                {mainArrivedLetter?.content}
+              </StyledCurrentlyContent>
+              <Button
+                style={{ marginTop: 15 }}
+                variant="contained"
+                onClick={() => {
+                  patchIsRead();
+                  handleClose();
+                  // setIsConfirmed(true);
+                  console.log(mainArrivedLetter);
+                }}
+              >
+                ✔ 확인
+              </Button>
+              <div>{mainArrivedLetter.is_read}</div>
+            </>
+          )}
         </Box>
       </Modal>
     </div>
