@@ -69,9 +69,9 @@ export default function RecentlyArrivedLetter() {
     }
   };
 
-  useEffect(() => {
-    fetchRecentlyLetter();
-  }, []);
+  // useEffect(() => {
+  //   fetchRecentlyLetter();
+  // }, []);
 
   // useEffect(() => {
   //   // const id = mainArrivedLetter.letter_Id
@@ -80,7 +80,13 @@ export default function RecentlyArrivedLetter() {
 
   return (
     <div style={{ marginTop: 45 }}>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        onClick={() => {
+          handleOpen();
+          fetchRecentlyLetter();
+        }}
+      >
         최근에 온 편지
       </Button>
       <Modal
