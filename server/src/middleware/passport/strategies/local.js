@@ -13,7 +13,7 @@ const verify = async (email, password, done) => {
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
-      done(null, { userId: user.user_id, status: user.status });
+      done(null, { userId: user.userId, status: user.status });
       return;
     }
     done(null, false, { reason: '비밀번호가 다릅니다.' });
