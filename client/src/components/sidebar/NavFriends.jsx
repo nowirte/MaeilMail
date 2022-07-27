@@ -25,7 +25,6 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(friends);
   return (
     <Friends>
       {friends?.map(friend => {
