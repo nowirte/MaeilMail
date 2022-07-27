@@ -51,11 +51,11 @@ class User extends Sequelize.Model {
         allowNull: false
       },
 
-      profileText: {
+      profile_text: {
         type: DataTypes.STRING(200)
       },
 
-      profileImage: {
+      profile_image: {
         type: DataTypes.STRING(1234),
         defaultValue: 'https://elice-everymail.s3.ap-northeast-2.amazonaws.com/%C3%A1%C2%84%C2%84%C3%A1%C2%85%C2%AE%C3%A1%C2%86%C2%BC%C3%A1%C2%84%C2%8B%C3%A1%C2%85%C2%B51658513551791.png'
       },
@@ -71,16 +71,19 @@ class User extends Sequelize.Model {
         charset: "utf8", // 한국어 설정
         collate: "utf8_general_ci", // 한국어 설정
         tableName: "Users",
-        modelName: "User"
+        modelName: "User",
+        underscored: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
       }
     );
     }
 
   static associate(db) { 
-    db.User.hasOne(db.Favor, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
-    db.User.hasOne(db.Language, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' })
-    db.User.hasMany(db.Letter, { foreignKey: 'sendId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
-    db.User.hasMany(db.Letter, { foreignKey: 'receiveId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.User.hasOne(db.Favor, { foreignKey: 'user_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.User.hasOne(db.Language, { foreignKey: 'user_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' })
+    db.User.hasMany(db.Letter, { foreignKey: 'send_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.User.hasMany(db.Letter, { foreignKey: 'receive_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
    }
 };
 

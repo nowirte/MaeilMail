@@ -77,13 +77,16 @@ class Favor extends Sequelize.Model {
         charset: "utf8", // 한국어 설정
         collate: "utf8_general_ci", // 한국어 설정
         tableName: "Favors",
-        modelName: "Favor"
+        modelName: "Favor",
+        underscored: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
       }
     );
     }
 
   static associate(db) { 
-    db.Favor.belongsTo(db.User, { foreignKey: 'userId', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
+    db.Favor.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade' });
    }
 };
 

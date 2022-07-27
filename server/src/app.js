@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 const { sequelize } = db;
-sequelize.sync({ force: false });
+sequelize.sync({ force: false});
 
 
 app.use(cors());
