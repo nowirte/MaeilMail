@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SettingBtn, ModalStyle } from './style';
 //function
 import useLoc from '../Signup/userLocationFunction';
-import objChangedarr from './util';
+import { objChangedarr, favorChangedName, langChangedName } from './util';
 
 const UserInfoEditArea = props => {
   const token = useSelector(state => state.auth.token);
@@ -31,6 +31,7 @@ const UserInfoEditArea = props => {
     setFavor(() => {
       const favObj = userData.Favor;
       const favArr = favObj ? objChangedarr(favObj) : null;
+      console.log('favArr', favArr);
       return favArr;
     });
     setLanguage(() => {

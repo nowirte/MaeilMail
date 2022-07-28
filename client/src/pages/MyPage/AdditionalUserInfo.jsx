@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
-import objChangedarr from './util';
+import { objChangedarr, favorChangedName, langChangedName } from './util';
 
 const AdditionalUserInfoArea = () => {
   const token = useSelector(state => state.auth.token);
@@ -19,6 +19,9 @@ const AdditionalUserInfoArea = () => {
 
       const favorArr = objChangedarr(res.data.user.Favor);
       const languageArr = objChangedarr(res.data.user.Language);
+
+      favorChangedName(favorArr);
+      langChangedName(languageArr);
 
       setFavor(favorArr);
       setLanguage(languageArr);
@@ -52,7 +55,7 @@ const AdditionalUserInfoArea = () => {
           (language || []).map(e =>
             e.selected === true ? (
               <p key={e.value} className="tag">
-                {e.label}
+                {e.name}
               </p>
             ) : (
               ''
