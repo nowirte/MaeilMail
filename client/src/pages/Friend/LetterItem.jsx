@@ -39,11 +39,11 @@ const LetterItem = ({ user, friend, letter }) => {
   // 도착시간에 따른 편지 읽기, 읽음 유무 확인 처리
   const showDetail = async e => {
     // 친구가 보낸 편지, 도착시간이 남음
-    if (letter.sendId === friend.user_id && timeRemaining > 0) {
+    if (letter.sendId === friend.userId && timeRemaining > 0) {
       e.preventDefault();
       console.log('아직 못 읽음');
     } else {
-      if (letter.is_read === 0) {
+      if (letter.isRead === 0) {
         await patchReadLetter();
       }
     }
@@ -53,12 +53,12 @@ const LetterItem = ({ user, friend, letter }) => {
   return (
     <Letter key={letter.letterId} future={timeRemaining > 0}>
       <StyledLink
-        to={`/friend/${friend.user_id}/${letter.letter_id}`}
+        to={`/friend/${friend.userId}/${letter.letterId}`}
         onClick={showDetail}
         user={user}
       >
         <LetterHeader>
-          <span>{letter.is_read ? <DoneIcon /> : ''}</span>
+          <span>{letter.isRead ? <DoneIcon /> : ''}</span>
           {timeRemaining > 0 ? (
             <img src={SendStamp} alt="stamp" />
           ) : (
@@ -66,13 +66,13 @@ const LetterItem = ({ user, friend, letter }) => {
           )}
         </LetterHeader>
         <LetterContent>
-          {timeRemaining > 0 && letter.sendId === friend.user_id
+          {timeRemaining > 0 && letter.send_id === friend.userId
             ? '✉️ 편지가 오고 있습니다.'
             : letter.content}
         </LetterContent>
         <LetterFooter>
           <Writer>{letter.nickname}</Writer>
-          <Date>{formatDate(letter.receive_date)}</Date>
+          <Date>{formatDate(letter.receiveDate)}</Date>
         </LetterFooter>
       </StyledLink>
     </Letter>

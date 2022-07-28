@@ -26,6 +26,10 @@ const FriendDetail = () => {
     language: [],
     info: {},
   });
+  // 편지리스트 페이지네이션
+  const [page, setPage] = useState(1);
+  // 페이지네이션의 총 수
+  const [totalPage, setTotalPage] = useState(null);
 
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
@@ -68,7 +72,7 @@ const FriendDetail = () => {
   const fetchLetters = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}`,
+        `http://localhost:3001/api/letters/${friendId}/${page}`,
         {
           headers: {
             Authorization: token,
@@ -76,7 +80,8 @@ const FriendDetail = () => {
         }
       );
       const data = res.data;
-      setLetters(data);
+      setLetters(data.findedLetter);
+      setTotalPage(data.totalPage);
     } catch (error) {
       console.error(error);
     }
@@ -142,6 +147,8 @@ const FriendDetail = () => {
     // 편지 리스트 받아오기
     fetchLetters();
   }, [fetchLetters]);
+
+  console.log(letters);
 
   return (
     <MainWrapper>
