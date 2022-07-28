@@ -191,7 +191,9 @@ class UserService {
   }
 
   async updateUserProfileImage(userId, profileImage) {
-    const affectedRows = await this.User.update({ profileImage }, { where: { user_id } });
+
+    const affectedRows = await this.User.update({ profileImage }, { where: { userId } });
+
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
