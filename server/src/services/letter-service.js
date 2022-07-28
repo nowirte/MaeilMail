@@ -237,7 +237,7 @@ class LetterService {
         }
       }
     }
-
+    console.log(myLetter);
     return myLetter;
   }
 
