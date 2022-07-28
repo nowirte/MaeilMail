@@ -5,7 +5,6 @@ import { loginRequired } from '../middleware';
 
 const lettersRouter = Router();
 
-
 lettersRouter.get('/admin/:userId', loginRequired, async (req, res, next) => {
   try {
     if (req.userStatus === "admin" ) {
@@ -24,6 +23,19 @@ lettersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
     const myId = req.userId;
     const result = await letterService.getContactUsers(myId);
+
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+lettersRouter.get('/:userId/:page', loginRequired, async (req, res, next) => {
+  try {
+    const myId = req.userId;
+    const { userId, page } = req.params;
+    // const pageNum = Number(req.params.page);
+    const result = await letterService.getLettersByPage(myId, userId, page);
 
     res.status(200).json(result);
   } catch (err) {
@@ -71,6 +83,7 @@ lettersRouter.post('/:userId', loginRequired ,async (req, res, next) => {
   }
 });
 
+
 // 모든 내화 내역 조회(path parameter 사용)
 lettersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try {
@@ -96,7 +109,6 @@ lettersRouter.get('/:userId/:letterId', loginRequired, async (req, res, next) =>
     next(err);
   }
 });
-
 
 // isRead
 lettersRouter.patch('/:letterId', loginRequired, async (req, res, next) => {

@@ -126,11 +126,7 @@ function RecommendDetailPage() {
             <div className="profileImgArea">
               <img
                 className="profileImage"
-                src={
-                  searchUser.profileImage === 'img/뚱이.png'
-                    ? '/img/뚱이.png'
-                    : searchUser.profileImage
-                }
+                src={searchUser.profileImage}
                 alt={searchUser.nickname}
               />
             </div>

@@ -6,10 +6,10 @@ import { User, Favor, Language } from '../db/models';
 import { getArrayForInputTag, getObjectForDB } from '../utils';
 
 const include = [
-  { model: Favor, attributes: { exclude: ['favor_id', 'userId', 'createdAt', 'updatedAt'] } },
-  { model: Language, attributes: { exclude: ['language_id', 'userId', 'createdAt', 'updatedAt'] } },
+  { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
+  { model: Language, attributes: { exclude: ['language_id', 'user_id', 'created_at', 'updated_at'] } },
 ];
-const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
+const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'created_at', 'updated_at'] };
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
@@ -58,7 +58,7 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
-    const userId = newUser.dataValues.user_id;
+    const { userId } = newUser.dataValues;
 
     await this.Favor.create({ userId });
     await this.Language.create({ userId });
@@ -77,7 +77,7 @@ class UserService {
 
     const newUser = await this.User.create(userInfo);
 
-    const userId = newUser.dataValues.user_id;
+    const { userId } = newUser.dataValues;
 
     await this.Favor.create({ userId });
     await this.Language.create({ userId });
@@ -104,7 +104,7 @@ class UserService {
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
-        where: { user_id: id, status: 'active' },
+        where: { userId, status: 'active' },
         attributes: ['password'],
       });
       if (!user) {
@@ -126,7 +126,7 @@ class UserService {
 
     // 유저 필터
     const filter = {
-      where: { user_id: userId, status: { [Op.not]: 'inactive' } },
+      where: { userId, status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -190,17 +190,17 @@ class UserService {
     return updated;
   }
 
-  async updateUserProfileImage(user_id, profileImage) {
-    const affectedRows = await this.User.update({ profileImage }, { where: { user_id } });
+  async updateUserProfileImage(userId, profileImage) {
+    const affectedRows = await this.User.update({ profileImage }, { where: { userId } });
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
-    const updated = await this.User.findOne({ where: { user_id } });
+    const updated = await this.User.findOne({ where: { userId } });
 
     return updated;
   }
 
-  async updateGoogleUser(id, body) {
+  async updateGoogleUser(userId, body) {
     const { nickname, gender, birthday, language, location, latitude, longitude } = body;
 
     const toUpdate = {
@@ -214,11 +214,11 @@ class UserService {
       status: 'active',
     };
 
-    const affectedRows = await this.User.update(toUpdate, { where: { user_id: id, status: 'temp', oauth: 'google' } });
+    const affectedRows = await this.User.update(toUpdate, { where: { userId, status: 'temp', oauth: 'google' } });
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
-    const updated = await this.getUserById(id);
+    const updated = await this.getUserById(userId);
 
     return updated;
   }
@@ -228,9 +228,9 @@ class UserService {
     return users;
   }
 
-  async getUserById(id) {
+  async getUserById(userId) {
     const user = await this.User.findOne({
-      where: { user_id: Number(id) },
+      where: { userId },
       include,
       attributes,
     });
@@ -250,7 +250,7 @@ class UserService {
   async getUsersBySearch(nickname) {
     const users = await this.User.findAll({
       where: { nickname: { [Op.regexp]: nickname }, status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
+      attributes: ['nickname', 'user_id', 'profile_image'],
     });
     return users;
   }
@@ -258,7 +258,7 @@ class UserService {
   async getUsersRecommended() {
     const users = await this.User.findAll({
       where: { status: 'active' },
-      attributes: ['nickname', 'user_id', 'profileImage'],
+      attributes: ['nickname', 'user_id', 'profile_image'],
       order: [Sequelize.fn('RAND')],
       limit: 10,
     });
