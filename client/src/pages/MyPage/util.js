@@ -6,6 +6,7 @@ const objChangedarr = obj => {
     const element = {};
     element.value = key;
     element.label = key.charAt(0).toUpperCase() + key.slice(1);
+    // element.name = '';
     element.selected = obj[key];
     result.push(element);
   });

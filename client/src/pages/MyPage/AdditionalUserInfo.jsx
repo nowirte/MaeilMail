@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
+import objChangedarr from './util';
 
 const AdditionalUserInfoArea = () => {
+  const token = useSelector(state => state.auth.token);
   const [favor, setFavor] = useState([]);
   const [language, setLanguage] = useState([]);
-
-  const token = useSelector(state => state.auth.token);
 
   const fetchUserData = async () => {
     try {
@@ -17,9 +17,11 @@ const AdditionalUserInfoArea = () => {
         },
       });
 
-      const { favorArray, languageArray } = res.data;
-      setFavor(favorArray);
-      setLanguage(languageArray);
+      const favorArr = objChangedarr(res.data.user.Favor);
+      const languageArr = objChangedarr(res.data.user.Language);
+
+      setFavor(favorArr);
+      setLanguage(languageArr);
     } catch (error) {
       console.error(error);
     }
