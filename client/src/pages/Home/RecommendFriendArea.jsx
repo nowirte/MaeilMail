@@ -15,20 +15,24 @@ import {
 
 export const RecommendFriendArea = ({ data }) => {
   const favor = data.Favor;
-  const favorites = Object.keys(favor).reduce((acc, k) => {
-    if (favor[k]) {
-      acc.push(k);
-    }
-    return acc;
-  }, []);
+  const favorites =
+    favor &&
+    Object.keys(favor).reduce((acc, k) => {
+      if (favor[k]) {
+        acc.push(k);
+      }
+      return acc;
+    }, []);
   const language = data.Language;
-  const languages = Object.keys(language).reduce((acc, k) => {
-    if (language[k]) {
-      acc.push(k);
-    }
-    return acc;
-  }, []);
-
+  const languages =
+    language &&
+    Object.keys(language).reduce((acc, k) => {
+      if (language[k]) {
+        acc.push(k);
+      }
+      return acc;
+    }, []);
+  console.log(favorites, languages);
   return (
     <Friend>
       <Account>
@@ -68,7 +72,7 @@ export const RecommendFriendArea = ({ data }) => {
       <AdditionalInfo>
         <InterestInfo>
           <p className="title">관심사</p>
-          {favorites.map((e, i) => {
+          {(favorites || []).map((e, i) => {
             return (
               <p className="tag" key={`${i}-${e}`}>
                 {e}
@@ -78,7 +82,7 @@ export const RecommendFriendArea = ({ data }) => {
         </InterestInfo>
         <LanguageInfo>
           <p className="title">언어</p>
-          {languages.map((e, i) => {
+          {(languages || []).map((e, i) => {
             return (
               <p className="tag" key={`${i}-${e}`}>
                 {e}
