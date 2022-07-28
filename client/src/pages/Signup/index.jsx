@@ -47,7 +47,7 @@ const SignUp = () => {
     const bodyData = JSON.stringify(state);
     //아직 백엔드와 연결 X
     await axios
-      .post('/api/users', bodyData, {
+      .post('http://localhost:3001/api/users', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -29,7 +29,7 @@ function RecommendDetailPage() {
 
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get('/api/auth/me', {
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -46,7 +46,7 @@ function RecommendDetailPage() {
 
   const fetchSearchUserDetail = async id => {
     try {
-      const res = await axios.get(`/api/users/${id}`, {
+      const res = await axios.get(`http://localhost:3001/api/users/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -60,9 +60,13 @@ function RecommendDetailPage() {
   const postLetter = useCallback(
     async newLetter => {
       try {
-        await axios.post(`/api/letters/${searchUserId}`, newLetter, {
-          headers: { Authorization: token },
-        });
+        await axios.post(
+          `http://localhost:3001/api/letters/${searchUserId}`,
+          newLetter,
+          {
+            headers: { Authorization: token },
+          }
+        );
       } catch (e) {
         console.error(e);
       }
