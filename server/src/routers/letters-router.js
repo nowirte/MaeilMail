@@ -18,6 +18,7 @@ lettersRouter.get('/admin/:userId', loginRequired, async (req, res, next) => {
   }
 });
 
+
 // 편지 주고받는 사람들 목록(Query String 이용)
 lettersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
@@ -34,7 +35,7 @@ lettersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try {
     const myId = req.userId;
     const { userId } = req.params;
-    const { page } = req.query.page;
+    const { page } = req.query;
     // const pageNum = Number(req.params.page);
     const result = await letterService.getLettersByPage(myId, userId, page);
 
@@ -44,7 +45,7 @@ lettersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   }
 });
 
-lettersRouter.get('/recent', loginRequired, async (req, res, next) => {
+lettersRouter.get('/my/recent', loginRequired, async (req, res, next) => {
   try {
     const myId = req.userId;
 
@@ -56,7 +57,7 @@ lettersRouter.get('/recent', loginRequired, async (req, res, next) => {
 });
 
 // 오고 있는 편지
-lettersRouter.get('/incoming', loginRequired, async (req, res, next) => {
+lettersRouter.get('/my/incoming', loginRequired, async (req, res, next) => {
   try{
     const myId = req.userId;
     const result = await letterService.incomingLetters(myId);
@@ -65,6 +66,7 @@ lettersRouter.get('/incoming', loginRequired, async (req, res, next) => {
     next(err);
   }
 });
+
 
 // 편지쓰기 (path parameter 사용)
 lettersRouter.post('/:userId', loginRequired ,async (req, res, next) => {
