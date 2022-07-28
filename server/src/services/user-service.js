@@ -58,10 +58,10 @@ class UserService {
 
     const newUser = await this.User.create(newUserInfo);
 
-    const { user_id } = newUser.dataValues;
+    const { userId } = newUser.dataValues;
 
-    await this.Favor.create({ user_id });
-    await this.Language.create({ user_id });
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
 
     return newUser;
   }
@@ -77,15 +77,15 @@ class UserService {
 
     const newUser = await this.User.create(userInfo);
 
-    const { user_id } = newUser.dataValues;
+    const { userId } = newUser.dataValues;
 
-    await this.Favor.create({ user_id });
-    await this.Language.create({ user_id });
+    await this.Favor.create({ userId });
+    await this.Language.create({ userId });
 
     return newUser;
   }
 
-  async updateUser(user_id, body, del) {
+  async updateUser(userId, body, del) {
     const {
       nickname,
       gender,
@@ -104,7 +104,7 @@ class UserService {
     // validate
     async function validatePassword(id, input) {
       const user = await User.findOne({
-        where: { user_id: id, status: 'active' },
+        where: { userId, status: 'active' },
         attributes: ['password'],
       });
       if (!user) {
@@ -119,14 +119,14 @@ class UserService {
       throw new Error('현재 비밀번호가 필요합니다.');
     }
 
-    const validate = await validatePassword(user_id, currentPassword);
+    const validate = await validatePassword(userId, currentPassword);
     if (!validate) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
 
     // 유저 필터
     const filter = {
-      where: { user_id, status: { [Op.not]: 'inactive' } },
+      where: { userId, status: { [Op.not]: 'inactive' } },
     };
 
     // 회원 탈퇴
@@ -164,10 +164,10 @@ class UserService {
 
     if (favorUpdate) {
       await this.Favor.findOrCreate({
-        where: { user_id },
+        where: { userId },
       });
       const affected = await this.Favor.update(favorUpdate, {
-        where: { user_id },
+        where: { userId },
       });
       if (affected === 0) {
         console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
@@ -176,31 +176,31 @@ class UserService {
 
     if (languageUpdate) {
       await this.Language.findOrCreate({
-        where: { user_id },
+        where: { userId },
       });
       const affected = await this.Language.update(languageUpdate, {
-        where: { user_id },
+        where: { userId },
       });
       if (affected === 0) {
         console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
       }
     }
 
-    const updated = await this.getUserById(user_id);
+    const updated = await this.getUserById(userId);
     return updated;
   }
 
-  async updateUserProfileImage(user_id, profileImage) {
-    const affectedRows = await this.User.update({ profileImage }, { where: { user_id } });
+  async updateUserProfileImage(userId, profileImage) {
+    const affectedRows = await this.User.update({ profileImage }, { where: { userId } });
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
-    const updated = await this.User.findOne({ where: { user_id } });
+    const updated = await this.User.findOne({ where: { userId } });
 
     return updated;
   }
 
-  async updateGoogleUser(user_id, body) {
+  async updateGoogleUser(userId, body) {
     const { nickname, gender, birthday, language, location, latitude, longitude } = body;
 
     const toUpdate = {
@@ -214,11 +214,11 @@ class UserService {
       status: 'active',
     };
 
-    const affectedRows = await this.User.update(toUpdate, { where: { user_id, status: 'temp', oauth: 'google' } });
+    const affectedRows = await this.User.update(toUpdate, { where: { userId, status: 'temp', oauth: 'google' } });
     if (affectedRows === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
-    const updated = await this.getUserById(user_id);
+    const updated = await this.getUserById(userId);
 
     return updated;
   }
@@ -228,9 +228,9 @@ class UserService {
     return users;
   }
 
-  async getUserById(user_id) {
+  async getUserById(userId) {
     const user = await this.User.findOne({
-      where: { user_id },
+      where: { userId },
       include,
       attributes,
     });

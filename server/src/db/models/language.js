@@ -78,7 +78,7 @@ class Language extends Sequelize.Model {
   static associate(db) {
     db.Language.belongsTo(db.User, {
       foreignKey: 'user_id',
-      sourceKey: 'user_id',
+      sourceKey: 'userId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
