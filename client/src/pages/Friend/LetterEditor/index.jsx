@@ -62,7 +62,6 @@ const LetterEditor = ({ handleWrite, postLetter, user, friend }) => {
       content: '',
     });
   };
-  console.log(friend);
   return (
     <div className={style.LetterEditor}>
       <div className={style.FlexBox}>

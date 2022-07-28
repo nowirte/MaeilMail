@@ -41,7 +41,7 @@ const Friend = () => {
   }, [user]);
 
   // 선택한 친구 정보 받아오기
-  const fetchFriend = async () => {
+  const fetchFriend = useCallback(async () => {
     try {
       const res = await axios.get(
         `http://localhost:3001/api/users/${friendId}`,
@@ -60,7 +60,7 @@ const Friend = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [friendId]);
 
   // 편지 리스트 받아오기
   const fetchLetters = useCallback(async () => {

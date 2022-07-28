@@ -6,6 +6,7 @@ import LetterWrapper from '../LetterList/LetterListStyle';
 import style from './LetterDetail.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useSelector } from 'react-redux';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const LetterDetail = () => {
   const friendId = useParams().id;
@@ -30,10 +31,19 @@ const LetterDetail = () => {
     }
   };
 
+  const handleCopyClipBoard = async text => {
+    try {
+      await navigator.clipboard.writeText(text);
+
+      alert('복사 성공!');
+    } catch (error) {
+      alert('복사 실패!');
+    }
+  };
+
   useEffect(() => {
     fetchLetter();
   }, []);
-  console.log(letter);
 
   return (
     <LetterWrapper>
@@ -42,6 +52,15 @@ const LetterDetail = () => {
       </Link>
 
       <li className={style.letterContainer}>
+        <div className={style.letterHeader}>
+          <span
+            className={style.letterCopyIcon}
+            title="복사"
+            onClick={() => handleCopyClipBoard(letter.content)}
+          >
+            <ContentCopyIcon />
+          </span>
+        </div>
         <pre className={style.letterContent}>{letter.content}</pre>
         <p className={style.letterSender}>{letter.nickname}</p>
         <p className={style.receiveDate}>{formatDate(letter.receiveDate)}</p>
