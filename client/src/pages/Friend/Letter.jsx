@@ -33,6 +33,7 @@ const Letter = () => {
   useEffect(() => {
     fetchLetter();
   }, []);
+  console.log(letter);
 
   return (
     <LetterWrapper>
@@ -43,7 +44,7 @@ const Letter = () => {
       <li className={style.letterContainer}>
         <pre className={style.letterContent}>{letter.content}</pre>
         <p className={style.letterSender}>{letter.nickname}</p>
-        <p className={style.receiveDate}>{formatDate(letter.receive_date)}</p>
+        <p className={style.receiveDate}>{formatDate(letter.receiveDate)}</p>
       </li>
     </LetterWrapper>
   );

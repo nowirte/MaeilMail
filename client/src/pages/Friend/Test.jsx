@@ -72,7 +72,7 @@ const FriendDetail = () => {
   const fetchLetters = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}/${page}`,
+        `http://localhost:3001/api/letters/${friendId}?page=${page}`,
         {
           headers: {
             Authorization: token,
@@ -109,7 +109,6 @@ const FriendDetail = () => {
   const createHandler = content => {
     const letter = content[0];
     const friend_id = content[1];
-    console.log(letter, friend_id);
     const distance = getDistance(
       user.longitude,
       user.latitude,
@@ -147,8 +146,6 @@ const FriendDetail = () => {
     // 편지 리스트 받아오기
     fetchLetters();
   }, [fetchLetters]);
-
-  console.log(letters);
 
   return (
     <MainWrapper>

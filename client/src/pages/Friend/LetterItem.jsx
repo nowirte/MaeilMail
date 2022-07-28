@@ -19,12 +19,12 @@ const LetterItem = ({ user, friend, letter }) => {
   const now = new window.Date();
   const receiveDate = new window.Date(letter.receive_date);
   const timeRemaining = new window.Date(receiveDate) - new window.Date(now);
+  const token = useSelector(state => state.auth.token);
 
   // 편지 읽음 확인 전송
   const patchReadLetter = async () => {
     const letterId = letter.letter_id;
-    const token = useSelector(state => state.auth.token);
-    const data = { is_read: 1 };
+    const data = { isRead: 1 };
     try {
       await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
         headers: {
