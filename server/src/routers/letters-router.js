@@ -30,10 +30,11 @@ lettersRouter.get('/', loginRequired, async (req, res, next) => {
   }
 });
 
-lettersRouter.get('/:userId/:page', loginRequired, async (req, res, next) => {
+lettersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try {
     const myId = req.userId;
-    const { userId, page } = req.params;
+    const { userId } = req.params;
+    const { page } = req.query.page;
     // const pageNum = Number(req.params.page);
     const result = await letterService.getLettersByPage(myId, userId, page);
 
