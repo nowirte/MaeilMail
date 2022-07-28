@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Outlet } from 'react-router';
 import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
-import { WriteBtn } from './LetterStyle';
+import { WriteBtn } from '../Friend/LetterItem/LetterItemStyle';
 import LetterEditor from './LetterEditor';
 import CreateIcon from '@mui/icons-material/Create';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-const FriendDetail = () => {
+const Friend = () => {
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 
@@ -142,4 +142,4 @@ const FriendDetail = () => {
   );
 };
 
-export default FriendDetail;
+export default Friend;

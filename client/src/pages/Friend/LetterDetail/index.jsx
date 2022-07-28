@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { formatDate } from './utils';
+import { formatDate } from '../utils';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { LetterWrapper } from './LetterStyle';
+import LetterWrapper from '../LetterList/LetterListStyle';
 import style from './LetterDetail.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useSelector } from 'react-redux';

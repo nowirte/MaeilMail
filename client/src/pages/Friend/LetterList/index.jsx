@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { LetterWrapper } from './LetterStyle';
-import LetterItem from './LetterItem';
+import LetterWrapper from './LetterListStyle';
+import LetterItem from '../LetterItem';
 import { useOutletContext } from 'react-router-dom';
 
 const LetterList = () => {

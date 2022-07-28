@@ -7,11 +7,11 @@ import {
   LetterFooter,
   Writer,
   Date,
-} from './LetterStyle';
-import Stamp from '../../assets/stamp.png';
-import SendStamp from '../../assets/send-stamp.png';
+} from './LetterItemStyle';
+import Stamp from '../../../assets/stamp.png';
+import SendStamp from '../../../assets/send-stamp.png';
 import DoneIcon from '@mui/icons-material/Done';
-import { formatDate } from './utils';
+import { formatDate } from '../utils';
 import axios from 'axios';
 
 const LetterItem = ({ user, friend, letter, token }) => {

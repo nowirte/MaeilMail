@@ -10,7 +10,7 @@ import LoginBackground from './components/loginBackground';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
 import LetterList from './pages/Friend/LetterList';
 import LetterDetail from './pages/Friend/LetterDetail';
-import FriendDetail from './pages/Friend/FriendDetail';
+import Friend from './pages/Friend';
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
           />
           <Route path="/mypage" element={<MyPage />} />
 
-          <Route element={<FriendDetail />}>
+          <Route element={<Friend />}>
             <Route path="/friend/:id" element={<LetterList />} />
             <Route path="/friend/:id/:postId" element={<LetterDetail />} />
           </Route>
