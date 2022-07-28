@@ -8,6 +8,15 @@ import { styled } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setArrivedLetter } from '../../redux/reducers/mainLetters';
 import { formatDate } from '../Friend/utils';
+import Stamp from '../../assets/stamp.png';
+
+import {
+  StyledRecentButton,
+  StyledRecentlyArrivedLetterHeader,
+  StampImage,
+  StyledSendInfo,
+  StyledButtonContainer,
+} from './styles/StyledRecentLetter';
 
 const style = {
   position: 'absolute',
@@ -16,7 +25,8 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 600,
   bgcolor: 'background.paper',
-  border: '5px solid pink',
+  border: '5px solid grey',
+  borderRadius: '24px',
   boxShadow: 24,
   p: 4,
 };
@@ -40,7 +50,7 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/recent', {
+      const res = await axios.get('http://localhost:3001/api/letters/recent', {
         headers: {
           Authorization: token,
         },
@@ -81,7 +91,7 @@ export default function RecentlyArrivedLetter() {
   // }, [isConfirmed]);
 
   return (
-    <div style={{ marginTop: 45 }}>
+    <StyledRecentButton>
       <Button
         variant="contained"
         onClick={() => {
@@ -102,40 +112,35 @@ export default function RecentlyArrivedLetter() {
             <Typography>아직 안 읽은 편지가 없습니다.</Typography>
           ) : (
             <>
-              <Typography id="modal-modal-title" style={{ fontSize: '24px' }}>
-                To. me
-              </Typography>
+              <StyledRecentlyArrivedLetterHeader>
+                <Typography style={{ fontSize: '24px', fontWeight: '700' }}>
+                  To. me
+                </Typography>
+                <StampImage>
+                  <img src={Stamp} alt="stamp" />
+                </StampImage>
+              </StyledRecentlyArrivedLetterHeader>
               <Typography
                 id="modal-modal-title"
                 style={{
-                  textDecoration: 'underline',
+                  textDecoration: 'dashed underline 1px',
+                  textUnderlinePosition: 'under',
                   fontSize: '20px',
-                  margin: '15px 0',
+                  margin: '35px 0',
+                  lineHeight: '32px',
                 }}
               >
                 {mainArrivedLetter?.content}
               </Typography>
 
-              <div
-                className="StyledSendInfo"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginTop: '15px',
-                  fontSize: '24px',
-                }}
-              >
-                <div>{formatDate(mainArrivedLetter.receive_date)}</div>
+              <StyledSendInfo>
+                <div style={{ lineHeight: '32px' }}>
+                  <p>{formatDate(mainArrivedLetter.receiveDate)}</p>
+                  <p>{mainArrivedLetter.sendLocation}</p>
+                </div>
                 <div>From. {mainArrivedLetter.nickname}</div>
-              </div>
-              <div
-                className="StyledButtonContainer"
-                style={{
-                  marginTop: '25px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
+              </StyledSendInfo>
+              <StyledButtonContainer>
                 <Button
                   style={{ marginTop: 15 }}
                   variant="contained"
@@ -148,12 +153,12 @@ export default function RecentlyArrivedLetter() {
                 >
                   ✔ 확인
                 </Button>
-              </div>
+              </StyledButtonContainer>
               {/* <div>{mainArrivedLetter.is_read}</div> */}
             </>
           )}
         </Box>
       </Modal>
-    </div>
+    </StyledRecentButton>
   );
 }

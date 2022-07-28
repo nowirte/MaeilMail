@@ -11,7 +11,7 @@ const NavTopArea = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('/api/auth/me', {
+      const res = await axios.get('http://localhost:3001/api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -42,7 +42,9 @@ const NavTopArea = () => {
               alt="profileImg"
             />
           </div>
-          <span>{user.nickname}</span>
+          <div className="profileName">
+            <div>{user.nickname}</div>
+          </div>
         </MyProfile>
       </StyledLink>
       <Line />
@@ -59,6 +61,7 @@ const StyledLink = styled(Link)`
 const NavTop = styled.div`
   height: 140px;
   border-radius: 0.25rem;
+  width: 100%;
 `;
 
 const Logo = styled.img`
@@ -74,19 +77,23 @@ const Line = styled.hr`
 `;
 
 const MyProfile = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
 
   font-size: 1.25rem;
   padding: 5px 0;
 
-  > span {
+  & .profileName {
+    width: 70%;
     font-weight: bold;
     color: white;
+    display: flex;
+    justify-content: center;
   }
 
   & .profileImgArea {
+    margin-left: 15px;
     display: flex;
     justify-content: center;
     align-items: center;

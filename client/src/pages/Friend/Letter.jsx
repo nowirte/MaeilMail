@@ -16,7 +16,7 @@ const Letter = () => {
   const fetchLetter = async () => {
     try {
       const res = await axios.get(
-        `/api/letters/${friendId}/${postId}`,
+        `http://localhost:3001/api/letters/${friendId}/${postId}`,
         {
           headers: {
             Authorization: token,

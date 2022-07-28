@@ -68,14 +68,17 @@ class Language extends Sequelize.Model {
         collate: 'utf8_general_ci', // 한국어 설정
         tableName: 'Languages',
         modelName: 'Language',
+        underscored: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
       }
     );
   }
 
   static associate(db) {
     db.Language.belongsTo(db.User, {
-      foreignKey: 'userId',
-      sourceKey: 'user_id',
+      foreignKey: 'user_id',
+      sourceKey: 'userId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

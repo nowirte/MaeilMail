@@ -10,7 +10,7 @@ const NavFriendsArea = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('/api/letters', {
+      const res = await axios.get('http://localhost:3001/api/letters', {
         headers: {
           Authorization: token,
         },
@@ -25,9 +25,9 @@ const NavFriendsArea = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(friends);
   return (
     <Friends>
+
       {friends &&
         friends?.map(friend => {
           return (
@@ -36,11 +36,15 @@ const NavFriendsArea = () => {
                 <div className="profileImgArea">
                   <img src={friend.profileImage} alt="friendImg" />
                 </div>
-                <span>{friend.nickname}</span>
+                <div className="friendInfo">
+                  <div className="friendName">{friend.nickname}</div>
+                  <div className="friendCount">{friend.count}</div>
+                </div>
               </FriendsList>
             </StyledLink>
           );
         })}
+
     </Friends>
   );
 };
@@ -59,26 +63,43 @@ const Friends = styled.div`
 
 const FriendsList = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 10px 0;
 
   font-size: 1.2rem;
   padding-bottom: 20px;
 
-  > span {
-    font-weight: bold;
-    color: white;
-  }
+  font-weight: bold;
+  color: white;
 
+  & .friendInfo {
+    position: relative;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .friendCount {
+      position: absolute;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: pink;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   & .profileImgArea {
+    margin-left: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     margin-right: 10px;
 
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
     background-color: white;
 
