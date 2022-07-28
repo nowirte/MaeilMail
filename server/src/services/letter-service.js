@@ -78,7 +78,7 @@ class LetterService {
     const elapsedDay = parseInt(Number(deliveryTime) / 1440, 10);
     const elapsedHours = parseInt(Number(deliveryTime) / 60, 10);
     const elpasedMinutes = Number(deliveryTime) % 60;
-
+    console.log("배달 시간", deliveryTime);
     const arriveDate = new Date();
 
     arriveDate.setDate(arriveDate.getDate() + elapsedDay);
@@ -88,6 +88,7 @@ class LetterService {
     const job = await scheduleJob(arriveDate, async () => {
       await this.Letter.update({ isArrived: true }, { where: { letterId } });
     });
+    console.log("도착");
     return job;
   }
 
@@ -161,8 +162,8 @@ class LetterService {
     const findedLetter = await this.Letter.findOne({
       where: {
         [Op.or]: [
-          { send_id: myId, receive_id: oponentId, letter_id: letterId },
-          { send_id: oponentId, receive_id: myId, letter_id: letterId },
+          { send_id: myId, receive_id: oponentId, letterId },
+          { send_id: oponentId, receive_id: myId, letterId },
         ],
       },
       raw: true,
