@@ -26,11 +26,14 @@ const CurrentlyComingLetter = () => {
   // console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/incoming', {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const res = await axios.get(
+        'http://localhost:3001/api/letters/my/incoming',
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       const data = await res.data;
       dispatch(initComingLetters({ mainComingLetters: data }));
     } catch (e) {
@@ -40,7 +43,7 @@ const CurrentlyComingLetter = () => {
   useEffect(() => {
     fetchCurrentlyComingLetter();
   }, []);
-  console.log('maincoming', mainComingLetters);
+  // console.log('maincoming', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>

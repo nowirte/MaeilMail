@@ -50,11 +50,14 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/recent', {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const res = await axios.get(
+        'http://localhost:3001/api/letters/my/recent',
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       console.log('data', res.data);
       const data = await res.data[0];
       dispatch(setArrivedLetter({ mainArrivedLetter: data }));
@@ -68,7 +71,7 @@ export default function RecentlyArrivedLetter() {
   const patchIsRead = async () => {
     try {
       const data = { isRead: 1 };
-      await axios.patch(`/api/letters/${letterId}`, data, {
+      await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
         headers: {
           Authorization: token,
         },
