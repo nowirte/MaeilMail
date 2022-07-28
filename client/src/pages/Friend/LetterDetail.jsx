@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import MainWrapper from '../../components/common';
-import { LetterWrapper } from './LetterStyle';
-import FriendInfo from './FriendInfo';
+import React, { useState, useEffect } from 'react';
+import { formatDate } from './utils';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { LetterWrapper } from './LetterStyle';
 import style from './LetterDetail.module.css';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useSelector } from 'react-redux';
 
 const LetterDetail = () => {
-  const userId = useParams().id;
+  const friendId = useParams().id;
   const postId = useParams().postId;
-
+  const token = useSelector(state => state.auth.token);
   const [letter, setLetter] = useState({});
 
   const fetchLetter = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(
-        `http://localhost:3001/api/letters/${userId}/${postId}`,
+        `http://localhost:3001/api/letters/${friendId}/${postId}`,
         {
           headers: {
             Authorization: token,
@@ -32,21 +32,21 @@ const LetterDetail = () => {
 
   useEffect(() => {
     fetchLetter();
-    console.log(friend, favor, language);
   }, []);
+  console.log(letter);
 
   return (
-    <MainWrapper>
-      {/* <FriendInfo friend={friend} favor={favor} language={language} /> */}
-      <LetterWrapper>
-        <div className={style.letterHeader}>
-          <h5 className="nickname">{letter.letter_id}</h5>
-        </div>
-        <p>{letter.nickname}</p>
-        <p>{letter.content}</p>
-        <p>{letter.receive_date}</p>
-      </LetterWrapper>
-    </MainWrapper>
+    <LetterWrapper>
+      <Link to={`/friend/${friendId}`}>
+        <ArrowBackIcon />
+      </Link>
+
+      <li className={style.letterContainer}>
+        <pre className={style.letterContent}>{letter.content}</pre>
+        <p className={style.letterSender}>{letter.nickname}</p>
+        <p className={style.receiveDate}>{formatDate(letter.receiveDate)}</p>
+      </li>
+    </LetterWrapper>
   );
 };
 

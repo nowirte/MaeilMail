@@ -2,8 +2,9 @@ import React, { useState, useRef } from 'react';
 import style from './LetterEditor.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { useParams } from 'react-router-dom';
+import { getDistance, getTime } from '../utils';
 
-const LetterEditor = ({ handleWrite, onCreate }) => {
+const LetterEditor = ({ handleWrite, postLetter, user, friend }) => {
   const friendId = useParams().id;
   const contentInput = useRef();
   const [state, setState] = useState({
@@ -17,6 +18,34 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
     });
   };
 
+  // 편지 작성
+  const createHandler = content => {
+    const letter = content[0];
+    const friend_id = content[1];
+    const distance = getDistance(
+      user.longitude,
+      user.latitude,
+      friend.longitude,
+      friend.latitude
+    );
+    const sendDate = new window.Date().toISOString();
+    let receiveDate = new window.Date();
+    const deliveryTime = getTime(distance);
+    receiveDate = new window.Date(
+      receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
+    ).toISOString();
+    const newLetter = {
+      sendId: user.userId,
+      receiveId: friend_id,
+      sendDate: sendDate,
+      receiveDate: receiveDate,
+      deliveryTime: deliveryTime,
+      content: letter,
+    };
+
+    postLetter(newLetter);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -26,13 +55,14 @@ const LetterEditor = ({ handleWrite, onCreate }) => {
       return;
     }
     const id = friendId;
-    onCreate([state.content, id]);
+    // onCreate([state.content, id]);
+    createHandler([state.content, id]);
     handleWrite();
     setState({
       content: '',
     });
   };
-
+  console.log(friend);
   return (
     <div className={style.LetterEditor}>
       <div className={style.FlexBox}>

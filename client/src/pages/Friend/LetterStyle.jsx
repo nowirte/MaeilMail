@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const LetterWrapper = styled.ul`
   overflow: hidden;
   position: relative;
-  margin: 220px 1rem 20rem 1rem;
+  margin: 15rem 1rem 20rem 1rem;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -13,7 +13,6 @@ const LetterWrapper = styled.ul`
 `;
 
 const Letter = styled.li`
-  /* cursor: pointer; */
   width: 300px;
   border-radius: 1rem;
   box-sizing: border-box;
@@ -104,7 +103,6 @@ const WriteBtn = styled.button`
   &:hover {
     background-color: #4f4f4f;
     color: #ccc;
-    opacity: 0.2;
   }
 `;
 export {

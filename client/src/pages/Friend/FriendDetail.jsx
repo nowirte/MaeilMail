@@ -4,7 +4,6 @@ import MainWrapper from '../../components/common';
 import FriendInfo from './FriendInfo';
 import { WriteBtn } from './LetterStyle';
 import LetterEditor from './LetterEditor';
-import { getDistance, getTime } from './utils';
 import CreateIcon from '@mui/icons-material/Create';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -14,7 +13,6 @@ const FriendDetail = () => {
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 
-  // 편지 보내기 버튼
   const [writeIsShown, setWriteIsShown] = useState(false);
   // 편지 리스트
   const [letters, setLetters] = useState([]);
@@ -26,10 +24,6 @@ const FriendDetail = () => {
     language: [],
     info: {},
   });
-  // 편지리스트 페이지네이션
-  const [page, setPage] = useState(1);
-  // 페이지네이션의 총 수
-  const [totalPage, setTotalPage] = useState(null);
 
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
@@ -72,7 +66,7 @@ const FriendDetail = () => {
   const fetchLetters = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}?page=${page}`,
+        `http://localhost:3001/api/letters/${friendId}?page=1`,
         {
           headers: {
             Authorization: token,
@@ -81,13 +75,12 @@ const FriendDetail = () => {
       );
       const data = res.data;
       setLetters(data.findedLetter);
-      setTotalPage(data.totalPage);
     } catch (error) {
       console.error(error);
     }
   }, [friendId]);
 
-  // 편지 작성하기
+  // 편지 작성 요청
   const postLetter = async newLetter => {
     try {
       await axios.post(
@@ -103,34 +96,6 @@ const FriendDetail = () => {
       console.error(error);
     }
     await fetchLetters();
-  };
-
-  // 편지 작성
-  const createHandler = content => {
-    const letter = content[0];
-    const friend_id = content[1];
-    const distance = getDistance(
-      user.longitude,
-      user.latitude,
-      friend.info.longitude,
-      friend.info.latitude
-    );
-    const sendDate = new window.Date().toISOString();
-    let receiveDate = new window.Date();
-    const deliveryTime = getTime(distance);
-    receiveDate = new window.Date(
-      receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
-    ).toISOString();
-    const newLetter = {
-      sendId: user.user_id,
-      receiveId: friend_id,
-      sendDate: sendDate,
-      receiveDate: receiveDate,
-      deliveryTime: deliveryTime,
-      content: letter,
-    };
-
-    postLetter(newLetter);
   };
 
   // 편지 보내기 버튼
@@ -157,7 +122,7 @@ const FriendDetail = () => {
       />
 
       {/* 하위 컴포넌트가 들어올 자리 */}
-      <Outlet context={[letters, setLetters]} />
+      <Outlet context={[letters]} />
 
       {/* 편지 보내기 버튼, 편지 작성 컴포넌트 */}
       {!writeIsShown ? (
@@ -166,7 +131,12 @@ const FriendDetail = () => {
           편지 보내기
         </WriteBtn>
       ) : (
-        <LetterEditor handleWrite={writeHandler} onCreate={createHandler} />
+        <LetterEditor
+          handleWrite={writeHandler}
+          postLetter={postLetter}
+          user={user}
+          friend={friend.info}
+        />
       )}
     </MainWrapper>
   );

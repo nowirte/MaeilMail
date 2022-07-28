@@ -11,7 +11,7 @@ import {
   BadgeWrapper,
   Badge,
 } from './FriendInfoStyle';
-import { getBirth, getAge } from './utils';
+import { getBirth, getAge } from '../utils';
 
 const FriendInfo = ({ friend, favor, language }) => {
   const favorites = Object.keys(favor).reduce((acc, k) => {
@@ -21,8 +21,8 @@ const FriendInfo = ({ friend, favor, language }) => {
     return acc;
   }, []);
 
-  const languages = Object.keys(favor).reduce((acc, k) => {
-    if (favor[k]) {
+  const languages = Object.keys(language).reduce((acc, k) => {
+    if (language[k]) {
       acc.push(k);
     }
     return acc;

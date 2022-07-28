@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
 import Home from './pages/Home';
 import SignUp from './pages/Signup';
-import Letters from './pages/Friend';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
-import Letter from './pages/Friend/Letter';
-import Test from './pages/Friend/Test';
+import LetterList from './pages/Friend/LetterList';
+import LetterDetail from './pages/Friend/LetterDetail';
+import FriendDetail from './pages/Friend/FriendDetail';
 
 const App = () => {
   return (
@@ -24,9 +24,10 @@ const App = () => {
             element={<RecommendDetailPage />}
           />
           <Route path="/mypage" element={<MyPage />} />
-          <Route element={<Test />}>
-            <Route path="/friend/:id" element={<Letters />} />
-            <Route path="/friend/:id/:postId" element={<Letter />} />
+
+          <Route element={<FriendDetail />}>
+            <Route path="/friend/:id" element={<LetterList />} />
+            <Route path="/friend/:id/:postId" element={<LetterDetail />} />
           </Route>
         </Route>
 
