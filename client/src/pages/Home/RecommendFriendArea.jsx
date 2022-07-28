@@ -14,6 +14,21 @@ import {
 } from './styles/StyledRecommendFriendArea';
 
 export const RecommendFriendArea = ({ data }) => {
+  const favor = data.Favor;
+  const favorites = Object.keys(favor).reduce((acc, k) => {
+    if (favor[k]) {
+      acc.push(k);
+    }
+    return acc;
+  }, []);
+  const language = data.Language;
+  const languages = Object.keys(language).reduce((acc, k) => {
+    if (language[k]) {
+      acc.push(k);
+    }
+    return acc;
+  }, []);
+
   return (
     <Friend>
       <Account>
@@ -53,30 +68,23 @@ export const RecommendFriendArea = ({ data }) => {
       <AdditionalInfo>
         <InterestInfo>
           <p className="title">관심사</p>
-          {data.Favor?.art && <p className="tag">예술</p>}
-          {data.Favor?.book && <p className="tag">독서</p>}
-          {data.Favor?.coding && <p className="tag">코딩</p>}
-          {data.Favor?.entertainment && <p className="tag">예능</p>}
-          {data.Favor?.fantacy && <p className="tag">판타지</p>}
-          {data.Favor?.fashion && <p className="tag">패션</p>}
-          {data.Favor?.game && <p className="tag">게임</p>}
-          {data.Favor?.movie && <p className="tag">영화</p>}
-          {data.Favor?.music && <p className="tag">노래</p>}
-          {data.Favor?.sports && <p className="tag">스포츠</p>}
-          {data.Favor?.travel && <p className="tag">여행</p>}
+          {favorites.map((e, i) => {
+            return (
+              <p className="tag" key={`${i}-${e}`}>
+                {e}
+              </p>
+            );
+          })}
         </InterestInfo>
         <LanguageInfo>
           <p className="title">언어</p>
-          {data.Language?.afrikaans && <p className="tag">아프리카어</p>}
-          {data.Language?.chinese && <p className="tag">중국어</p>}
-          {data.Language?.english && <p className="tag">영어</p>}
-          {data.Language?.french && <p className="tag">프랑스어</p>}
-          {data.Language?.german && <p className="tag">독일어</p>}
-          {data.Language?.japanese && <p className="tag">일본어</p>}
-          {data.Language?.korean && <p className="tag">한국어</p>}
-          {data.Language?.russian && <p className="tag">러시안어</p>}
-          {data.Language?.russian && <p className="tag">스페인어</p>}
-          {data.Language?.uzbek && <p className="tag">우즈베키스탄어</p>}
+          {languages.map((e, i) => {
+            return (
+              <p className="tag" key={`${i}-${e}`}>
+                {e}
+              </p>
+            );
+          })}
         </LanguageInfo>
       </AdditionalInfo>
     </Friend>
