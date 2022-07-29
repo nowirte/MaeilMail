@@ -78,7 +78,7 @@ class UserService {
   }
 
   async addGoogleUser(email) {
-    const hashed = await bcrypt.hash('탈퇴', 10);
+    const hashed = await bcrypt.hash('google', 10);
     const random = Math.floor(Math.random() * 10000);
     const userInfo = {
       email,
