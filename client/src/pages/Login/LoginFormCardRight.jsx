@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/reducers/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 import {
   LoginFormInput,
   LoginFormButton,
@@ -60,23 +61,22 @@ const LoginForm = props => {
         navigate('/');
       })
       .catch(function () {
-        alert('계정이나 비밀번호가 다릅니다.');
+        alert('이메일, 비밀번호를 확인해주세요.');
       });
   }
 
-  async function handleGoogleLoginClick(e) {
-    e.preventDefault();
+  const login = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      const { access_token } = tokenResponse;
+      const { data } = await axios.get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`
+      );
+      const { email } = data;
 
-    //CORS에러 있음
-    await axios
-      .get('http://localhost:3001/api/auth/login/google')
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+      const res = axios.post('');
+    },
+    onError: () => console.log('Login Failed'),
+  });
 
   return (
     <FormCard>
@@ -100,10 +100,16 @@ const LoginForm = props => {
         <Link to="/home">비밀번호 찾기</Link>
         <Link to="/signup">회원가입</Link>
       </LinkContainer>
-      <LoginGoogleButton onClick={handleGoogleLoginClick}>
+
+      <LoginGoogleButton
+        onClick={() => {
+          login();
+        }}
+      >
         <GoogleLogo src={googleLogo} alt="googleLogo" />
         Google
       </LoginGoogleButton>
+
       <span>SNS 로그인/회원가입</span>
     </FormCard>
   );
