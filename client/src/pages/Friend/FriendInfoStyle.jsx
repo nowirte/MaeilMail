@@ -34,8 +34,7 @@ const UserEmoji = styled.div`
 
   & > img {
     height: 100%;
-    width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
   }
 `;
@@ -63,7 +62,6 @@ const BadgeWrapper = styled.div`
   display: flex;
   margin-top: 0.5rem;
   gap: 0.5rem;
-  flex-wrap: wrap;
 `;
 const Badge = styled.span`
   font-size: 1rem;

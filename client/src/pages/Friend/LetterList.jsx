@@ -2,11 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import LetterWrapper from './LetterListStyle';
-import LetterItem from '../LetterItem';
-import { useOutletContext } from 'react-router-dom';
+import { LetterWrapper } from './LetterStyle';
+import LetterItem from './LetterItem';
 
-const LetterList = () => {
+const LetterList = ({ letters, handleClick }) => {
   const friendId = useParams().id;
   const token = useSelector(state => state.auth.token);
 
@@ -15,7 +14,6 @@ const LetterList = () => {
   // 친구인 유저
   const [friend, setFriend] = useState([]);
   // 편지 리스트
-  const [letters, setLetters] = useOutletContext();
 
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
@@ -53,21 +51,20 @@ const LetterList = () => {
   useEffect(() => {
     fetchUser();
     fetchFriend();
-  }, [friendId, token]);
+  }, []);
 
   return (
     <LetterWrapper>
-      {letters === undefined && <p>아직 편지가 없습니다.</p>}
-      {letters !== undefined &&
-        letters.map(letter => (
-          <LetterItem
-            key={letter.letterId}
-            letter={letter}
-            friend={friend}
-            user={user}
-            token={token}
-          />
-        ))}
+      {letters.length === 0 && <p>아직 편지가 없습니다.</p>}
+      {letters.map(letter => (
+        <LetterItem
+          key={Math.random().toString()}
+          letter={letter}
+          friend={friend}
+          user={user}
+          handleClick={handleClick}
+        />
+      ))}
     </LetterWrapper>
   );
 };

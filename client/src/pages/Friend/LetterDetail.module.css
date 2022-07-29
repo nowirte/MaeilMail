@@ -7,19 +7,6 @@
   border: 1px solid #ccc;
   border-radius: 1rem;
 }
-.letterHeader {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.letterCopyIcon {
-  border: 2px solid #ccc;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-}
-.letterCopyIcon:hover {
-  transform: scale(1.1);
-}
 
 .letterContent {
   font-size: 1.2rem;
