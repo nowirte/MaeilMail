@@ -201,7 +201,7 @@ class UserService {
   }
 
   async updateGoogleUser(userId, body) {
-    const { nickname, gender, birthday, language, location, latitude, longitude } = body;
+    const { nickname, gender, language, location, latitude, longitude } = body;
 
     const nicknameResult = await this.User.findOne({
       where: { nickname },
@@ -215,7 +215,6 @@ class UserService {
     const toUpdate = {
       ...(nickname && { nickname }),
       ...(gender && { gender }),
-      ...(birthday && { birthday }),
       ...(language && { language }),
       ...(location && { location }),
       ...(latitude && { latitude }),
