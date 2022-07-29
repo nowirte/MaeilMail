@@ -23,7 +23,7 @@ class UserService {
     const result = await this.User.findOne({
       where: filter,
     });
-    return !!result;
+    return result;
   }
 
   async validatePassword(id, input) {
