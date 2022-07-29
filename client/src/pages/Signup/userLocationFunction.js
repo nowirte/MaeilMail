@@ -1,25 +1,15 @@
+import axios from 'axios';
+
 export default async function getLocInfo() {
   try {
-    const position = await new Promise((resolve, rejected) => {
-      navigator.geolocation.getCurrentPosition(resolve, rejected);
-    });
+    const res = await axios(
+      `https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.REACT_APP_LOCATION_API_KEY}`
+    );
+    console.log(res);
+    const { latitude, longitude, country_name } = res.data;
 
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-
-    const data = await getCountryData(lat, lng);
-    return { location: data, latitude: lat, longitude: lng };
+    return { location: country_name, latitude: latitude, longitude: longitude };
   } catch (err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
-}
-
-function getCountryData(lat, lng) {
-  return fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-  )
-    .then(res => res.json())
-    .then(data => {
-      return data.countryName;
-    });
 }
