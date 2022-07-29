@@ -19,21 +19,21 @@ class LetterService {
   // 쪽지보냈던 사람들 조회
   async getContactUsers(myId) {
     const targetId = await this.Letter.findAll({
-      where: { [Op.or]: [{ send_id: myId }, { receive_id: myId }] },
+      where: { [Op.or]: [{ send_id: Number(myId) }, { receive_id: Number(myId) }] },
       raw: true,
     });
     
     const idArrayTemp = [];
-
+    
     for (let i = 0; i < targetId.length; i += 1) {
-      if (targetId[i].receive_Id === myId) {
+      if (targetId[i].receive_id === myId) {
         idArrayTemp.push(targetId[i].send_id);
       } else {
         idArrayTemp.push(targetId[i].receive_id);
       }
     }
     const idArray = [...new Set(idArrayTemp)];
-    
+
     // 나한테 온 편지 찾기
     const myLetter = await this.Letter.findAll({
       where: { receive_Id: myId},
@@ -78,7 +78,7 @@ class LetterService {
     const elapsedDay = parseInt(Number(deliveryTime) / 1440, 10);
     const elapsedHours = parseInt(Number(deliveryTime) / 60, 10);
     const elpasedMinutes = Number(deliveryTime) % 60;
-    console.log("배달 시간", deliveryTime);
+
     const arriveDate = new Date();
 
     arriveDate.setDate(arriveDate.getDate() + elapsedDay);
@@ -88,7 +88,7 @@ class LetterService {
     const job = await scheduleJob(arriveDate, async () => {
       await this.Letter.update({ isArrived: true }, { where: { letterId } });
     });
-    console.log("도착");
+
     return job;
   }
 
@@ -237,7 +237,7 @@ class LetterService {
         }
       }
     }
-    console.log(myLetter);
+
     return myLetter;
   }
 
