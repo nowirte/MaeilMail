@@ -92,7 +92,8 @@
 ### 💻 서비스 구조도
 ---
 <br/>
-<div><img src="https://cdn.discordapp.com/attachments/993788882397175862/1000205318074150922/unknown.png"></div>
+<div><img src="https://user-images.githubusercontent.com/97136735/181684033-272246e2-e08e-4734-8dac-c48766cc80a1.png"></div>
+
 <br/>
 
 ### 🔗 링크
