@@ -35,18 +35,17 @@ authRouter.post('/login/google', async (req, res, next) => {
   try {
     const { email } = req.body;
     const result = await userService.validateEmail(email, 'google');
-    const newUser = result || await userService.addGoogleUser(email);
+    const newUser = result || (await userService.addGoogleUser(email));
 
     if (!newUser) {
       throw new Error('알 수 없는 이유로 계정이 생성되지 않았습니다.');
     }
 
-    await setUserToken(newUser, res)
+    await setUserToken(newUser, res);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
-
+});
 
 // 마이페이지
 authRouter.get('/me', loginRequired, async (req, res, next) => {
@@ -67,16 +66,17 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
     }
     // isGoogle: 구글 로그인 했으나 회원 정보 입력 안 한 경우
     const { isGoogle } = req.query;
+    if (isGoogle) {
+      const status = await userService.updateGoogleUser(Number(userId), req.body);
+      await setUserToken({ userId, status }, res);
+    } else {
+      const result = await userService.updateUser(Number(userId), req.body, false);
 
-    const result = isGoogle
-      ? await userService.updateGoogleUser(Number(userId), req.body)
-      : await userService.updateUser(Number(userId), req.body, false);
-
-    if (!result) {
-      throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
+      if (!result) {
+        throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
+      }
+      res.status(200).json(result);
     }
-    console.log(result);
-    res.status(200).json(result);
   } catch (err) {
     next(err);
   }
