@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDistance, getTime, formatDate } from '../Friend/utils';
-import LetterEditor from '../Friend/LetterEditor';
+import FriendLetterEditor from './FriendLetterEditor';
 import {
   Wrapper,
   ProfileImg,
@@ -141,7 +141,10 @@ function RecommendDetailPage() {
             </StyledWriteButton>
           </StyledWriteButtonContainer>
         ) : (
-          <LetterEditor handleWrite={writeHandler} onCreate={createHandler} />
+          <FriendLetterEditor
+            handleWrite={writeHandler}
+            onCreate={createHandler}
+          />
         )}
       </Wrapper>
     </>
