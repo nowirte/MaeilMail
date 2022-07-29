@@ -49,7 +49,13 @@ authRouter.get(
 authRouter.get('/me', loginRequired, async (req, res, next) => {
   try {
     const { userId } = req;
+
     const info = await userService.getUserById(Number(userId));
+
+    if (!info) {
+      res.status(404).json({ reason: 'NotFoundError' });
+    }
+
     res.status(200).json(info);
   } catch (err) {
     next(err);
@@ -67,11 +73,12 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 
     const result = isGoogle
       ? await userService.updateGoogleUser(Number(userId), req.body)
-      : await userService.updateUser(Number(userId), req.body, false);
+      : await userService.updateUser(Number(userId), req.body);
 
     if (!result) {
-      throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
+      res.status(404).json({ result: 'error', reason: 'NotFoundError' });
     }
+
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -80,13 +87,18 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
 
 authRouter.patch('/me/image', loginRequired, upload.single('img'), async (req, res) => {
   const { userId, file } = await req;
+
   const imageUrl = await file.location;
-  if (imageUrl) {
-    await userService.updateUserProfileImage(Number(userId), imageUrl);
-    res.json({ imageUrl });
-  } else {
-    res.json({ result: 'error', message: '이미지가 제대로 업로드되지 않았습니다.' });
+  if (!imageUrl) {
+    throw new Error('이미지가 제대로 업로드되지 않았습니다.');
   }
+
+  const result = await userService.updateUserProfileImage(Number(userId), imageUrl);
+  if (result === 0) {
+    throw new Error('업데이트가 제대로 이루어지지 않았습니다.');
+  }
+
+  res.status(200).json({ imageUrl, message: '정상적으로 업데이트되었습니다.' });
 });
 
 authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
@@ -96,12 +108,11 @@ authRouter.patch('/me/withdrawal', loginRequired, async (req, res, next) => {
       throw new Error('토큰에서 id가 정상적으로 추출되지 않았습니다.');
     }
 
-    const result = await userService.updateUser(Number(userId), req.body, true);
-
-    if (!result) {
-      throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
+    const result = await userService.inactivateUser(Number(userId), req.body);
+    if (result === 0) {
+      throw new Error('탈퇴가 정상적으로 이루어지지 않았습니다.');
     }
-    res.status(200).json(result);
+    res.status(200).json({ message: '정상적으로 탈퇴되었습니다.' });
   } catch (err) {
     next(err);
   }

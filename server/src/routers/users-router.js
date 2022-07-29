@@ -21,21 +21,27 @@ usersRouter.post('/', async (req, res, next) => {
 // 조건에 따라 유저들 정보 조회
 usersRouter.get('/', loginRequired, async (req, res, next) => {
   try {
+    const { userId } = req;
     const { isAdmin, search, recommend } = req.query;
+
     if (isAdmin) {
       if (req.userStatus !== 'admin') {
         throw new Error('관리자만 접근할 수 있습니다.');
       }
+
       const users = await userService.getUsers();
       res.status(200).json(users);
     } else if (search) {
-      if (search === '') {
+      const target = search.trim()
+      if (!target) {
         throw new Error('검색어를 입력해주세요');
       }
-      const result = await userService.getUsersBySearch(search);
+
+      const result = await userService.getUsersBySearch(userId, target);
       res.status(200).json(result);
     } else if (recommend) {
-      const result = await userService.getUsersRecommended();
+
+      const result = await userService.getUsersRecommended(userId);
       res.status(200).json(result);
     }
   } catch (err) {
@@ -47,6 +53,7 @@ usersRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await userService.getUserById(Number(userId));
+
     res.status(200).json(user);
   } catch (err) {
     next(err);
