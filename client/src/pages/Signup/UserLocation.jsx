@@ -2,7 +2,6 @@ import { React, useEffect } from 'react';
 import styled from 'styled-components';
 import loc from './location.png';
 import refresh from './refresh.png';
-import { useSelector, useDispatch } from 'react-redux';
 import useLoc from './userLocationFunction';
 
 const LocationContainer = styled.div`

@@ -48,21 +48,23 @@ const LoginForm = props => {
     e.preventDefault();
     const data = { email: email, password: password };
     const bodyData = JSON.stringify(data);
-
-    await axios
-      .post('http://localhost:3001/api/auth/login', bodyData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(function (response) {
-        const { role, token } = response.data;
-        dispatch(setAuth({ role: role, token: token, auth: true }));
-        navigate('/');
-      })
-      .catch(function () {
+    try {
+      const { role, token } = await axios.post(
+        'http://localhost:3001/api/auth/login',
+        bodyData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      dispatch(setAuth({ role: role, token: token, auth: true }));
+      navigate('/');
+    } catch {
+      () => {
         alert('이메일, 비밀번호를 확인해주세요.');
-      });
+      };
+    }
   }
 
   const login = useGoogleLogin({
@@ -72,8 +74,21 @@ const LoginForm = props => {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`
       );
       const { email } = data;
+      const bodyData = JSON.stringify({ email: email });
 
-      const res = axios.post('');
+      const res = await axios.post(
+        'http://localhost:3001/api/auth/login/google',
+        bodyData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const { token, role } = res.data;
+      dispatch(setAuth({ role: role, token: token, auth: true }));
+      role === 'temp' ? navigate('/googleSignup') : navigate('/');
     },
     onError: () => console.log('Login Failed'),
   });

@@ -1,6 +1,8 @@
+import { React, useEffect } from 'react';
 import styled from 'styled-components';
-import location from './location.png';
+import loc from './location.png';
 import refresh from './refresh.png';
+import useLoc from '../Signup/userLocationFunction';
 
 const LocationContainer = styled.div`
   height: 50px;
@@ -32,12 +34,30 @@ const Refresh = styled.img`
   border: none;
 `;
 
-const UserLocation = () => {
+const UserLocation = props => {
+  const { locationInfo, setLocationInfo } = props;
+
+  useEffect(() => {
+    useLoc().then(res => {
+      setLocationInfo(state => {
+        return { ...state, ...res };
+      });
+    });
+  }, []);
+
+  async function refreshHandleClick(e) {
+    e.preventDefault();
+    const locInfo = await useLoc();
+    setLocationInfo(state => {
+      return { ...state, ...locInfo };
+    });
+  }
+
   return (
     <LocationContainer>
-      <Location src={location} alt="location" />
-      <span>South Korea</span>
-      <Refresh src={refresh} alt="refresh" />
+      <Location src={loc} alt="location" />
+      <span>{locationInfo.location}</span>
+      <Refresh src={refresh} alt="refresh" onClick={refreshHandleClick} />
     </LocationContainer>
   );
 };
