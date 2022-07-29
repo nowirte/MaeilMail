@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -50,16 +50,18 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/letters/recent', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      // console.log('data', res.data);
-      const data = await res.data[res.data.length - 1];
+      const res = await axios.get(
+        'http://localhost:3001/api/letters/my/recent',
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log('data', res.data);
+      const data = await res.data[0];
       dispatch(setArrivedLetter({ mainArrivedLetter: data }));
-      setLetterId(mainArrivedLetter.letter_id);
-      // console.log(mainArrivedLetter);
+      setLetterId(mainArrivedLetter?.letterId);
     } catch (e) {
       console.error(e);
     }
@@ -67,28 +69,18 @@ export default function RecentlyArrivedLetter() {
 
   const patchIsRead = async () => {
     try {
-      const data = { ...mainArrivedLetter, isRead: 1 };
-      const response = await axios.patch(`/api/letters/${letterId}`, data, {
+      const data = { isRead: 1 };
+      await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
         headers: {
           Authorization: token,
         },
       });
 
-      dispatch(setArrivedLetter({ mainArrivedLetter: response.data }));
-
+      // dispatch(setArrivedLetter({ mainArrivedLetter: response.data }));
     } catch (e) {
       console.error(e);
     }
   };
-
-  // useEffect(() => {
-  //   fetchRecentlyLetter();
-  // }, []);
-
-  // useEffect(() => {
-  //   // const id = mainArrivedLetter.letter_Id
-  //   patchIsRead(letterId);
-  // }, [isConfirmed]);
 
   return (
     <StyledRecentButton>
@@ -108,7 +100,7 @@ export default function RecentlyArrivedLetter() {
         onClick={handleClose}
       >
         <Box sx={style}>
-          {mainArrivedLetter.length === 1 ? (
+          {!mainArrivedLetter ? (
             <Typography>아직 안 읽은 편지가 없습니다.</Typography>
           ) : (
             <>
@@ -135,10 +127,10 @@ export default function RecentlyArrivedLetter() {
 
               <StyledSendInfo>
                 <div style={{ lineHeight: '32px' }}>
-                  <p>{formatDate(mainArrivedLetter.receiveDate)}</p>
-                  <p>{mainArrivedLetter.sendLocation}</p>
+                  <p>{formatDate(mainArrivedLetter?.receiveDate)}</p>
+                  <p>{mainArrivedLetter?.sendLocation}</p>
                 </div>
-                <div>From. {mainArrivedLetter.nickname}</div>
+                <div>From. {mainArrivedLetter?.nickname}</div>
               </StyledSendInfo>
               <StyledButtonContainer>
                 <Button
@@ -146,15 +138,11 @@ export default function RecentlyArrivedLetter() {
                   variant="contained"
                   onClick={() => {
                     patchIsRead();
-                    handleClose();
-                    // setIsConfirmed(true);
-                    console.log(mainArrivedLetter);
                   }}
                 >
                   ✔ 확인
                 </Button>
               </StyledButtonContainer>
-              {/* <div>{mainArrivedLetter.is_read}</div> */}
             </>
           )}
         </Box>

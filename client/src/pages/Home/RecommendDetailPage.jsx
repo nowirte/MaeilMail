@@ -24,6 +24,7 @@ function RecommendDetailPage() {
   const searchUser = useSelector(state => state.searchUser.searchUser);
   const searchUserId = useSelector(state => state.searchUser.searchUserId);
   // console.log('searchUserId', searchUserId);
+  // console.log('searchUser', searchUser);
   const [writeIsShown, setWriteIsShown] = useState(false);
   const [user, setUser] = useState({});
 
@@ -89,8 +90,8 @@ function RecommendDetailPage() {
         receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
       ).toISOString();
       const newLetter = {
-        sendId: user.user_id,
-        receiveId: searchUser.user_id,
+        sendId: user.userId,
+        receiveId: searchUser.userId,
         sendDate: sendDate,
         receiveDate: receiveDate,
         deliveryTime: deliveryTime,
@@ -110,7 +111,7 @@ function RecommendDetailPage() {
     fetchSearchUserDetail(searchUserId);
     fetchUser();
   }, []);
-  console.log('searchUser', searchUser);
+  // console.log('searchUser', searchUser);
 
   return (
     <>
