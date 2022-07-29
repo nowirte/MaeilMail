@@ -30,7 +30,7 @@ class UserService {
     const password = await this.User.findOne({
       where: { user_id: id, status: { [Op.not]: 'inactive' } },
       attributes: ['password'],
-      raw
+      raw,
     });
     const result = await bcrypt.compare(input, password.password);
     return result;
@@ -42,7 +42,7 @@ class UserService {
       where: { email, status: { [Op.not]: 'inactive' }, oauth: 'local' },
     });
     const nicknameResult = await this.User.findOne({
-      where: { nickname, status: { [Op.not]: 'inactive' }},
+      where: { nickname, status: { [Op.not]: 'inactive' } },
     });
 
     if (emailResult && nicknameResult) {
@@ -87,7 +87,7 @@ class UserService {
       status: 'temp',
       gender: 'else',
       oauth: 'google',
-    }
+    };
 
     const newUser = await this.User.create(userInfo);
 
@@ -205,7 +205,7 @@ class UserService {
 
     const nicknameResult = await this.User.findOne({
       where: { nickname },
-      status: { [Op.not]: 'inactive' }
+      status: { [Op.not]: 'inactive' },
     });
 
     if (nicknameResult) {
@@ -224,12 +224,12 @@ class UserService {
     };
 
     const affectedRows = await this.User.update(toUpdate, { where: { userId, status: 'temp', oauth: 'google' } });
-    if (affectedRows === 0) {
+    if (affectedRows[0] === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
     const updated = await this.getUserById(userId);
-
-    return updated;
+    const { status } = updated.user.dataValues;
+    return status;
   }
 
   async getUsers() {
