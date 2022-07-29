@@ -36,7 +36,7 @@ class LetterService {
 
     // 나한테 온 편지 찾기
     const myLetter = await this.Letter.findAll({
-      where: { receive_Id: myId},
+      where: { receive_id: myId},
       is_read: 0,
       raw: true,
     });
@@ -168,7 +168,7 @@ class LetterService {
       },
       raw: true,
     });
-
+    
     if (findedLetter.send_id === myId) {
       const myNickname = await this.User.findAll({ where: { userId: myId }, attributes: ['nickname'], raw: true });
       findedLetter.nickname = myNickname[0].nickname;
