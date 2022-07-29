@@ -34,14 +34,8 @@ authRouter.post('/login', async (req, res, next) => {
 authRouter.post('/login/google', async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = await userService.validateEmail(email, 'google');
-
-    if (user) {
-      res.json({result: false, message: "이미 가입된 이메일입니다."})
-      return
-    } 
-
-    const newUser = await userService.addGoogleUser(email);
+    const result = await userService.validateEmail(email, 'google');
+    const newUser = result || await userService.addGoogleUser(email);
 
     if (!newUser) {
       throw new Error('알 수 없는 이유로 계정이 생성되지 않았습니다.');
