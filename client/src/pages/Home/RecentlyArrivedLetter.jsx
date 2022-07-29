@@ -61,8 +61,7 @@ export default function RecentlyArrivedLetter() {
       console.log('data', res.data);
       const data = await res.data[0];
       dispatch(setArrivedLetter({ mainArrivedLetter: data }));
-      setLetterId(mainArrivedLetter.letterId);
-      // console.log(mainArrivedLetter);
+      setLetterId(mainArrivedLetter?.letterId);
     } catch (e) {
       console.error(e);
     }
@@ -101,7 +100,7 @@ export default function RecentlyArrivedLetter() {
         onClick={handleClose}
       >
         <Box sx={style}>
-          {mainArrivedLetter?.length === 1 ? (
+          {!mainArrivedLetter ? (
             <Typography>아직 안 읽은 편지가 없습니다.</Typography>
           ) : (
             <>
