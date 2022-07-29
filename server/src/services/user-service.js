@@ -23,7 +23,7 @@ class UserService {
     const result = await this.User.findOne({
       where: filter,
     });
-    return result;
+    return !!result;
   }
 
   async validatePassword(id, input) {
@@ -77,13 +77,16 @@ class UserService {
     return newUser;
   }
 
-  async addGoogleUser(userInfo) {
-    const { email } = userInfo;
-    const result = await this.User.findOne({
-      where: { email, status: 'active', oauth: 'google' },
-    });
-    if (result) {
-      throw new Error('중복된 이메일입니다.');
+  async addGoogleUser(email) {
+    const hashed = await bcrypt.hash('탈퇴', 10);
+    const random = Math.floor(Math.random() * 10000);
+    const userInfo = {
+      email,
+      password: hashed,
+      nickname: `google#${random}`,
+      status: 'temp',
+      gender: 'else',
+      oauth: 'google',
     }
 
     const newUser = await this.User.create(userInfo);
