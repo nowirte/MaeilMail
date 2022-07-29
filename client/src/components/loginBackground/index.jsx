@@ -24,11 +24,11 @@ const Background = styled.div`
 `;
 
 const loginBackground = () => {
-  const auth = useSelector(state => state.auth.auth);
+  const { auth, role } = useSelector(state => state.auth.auth);
   return (
     <Container>
       <Background />
-      {!auth ? <Outlet /> : <Navigate to="/" />}
+      {!auth || role === 'temp' ? <Outlet /> : <Navigate to="/" />}
     </Container>
   );
 };

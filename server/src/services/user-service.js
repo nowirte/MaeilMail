@@ -3,13 +3,14 @@
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
-import { getArrayForInputTag, getObjectForDB } from '../utils';
+import { reduceObjToArray, reduceArrayToObject } from '../utils';
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
   { model: Language, attributes: { exclude: ['language_id', 'user_id', 'created_at', 'updated_at'] } },
 ];
-const attributes = { exclude: ['user_id', 'password', 'status', 'oauth', 'created_at', 'updated_at'] };
+const attributes = { exclude: ['userId', 'password', 'oauth', 'created_at', 'updated_at'] };
+const raw = true;
 class UserService {
   constructor(param1, param2, param3) {
     this.User = param1;
@@ -25,13 +26,23 @@ class UserService {
     return result;
   }
 
+  async validatePassword(id, input) {
+    const password = await this.User.findOne({
+      where: { user_id: id, status: { [Op.not]: 'inactive' } },
+      attributes: ['password'],
+      raw,
+    });
+    const result = await bcrypt.compare(input, password.password);
+    return result;
+  }
+
   async addUser(userInfo) {
     const { nickname, email, password, gender, location, latitude, longitude, birthday } = userInfo;
     const emailResult = await this.User.findOne({
-      where: { email, status: 'active', oauth: 'local' },
+      where: { email, status: { [Op.not]: 'inactive' }, oauth: 'local' },
     });
     const nicknameResult = await this.User.findOne({
-      where: { nickname, status: 'active' },
+      where: { nickname, status: { [Op.not]: 'inactive' } },
     });
 
     if (emailResult && nicknameResult) {
@@ -66,14 +77,17 @@ class UserService {
     return newUser;
   }
 
-  async addGoogleUser(userInfo) {
-    const { email } = userInfo;
-    const result = await this.User.findOne({
-      where: { email, status: 'active', oauth: 'google' },
-    });
-    if (result) {
-      throw new Error('중복된 이메일입니다.');
-    }
+  async addGoogleUser(email) {
+    const hashed = await bcrypt.hash('google', 10);
+    const random = Math.floor(Math.random() * 10000);
+    const userInfo = {
+      email,
+      password: hashed,
+      nickname: `google#${random}`,
+      status: 'temp',
+      gender: 'else',
+      oauth: 'google',
+    };
 
     const newUser = await this.User.create(userInfo);
 
@@ -101,25 +115,11 @@ class UserService {
       newPassword,
     } = body;
 
-    // validate
-    async function validatePassword(id, input) {
-      const user = await User.findOne({
-        where: { userId, status: 'active' },
-        attributes: ['password'],
-      });
-      if (!user) {
-        throw new Error('유저를 찾을 수 없습니다.');
-      }
-      const passwordInDB = user.dataValues.password;
-      const result = await bcrypt.compare(input, passwordInDB);
-      return result;
-    }
-
     if (!currentPassword) {
       throw new Error('현재 비밀번호가 필요합니다.');
     }
 
-    const validate = await validatePassword(userId, currentPassword);
+    const validate = await this.validatePassword(userId, currentPassword);
     if (!validate) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
@@ -139,8 +139,8 @@ class UserService {
     }
 
     // 회원 정보 수정
-    const languageUpdate = await getObjectForDB(language);
-    const favorUpdate = await getObjectForDB(favor);
+    const languageUpdate = await reduceArrayToObject(language);
+    const favorUpdate = await reduceArrayToObject(favor);
 
     const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : null;
 
@@ -164,10 +164,10 @@ class UserService {
 
     if (favorUpdate) {
       await this.Favor.findOrCreate({
-        where: { userId },
+        where: { user_id: userId },
       });
       const affected = await this.Favor.update(favorUpdate, {
-        where: { userId },
+        where: { user_id: userId },
       });
       if (affected === 0) {
         console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
@@ -176,10 +176,10 @@ class UserService {
 
     if (languageUpdate) {
       await this.Language.findOrCreate({
-        where: { userId },
+        where: { user_id: userId },
       });
       const affected = await this.Language.update(languageUpdate, {
-        where: { userId },
+        where: { user_id: userId },
       });
       if (affected === 0) {
         console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
@@ -205,6 +205,15 @@ class UserService {
   async updateGoogleUser(userId, body) {
     const { nickname, gender, birthday, language, location, latitude, longitude } = body;
 
+    const nicknameResult = await this.User.findOne({
+      where: { nickname },
+      status: { [Op.not]: 'inactive' },
+    });
+
+    if (nicknameResult) {
+      throw new Error('중복된 닉네임입니다.');
+    }
+
     const toUpdate = {
       ...(nickname && { nickname }),
       ...(gender && { gender }),
@@ -217,12 +226,12 @@ class UserService {
     };
 
     const affectedRows = await this.User.update(toUpdate, { where: { userId, status: 'temp', oauth: 'google' } });
-    if (affectedRows === 0) {
+    if (affectedRows[0] === 0) {
       throw new Error('업데이트 대상을 찾지 못했습니다.');
     }
     const updated = await this.getUserById(userId);
-
-    return updated;
+    const { status } = updated.user.dataValues;
+    return status;
   }
 
   async getUsers() {
@@ -243,8 +252,8 @@ class UserService {
     const favObj = user.dataValues.Favor;
     const langObj = user.dataValues.Language;
 
-    const favorArray = favObj ? await getArrayForInputTag(favObj.dataValues) : null;
-    const languageArray = langObj ? await getArrayForInputTag(langObj.dataValues) : null;
+    const favorArray = favObj ? await reduceObjToArray(favObj.dataValues) : null;
+    const languageArray = langObj ? await reduceObjToArray(langObj.dataValues) : null;
 
     return { favorArray, languageArray, user };
   }
