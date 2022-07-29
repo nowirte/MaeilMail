@@ -33,13 +33,7 @@
   height: 100px;
 }
 
-.Btn {
+.LetterEditor button {
   font-size: 1rem;
   cursor: pointer;
-  padding: 1rem 0.5rem;
-  cursor: 'pointer';
-}
-
-.Btn:hover {
-  transform: scale(1.1);
 }
