@@ -12,7 +12,7 @@ import {
   LetterFooter,
   Writer,
   Date,
-} from '../Friend/LetterStyle';
+} from '../Friend/LetterItem/LetterItemStyle';
 import Stamp from '../../assets/stamp.png';
 import DoneIcon from '@mui/icons-material/Done';
 import styled from 'styled-components';

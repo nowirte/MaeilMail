@@ -1,19 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const LetterWrapper = styled.ul`
-  overflow: hidden;
-  position: relative;
-  margin: 220px 1rem 20rem 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  width: 90%;
-  gap: 1.5rem;
-  text-decoration: none;
-`;
-
 const Letter = styled.li`
-  /* cursor: pointer; */
   width: 300px;
   border-radius: 1rem;
   box-sizing: border-box;
@@ -104,11 +92,10 @@ const WriteBtn = styled.button`
   &:hover {
     background-color: #4f4f4f;
     color: #ccc;
-    opacity: 0.2;
   }
 `;
+
 export {
-  LetterWrapper,
   Letter,
   StyledLink,
   LetterHeader,
