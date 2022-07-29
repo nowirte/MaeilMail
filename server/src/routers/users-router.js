@@ -11,8 +11,8 @@ usersRouter.post('/', async (req, res, next) => {
   try {
     const { nickname, email, password, gender, location, latitude, longitude, birthday } = req.body;
     const info = { nickname, email, password, gender, location, latitude, longitude, birthday };
-    const user = await userService.addUser(info);
-    res.status(201).json(user);
+    const result = await userService.addUser(info);
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }
@@ -54,6 +54,9 @@ usersRouter.get('/:userId', loginRequired, async (req, res, next) => {
     const { userId } = req.params;
     const user = await userService.getUserById(Number(userId));
 
+    if (!user) {
+      res.status(404).json("NotFoundError")
+    }
     res.status(200).json(user);
   } catch (err) {
     next(err);

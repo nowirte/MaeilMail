@@ -70,11 +70,10 @@ class UserService {
     const newUser = await this.User.create(newUserInfo);
 
     const { userId } = newUser.dataValues;
+    await this.Favor.create({ user_id: userId });
+    await this.Language.create({ user_id: userId });
 
-    await this.Favor.create({ userId });
-    await this.Language.create({ userId });
-
-    return newUser;
+    return { message: '정상적으로 가입되었습니다.' };
   }
 
   async addGoogleUser(email) {
@@ -93,8 +92,8 @@ class UserService {
 
     const { userId } = newUser.dataValues;
 
-    await this.Favor.create({ userId });
-    await this.Language.create({ userId });
+    await this.Favor.create({ user_id: userId });
+    await this.Language.create({ user_id: userId });
 
     return newUser;
   }
@@ -143,13 +142,13 @@ class UserService {
     await this.User.update(toUpdate, { where: { userId, status: { [Op.not]: 'inactive' } } });
 
     if (favorUpdate) {
-      await this.Favor.findOrCreate({ where: { userId } });
-      await this.Favor.update(favorUpdate, { where: { userId } });
+      await this.Favor.findOrCreate({ where: { user_id: userId } });
+      await this.Favor.update(favorUpdate, { where: { user_id: userId } });
     }
 
     if (languageUpdate) {
-      await this.Language.findOrCreate({ where: { userId } });
-      await this.Language.update(languageUpdate, { where: { userId } });
+      await this.Language.findOrCreate({ where: { user_id: userId } });
+      await this.Language.update(languageUpdate, { where: { user_id: userId } });
     }
 
     const updated = await this.getUserById(userId);
@@ -165,11 +164,7 @@ class UserService {
   async updateGoogleUser(userId, body) {
     const { nickname, gender, language, location, latitude, longitude } = body;
 
-    const nicknameResult = await this.User.findOne({
-      where: { nickname },
-      status: { [Op.not]: 'inactive' },
-    });
-
+    const nicknameResult = await this.User.findOne({ where: { nickname }, status: { [Op.not]: 'inactive' } });
     if (nicknameResult) {
       throw new Error('중복된 닉네임입니다.');
     }
@@ -194,7 +189,7 @@ class UserService {
   }
 
   async getUsers() {
-    const users = await this.User.findAll({ include, attributes });
+    const users = await this.User.findAll({ include, attributes, raw });
     return users;
   }
 
@@ -205,13 +200,16 @@ class UserService {
       attributes,
     });
 
-    const favObj = user.dataValues.Favor;
-    const langObj = user.dataValues.Language;
+    if (!user) {
+      return false
+    }
 
-    const favorArray = favObj ? await reduceObjToArray(favObj.dataValues) : null;
-    const languageArray = langObj ? await reduceObjToArray(langObj.dataValues) : null;
+    // const favObj = user.dataValues.Favor;
+    // const langObj = user.dataValues.Language;
+    // const favorArray = favObj ? await reduceObjToArray(favObj.dataValues) : null;
+    // const languageArray = langObj ? await reduceObjToArray(langObj.dataValues) : null;
 
-    return { favorArray, languageArray, user };
+    return user;
   }
 
   async getUsersBySearch(userId, nickname) {
