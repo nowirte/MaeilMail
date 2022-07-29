@@ -64,7 +64,10 @@ const UserSignOutArea = () => {
         <ModalStyle>
           <Title id="userSignOut-title">정말 탈퇴하시겠습니까?</Title>
           <div id="userSignOut-description" style={{ fontSize: '0.8rem' }}>
-            탈퇴하시려면 현재 비밀번호를 입력해주세요.
+            탈퇴하시려면 현재 비밀번호를 입력해주세요. <br />
+            <br />
+            구글 로그인 회원은 '탈퇴'를 입력해주세요. <br />
+            <br />
           </div>
           <Input
             style={{ display: 'block', marginBottom: '20px', marginTop: '8px' }}

@@ -32,7 +32,6 @@ export const RecommendFriendArea = ({ data }) => {
       }
       return acc;
     }, []);
-  console.log(favorites, languages);
   return (
     <Friend>
       <Account>

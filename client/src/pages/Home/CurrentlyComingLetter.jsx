@@ -23,11 +23,10 @@ const CurrentlyComingLetter = () => {
   const mainComingLetters = useSelector(
     state => state.mainLetters.mainComingLetters
   );
-  // console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
       const res = await axios.get(
-        'http://localhost:3001/api/letters/incoming',
+        'http://localhost:3001/api/letters/my/incoming',
         {
           headers: {
             Authorization: token,
@@ -43,7 +42,6 @@ const CurrentlyComingLetter = () => {
   useEffect(() => {
     fetchCurrentlyComingLetter();
   }, []);
-
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>
@@ -54,7 +52,7 @@ const CurrentlyComingLetter = () => {
             <SwiperSlide key={index}>
               <Letter key={letter.letterId}>
                 <LetterHeader>
-                  <span>{letter.is_read ? <DoneIcon /> : ''}</span>
+                  <span>{letter.isRead ? <DoneIcon /> : ''}</span>
                   <img src={Stamp} alt="stamp" />
                 </LetterHeader>
                 <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
