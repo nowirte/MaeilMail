@@ -48,23 +48,22 @@ const LoginForm = props => {
     e.preventDefault();
     const data = { email: email, password: password };
     const bodyData = JSON.stringify(data);
-    try {
-      const { role, token } = await axios.post(
-        'http://localhost:3001/api/auth/login',
-        bodyData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      dispatch(setAuth({ role: role, token: token, auth: true }));
-      navigate('/');
-    } catch {
-      () => {
+
+    axios
+      .post('http://localhost:3001/api/auth/login', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(res => {
+        const { token, role } = res.data;
+        dispatch(setAuth({ role: role, token: token, auth: true }));
+        navigate('/');
+      })
+      .catch(err => {
+        console.log(err);
         alert('이메일, 비밀번호를 확인해주세요.');
-      };
-    }
+      });
   }
 
   const login = useGoogleLogin({
