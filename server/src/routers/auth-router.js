@@ -30,20 +30,29 @@ authRouter.post('/login', async (req, res, next) => {
   )(req, res, next);
 });
 
-// 구글 로그인
-authRouter.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// 구글 회원가입
+authRouter.post('/login/google', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.validateEmail(email, 'google');
 
-authRouter.get(
-  '/login/google/callback',
-  passport.authenticate('google', { session: false, failureMessage: true }),
-  async (req, res, next) => {
-    try {
-      await setUserToken(req.user, res);
-    } catch (err) {
-      next(err);
+    if (user) {
+      res.json({result: false, message: "이미 가입된 이메일입니다."})
+      return
+    } 
+
+    const newUser = await userService.addGoogleUser(email);
+
+    if (!newUser) {
+      throw new Error('알 수 없는 이유로 계정이 생성되지 않았습니다.');
     }
+
+    await setUserToken(newUser, res)
+  } catch (err) {
+    next(err)
   }
-);
+})
+
 
 // 마이페이지
 authRouter.get('/me', loginRequired, async (req, res, next) => {
@@ -66,7 +75,7 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
     const { isGoogle } = req.query;
 
     const result = isGoogle
-      ? await userService.updateGoogleUser(userId, req.body)
+      ? await userService.updateGoogleUser(Number(userId), req.body)
       : await userService.updateUser(Number(userId), req.body, false);
 
     if (!result) {
