@@ -75,6 +75,7 @@ authRouter.patch('/me', tempAllowed, async (req, res, next) => {
     if (!result) {
       throw new Error('업데이트 된 정보를 불러오지 못했습니다.');
     }
+    console.log(result);
     res.status(200).json(result);
   } catch (err) {
     next(err);
