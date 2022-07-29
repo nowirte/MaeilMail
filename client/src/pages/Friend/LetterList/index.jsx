@@ -15,7 +15,7 @@ const LetterList = () => {
   // 친구인 유저
   const [friend, setFriend] = useState([]);
   // 편지 리스트
-  const [letters] = useOutletContext();
+  const [letters, setLetters] = useOutletContext();
 
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
@@ -54,18 +54,20 @@ const LetterList = () => {
     fetchUser();
     fetchFriend();
   }, [friendId, token]);
+
   return (
     <LetterWrapper>
-      {letters.length === 0 && <p>아직 편지가 없습니다.</p>}
-      {letters.map(letter => (
-        <LetterItem
-          key={letter.letterId}
-          letter={letter}
-          friend={friend}
-          user={user}
-          token={token}
-        />
-      ))}
+      {letters === undefined && <p>아직 편지가 없습니다.</p>}
+      {letters !== undefined &&
+        letters.map(letter => (
+          <LetterItem
+            key={letter.letterId}
+            letter={letter}
+            friend={friend}
+            user={user}
+            token={token}
+          />
+        ))}
     </LetterWrapper>
   );
 };
