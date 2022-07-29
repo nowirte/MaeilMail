@@ -9,7 +9,7 @@ const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
   { model: Language, attributes: { exclude: ['language_id', 'user_id', 'created_at', 'updated_at'] } },
 ];
-const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'createdAt', 'updatedAt'] };
+const attributes = { exclude: ['userId', 'password', 'oauth', 'created_at', 'updated_at'] };
 const raw = true;
 class UserService {
   constructor(param1, param2, param3) {
@@ -28,7 +28,7 @@ class UserService {
 
   async validatePassword(id, input) {
     const password = await this.User.findOne({
-      where: { user_id: id, status: 'active' },
+      where: { user_id: id, status: { [Op.not]: 'inactive' } },
       attributes: ['password'],
       raw
     });
@@ -39,10 +39,10 @@ class UserService {
   async addUser(userInfo) {
     const { nickname, email, password, gender, location, latitude, longitude, birthday } = userInfo;
     const emailResult = await this.User.findOne({
-      where: { email, status: 'active', oauth: 'local' },
+      where: { email, status: { [Op.not]: 'inactive' }, oauth: 'local' },
     });
     const nicknameResult = await this.User.findOne({
-      where: { nickname, status: 'active' },
+      where: { nickname, status: { [Op.not]: 'inactive' }},
     });
 
     if (emailResult && nicknameResult) {
@@ -78,7 +78,7 @@ class UserService {
   }
 
   async addGoogleUser(email) {
-    const hashed = await bcrypt.hash('탈퇴', 10);
+    const hashed = await bcrypt.hash('google', 10);
     const random = Math.floor(Math.random() * 10000);
     const userInfo = {
       email,
@@ -164,10 +164,10 @@ class UserService {
 
     if (favorUpdate) {
       await this.Favor.findOrCreate({
-        where: { userId },
+        where: { user_id: userId },
       });
       const affected = await this.Favor.update(favorUpdate, {
-        where: { userId },
+        where: { user_id: userId },
       });
       if (affected === 0) {
         console.log('관심사 정보에서 변경이 이루어지지 않았습니다.');
@@ -176,10 +176,10 @@ class UserService {
 
     if (languageUpdate) {
       await this.Language.findOrCreate({
-        where: { userId },
+        where: { user_id: userId },
       });
       const affected = await this.Language.update(languageUpdate, {
-        where: { userId },
+        where: { user_id: userId },
       });
       if (affected === 0) {
         console.log('사용 언어 정보에서 변경이 이루어지지 않았습니다.');
@@ -204,6 +204,15 @@ class UserService {
 
   async updateGoogleUser(userId, body) {
     const { nickname, gender, birthday, language, location, latitude, longitude } = body;
+
+    const nicknameResult = await this.User.findOne({
+      where: { nickname },
+      status: { [Op.not]: 'inactive' }
+    });
+
+    if (nicknameResult) {
+      throw new Error('중복된 닉네임입니다.');
+    }
 
     const toUpdate = {
       ...(nickname && { nickname }),
