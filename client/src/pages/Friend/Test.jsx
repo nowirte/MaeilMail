@@ -76,7 +76,7 @@ const FriendDetail = () => {
         }
       );
       const data = res.data;
-      setLetters(data);
+      setLetters(data.findedLetter);
     } catch (error) {
       console.error(error);
     }
