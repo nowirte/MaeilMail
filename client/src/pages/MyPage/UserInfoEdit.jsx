@@ -20,6 +20,7 @@ const UserInfoEditArea = props => {
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
+  const [google, setGoogle] = useState(true);
   const [language, setLanguage] = useState([]);
   const [inputData, setInputData] = useState({});
   const [currentPassword, setCurrentPassword] = useState('');
@@ -27,7 +28,10 @@ const UserInfoEditArea = props => {
   const [checkPassword, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
 
+  console.log('google', google);
+
   useEffect(() => {
+    setGoogle(() => (userData.oauth === 'google' ? true : false));
     setFavor(() => {
       const favObj = userData.Favor;
       const favArr = favObj ? objChangedarr(favObj) : null;
@@ -107,7 +111,10 @@ const UserInfoEditArea = props => {
         profileText: inputData.profileText,
         birthday: inputData.birthday,
         newPassword: changedPassword ? changedPassword : currentPassword,
-        currentPassword: currentPassword,
+        currentPassword: google
+          ? process.env.REACT_APP_GOOGLEPW
+          : currentPassword,
+        // currentPassword: currentPassword,
         favor: favor,
         language: language,
         location: inputData.location,
@@ -219,62 +226,67 @@ const UserInfoEditArea = props => {
                   onChange={handleCheckedLanguage}
                 />
               </EditTitle>
-              <EditTitle className="changedPassowrd">
-                <p>변경 할 비밀번호</p>
-                <input
-                  id="changedPassowrd"
-                  type="password"
-                  placeholder="새로운 비밀번호"
-                  name="changedPassowrd"
-                  value={changedPassword}
-                  onChange={e => {
-                    setChangedPassword(e.target.value);
-                  }}
-                />
-              </EditTitle>
-              <EditTitle className="checkPassowrd">
-                <p>비밀번호 확인</p>
-                <input
-                  id="checkPassowrd"
-                  type="password"
-                  placeholder="새로운 비밀번호 확인"
-                  name="checkPassowrd"
-                  value={checkPassword || ''}
-                  onChange={e => {
-                    setCheckPassword(e.target.value);
-                  }}
-                />
-                {changedPassword !== checkPassword && (
-                  <p
-                    className="changedPasswordChecked"
-                    style={{
-                      fontSize: '0.75rem',
-                      color: 'red',
-                      marginTop: '0.5rem',
-                    }}
-                  >
-                    새로운 비밀번호가 일치하지 않습니다.
-                  </p>
-                )}
-              </EditTitle>
-              <EditTitle className="currentPassowrd">
-                <p>
-                  현재 비밀번호를 입력해주세요.
-                  <span style={{ fontSize: '0.75rem', color: 'red' }}>
-                    *필수
-                  </span>
-                </p>
-                <input
-                  id="currentPassowrd"
-                  type="password"
-                  placeholder="현재 비밀번호"
-                  name="currentPassword"
-                  value={currentPassword || ''}
-                  onChange={e => {
-                    setCurrentPassword(e.target.value);
-                  }}
-                />
-              </EditTitle>
+              {!google && (
+                <div>
+                  <EditTitle className="changedPassowrd">
+                    <p>변경 할 비밀번호</p>
+                    <input
+                      id="changedPassowrd"
+                      type="password"
+                      placeholder="새로운 비밀번호"
+                      name="changedPassowrd"
+                      value={changedPassword}
+                      onChange={e => {
+                        setChangedPassword(e.target.value);
+                      }}
+                    />
+                  </EditTitle>
+                  <EditTitle className="checkPassowrd">
+                    <p>비밀번호 확인</p>
+                    <input
+                      id="checkPassowrd"
+                      type="password"
+                      placeholder="새로운 비밀번호 확인"
+                      name="checkPassowrd"
+                      value={checkPassword || ''}
+                      onChange={e => {
+                        setCheckPassword(e.target.value);
+                      }}
+                    />
+                    {changedPassword !== checkPassword && (
+                      <p
+                        className="changedPasswordChecked"
+                        style={{
+                          fontSize: '0.75rem',
+                          color: 'red',
+                          marginTop: '0.5rem',
+                        }}
+                      >
+                        새로운 비밀번호가 일치하지 않습니다.
+                      </p>
+                    )}
+                  </EditTitle>
+                  <EditTitle className="currentPassowrd">
+                    <p>
+                      현재 비밀번호를 입력해주세요.
+                      <span style={{ fontSize: '0.75rem', color: 'red' }}>
+                        *필수
+                      </span>
+                    </p>
+                    <input
+                      id="currentPassowrd"
+                      type="password"
+                      placeholder="현재 비밀번호"
+                      name="currentPassword"
+                      value={currentPassword || ''}
+                      onChange={e => {
+                        setCurrentPassword(e.target.value);
+                      }}
+                    />
+                  </EditTitle>
+                </div>
+              )}
+
               <div className="editBtn">
                 <ThemeProvider theme={theme}>
                   <Button
