@@ -3,7 +3,7 @@
 import { Op, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { User, Favor, Language } from '../db/models';
-import { reduceObjToArray, reduceArrayToObject } from '../utils';
+import { reduceArrayToObject } from '../utils';
 
 const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
@@ -156,7 +156,6 @@ class UserService {
   }
 
   async updateUserProfileImage(userId, profileImage) {
-
     const affectedRows = await this.User.update({ profileImage }, { where: { userId } });
 
     return affectedRows[0];
@@ -202,7 +201,7 @@ class UserService {
     });
 
     if (!user) {
-      return false
+      return false;
     }
 
     // const favObj = user.dataValues.Favor;
@@ -210,7 +209,7 @@ class UserService {
     // const favorArray = favObj ? await reduceObjToArray(favObj.dataValues) : null;
     // const languageArray = langObj ? await reduceObjToArray(langObj.dataValues) : null;
 
-    return user;
+    return { user };
   }
 
   async getUsersBySearch(userId, nickname) {
