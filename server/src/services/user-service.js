@@ -9,7 +9,7 @@ const include = [
   { model: Favor, attributes: { exclude: ['favor_id', 'user_id', 'created_at', 'updated_at'] } },
   { model: Language, attributes: { exclude: ['language_id', 'user_id', 'created_at', 'updated_at'] } },
 ];
-const attributes = { exclude: ['userId', 'password', 'status', 'oauth', 'created_at', 'updated_at'] };
+const attributes = { exclude: ['userId', 'password', 'status', 'created_at', 'updated_at'] };
 const raw = true;
 class UserService {
   constructor(param1, param2, param3) {
