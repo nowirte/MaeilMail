@@ -28,8 +28,6 @@ const UserInfoEditArea = props => {
   const [checkPassword, setCheckPassword] = useState('');
   const [open, setOpen] = useState(false);
 
-  console.log('google', google);
-
   useEffect(() => {
     setGoogle(() => (userData.oauth === 'google' ? true : false));
     setFavor(() => {
