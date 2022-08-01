@@ -15,7 +15,6 @@ const verify = async (jwtPayload, done) => {
     }
     done(null, false, { reason: '인증에 실패하였습니다.' });
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };
