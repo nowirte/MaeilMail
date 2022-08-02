@@ -64,16 +64,12 @@ const googleSignup = () => {
     const bodyData = JSON.stringify(state);
     //아직 백엔드와 연결 X
     try {
-      const res = await axios.patch(
-        'http://localhost:3001/api/auth/me?isGoogle=true',
-        bodyData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: oldToken,
-          },
-        }
-      );
+      const res = await axios.patch('api/auth/me?isGoogle=true', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: oldToken,
+        },
+      });
       const { token, role } = res.data;
       dispatch(setAuth({ role: role, token: token, auth: true }));
       alert('가입에 성공하셨습니다!');

@@ -50,7 +50,7 @@ const LoginForm = props => {
     const bodyData = JSON.stringify(data);
 
     axios
-      .post('http://localhost:3001/api/auth/login', bodyData, {
+      .post('api/auth/login', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -75,15 +75,11 @@ const LoginForm = props => {
       const { email } = data;
       const bodyData = JSON.stringify({ email: email });
 
-      const res = await axios.post(
-        'http://localhost:3001/api/auth/login/google',
-        bodyData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const res = await axios.post('api/auth/login/google', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       const { token, role } = res.data;
       dispatch(setAuth({ role: role, token: token, auth: true }));
