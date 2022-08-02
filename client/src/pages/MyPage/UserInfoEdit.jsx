@@ -120,7 +120,7 @@ const UserInfoEditArea = props => {
 
       const bodyData = JSON.stringify(data);
 
-      await axios.patch('http://localhost:3001/api/auth/me', bodyData, {
+      await axios.patch('api/auth/me', bodyData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token,

@@ -13,7 +13,7 @@ const MyPage = () => {
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
+      const res = await axios.get('api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -37,7 +37,7 @@ const MyPage = () => {
     formData.append('img', e.target.files[0]);
 
     try {
-      await axios.patch(`http://localhost:3001/api/auth/me/image`, formData, {
+      await axios.patch(`api/auth/me/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: token,

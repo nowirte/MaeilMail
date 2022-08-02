@@ -31,16 +31,12 @@ const UserSignOutArea = () => {
 
       await persistor.purge();
 
-      await axios.patch(
-        `http://localhost:3001/api/auth/me/withdrawal`,
-        bodyData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        }
-      );
+      await axios.patch(`api/auth/me/withdrawal`, bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      });
       handleModal();
       alert('회원 탈퇴되었습니다. 지금까지 이용해주셔서 감사합니다.');
       location.reload();
