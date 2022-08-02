@@ -38,7 +38,6 @@ const StyledCurrentlyContent = styled(Typography)({
 
 export default function RecentlyArrivedLetter() {
   const token = useSelector(state => state.auth.token);
-  // const [isConfirmed, setIsConfirmed] = useState(false);
   const [letterId, setLetterId] = useState(null);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -50,15 +49,11 @@ export default function RecentlyArrivedLetter() {
 
   const fetchRecentlyLetter = async () => {
     try {
-      const res = await axios.get(
-        'http://localhost:3001/api/letters/my/recent',
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      console.log('data', res.data);
+      const res = await axios.get('/api/letters/my/recent', {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = await res.data[0];
       dispatch(setArrivedLetter({ mainArrivedLetter: data }));
       setLetterId(mainArrivedLetter?.letterId);
@@ -70,13 +65,11 @@ export default function RecentlyArrivedLetter() {
   const patchIsRead = async () => {
     try {
       const data = { isRead: 1 };
-      await axios.patch(`http://localhost:3001/api/letters/${letterId}`, data, {
+      await axios.patch(`/api/letters/${letterId}`, data, {
         headers: {
           Authorization: token,
         },
       });
-
-      // dispatch(setArrivedLetter({ mainArrivedLetter: response.data }));
     } catch (e) {
       console.error(e);
     }
