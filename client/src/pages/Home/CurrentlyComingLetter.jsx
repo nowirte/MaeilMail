@@ -25,14 +25,11 @@ const CurrentlyComingLetter = () => {
   );
   const fetchCurrentlyComingLetter = async () => {
     try {
-      const res = await axios.get(
-        'http://localhost:3001/api/letters/my/incoming',
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get('/api/letters/my/incoming', {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = await res.data;
       dispatch(initComingLetters({ mainComingLetters: data }));
     } catch (e) {
