@@ -43,7 +43,6 @@ const FriendInfo = ({ friend, favor, language }) => {
   if (language?.russian === true) languages.push('russian');
   if (language?.spanish === true) languages.push('spanish');
   if (language?.uzbek === true) languages.push('uzbek');
-  console.log(friend.profileImage);
   return (
     <User>
       <UserInfo>

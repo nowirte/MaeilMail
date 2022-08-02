@@ -41,7 +41,6 @@ const LetterItem = ({ user, friend, letter }) => {
     // 친구가 보낸 편지, 도착시간이 남음
     if (letter.sendId === friend.user_id && timeRemaining > 0) {
       e.preventDefault();
-      console.log('아직 못 읽음');
     } else {
       if (letter.is_read === 0) {
         await patchReadLetter();

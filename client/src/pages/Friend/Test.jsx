@@ -104,7 +104,6 @@ const FriendDetail = () => {
   const createHandler = content => {
     const letter = content[0];
     const friend_id = content[1];
-    console.log(letter, friend_id);
     const distance = getDistance(
       user.longitude,
       user.latitude,
