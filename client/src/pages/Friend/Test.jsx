@@ -30,7 +30,7 @@ const FriendDetail = () => {
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/auth/me', {
+      const res = await axios.get('api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -45,14 +45,11 @@ const FriendDetail = () => {
   // 선택한 친구 정보 받아오기
   const fetchFriend = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/api/users/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`api/users/${friendId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
       setFriend({
         favor: data.user.Favor,
@@ -67,14 +64,11 @@ const FriendDetail = () => {
   // 편지 리스트 받아오기
   const fetchLetters = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/api/letters/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`api/letters/${friendId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
       setLetters(data.findedLetter);
     } catch (error) {
@@ -85,15 +79,11 @@ const FriendDetail = () => {
   // 편지 작성하기
   const postLetter = async newLetter => {
     try {
-      await axios.post(
-        `http://localhost:3001/api/letters/${friendId}`,
-        newLetter,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      await axios.post(`api/letters/${friendId}`, newLetter, {
+        headers: {
+          Authorization: token,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
