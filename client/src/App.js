@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBar from './components/sidebar';
+import AdminSideBar from './components/adminSidebar';
 import Home from './pages/Home';
 import SignUp from './pages/Signup';
 import Letters from './pages/Friend';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
+import AdminMain from './pages/AdminMain';
 import GoogleSignup from './pages/GoogleSignup';
 import LoginBackground from './components/loginBackground';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
@@ -28,6 +30,10 @@ const App = () => {
             <Route path="/friend/:id" element={<Letters />} />
             <Route path="/friend/:id/:postId" element={<Letter />} />
           </Route>
+        </Route>
+
+        <Route element={<AdminSideBar/>}>
+          <Route path="/admin/main" element={<AdminMain/>}/>
         </Route>
 
         <Route element={<LoginBackground />}>
