@@ -9,6 +9,9 @@ import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import AdminMain from './pages/AdminMain';
 import GoogleSignup from './pages/GoogleSignup';
+import UserInfo from './pages/AdminUserInfo';
+import Dashboard from './pages/AdminDashboard';
+
 import LoginBackground from './components/loginBackground';
 import RecommendDetailPage from './pages/Home/RecommendDetailPage';
 import Letter from './pages/Friend/Letter';
@@ -34,6 +37,9 @@ const App = () => {
 
         <Route element={<AdminSideBar/>}>
           <Route path="/admin/main" element={<AdminMain/>}/>
+          <Route path="/admin/userInfo" element={<UserInfo/>}/>
+          <Route path="/admin/dashboard" element={<Dashboard/>}/>
+
         </Route>
 
         <Route element={<LoginBackground />}>

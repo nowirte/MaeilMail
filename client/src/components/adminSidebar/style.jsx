@@ -5,7 +5,9 @@ export const NavList = styled.input`
 display: none;
 
 +label:hover{
-    background-color:white;
+    background: ${(props)=>
+    	props.role === "logo" ? '#40577A' : '#fff'
+    };
     color:#474747;
 }
 
@@ -14,7 +16,7 @@ display: none;
     font-size: 32px;
     border-radius: 5px;
     margin: 5px 10px;
-    padding: 15px 0 15px 30px;
+    padding: ${(props) => props.role==='logo'? '15px 0':'15px 0 15px 30px'};
     border: none;
     background-color:#40577A;
     color:white;
@@ -22,7 +24,9 @@ display: none;
     align-items: center;
 }
 &:checked + label {
-    background: white;
+    background: ${(props)=>
+    	props.role === "logo" ? '#40577A' : '#fff'
+    };
     color: #474747;
   }
 `
