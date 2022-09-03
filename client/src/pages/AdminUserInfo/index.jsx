@@ -1,8 +1,12 @@
 import React from 'react';
+import { AdminUserInfoContainer } from './style';
+import UserSearchbar from './UserSearchbar';
 
 const AdminUserInfo = () => {
   return (
-    <h1>관리자 유저정보 페이지</h1>
+    <AdminUserInfoContainer>
+      <UserSearchbar />
+    </AdminUserInfoContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginCard = styled.div`
+const LoginCard = styled.form`
   position: absolute;
   left: 50%;
   top: 50%;

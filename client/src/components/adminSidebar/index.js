@@ -12,7 +12,7 @@ const AdminSideBar = () => {
   function Linkin(e) {
     return navigate(`/admin/${e.target.value}`);
   }
-  return (
+  return auth ? (
     <Container>
       <SideWrapper>
         <Navbar>
@@ -48,8 +48,10 @@ const AdminSideBar = () => {
         </Navbar>
         <LogoutArea />
       </SideWrapper>
-      {auth ? <Outlet /> : <Navigate to="/login" />}
+      <Outlet />
     </Container>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

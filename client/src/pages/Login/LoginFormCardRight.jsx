@@ -16,7 +16,7 @@ import {
 import logo from './logo.png';
 import googleLogo from './googleLogo.png';
 
-const FormCard = styled.div`
+const FormCardRight = styled.div`
   width: 700px;
   height: 800px;
   background-color: white;
@@ -89,7 +89,7 @@ const LoginForm = props => {
   });
 
   return (
-    <FormCard>
+    <FormCardRight>
       <Logo src={logo} alt="Logo" />
       <LoginFormInput
         placeholder="이메일"
@@ -121,7 +121,7 @@ const LoginForm = props => {
       </LoginGoogleButton>
 
       <span>SNS 로그인/회원가입</span>
-    </FormCard>
+    </FormCardRight>
   );
 };
 

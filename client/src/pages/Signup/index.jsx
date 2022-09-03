@@ -45,22 +45,27 @@ const SignUp = () => {
   async function handleSignupClick(e) {
     e.preventDefault();
     const bodyData = JSON.stringify(state);
-    //아직 백엔드와 연결 X
-    await axios
-      .post('api/users', bodyData, {
+
+    try {
+      await axios.post('api/users', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then(function (response) {
-        if (response.status === 201) {
-          alert('가입을 축하드립니다');
-          navigate('/login');
-        }
-      })
-      .catch(function (error) {
-        alert(error.response.data.reason);
       });
+      // .then(function (response) {
+      //   if (response.status === 201) {
+      //     alert('가입을 축하드립니다');
+      //     navigate('/login');
+      //   }
+      // })
+      // .catch(function (error) {
+      //   alert(error.response.data.reason);
+      // });
+      alert('가입을 축하드립니다');
+      navigate('/login');
+    } catch (error) {
+      alert(error.response.data.reason);
+    }
   }
   return (
     <SignupCard>
