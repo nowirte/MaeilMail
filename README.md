@@ -2,23 +2,20 @@
 
 <br>
 
-### **서비스 설명**
-
-### 목표: 편지를 기다리는 감성을 온라인에서 구현
----
-
-
-### 핵심 기능
----
-
-  1. 사용자의 위치에 기반하여 편지의 도착 시간이 결정됩니다.
-  2. node-schedule을 이용하여 도착 시간이 지나면 편지를 확인할 수 있습니다.
-
-
-### 프로젝트 구성
+### 개요
 ---
 
 <table align="center">
+  <tr>
+    <td><span> 주제 </span></td>
+    <td><span> 온라인 펜팔 서비스 </span></td>
+  </tr>
+  
+  <tr>
+    <td><span> 목표 </span></td>
+    <td><span> 편지를 기다리는 감성을 온라인에서 구현 </span></td>
+  </tr>
+  
   <tr>
     <td><span>기술 스택</span></td>
     <td>
@@ -34,6 +31,14 @@
     </td>
   </tr>
   <tr>
+    <td>프로젝트 소개서</td>
+    <td>
+      <a href="https://jaeyeong815.notion.site/88b29312cff34763884feef11109b340">
+        👉 소개서 바로가기
+      </a>
+    </td>
+  </tr>
+  <tr>
     <td>배포 페이지</td>
     <td>
       <a href="http://kdt-sw2-seoul-team13.elicecoding.com/">
@@ -42,6 +47,24 @@
     </td>
   </tr>
 <table>
+
+
+<br>
+
+### 핵심 기능
+---
+
+  1. 사용자의 위치에 기반하여 편지의 도착 시간이 결정됩니다.
+  2. node-schedule을 이용하여 도착 시간이 지나면 편지를 확인할 수 있습니다.
+
+
+<br>
+
+### 💻 서비스 구조도
+---
+<br/>
+<div><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
+<br/>
 
 <br>
 
@@ -57,13 +80,9 @@
 | 김명균 | 백엔드     | db 연결, 편지 api, 배포 |
 | 배장한 | 백엔드     | 사용자 api, 배포 |
 
-### 💻 서비스 구조도
----
-<br/>
-<div><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
-<br/>
+<br>
 
-### 🔗 링크
+### 🔗 관련 링크
 ---
 <table align="center">
 <thead>
