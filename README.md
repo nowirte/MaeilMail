@@ -4,10 +4,8 @@
 
 ### **서비스 설명**
 
-### 목표
+### 목표: 편지를 기다리는 감성을 온라인에서 구현
 ---
- 
- ## 편지를 기다리는 감성을 온라인에서 구현 ##
 
 
 ### 핵심 기능
@@ -62,9 +60,7 @@
 ### 💻 서비스 구조도
 ---
 <br/>
-<div><img src="https://user-images.githubusercontent.com/97136735/181684033-272246e2-e08e-4734-8dac-c48766cc80a1.png"></div>
-![서비스 구조도](https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png)
-
+<div><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
 <br/>
 
 ### 🔗 링크
