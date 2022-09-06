@@ -2,7 +2,7 @@
 
 <br>
 
-### 개요
+### 📖개요
 ---
 
 <table align="center">
@@ -31,27 +31,32 @@
     </td>
   </tr>
   <tr>
-    <td>프로젝트 소개서</td>
-    <td>
-      <a href="https://jaeyeong815.notion.site/88b29312cff34763884feef11109b340">
-        👉 소개서 바로가기
-      </a>
+    <td align="center" colspan=2>
+      <a href="https://jaeyeong815.notion.site/88b29312cff34763884feef11109b340"> 👉 프로젝트 소개서 </a>
     </td>
   </tr>
   <tr>
-    <td>배포 페이지</td>
-    <td>
-      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/">
-        👉 배포 페이지 바로가기
-      </a>
+    <td align="center" colspan=2>
+      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/](http://ec2-13-125-119-10.ap-northeast-2.compute.amazonaws.com/)"> 👉 배포 페이지 </a>
     </td>
   </tr>
+  <tr>
+    <td align="center" colspan=2>
+      <a href="https://www.figma.com/file/x6VNP5t97mEBBGZtwBxNiB/%EC%B5%9C%EA%B0%9513%ED%8C%80?node-id=367%3A232">🎨 WireFrame</a>
+    </td>
+  </tr>
+  </tr>
+    <td align="center" colspan=2>
+      <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
+    </td>
+  </tr>
+  
 <table>
 
 
 <br>
 
-### 핵심 기능
+### 🎯 핵심 기능
 ---
 
   1. 사용자의 위치에 기반하여 편지의 도착 시간이 결정됩니다.
@@ -63,9 +68,55 @@
 ### 💻 서비스 구조도
 ---
 <br/>
-<div><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
+<div align="center"><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
 <br/>
 
+<br>
+
+  
+### 👉 기능 명세
+---
+
+  - **사이드바(nav 바)**
+    - 로고 클릭 시 메인 화면으로 이동
+    - 유저 본인 클릭 시 마이페이지로 이동
+    - 친구 클릭 시 친구 상세 프로필 페이지로 이동
+    - 안읽은 편지 수 확인 가능
+    - 로그아웃 기능
+        - 로그인 화면으로 이동
+- **메인 페이지** `/`
+    - 유저 추천 및 친구 검색 기능
+        - 친구 상세 페이지
+            - 편지 작성 기능
+            - 친구 정보 확인
+    - 배달 중인 편지들 확인하기
+    - 최근 도착한 편지 확인 및 읽음 처리 기능
+- **편지 리스트 페이지 `/friend/:userId`**
+    - 친구 상세 프로필 제공
+    - 친구와 나눈 편지 리스트 정보 제공
+    - 편지 작성 기능
+- **편지 상세 페이지 `/friend/:userId/:postId`**
+    - 편지 상세 정보 제공
+    - 편지 작성 기능
+- **마이페이지 `/mypage`**
+    - 유저 정보 수정 기능
+        - 프로필 이미지 / 닉네임 / 한 줄 소개 / 생일 / 위치 / 관심사 / 사용 언어 / 비밀번호 수정
+        - 회원 정보 수정 시 현재 비밀번호가 일치해야 가능
+    - 회원 탈퇴 기능
+- **로그인 `/login`**
+    - 일반 로그인
+        - 로그인 성공 후 메인 페이지로 이동
+    - 구글 로그인 **(추가)**
+        - 로그인 성공 후 유저가 임시가입 상태일시 추가 정보 페이지로 이동
+        - 임시가입 실패시 추가정보 기입 페이지로 이동
+- **구글 회원가입 `/googleSignup` (추가)**
+    - 구글 회원가입
+        - 구글 회원가입 성공시 임시가입 상태로 저장 후 추가 정보 입력 페이지 이동
+        - 추가정보 기입 성공시 메인페이지로 이동
+- **회원가입 `/signup`**
+    - 회원가입
+        - 가입 성공시로그인 페이지로 이동
+  
 <br>
 
 ### ✋ 역할
@@ -81,37 +132,3 @@
 | 배장한 | 백엔드     | 사용자 api, 배포 |
 
 <br>
-
-### 🔗 관련 링크
----
-<table align="center">
-<thead>
-  <tr>
-    <th colspan=5>
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13">🏠 GitLab Wiki Home</a>
-    </th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td align="center" colspan=2>
-      <a href="https://www.figma.com/file/x6VNP5t97mEBBGZtwBxNiB/%EC%B5%9C%EA%B0%9513%ED%8C%80?node-id=367%3A232">🎨 WireFrame</a>
-    </td>
-    <td align="center">
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/team-code-convention">📕 Code Convention</a>
-    </td>
-    <td align="center">
-      <a href="https://amethyst-earl-96d.notion.site/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
-    </td>
-
-  </tr>
-    <tr>
-    <td align="center" colspan=2>
-      <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
-    </td>
-    <td align="center" colspan=2>
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0">📂 Directory Structure</a>
-    </td>
-  </tr>
-</tbody>
-<table>
