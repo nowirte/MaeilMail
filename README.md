@@ -47,7 +47,7 @@
   </tr>
   </tr>
     <td align="center" colspan=2>
-      <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
+      <a href="https://maeilmail-api-docs.herokuapp.com/">🔑 API Specification (Swagger)</a>
     </td>
   </tr>
   
