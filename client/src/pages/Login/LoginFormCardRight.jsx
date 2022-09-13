@@ -13,8 +13,8 @@ import {
   GoogleLogo,
   LoginGoogleButton,
 } from './LoginFormElements';
-import logo from './logo.png';
-import googleLogo from './googleLogo.png';
+import logo from '../../assets/logo.png';
+import googleLogo from '../../assets/googleLogo.png';
 
 const FormCardRight = styled.div`
   width: 700px;

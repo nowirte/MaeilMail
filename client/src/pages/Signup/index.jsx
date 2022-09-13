@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from './logo.png';
+import logo from '../../assets/logo.png';
 import { Logo, LoginButton, LinkContainer } from './SignupFormElements';
 import SignupInput from './SignupInput';
 import PersonalInfo from './PersonalInfo';
@@ -52,15 +52,7 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
       });
-      // .then(function (response) {
-      //   if (response.status === 201) {
-      //     alert('가입을 축하드립니다');
-      //     navigate('/login');
-      //   }
-      // })
-      // .catch(function (error) {
-      //   alert(error.response.data.reason);
-      // });
+
       alert('가입을 축하드립니다');
       navigate('/login');
     } catch (error) {

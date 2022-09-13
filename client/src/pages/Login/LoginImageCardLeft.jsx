@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import backgroundImage from './mailboxBG.jpg';
+import backgroundImage from '../../assets/mailboxBG.jpg';
 
 const ImgCard = styled.div`
   width: 700px;

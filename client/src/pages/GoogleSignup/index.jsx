@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import logo from './logo.png';
+import logo from '../../assets/logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/reducers/auth';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import {
   Logo,
   LoginInput,
   LoginButton,
-  LinkContainer,
 } from './GoogleSignupFormElements';
 import PersonalInfo from './PersonalInfo';
 
@@ -62,7 +61,7 @@ const googleSignup = () => {
     };
 
     const bodyData = JSON.stringify(state);
-    //아직 백엔드와 연결 X
+    ㅂㅁ
     try {
       const res = await axios.patch('api/auth/me?isGoogle=true', bodyData, {
         headers: {
