@@ -66,7 +66,7 @@ const LoginForm = props => {
       });
   }
 
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     onSuccess: async tokenResponse => {
       const { access_token } = tokenResponse;
       const { data } = await axios.get(
@@ -87,6 +87,11 @@ const LoginForm = props => {
     },
     onError: () => console.log('Login Failed'),
   });
+
+  function handleGoogleLoginClick(e) {
+    e.preventDefault();
+    googleLogin();
+  }
 
   return (
     <FormCardRight>
@@ -111,11 +116,7 @@ const LoginForm = props => {
         <Link to="/signup">회원가입</Link>
       </LinkContainer>
 
-      <LoginGoogleButton
-        onClick={() => {
-          login();
-        }}
-      >
+      <LoginGoogleButton onClick={handleGoogleLoginClick}>
         <GoogleLogo src={googleLogo} alt="googleLogo" />
         Google
       </LoginGoogleButton>
