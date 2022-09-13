@@ -37,7 +37,7 @@
   </tr>
   <tr>
     <td align="center" colspan=2>
-      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/](http://ec2-13-125-119-10.ap-northeast-2.compute.amazonaws.com/)"> 👉 배포 페이지 </a>
+      <a href="https://bit.ly/3wTU9Te"> 👉 배포 페이지 </a>
     </td>
   </tr>
   <tr>
