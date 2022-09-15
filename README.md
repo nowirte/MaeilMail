@@ -26,7 +26,6 @@
         <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white"/>
         <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white"/>
         <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white">
-        <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white">
       </div>
     </td>
   </tr>
