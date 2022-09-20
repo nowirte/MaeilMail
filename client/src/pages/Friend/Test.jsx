@@ -30,7 +30,7 @@ const FriendDetail = () => {
   // 로그인한 유저 정보 받아오기
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get('api/auth/me', {
+      const res = await axios.get('/api/auth/me', {
         headers: {
           Authorization: token,
         },
@@ -45,7 +45,7 @@ const FriendDetail = () => {
   // 선택한 친구 정보 받아오기
   const fetchFriend = async () => {
     try {
-      const res = await axios.get(`api/users/${friendId}`, {
+      const res = await axios.get(`/api/users/${friendId}`, {
         headers: {
           Authorization: token,
         },
@@ -64,7 +64,7 @@ const FriendDetail = () => {
   // 편지 리스트 받아오기
   const fetchLetters = useCallback(async () => {
     try {
-      const res = await axios.get(`api/letters/${friendId}`, {
+      const res = await axios.get(`/api/letters/${friendId}`, {
         headers: {
           Authorization: token,
         },

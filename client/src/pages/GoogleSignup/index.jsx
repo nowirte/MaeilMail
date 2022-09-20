@@ -5,11 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/reducers/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Logo,
-  LoginInput,
-  LoginButton,
-} from './GoogleSignupFormElements';
+import { Logo, LoginInput, LoginButton } from './GoogleSignupFormElements';
 import PersonalInfo from './PersonalInfo';
 
 const SignupCard = styled.form`
@@ -61,7 +57,7 @@ const googleSignup = () => {
     };
 
     const bodyData = JSON.stringify(state);
-    ㅂㅁ
+
     try {
       const res = await axios.patch('api/auth/me?isGoogle=true', bodyData, {
         headers: {
