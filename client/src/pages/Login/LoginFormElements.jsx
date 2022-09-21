@@ -1,4 +1,51 @@
 import styled from 'styled-components';
+import backgroundImage from '../../assets/mailboxBG.jpg';
+
+export const LoginCard = styled.form`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FormCardRight = styled.div`
+  width: 700px;
+  height: 800px;
+  background-color: white;
+  border-top-right-radius: 48px;
+  border-bottom-right-radius: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const LoginImageCardLeft = styled.div`
+  width: 700px;
+  height: 800px;
+
+  border-top-left-radius: 48px;
+  border-bottom-left-radius: 48px;
+
+  background-image: url(${backgroundImage});
+
+  background-size: 1350px 900px;
+  background-position: 55% 20%;
+
+  display: flex;
+  justify-content: center;
+  direction: column;
+
+  span {
+    margin-top: 50px;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+`;
 
 export const LoginFormButton = styled.button`
   width: 570px;
