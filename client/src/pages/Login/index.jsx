@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/reducers/auth';
@@ -23,10 +23,9 @@ import {
 const Login = () => {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-
   let navigate = useNavigate();
 
-  const { values, handleChange, handleSubmit } = useForm({
+  const { values, handleInputChange, handleSubmit } = useForm({
     initialValues: { email: '', password: '' },
     onSubmit: values => {
       const bodyData = JSON.stringify(values);
@@ -86,14 +85,14 @@ const Login = () => {
           type="email"
           name="email"
           value={values.email}
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <LoginFormInput
           placeholder="비밀번호"
           type="password"
           name="password"
           value={values.password}
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <LoginFormButton onClick={handleSubmit}>로그인</LoginFormButton>
         <LinkContainer>

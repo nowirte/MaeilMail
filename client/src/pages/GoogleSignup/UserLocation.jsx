@@ -2,7 +2,7 @@ import { React, useEffect } from 'react';
 import styled from 'styled-components';
 import loc from './location.png';
 import refresh from './refresh.png';
-import useLoc from '../Signup/userLocationFunction';
+import useLoc from '../../utils/userLocationFunction';
 
 const LocationContainer = styled.div`
   height: 50px;

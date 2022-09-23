@@ -1,82 +1,130 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
-import { Logo, LoginButton, LinkContainer } from './SignupFormElements';
-import SignupInput from './SignupInput';
-import PersonalInfo from './PersonalInfo';
+import useForm from '../../hooks/useForm';
+import loc from '../../assets/location.png';
+import refresh from '../../assets/refresh.png';
+import useLoc from '../../utils/userLocationFunction';
 
-const SignupCard = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 900px;
-  height: 1100px;
-
-  border-radius: 48px;
-
-  background-color: white;
-`;
+import {
+  Logo,
+  LoginInput,
+  LoginButton,
+  LinkContainer,
+  SignupCard,
+  Location,
+  LocationContainer,
+  Refresh,
+  UserInfoContainer,
+  GenderContainer,
+  Male,
+  Female,
+} from './SignupFormElements';
 
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const [userInfo, setUserInfo] = useState({
-    email: '',
-    password: '',
-    nickname: '',
-  });
   const [checkPassword, setCheckPassword] = useState('');
-  const [locationInfo, setLocationInfo] = useState({
-    location: '',
-    latitude: 0,
-    longitude: 0,
-  });
-  const [gender, setGender] = useState({
-    gender: '',
-  });
-  const state = { ...userInfo, ...locationInfo, ...gender };
-  async function handleSignupClick(e) {
-    e.preventDefault();
-    const bodyData = JSON.stringify(state);
 
-    try {
-      await axios.post('api/users', bodyData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  const { values, handleInputChange, handleChange, handleSubmit } = useForm({
+    initialValues: {
+      gender: '',
+      location: '',
+      nickname: '',
+      email: '',
+      password: '',
+      latitude: '',
+      longitude: '',
+    },
+    onSubmit: async values => {
+      const bodyData = JSON.stringify(values);
 
-      alert('가입을 축하드립니다');
-      navigate('/login');
-    } catch (error) {
-      alert(error.response.data.reason);
-    }
+      try {
+        await axios.post('api/users', bodyData, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        alert('가입을 축하드립니다');
+        navigate('/login');
+      } catch (error) {
+        alert(error.response.data.reason);
+      }
+    },
+  });
+
+  const handleLocation = async () => {
+    const locationObject = await useLoc();
+    handleChange(locationObject);
+  };
+
+  function handleCheckPasswordChange(e) {
+    setCheckPassword(e.target.value);
   }
+
+  useEffect(() => {
+    handleLocation();
+  }, []);
+
   return (
     <SignupCard>
       <Logo src={logo} alt="Logo" />
-      <PersonalInfo
-        locationInfo={locationInfo}
-        setLocationInfo={setLocationInfo}
-        gender={gender}
-        setGender={setGender}
+      <UserInfoContainer>
+        <GenderContainer>
+          <Male
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            onChange={handleInputChange}
+          />
+          <label htmlFor="male">남성</label>
+          <Female
+            type="radio"
+            id="female"
+            name="gender"
+            value="female"
+            onChange={handleInputChange}
+          />
+          <label htmlFor="female">여성</label>
+        </GenderContainer>
+        <LocationContainer>
+          <Location src={loc} alt="location" />
+          <span>{values.location}</span>
+          <Refresh src={refresh} alt="refresh" onClick={handleLocation} />
+        </LocationContainer>
+      </UserInfoContainer>
+      <LoginInput
+        placeholder="닉네임"
+        name="nickname"
+        value={values.nickname}
+        onChange={handleInputChange}
       />
-      <SignupInput
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-        checkPassword={checkPassword}
-        setCheckPassword={setCheckPassword}
+      <LoginInput
+        placeholder="이메일"
+        type="email"
+        name="email"
+        value={values.email}
+        onChange={handleInputChange}
+      />
+      <LoginInput
+        placeholder="비밀번호"
+        type="password"
+        name="password"
+        value={values.password}
+        onChange={handleInputChange}
+      />
+      <LoginInput
+        placeholder="비밀번호 확인"
+        type="password"
+        value={checkPassword}
+        onChange={handleCheckPasswordChange}
       />
       <LoginButton
-        onClick={handleSignupClick}
-        disabled={userInfo.password === checkPassword ? false : true}
+        onClick={handleSubmit}
+        disabled={values.password === checkPassword ? false : true}
       >
         회원가입하기
       </LoginButton>

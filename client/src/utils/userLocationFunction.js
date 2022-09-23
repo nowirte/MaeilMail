@@ -3,7 +3,7 @@ import axios from 'axios';
 export default async function getLocInfo() {
   try {
     const res = await axios(
-      `https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.REACT_APP_LOCATION_API_KEY}`
+      `https://geolocation-db.com/json/`
     );
     const { latitude, longitude, country_name } = res.data;
 

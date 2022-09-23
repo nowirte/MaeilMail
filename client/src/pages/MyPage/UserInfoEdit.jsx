@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //style
 import { SettingBtn, ModalStyle } from './style';
 //function
-import useLoc from '../Signup/userLocationFunction';
+import useLoc from '../../utils/userLocationFunction';
 import objChangedarr from './util';
 
 const UserInfoEditArea = props => {
