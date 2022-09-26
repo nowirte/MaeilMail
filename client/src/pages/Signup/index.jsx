@@ -6,6 +6,7 @@ import useForm from '../../hooks/useForm';
 import loc from '../../assets/location.png';
 import refresh from '../../assets/refresh.png';
 import useLoc from '../../utils/userLocationFunction';
+import validate from '../../validations/signupValidation';
 
 import {
   Logo,
@@ -53,6 +54,7 @@ const SignUp = () => {
         alert(error.response.data.reason);
       }
     },
+    validate,
   });
 
   const handleLocation = async () => {

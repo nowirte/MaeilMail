@@ -7,6 +7,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import useForm from '../../hooks/useForm';
 import logo from '../../assets/logo.png';
 import googleLogo from '../../assets/googleLogo.png';
+import validate from '../../validations/loginValidation';
 
 import {
   LoginFormInput,
@@ -25,7 +26,7 @@ const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const { values, handleInputChange, handleSubmit } = useForm({
+  const { values, handleInputChange, handleSubmit, errors } = useForm({
     initialValues: { email: '', password: '' },
     onSubmit: values => {
       const bodyData = JSON.stringify(values);
@@ -46,6 +47,7 @@ const Login = () => {
           alert('이메일, 비밀번호를 확인해주세요.');
         });
     },
+    validate,
   });
 
   const googleLogin = useGoogleLogin({
