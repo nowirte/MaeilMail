@@ -13,16 +13,14 @@ function useForm({ initialValues, onSubmit, validate }) {
     setValues({ ...values, ...stateObject });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    setErrors(validate(values));
-    console.log(errors);
+    setErrors({ ...errors, ...validate(values) });
     if (Object.keys(errors).length === 0) {
-      // onSubmit(values);
-      console.log(Object.keys(errors).length);
-      console.log(errors.email);
+      onSubmit(values);
+    } else {
+      console.log(errors);
     }
-    console.log(errors.email);
   };
 
   return {

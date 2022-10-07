@@ -8,6 +8,7 @@ import useForm from '../../hooks/useForm';
 import logo from '../../assets/logo.png';
 import googleLogo from '../../assets/googleLogo.png';
 import validate from '../../validations/loginValidation';
+import useBreakPoint from '../../utils/breakpoints';
 
 import {
   LoginFormInput,
@@ -19,6 +20,8 @@ import {
   LoginImageCardLeft,
   FormCardRight,
   LoginCard,
+  InvisibleBox,
+  Container,
 } from './LoginFormElements';
 
 const Login = () => {
@@ -77,39 +80,53 @@ const Login = () => {
     googleLogin();
   }
 
+  const { isMobile, isLaptop, isPC } = useBreakPoint();
+
   return (
-    <LoginCard>
-      <LoginImageCardLeft />
-      <FormCardRight>
-        <Logo src={logo} alt="Logo" />
-        <LoginFormInput
-          placeholder="이메일"
-          type="email"
-          name="email"
-          value={values.email}
-          onChange={handleInputChange}
-        />
-        <LoginFormInput
-          placeholder="비밀번호"
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleInputChange}
-        />
-        <LoginFormButton onClick={handleSubmit}>로그인</LoginFormButton>
-        <LinkContainer>
-          <Link to="/">비밀번호 찾기</Link>
-          <Link to="/signup">회원가입</Link>
-        </LinkContainer>
+    <Container>
+      <InvisibleBox />
 
-        <LoginGoogleButton onClick={handleGoogleLoginClick}>
-          <GoogleLogo src={googleLogo} alt="googleLogo" />
-          Google
-        </LoginGoogleButton>
+      <LoginCard>
+        {isPC && <LoginImageCardLeft />}
+        <FormCardRight isMobile={isMobile} isLaptop={isLaptop}>
+          <Logo src={logo} alt="Logo" isMobile={isMobile} />
+          <LoginFormInput
+            placeholder="이메일"
+            type="email"
+            name="email"
+            value={values.email}
+            onChange={handleInputChange}
+            isMobile={isMobile}
+          />
+          <LoginFormInput
+            placeholder="비밀번호"
+            type="password"
+            name="password"
+            value={values.password}
+            onChange={handleInputChange}
+            isMobile={isMobile}
+          />
+          <LoginFormButton onClick={handleSubmit} isMobile={isMobile}>
+            로그인
+          </LoginFormButton>
+          <LinkContainer isMobile={isMobile}>
+            <Link to="/">비밀번호 찾기</Link>
+            <Link to="/signup">회원가입</Link>
+          </LinkContainer>
 
-        <span>SNS 로그인/회원가입</span>
-      </FormCardRight>
-    </LoginCard>
+          <LoginGoogleButton
+            isMobile={isMobile}
+            onClick={handleGoogleLoginClick}
+          >
+            <GoogleLogo src={googleLogo} alt="googleLogo" />
+            Google
+          </LoginGoogleButton>
+
+          <span>SNS 로그인/회원가입</span>
+        </FormCardRight>
+      </LoginCard>
+      <InvisibleBox />
+    </Container>
   );
 };
 
