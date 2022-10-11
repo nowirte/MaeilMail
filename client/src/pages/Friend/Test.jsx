@@ -45,14 +45,11 @@ const FriendDetail = () => {
   // 선택한 친구 정보 받아오기
   const fetchFriend = async () => {
     try {
-      const res = await axios.get(
-        `/api/users/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`/api/users/${friendId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
       setFriend({
         favor: data.user.Favor,
@@ -67,16 +64,13 @@ const FriendDetail = () => {
   // 편지 리스트 받아오기
   const fetchLetters = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `/api/letters/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`/api/letters/${friendId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
-      setLetters(data);
+      setLetters(data.findedLetter);
     } catch (error) {
       console.error(error);
     }
@@ -85,15 +79,11 @@ const FriendDetail = () => {
   // 편지 작성하기
   const postLetter = async newLetter => {
     try {
-      await axios.post(
-        `/api/letters/${friendId}`,
-        newLetter,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      await axios.post(`api/letters/${friendId}`, newLetter, {
+        headers: {
+          Authorization: token,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +94,6 @@ const FriendDetail = () => {
   const createHandler = content => {
     const letter = content[0];
     const friend_id = content[1];
-    console.log(letter, friend_id);
     const distance = getDistance(
       user.longitude,
       user.latitude,

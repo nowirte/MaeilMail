@@ -4,20 +4,18 @@ import { initComingLetters } from '../../redux/reducers/mainLetters';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import {
-  Container,
-  CurrentlyComingContainer,
-  CurrentlyComingContentContainer,
-  LetterContent,
-  CurrentlyProfile,
-  CurrentlyImageContainer,
-  CurrentlyIntroduction,
-  CurrentlyFriendName,
-  CurrentlyDate,
-  CurrentlyLocation,
-  CurrentlyTickingTime,
-} from './styles/StyledCurrentlyComingLetter';
 import { formatDate } from '../Friend/utils';
+import {
+  Letter,
+  LetterHeader,
+  LetterContent,
+  LetterFooter,
+  Writer,
+  Date,
+} from '../Friend/LetterStyle';
+import Stamp from '../../assets/stamp.png';
+import DoneIcon from '@mui/icons-material/Done';
+import styled from 'styled-components';
 
 const CurrentlyComingLetter = () => {
   const dispatch = useDispatch();
@@ -25,10 +23,9 @@ const CurrentlyComingLetter = () => {
   const mainComingLetters = useSelector(
     state => state.mainLetters.mainComingLetters
   );
-  // console.log('mainComing', mainComingLetters);
   const fetchCurrentlyComingLetter = async () => {
     try {
-      const res = await axios.get('/api/letters/incoming', {
+      const res = await axios.get('/api/letters/my/incoming', {
         headers: {
           Authorization: token,
         },
@@ -42,8 +39,6 @@ const CurrentlyComingLetter = () => {
   useEffect(() => {
     fetchCurrentlyComingLetter();
   }, []);
-
-  // console.log('mainComingLetters', mainComingLetters);
   return (
     <Container>
       <Swiper spaceBetween={360} slidesPerView={5}>
@@ -52,35 +47,17 @@ const CurrentlyComingLetter = () => {
         ) : (
           mainComingLetters.map((letter, index) => (
             <SwiperSlide key={index}>
-              <CurrentlyComingContainer>
-                <CurrentlyComingContentContainer>
-                  <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
-                </CurrentlyComingContentContainer>
-                <CurrentlyProfile>
-                  <CurrentlyImageContainer>
-                    <img
-                      src={
-                        letter.send_img === 'img/뚱이.png'
-                          ? '/img/뚱이.png'
-                          : letter.send_img
-                      }
-                      alt={letter.sendId}
-                    />
-                  </CurrentlyImageContainer>
-                  <CurrentlyIntroduction>
-                    <CurrentlyFriendName>{letter.nickname}</CurrentlyFriendName>
-                    <CurrentlyDate>
-                      {formatDate(letter.send_date)}
-                    </CurrentlyDate>
-                    <CurrentlyLocation>
-                      {letter.send_location}
-                    </CurrentlyLocation>
-                    <CurrentlyTickingTime>
-                      {formatDate(letter.receive_date)}
-                    </CurrentlyTickingTime>
-                  </CurrentlyIntroduction>
-                </CurrentlyProfile>
-              </CurrentlyComingContainer>
+              <Letter key={letter.letterId}>
+                <LetterHeader>
+                  <span>{letter.isRead ? <DoneIcon /> : ''}</span>
+                  <img src={Stamp} alt="stamp" />
+                </LetterHeader>
+                <LetterContent>✉️ 편지가 오고 있습니다.</LetterContent>
+                <LetterFooter>
+                  <Writer>{letter.nickname}</Writer>
+                  <Date>{formatDate(letter.receiveDate)}</Date>
+                </LetterFooter>
+              </Letter>
             </SwiperSlide>
           ))
         )}
@@ -89,4 +66,8 @@ const CurrentlyComingLetter = () => {
   );
 };
 
+const Container = styled.div`
+  margin-top: 45px;
+  margin-left: 10px;
+`;
 export default CurrentlyComingLetter;

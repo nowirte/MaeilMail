@@ -1,4 +1,4 @@
-async function getArrayForInputTag(obj) {
+const objChangedarr = obj => {
   const result = [];
   const keys = Object.keys(obj);
 
@@ -6,9 +6,11 @@ async function getArrayForInputTag(obj) {
     const element = {};
     element.value = key;
     element.label = key.charAt(0).toUpperCase() + key.slice(1);
+    // element.name = '';
     element.selected = obj[key];
     result.push(element);
   });
   return result;
-}
-export { getArrayForInputTag };
+};
+
+export default objChangedarr;

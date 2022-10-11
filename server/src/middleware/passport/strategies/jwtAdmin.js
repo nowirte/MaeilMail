@@ -15,7 +15,6 @@ const verify = async (jwtPayload, done) => {
     }
     done(null, false, { reason: '권한이 없습니다.' });
   } catch (err) {
-    console.error(err);
     done(err);
   }
 };

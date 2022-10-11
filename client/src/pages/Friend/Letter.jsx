@@ -15,14 +15,11 @@ const Letter = () => {
 
   const fetchLetter = async () => {
     try {
-      const res = await axios.get(
-        `/api/letters/${friendId}/${postId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`/api/letters/${friendId}/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
       setLetter(data);
     } catch (error) {

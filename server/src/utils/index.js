@@ -1,4 +1,4 @@
 export * from './setUserToken';
 export * from './multer';
-export * from './getArrayForInputTag';
-export * from './getObjectForDB';
+export * from './reduceObjToArray';
+export * from './reduceArrayToObject';

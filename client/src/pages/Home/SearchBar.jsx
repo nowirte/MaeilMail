@@ -50,7 +50,6 @@ const SearchBar = () => {
       .then(res => res.data)
       .then(data => {
         dispatch(setSearchUsers({ searchUsers: data }));
-        // console.log('searchUsers', searchUsers);
       });
   };
   return (

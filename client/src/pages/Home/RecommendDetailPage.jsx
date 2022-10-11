@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDistance, getTime, formatDate } from '../Friend/utils';
-import LetterEditor from '../Friend/LetterEditor';
+import FriendLetterEditor from './FriendLetterEditor';
 import {
   Wrapper,
   ProfileImg,
@@ -23,7 +23,7 @@ function RecommendDetailPage() {
   const token = useSelector(state => state.auth.token);
   const searchUser = useSelector(state => state.searchUser.searchUser);
   const searchUserId = useSelector(state => state.searchUser.searchUserId);
-  // console.log('searchUserId', searchUserId);
+
   const [writeIsShown, setWriteIsShown] = useState(false);
   const [user, setUser] = useState({});
 
@@ -40,9 +40,6 @@ function RecommendDetailPage() {
       console.error(e);
     }
   }, [user]);
-
-  // console.log(user);
-  // console.log('token', token);
 
   const fetchSearchUserDetail = async id => {
     try {
@@ -85,8 +82,8 @@ function RecommendDetailPage() {
         receiveDate.setMinutes(receiveDate.getMinutes() + deliveryTime)
       ).toISOString();
       const newLetter = {
-        sendId: user.user_id,
-        receiveId: searchUser.user_id,
+        sendId: user.userId,
+        receiveId: searchUser.userId,
         sendDate: sendDate,
         receiveDate: receiveDate,
         deliveryTime: deliveryTime,
@@ -106,7 +103,6 @@ function RecommendDetailPage() {
     fetchSearchUserDetail(searchUserId);
     fetchUser();
   }, []);
-  console.log('searchUser', searchUser);
 
   return (
     <>
@@ -122,11 +118,7 @@ function RecommendDetailPage() {
             <div className="profileImgArea">
               <img
                 className="profileImage"
-                src={
-                  searchUser.profileImage === 'img/뚱이.png'
-                    ? '/img/뚱이.png'
-                    : searchUser.profileImage
-                }
+                src={searchUser.profileImage}
                 alt={searchUser.nickname}
               />
             </div>
@@ -140,7 +132,10 @@ function RecommendDetailPage() {
             </StyledWriteButton>
           </StyledWriteButtonContainer>
         ) : (
-          <LetterEditor handleWrite={writeHandler} onCreate={createHandler} />
+          <FriendLetterEditor
+            handleWrite={writeHandler}
+            onCreate={createHandler}
+          />
         )}
       </Wrapper>
     </>

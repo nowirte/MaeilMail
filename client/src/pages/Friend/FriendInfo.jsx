@@ -43,7 +43,6 @@ const FriendInfo = ({ friend, favor, language }) => {
   if (language?.russian === true) languages.push('russian');
   if (language?.spanish === true) languages.push('spanish');
   if (language?.uzbek === true) languages.push('uzbek');
-  console.log(friend.profileImage);
   return (
     <User>
       <UserInfo>
@@ -73,7 +72,7 @@ const FriendInfo = ({ friend, favor, language }) => {
         </BadgeWrapper>
       </UserInfo>
       <UserEmoji>
-        <img src={`/${friend.profileImage}`} alt="friendImg" />
+        <img src={friend.profileImage} alt="friendImg" />
       </UserEmoji>
     </User>
   );

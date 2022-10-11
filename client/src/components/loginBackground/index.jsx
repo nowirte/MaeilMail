@@ -1,13 +1,9 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router';
 import styled from 'styled-components';
-import backgroundImage from './img/mailboxBG.jpg';
+import backgroundImage from './img/mailbox_blured_BG.jpg';
 import { useSelector } from 'react-redux';
-
-const Container = styled.div`
-  display: relative;
-  width: 100vw;
-`;
+import useBreakpoints from '../../utils/breakpoints';
 
 const Background = styled.div`
   position: absolute;
@@ -17,19 +13,28 @@ const Background = styled.div`
   bottom: 0;
   background-image: url(${backgroundImage});
   width: 100vw;
-  filter: grayscale(20%) opacity(70%);
   z-index: -1;
-  background-size: cover;
+  display: flex;
+  justify-content: center;
   background-position: 30% 50%;
+  overflow: scroll;
 `;
 
 const loginBackground = () => {
-  const auth = useSelector(state => state.auth.auth);
-  return (
-    <Container>
-      <Background />
-      {!auth ? <Outlet /> : <Navigate to="/" />}
-    </Container>
+  const { auth, role } = useSelector(state => state.auth.auth);
+  const { isMobile } = useBreakpoints();
+  return !auth || role === 'temp' ? (
+    isMobile ? (
+      <>
+        <Outlet />
+      </>
+    ) : (
+      <Background>
+        <Outlet />
+      </Background>
+    )
+  ) : (
+    <Navigate to="/" />
   );
 };
 

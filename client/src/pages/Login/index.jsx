@@ -1,15 +1,132 @@
-import React, { useState } from 'react';
-import LoginFormCardRight from './LoginFormCardRight';
-import LoginImageCardLeft from './LoginImageCardLeft';
-import LoginCard from './LoginCard';
+import React from 'react';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/reducers/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import useForm from '../../hooks/useForm';
+import logo from '../../assets/logo.png';
+import googleLogo from '../../assets/googleLogo.png';
+import validate from '../../validations/loginValidation';
+import useBreakPoint from '../../utils/breakpoints';
+
+import {
+  LoginFormInput,
+  LoginFormButton,
+  LinkContainer,
+  Logo,
+  GoogleLogo,
+  LoginGoogleButton,
+  LoginImageCardLeft,
+  FormCardRight,
+  LoginCard,
+  InvisibleBox,
+  Container,
+} from './LoginFormElements';
 
 const Login = () => {
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const { values, handleInputChange, handleSubmit, errors } = useForm({
+    initialValues: { email: '', password: '' },
+    onSubmit: values => {
+      const bodyData = JSON.stringify(values);
+
+      axios
+        .post('api/auth/login', bodyData, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(res => {
+          const { token, role } = res.data;
+          dispatch(setAuth({ role: role, token: token, auth: true }));
+          navigate('/');
+        })
+        .catch(err => {
+          console.log(err);
+          alert('이메일, 비밀번호를 확인해주세요.');
+        });
+    },
+    validate,
+  });
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      const { access_token } = tokenResponse;
+      const { data } = await axios.get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`
+      );
+      const { email } = data;
+      const bodyData = JSON.stringify({ email: email });
+
+      const res = await axios.post('/api/auth/login/google', bodyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const { token, role } = res.data;
+      dispatch(setAuth({ role: role, token: token, auth: true }));
+      role === 'temp' ? navigate('/googleSignup') : navigate('/');
+    },
+    onError: () => alert('로그인에 실패했습니다. 다시 시도해주세요.'),
+  });
+
+  function handleGoogleLoginClick(e) {
+    e.preventDefault();
+    googleLogin();
+  }
+
+  const { isMobile, isLaptop, isPC } = useBreakPoint();
+
   return (
-    <LoginCard>
-      <LoginImageCardLeft />
-      <LoginFormCardRight loginForm={loginForm} setLoginForm={setLoginForm} />
-    </LoginCard>
+    <Container>
+      <InvisibleBox />
+
+      <LoginCard>
+        {isPC && <LoginImageCardLeft />}
+        <FormCardRight isMobile={isMobile} isLaptop={isLaptop}>
+          <Logo src={logo} alt="Logo" isMobile={isMobile} />
+          <LoginFormInput
+            placeholder="이메일"
+            type="email"
+            name="email"
+            value={values.email}
+            onChange={handleInputChange}
+            isMobile={isMobile}
+          />
+          <LoginFormInput
+            placeholder="비밀번호"
+            type="password"
+            name="password"
+            value={values.password}
+            onChange={handleInputChange}
+            isMobile={isMobile}
+          />
+          <LoginFormButton onClick={handleSubmit} isMobile={isMobile}>
+            로그인
+          </LoginFormButton>
+          <LinkContainer isMobile={isMobile}>
+            <Link to="/">비밀번호 찾기</Link>
+            <Link to="/signup">회원가입</Link>
+          </LinkContainer>
+
+          <LoginGoogleButton
+            isMobile={isMobile}
+            onClick={handleGoogleLoginClick}
+          >
+            <GoogleLogo src={googleLogo} alt="googleLogo" />
+            Google
+          </LoginGoogleButton>
+
+          <span>SNS 로그인/회원가입</span>
+        </FormCardRight>
+      </LoginCard>
+      <InvisibleBox />
+    </Container>
   );
 };
 

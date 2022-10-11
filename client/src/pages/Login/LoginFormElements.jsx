@@ -1,7 +1,66 @@
 import styled from 'styled-components';
+import backgroundImage from '../../assets/mailboxBG.jpg';
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  flex-direction: column;
+`;
+
+export const LoginCard = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const InvisibleBox = styled.div`
+  visibility: hidden;
+  height: 50px;
+  width: 10px;
+`;
+
+export const FormCardRight = styled.div`
+  ${props => (props.isMobile ? `width: 100vw` : `width: 700px`)};
+  height: 800px;
+  background-color: white;
+
+  ${props =>
+    props.isLaptop ? `border-radius: 48px` : `border-radius: 0 48px 48px 0`};
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  ${props =>
+    props.isMobile ? `justify-content: start` : `justify-content: center`};
+`;
+
+export const LoginImageCardLeft = styled.div`
+  width: 700px;
+  height: 800px;
+
+  border-top-left-radius: 48px;
+  border-bottom-left-radius: 48px;
+
+  background-image: url(${backgroundImage});
+
+  background-size: 1350px 900px;
+  background-position: 55% 20%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  span {
+    margin-top: 50px;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+`;
 
 export const LoginFormButton = styled.button`
-  width: 570px;
+  ${props => (props.isMobile ? `width: 85%` : `width: 570px;`)};
   height: 80px;
   margin: 40px 0 20px 0;
   padding: 20px;
@@ -19,7 +78,7 @@ export const LoginFormButton = styled.button`
 `;
 
 export const LoginFormInput = styled.input`
-  width: 550px;
+  ${props => (props.isMobile ? `width: 80%` : `width: 550px;`)};
   height: 70px;
   margin: 10px;
   padding: 0 0 0 20px;
@@ -48,7 +107,8 @@ export const LinkContainer = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 300px;
+  ${props => (props.isMobile ? `width: 250px` : `width: 320px`)};
+  padding: 0 0 20px 0;
 `;
 
 export const GoogleLogo = styled.img`
@@ -66,7 +126,8 @@ export const GoogleLogo = styled.img`
 export const LoginGoogleButton = styled.button`
   position: relative;
 
-  width: 570px;
+  ${props => (props.isMobile ? `width: 90%` : `width: 570px;`)};
+
   height: 80px;
 
   background-color: white;

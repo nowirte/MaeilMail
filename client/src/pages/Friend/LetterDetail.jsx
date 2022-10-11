@@ -15,14 +15,11 @@ const LetterDetail = () => {
   const fetchLetter = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(
-        `/api/letters/${userId}/${postId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`/api/letters/${userId}/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data;
       setLetter(data);
     } catch (error) {

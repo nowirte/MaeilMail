@@ -33,14 +33,11 @@ const LetterList = ({ letters, handleClick }) => {
   // 선택한 친구 정보 받아오기
   const fetchFriend = async () => {
     try {
-      const res = await axios.get(
-        `/api/users/${friendId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const res = await axios.get(`/api/users/${friendId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = res.data.user;
       setFriend(data);
     } catch (error) {

@@ -12,13 +12,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //style
 import { SettingBtn, ModalStyle } from './style';
 //function
-import useLoc from '../Signup/userLocationFunction';
+import useLoc from '../../utils/userLocationFunction';
+import objChangedarr from './util';
 
 const UserInfoEditArea = props => {
   const token = useSelector(state => state.auth.token);
   const userData = props.data;
 
   const [favor, setFavor] = useState([]);
+  const [google, setGoogle] = useState(true);
   const [language, setLanguage] = useState([]);
   const [inputData, setInputData] = useState({});
   const [currentPassword, setCurrentPassword] = useState('');
@@ -27,8 +29,17 @@ const UserInfoEditArea = props => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setFavor(props.favor);
-    setLanguage(props.language);
+    setGoogle(() => (userData.oauth === 'google' ? true : false));
+    setFavor(() => {
+      const favObj = userData.Favor;
+      const favArr = favObj ? objChangedarr(favObj) : null;
+      return favArr;
+    });
+    setLanguage(() => {
+      const langObj = userData.Language;
+      const langArr = langObj ? objChangedarr(langObj) : null;
+      return langArr;
+    });
   }, [userData]);
 
   const handleModal = () => {
@@ -98,7 +109,10 @@ const UserInfoEditArea = props => {
         profileText: inputData.profileText,
         birthday: inputData.birthday,
         newPassword: changedPassword ? changedPassword : currentPassword,
-        currentPassword: currentPassword,
+        currentPassword: google
+          ? process.env.REACT_APP_GOOGLEPW
+          : currentPassword,
+        // currentPassword: currentPassword,
         favor: favor,
         language: language,
         location: inputData.location,
@@ -106,7 +120,7 @@ const UserInfoEditArea = props => {
 
       const bodyData = JSON.stringify(data);
 
-      await axios.patch('/api/auth/me', bodyData, {
+      await axios.patch('api/auth/me', bodyData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token,
@@ -116,8 +130,6 @@ const UserInfoEditArea = props => {
       handleModal();
       document.location.href = '/mypage';
       alert('회원 정보가 수정되었습니다.');
-      // location.reload();
-      // window.location.replace('/mypage');
     } catch (err) {
       console.log(err.response);
       alert(err.response.data.reason);
@@ -212,62 +224,67 @@ const UserInfoEditArea = props => {
                   onChange={handleCheckedLanguage}
                 />
               </EditTitle>
-              <EditTitle className="changedPassowrd">
-                <p>변경 할 비밀번호</p>
-                <input
-                  id="changedPassowrd"
-                  type="password"
-                  placeholder="새로운 비밀번호"
-                  name="changedPassowrd"
-                  value={changedPassword}
-                  onChange={e => {
-                    setChangedPassword(e.target.value);
-                  }}
-                />
-              </EditTitle>
-              <EditTitle className="checkPassowrd">
-                <p>비밀번호 확인</p>
-                <input
-                  id="checkPassowrd"
-                  type="password"
-                  placeholder="새로운 비밀번호 확인"
-                  name="checkPassowrd"
-                  value={checkPassword || ''}
-                  onChange={e => {
-                    setCheckPassword(e.target.value);
-                  }}
-                />
-                {changedPassword !== checkPassword && (
-                  <p
-                    className="changedPasswordChecked"
-                    style={{
-                      fontSize: '0.75rem',
-                      color: 'red',
-                      marginTop: '0.5rem',
-                    }}
-                  >
-                    새로운 비밀번호가 일치하지 않습니다.
-                  </p>
-                )}
-              </EditTitle>
-              <EditTitle className="currentPassowrd">
-                <p>
-                  현재 비밀번호를 입력해주세요.
-                  <span style={{ fontSize: '0.75rem', color: 'red' }}>
-                    *필수
-                  </span>
-                </p>
-                <input
-                  id="currentPassowrd"
-                  type="password"
-                  placeholder="현재 비밀번호"
-                  name="currentPassword"
-                  value={currentPassword || ''}
-                  onChange={e => {
-                    setCurrentPassword(e.target.value);
-                  }}
-                />
-              </EditTitle>
+              {!google && (
+                <div>
+                  <EditTitle className="changedPassowrd">
+                    <p>변경 할 비밀번호</p>
+                    <input
+                      id="changedPassowrd"
+                      type="password"
+                      placeholder="새로운 비밀번호"
+                      name="changedPassowrd"
+                      value={changedPassword}
+                      onChange={e => {
+                        setChangedPassword(e.target.value);
+                      }}
+                    />
+                  </EditTitle>
+                  <EditTitle className="checkPassowrd">
+                    <p>비밀번호 확인</p>
+                    <input
+                      id="checkPassowrd"
+                      type="password"
+                      placeholder="새로운 비밀번호 확인"
+                      name="checkPassowrd"
+                      value={checkPassword || ''}
+                      onChange={e => {
+                        setCheckPassword(e.target.value);
+                      }}
+                    />
+                    {changedPassword !== checkPassword && (
+                      <p
+                        className="changedPasswordChecked"
+                        style={{
+                          fontSize: '0.75rem',
+                          color: 'red',
+                          marginTop: '0.5rem',
+                        }}
+                      >
+                        새로운 비밀번호가 일치하지 않습니다.
+                      </p>
+                    )}
+                  </EditTitle>
+                  <EditTitle className="currentPassowrd">
+                    <p>
+                      현재 비밀번호를 입력해주세요.
+                      <span style={{ fontSize: '0.75rem', color: 'red' }}>
+                        *필수
+                      </span>
+                    </p>
+                    <input
+                      id="currentPassowrd"
+                      type="password"
+                      placeholder="현재 비밀번호"
+                      name="currentPassword"
+                      value={currentPassword || ''}
+                      onChange={e => {
+                        setCurrentPassword(e.target.value);
+                      }}
+                    />
+                  </EditTitle>
+                </div>
+              )}
+
               <div className="editBtn">
                 <ThemeProvider theme={theme}>
                   <Button
