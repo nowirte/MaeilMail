@@ -1,56 +1,21 @@
 ## **📫 매일메일**
 
-### **매일 다양한 국적, 다양한 관심사를 가진 사람들을 만나보세요!**
-
 <br>
 
-### **서비스 설명**
-
-### 기획 의도 및 목적
----
-<br/>
-
-펜팔에 대해 알고 계시나요? 펜팔이란 손글씨로 쓴 편지를 주고받는 친구를 의미합니다. 
-
-우리의 삶은 오프라인에서 온라인으로의 비대면 서비스 방식으로 전환되고 있습니다. 
-
-전통적인 펜팔 방식과는 달리, 장소와 시간에 상관없이 온라인에서도 소통이 가능한 서비스를 만들고 싶었습니다. 
-
-집에서도 전 세계를 여행하며 국적, 성별, 나이에 상관없이 편지를 주고받을 수 있는 서비스를 기획하게 되었습니다. 그렇지만 감성을 곁들여서요. 
-
-빠른 세상 속에서 우리는 즉각적인 소통이 가능해졌지만, 이처럼 편리한 인터넷 세상이 가끔은 피곤하게 느껴지기도 합니다. 
-
-우리가 편지를 주고받을 때에는 시간이 걸립니다. 내가 있는 곳에서 더 멀리 떨어진 친구일수록 더 오래 걸립니다. 
-
-편지를 기다리면서 더 가치 있는 내용을 담게 되고, 편지 한 통으로 전 세계 친구들과 마음을 나눌 수 있는 서비스를 기획하고자 하였습니다. 
-
-언어와 관심사를 기반으로 새로운 친구를 만나고, 외국어를 연습하며 소통할 수 있습니다.
-<br/>
-
-
-
-### 웹 서비스의 주제 및, 최종적인 메인 기능과 서브 기능 설명
----
-
-- 주제: 아날로그 편지를 구현한 웹 서비스
-- 메인 기능
-  1. 편지처럼 주고받는 대화기능 (node-schedule을 이용해 시간에 따른 배송상태 업데이트)
-  2. 위치 기반 편지 도착 시간 계산
-  3. 친구 랜덤 추천 및 검색 기능
-   
-- 서브 기능
-  1. Private Routing을 이용한 로그인, 로그아웃
-  2. multer를 이용한 이미지 업로드 (마이페이지)
-
-### 프로젝트만의 차별점, 기대 효과
----
-
-자신의 이름이 아닌 익명으로 가입이 가능하며 신분과 이름이 알려져 있지 않아 자유롭습니다. 또한 매일메일의 컨셉이 국가간 거리에 따라 편지가 도착하는 시간이 다르다 보니 편지에 따라 소요시간이 다양합니다. 소요시간이 길다보니 한 번 편지를 보낼 때 많이 대화를 하고 싶어 길게 보내고, 연락을 소중하게 여기게 됩니다. 마지막으로 검색이나 친구 추천을 통해서 나와 공통된 관심사가 있는지 확인할 수 있고, 나와 맞는 친구들을 찾을 수 있다는 장점이 있습니다.
-
-### 프로젝트 구성
+### 📖개요
 ---
 
 <table align="center">
+  <tr>
+    <td><span> 주제 </span></td>
+    <td><span> 온라인 펜팔 서비스 </span></td>
+  </tr>
+  
+  <tr>
+    <td><span> 목표 </span></td>
+    <td><span> 편지를 기다리는 감성을 온라인에서 구현 </span></td>
+  </tr>
+  
   <tr>
     <td><span>기술 스택</span></td>
     <td>
@@ -61,20 +26,96 @@
         <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white"/>
         <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white"/>
         <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white">
-        <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white">
       </div>
     </td>
   </tr>
   <tr>
-    <td>배포 페이지</td>
-    <td>
-      <a href="http://kdt-sw2-seoul-team13.elicecoding.com/">
-        👉 배포 페이지 바로가기
-      </a>
+    <td align="center" colspan=2>
+      <a href="https://jaeyeong815.notion.site/88b29312cff34763884feef11109b340"> 👉 프로젝트 소개서 </a>
     </td>
   </tr>
+  <tr>
+    <td align="center" colspan=2>
+      <a href="https://bit.ly/3wTU9Te"> 👉 배포 페이지 </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan=2>
+      <a href="https://www.figma.com/file/x6VNP5t97mEBBGZtwBxNiB/%EC%B5%9C%EA%B0%9513%ED%8C%80?node-id=367%3A232">🎨 WireFrame</a>
+    </td>
+  </tr>
+  </tr>
+    <td align="center" colspan=2>
+      <a href="https://maeilmail-api-docs.herokuapp.com/">🔑 API Specification (Swagger)</a>
+    </td>
+  </tr>
+  
 <table>
 
+
+<br>
+
+### 🎯 핵심 기능
+---
+
+  1. 사용자의 위치에 기반하여 편지의 도착 시간이 결정됩니다.
+  2. node-schedule을 이용하여 도착 시간이 지나면 편지를 확인할 수 있습니다.
+
+
+<br>
+
+### 💻 서비스 구조도
+---
+<br/>
+<div align="center"><img src="https://user-images.githubusercontent.com/102276240/188565575-657a388a-2d19-44a6-bf34-0808daf89c09.png"></div>
+<br/>
+
+<br>
+
+  
+### 👉 기능 명세
+---
+
+  - **사이드바(nav 바)**
+    - 로고 클릭 시 메인 화면으로 이동
+    - 유저 본인 클릭 시 마이페이지로 이동
+    - 친구 클릭 시 친구 상세 프로필 페이지로 이동
+    - 안읽은 편지 수 확인 가능
+    - 로그아웃 기능
+        - 로그인 화면으로 이동
+- **메인 페이지** `/`
+    - 유저 추천 및 친구 검색 기능
+        - 친구 상세 페이지
+            - 편지 작성 기능
+            - 친구 정보 확인
+    - 배달 중인 편지들 확인하기
+    - 최근 도착한 편지 확인 및 읽음 처리 기능
+- **편지 리스트 페이지 `/friend/:userId`**
+    - 친구 상세 프로필 제공
+    - 친구와 나눈 편지 리스트 정보 제공
+    - 편지 작성 기능
+- **편지 상세 페이지 `/friend/:userId/:postId`**
+    - 편지 상세 정보 제공
+    - 편지 작성 기능
+- **마이페이지 `/mypage`**
+    - 유저 정보 수정 기능
+        - 프로필 이미지 / 닉네임 / 한 줄 소개 / 생일 / 위치 / 관심사 / 사용 언어 / 비밀번호 수정
+        - 회원 정보 수정 시 현재 비밀번호가 일치해야 가능
+    - 회원 탈퇴 기능
+- **로그인 `/login`**
+    - 일반 로그인
+        - 로그인 성공 후 메인 페이지로 이동
+    - 구글 로그인 **(추가)**
+        - 로그인 성공 후 유저가 임시가입 상태일시 추가 정보 페이지로 이동
+        - 임시가입 실패시 추가정보 기입 페이지로 이동
+- **구글 회원가입 `/googleSignup` (추가)**
+    - 구글 회원가입
+        - 구글 회원가입 성공시 임시가입 상태로 저장 후 추가 정보 입력 페이지 이동
+        - 추가정보 기입 성공시 메인페이지로 이동
+- **회원가입 `/signup`**
+    - 회원가입
+        - 가입 성공시로그인 페이지로 이동
+  
 <br>
 
 ### ✋ 역할
@@ -89,42 +130,4 @@
 | 김명균 | 백엔드     | db 연결, 편지 api, 배포 |
 | 배장한 | 백엔드     | 사용자 api, 배포 |
 
-### 💻 서비스 구조도
----
-<br/>
-<div><img src="https://cdn.discordapp.com/attachments/993788882397175862/1000205318074150922/unknown.png"></div>
-<br/>
-
-### 🔗 링크
----
-<table align="center">
-<thead>
-  <tr>
-    <th colspan=5>
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13">🏠 GitLab Wiki Home</a>
-    </th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td align="center" colspan=2>
-      <a href="https://www.figma.com/file/x6VNP5t97mEBBGZtwBxNiB/%EC%B5%9C%EA%B0%9513%ED%8C%80?node-id=367%3A232">🎨 WireFrame</a>
-    </td>
-    <td align="center">
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/team-code-convention">📕 Code Convention</a>
-    </td>
-    <td align="center">
-      <a href="https://amethyst-earl-96d.notion.site/new-edf193249ece4a6db3701b2b99fa1fc9">💾 기능 정의서</a>
-    </td>
-
-  </tr>
-    <tr>
-    <td align="center" colspan=2>
-      <a href="https://team13-swagger.herokuapp.com/">🔑 API Specification (Swagger)</a>
-    </td>
-    <td align="center" colspan=2>
-      <a href="https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team13/project13/-/wikis/%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0">📂 Directory Structure</a>
-    </td>
-  </tr>
-</tbody>
-<table>
+<br>
